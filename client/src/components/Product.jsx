@@ -47,7 +47,7 @@ export default function Product(props) {
                 </div>
                 <div className="review">
                     <h5>Óptimo</h5>
-                    <p>Cumple perfectamente con su función. Me gusta que sea antiahorque porque cede fácilmente, como así también que se pueda poner el nro de teléfono donde dice muy home.</p>
+                    <p>Cumple perfectamente con su función. Me gusta porque cede fácilmente, como así también que se pueda poner el nro de teléfono donde dice muy home.</p>
                 </div>
             </div>
         </div>
