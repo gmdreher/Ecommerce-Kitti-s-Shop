@@ -1,0 +1,17 @@
+.catalogue{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2{
+        margin: 1em;
+        font-family: cursive;
+    }
+    .contentcards{
+       
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 90%;
+        margin: 10px;
+    }
+}

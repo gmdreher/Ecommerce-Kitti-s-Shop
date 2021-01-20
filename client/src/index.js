@@ -5,11 +5,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ProductCard from './components/productCard/ProductCard';
 import NavBar from './components/navBar/NavBar.js'
+import Catalogue from './components/catalogue/Catalogue';
 
 ReactDOM.render(
   <React.StrictMode>
     <NavBar/>
-    <ProductCard />
+    <Catalogue/>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
