@@ -1,0 +1,31 @@
+.navBar{
+    display: grid;
+    grid-template-columns: auto 30em 10em 10em;
+    align-items: center;
+    div{
+        display: flex;
+        align-items: center;
+    
+        img{
+            height: 100px;
+        }
+        span{
+            font-family: cursive;
+            font-size: larger;
+        }
+    }
+    label{
+        display: flex;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 9999px;
+        height: 46px;
+        padding: 0 1em;
+        width: fit-content;
+        .carrito{
+            font-size: 25px;
+            margin: 10px;
+        }
+    }
+
+}

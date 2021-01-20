@@ -1,7 +1,14 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
+const { Op } = require("sequelize");
+
+
+//Falta asociar a categoria, falta modelo de categoria
+
+//Task 21  => Ruta que devuelva todos los productos
 
 server.get('/', (req, res, next) => {
+
 	Product.findAll({
 		include: {
 			model: Category,
@@ -13,6 +20,7 @@ server.get('/', (req, res, next) => {
 		})
 		.catch(next);
 });
+
 
 
 server.post('/', function (req, res) {
@@ -60,6 +68,47 @@ server.delete('/:id', function(req,res){
 		res.status(400).send(`Error ${error}`)
 	})
 })
+
+server.get("/:id", (req, res) => {
+	const id = req.params.id;
+	Product.findOne({
+		where: {
+			id: id,
+		},
+	})
+		.then((product) => {
+			res.json(product);
+		})
+		.catch((err) => {
+			return res.send({ data: err }).status(400);
+		});
+});
+
+server.get("/search", (req, res) => {
+	const producto = req.query.value;
+	Product.findAll({
+		where: {
+			[Op.or]:
+				[{
+					name: {
+						[Op.iLike]: `%${producto}%`
+					}
+				},
+					{
+						description: {
+							[Op.iLike]: `%${producto}%`
+						}
+					}
+				]
+		},
+	})
+		.then((product) => {
+			res.status(200).json(product);
+		})
+		.catch(error => {
+			res.status(400).send(`Error: ${error}`)
+		})
+});
 
 // server.get('/category/:categoryname', (req, res) => {
 // 	let categoryName = req.params.categoryname;
@@ -111,5 +160,3 @@ server.post('/:productId/category/:categoryId', (req, res) => {
 //
 // })
 module.exports = server;
-
-
