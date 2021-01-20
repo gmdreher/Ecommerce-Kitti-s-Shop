@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import ProductCard from './components/productCard/ProductCard';
+import NavBar from './components/navBar/NavBar.js'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <NavBar/>
+    <ProductCard />
   </React.StrictMode>,
   document.getElementById('root')
 );

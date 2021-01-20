@@ -1,0 +1,20 @@
+.productCard{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 15em;
+    height: 20em;
+   h3{
+    text-align: center;
+   }
+    
+    img{
+        width: 12em;
+        
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        background-color: red;
+    }
+}
