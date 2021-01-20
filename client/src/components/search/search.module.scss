@@ -1,0 +1,22 @@
+.searchBar{
+    display: flex;
+    justify-items: center;
+
+    form{
+        border-radius: 9999px;
+        border: 1px solid black;
+        padding: 0 1em;
+        display: flex;
+        align-items: center;
+        input{
+            border: none;
+            height: 30px;
+            width: 300px;
+            
+        }
+        i{
+            font-size: 25px;
+            margin: 10px;
+        }
+    }
+}
