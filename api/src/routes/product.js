@@ -2,7 +2,12 @@ const server = require('express').Router();
 const { Product, Category } = require('../db.js');
 
 server.get('/', (req, res, next) => {
-	Product.findAll()
+	Product.findAll({
+		include: {
+			model: Category,
+			as: 'categories'
+		}
+	})
 		.then(products => {
 			res.send(products);
 		})
