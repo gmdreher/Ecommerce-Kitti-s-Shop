@@ -6,10 +6,10 @@ import Product from "../components/Product";
 const Routes = () => {
     
     return(
-        <div>
+        <>
          <Route exact path= '/products' component={Catalogue}></Route>
          <Route exact path="/products/:id" component={Product}></Route>
-        </div>
+        </>
     )
 }
 
