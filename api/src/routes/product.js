@@ -1,9 +1,9 @@
 const server = require('express').Router();
-const {Product, Category} = require('../db.js');
-const {Op} = require("sequelize");
+const { Product, Category } = require('../db.js');
+const { Op } = require("sequelize");
 
 server.get('/', (req, res, next) => {
-  
+
   Product.findAll({
     include: {
       model: Category,
@@ -16,9 +16,35 @@ server.get('/', (req, res, next) => {
     .catch(next);
 });
 
+server.get("/search", (req, res) => {
+  const producto = req.query.value;
+  Product.findAll({
+    where: {
+      [Op.or]:
+        [{
+          name: {
+            [Op.iLike]: `%${producto}%`
+          }
+        },
+        {
+          description: {
+            [Op.iLike]: `%${producto}%`
+          }
+        }
+        ]
+    },
+  })
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch(error => {
+      res.status(400).send(`Error: ${error}`)
+    })
+});
+
 server.post('/', function (req, res) {
-  var {name, description, price, stock} = req.body;
-  
+  var { name, description, price, stock } = req.body;
+
   Product.create({
     name: name,
     description: description,
@@ -33,24 +59,27 @@ server.post('/', function (req, res) {
 });
 
 server.put('/:id', function (req, res) {
-  const {id} = req.params;
-  const {name, description, price, stock} = req.body;
+  const { id } = req.params;
+  const { name, description, price, stock } = req.body;
   Product.update(
     {
       name: name,
       description: description,
       price: price,
       stock: stock
-    }, {where: {id: id}})
+    }, { where: { id: id } })
     .then(e => {
       res.status(200).send(e)
     }).catch(error => {
-    res.status(400).send(`Error ${error}`);
-  })
-})
+      res.status(400).send(`Error ${error}`);
+    })
+});
+
+
+
 
 server.delete('/:id', function (req, res) {
-  const {id} = req.params;
+  const { id } = req.params;
   Product.destroy({
     where: {
       id: id
@@ -61,6 +90,8 @@ server.delete('/:id', function (req, res) {
     res.status(400).send(`Error ${error}`)
   })
 });
+
+
 
 server.get("/:id", (req, res) => {
   const id = req.params.id;
@@ -73,38 +104,14 @@ server.get("/:id", (req, res) => {
       res.json(product);
     })
     .catch((err) => {
-      return res.send({data: err}).status(400);
+      return res.send({ data: err }).status(400);
     });
 });
 
-server.get("/search", (req, res) => {
-  const producto = req.query.value;
-  Product.findAll({
-    where: {
-      [Op.or]:
-        [{
-          name: {
-            [Op.iLike]: `%${producto}%`
-          }
-        },
-          {
-            description: {
-              [Op.iLike]: `%${producto}%`
-            }
-          }
-        ]
-    },
-  })
-    .then((product) => {
-      res.status(200).json(product);
-    })
-    .catch(error => {
-      res.status(400).send(`Error: ${error}`)
-    })
-});
+
 
 server.post('/category', (req, res) => {
-  let {name, description} = req.body;
+  let { name, description } = req.body;
   Category.create({
     name: name,
     description: description,
@@ -116,12 +123,14 @@ server.post('/category', (req, res) => {
     })
 });
 
+
+
 server.post('/:productId/category/:categoryId', (req, res) => {
-  let {productId, categoryId} = req.params;
-  
+  let { productId, categoryId } = req.params;
+
   let productAddCategory;
   let categoryProduct;
-  
+
   Product.findByPk(productId)
     .then(product => {
       productAddCategory = product;
@@ -144,5 +153,8 @@ server.post('/:productId/category/:categoryId', (req, res) => {
         })
     })
 });
+
+
+
 
 module.exports = server;
