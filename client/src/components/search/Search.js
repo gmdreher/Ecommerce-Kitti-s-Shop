@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import style from './search.module.scss'
+import axios from 'axios'
 
 export default function Search(){
+    //ejecuta un funcion recibida por props con el texto ingresado
+    
     const[input, setInput]= useState({search:''})
 
 function handleChange(e){
@@ -10,7 +13,11 @@ function handleChange(e){
 
 function handleSubmit(e){
     e.preventDefault()
-    alert('se submitio')
+    axios.get("http://127.0.0.1:3001/products/search")
+    .then(e=>{
+        setInput(e.data);
+        console.log('entra al handle')
+    })
 }
 
     return(

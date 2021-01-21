@@ -26,10 +26,10 @@ export default function Product({ id }) {
                 <div className="data">
                     <h2>{data.name}</h2>
                     <div className="start">
-                        <i class="fa fa-star fa-lg"></i>
-                        <i class="fa fa-star fa-lg"></i>
-                        <i class="fa fa-star fa-lg"></i>
-                        <i class="fa fa-star fa-lg"></i>
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
                     </div>
                     <p><strong>Precio: </strong> ${data.price}</p>
                     <form>
