@@ -1,7 +1,9 @@
 import { GET_PRODUCT_BY_ID } from '../constants/productContants.js';
+import {GET_PRODUCTS} from '../constants/products.js';
 
 const initialState = {
     product: [],
+    products: []
 };
 
 export const productById = (state = initialState, action) => {
@@ -11,6 +13,11 @@ export const productById = (state = initialState, action) => {
                 ...state,
                 product: action.payload
             }
+            
+        case GET_PRODUCTS:
+            let estado= {...state, products: action.payload }
+            return estado;
+
         default:
             return state;
     }
