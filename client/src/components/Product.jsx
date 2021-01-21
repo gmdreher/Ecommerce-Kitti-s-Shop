@@ -10,8 +10,6 @@ export default function Product({ id }) {
     const dispatch = useDispatch();
     const data = useSelector((store) => store.product.product);
 
-
-
     console.log(data);
 
     useEffect(() => {

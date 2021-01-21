@@ -4,11 +4,11 @@ import Catalogue from "../components/catalogue/Catalogue";
 import Product from "../components/Product";
 
 const Routes = () => {
-    
-    return(
+
+    return (
         <>
-         <Route exact path= '/products' component={Catalogue}></Route>
-         <Route exact path="/products/:id" component={Product}></Route>
+            <Route exact path='/products' component={Catalogue}></Route>
+            <Route exact path="/products/:id" component={Product}></Route>
         </>
     )
 }
