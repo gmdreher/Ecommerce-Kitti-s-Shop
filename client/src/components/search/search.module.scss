@@ -12,7 +12,11 @@
             border: none;
             height: 30px;
             width: 300px;
-            
+            outline:none !important;
+            outline-width: 0 !important;
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;        
         }
         i{
             font-size: 25px;

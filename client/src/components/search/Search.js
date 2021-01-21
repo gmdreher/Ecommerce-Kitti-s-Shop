@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import style from './search.module.scss'
 
 export default function Search(){
+    //ejecuta un funcion recibida por props con el texto ingresado
+    
     const[input, setInput]= useState({search:''})
 
 function handleChange(e){
