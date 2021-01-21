@@ -11,7 +11,6 @@ ReactDOM.render(
   <React.StrictMode>
     <NavBar/>
     <Catalogue/>
-
   </React.StrictMode>,
   document.getElementById('root')
 );

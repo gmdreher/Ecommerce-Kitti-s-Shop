@@ -32,6 +32,10 @@ export default function Catalogue(){
                     return <ProductCard data={e}/>
                 })}
             </div>
+            <div className={styles.categories}>
+                <h3>Categories</h3>
+                
+            </div>
         </div>
     )
 }
