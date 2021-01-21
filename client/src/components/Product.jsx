@@ -10,6 +10,8 @@ export default function Product({ id }) {
     const dispatch = useDispatch();
     const data = useSelector((store) => store.product.product);
 
+
+
     console.log(data);
 
     useEffect(() => {
@@ -26,10 +28,10 @@ export default function Product({ id }) {
                 <div className="data">
                     <h2>{data.name}</h2>
                     <div className="start">
-                        <i class="fa fa-star fa-lg"/>
-                        <i class="fa fa-star fa-lg"/>
-                        <i class="fa fa-star fa-lg"/>
-                        <i class="fa fa-star fa-lg"/>
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
                     </div>
                     <p><strong>Precio: </strong> ${data.price}</p>
                     <form>
