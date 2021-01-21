@@ -1,6 +1,8 @@
 import React from 'react';
 import '../src/Styles/App.scss';
-import Product from './components/Product.jsx';
+import Navbar from './components/navBar/NavBar';
+
+import Routes from './routes/Routes';
 
 const product = {
   name: "Collar Premium Trixie",
@@ -14,11 +16,12 @@ function App() {
   return (
     <div className="App">
       <header>
+        <Navbar/>
 
       </header>
 
       <main>
-        <Product data={product} />
+        <Routes />
       </main>
 
       <footer>
