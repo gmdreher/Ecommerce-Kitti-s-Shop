@@ -130,6 +130,19 @@ server.post('/:productId/category/:categoryId', (req, res) => {
     })
 });
 
+server.get('/category/:categoryName', (req, res, next) => {
+  let categoryName = req.params.categoryName;
+  Category.findAll({
+    where: {
+      name: categoryName
+    }
+  })
+    .then(products => {
+      res.send(products);
+    })
+    .catch(next);
+});
+
 server.get("/search", (req, res) => {
   const producto = req.query.value;
   Product.findAll({
