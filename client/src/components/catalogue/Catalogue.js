@@ -1,28 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard from '../productCard/ProductCard.js';
 import styles from './catalogue.module.scss'
+import axios from 'axios'
 
 export default function Catalogue(){
     //deberia recibir por props un array de productos
     //esto es para probar
-    const [data, setdata]= useState([
-        {
-            name: "algo",
-            price: 214
-        },
-        {
-            name: "amas",
-            price: 2655
-        },
-        {
-            name: "adsao",
-            price: 2155
-        },
-        {
-            name: "amasdad",
-            price: 265
-        }
-    ])
+    const [data, setData]= useState([])
+
+    
+    useEffect(()=>{
+        console.log("entre al useEffect");
+        axios.get("http://127.0.0.1:3001/products")
+        .then(e=>{
+            setData(e.data);
+        })
+    },[])
 
     return(
         <div className={styles.catalogue}>

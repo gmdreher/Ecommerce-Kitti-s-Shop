@@ -3,7 +3,7 @@ import styles from './productCard.module.scss';
 import pic from '../../images/logo-cat.jpeg';
 
 export default function ProductCard({data}){
-
+    
     return(
         <div className={ 'card ' + styles.card} >
             <img src={pic} class="card-img-top" alt="..." onClick={()=>alert('data.name')}/>

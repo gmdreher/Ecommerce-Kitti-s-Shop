@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ProductCard from './components/productCard/ProductCard';
-import NavBar from './components/navBar/NavBar.js'
-import Catalogue from './components/catalogue/Catalogue';
+
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <NavBar/>
-    <Catalogue/>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
