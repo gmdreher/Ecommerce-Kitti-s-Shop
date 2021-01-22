@@ -16,8 +16,6 @@ class CrudProductForm extends React.Component {
                 description: '',
                 price: '',
                 stock: ''
-                //categoria: '',
-                //imagenes: ''
             },
             modalInsertar: false,
             modalEditar: false,
@@ -186,8 +184,9 @@ class CrudProductForm extends React.Component {
                              {this.props.categories && this.props.categories.map((cate=>(
                                 <Label check> 
                                     <Input type="checkbox" />
-                                 
+                                    {'      '}
                                     {cate.name}
+                                    {'      '}
                                 
                                 </Label>
                              )))}
