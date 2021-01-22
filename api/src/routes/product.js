@@ -127,21 +127,14 @@ server.get('/', (req, res, next) => {
     .catch(next);
 });
 
-//task 22
-server.get('/category/:categoryName', (req, res, next) => {
-  let categoryName = req.params.categoryName;
-  Category.findAll({
-    where: {
-      name: categoryName
-    }
-  })
-    .then(products => {
-      res.send(products);
+server.get('/categories', (req, res, next) => {
+  Category.findAll()
+    .then(categories => {
+      res.json(categories);
     })
     .catch(next);
 });
 
-//task 17
 server.post('/:productId/category/:categoryId', (req, res) => {
   let { productId, categoryId } = req.params;
 
@@ -176,6 +169,26 @@ server.post('/:productId/category/:categoryId', (req, res) => {
       res.status(400).send(`Error: ${err}`)
     })
 });
+
+server.get('/category/:categoryName', (req, res, next) => {
+  let categoryName = req.params.categoryName;
+  Product.findAll({
+   
+    include: [
+      {
+        model: Category, as: 'categories',
+        where: {
+          name: categoryName
+        },
+      },
+    ],
+  })
+    .then(products => {
+      res.json(products)
+    })
+    .catch(next);
+});
+
 
 //task 24
 server.get("/:id", (req, res) => {

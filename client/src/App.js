@@ -12,6 +12,7 @@ import CrudProduct from './components/CrudProduct.jsx'
 //   price: 1305,
 //   quantity: 5,
 // }
+import ProductsByCategory from "./components/Categories/ProductsByCategory";
 
 
 function App() {
@@ -23,9 +24,13 @@ function App() {
         </header>
 
         <main>
-          <Route exact path='/products' component={Catalogue}></Route>
+          <Route exact path='/products' component={Catalogue}/>
           <Route exact path="/products/detalle/:id" render={({ match }) => <Product id={match.params.id} />} />
-          <Route exact path='/products/admin' component={CrudProduct}></Route>
+          <Route exact path='/products/admin' component={CrudProduct}/>
+          <Route
+            path="/products/category/:categoryName"
+            render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}
+          />
         </main>
 
         <footer>
