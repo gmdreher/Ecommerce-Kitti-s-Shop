@@ -1,0 +1,13 @@
+export const PRODUCT_CREATED = 'PRODUCT_CREATED';
+
+export const PRODUCT_DELETE = 'PRODUCT_DELETE';
+
+export const PRODUCT_UPDATE = 'PRODUCT_UPDATE';
+
+export const PRODUCTS_READ = 'PRODUCTS_READ';
+
+export const CATEGORIES_READ = 'CATEGORIES_READ';
+
+
+
+

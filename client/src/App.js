@@ -1,5 +1,6 @@
 import React from 'react';
 import '../src/Styles/App.scss';
+import CrudProductForm from './components/CrudProduct';
 import Product from './components/Product.jsx';
 
 const product = {
@@ -18,7 +19,8 @@ function App() {
       </header>
 
       <main>
-        <Product data={product} />
+        {/* <Product data={product} /> */}
+        <CrudProductForm/>
       </main>
 
       <footer>

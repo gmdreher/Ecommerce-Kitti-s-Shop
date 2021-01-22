@@ -15,6 +15,38 @@ server.get('/', (req, res, next) => {
     })
     .catch(next);
 });
+server.get("/search", (req, res) => {
+  const producto = req.query.value;
+  Product.findAll({
+    where: {
+      [Op.or]:
+        [{
+          name: {
+            [Op.iLike]: `%${producto}%`
+          }
+        },
+          {
+            description: {
+              [Op.iLike]: `%${producto}%`
+            }
+          }
+        ]
+    },
+  })
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch(error => {
+      res.status(400).send(`Error: ${error}`)
+    })
+});
+server.get('/category', (req, res, next) => { 
+  Category.findAll()
+    .then(categories => {
+      res.send(categories);
+    })
+    .catch(next);
+});
 
 server.post('/', function (req, res) {
   var {name, description, price, stock} = req.body;
@@ -77,31 +109,6 @@ server.get("/:id", (req, res) => {
     });
 });
 
-server.get("/search", (req, res) => {
-  const producto = req.query.value;
-  Product.findAll({
-    where: {
-      [Op.or]:
-        [{
-          name: {
-            [Op.iLike]: `%${producto}%`
-          }
-        },
-          {
-            description: {
-              [Op.iLike]: `%${producto}%`
-            }
-          }
-        ]
-    },
-  })
-    .then((product) => {
-      res.status(200).json(product);
-    })
-    .catch(error => {
-      res.status(400).send(`Error: ${error}`)
-    })
-});
 
 server.post('/category', (req, res) => {
   let {name, description} = req.body;
