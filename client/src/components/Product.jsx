@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../Styles/App.scss';
 import image from '../01.jpg';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductById } from '../actions/productActions.js';
 
+export default function Product({ id }) {
 
-export default function Product(props) {
+    const dispatch = useDispatch();
+    const data = useSelector((store) => store.product.product);
+
+    console.log(data);
+
+    useEffect(() => {
+        dispatch(getProductById(id));
+    }, [dispatch])
 
     return (
         <div className="containe" >
@@ -14,14 +24,14 @@ export default function Product(props) {
                     <img src={image} alt="img" />
                 </div>
                 <div className="data">
-                    <h2>{props.data.name}</h2>
+                    <h2>{data.name}</h2>
                     <div className="start">
-                        <i class="fa fa-star fa-lg"></i>
-                        <i class="fa fa-star fa-lg"></i>
-                        <i class="fa fa-star fa-lg"></i>
-                        <i class="fa fa-star fa-lg"></i>
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
+                        <i class="fa fa-star fa-lg" />
                     </div>
-                    <p><strong>Precio: </strong> ${props.data.price}</p>
+                    <p><strong>Precio: </strong> ${data.price}</p>
                     <form>
                         <label for="quanty"><strong>Cantidad: </strong></label>
                         <select name="quanty" id="quanty">
@@ -35,7 +45,7 @@ export default function Product(props) {
                         <button className="btn btn-outline-dark">Agregar a Carrito</button>
                         <button className="btn btn-outline-dark">Comprar</button>
                     </div>
-                    <p><strong>Descripción: </strong> {props.data.description}</p>
+                    <p><strong>Descripción: </strong> {data.description}</p>
                 </div>
             </div>
             <div className="reviews">

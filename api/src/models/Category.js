@@ -5,7 +5,6 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
 
-
   // defino el modelo
   const Category = sequelize.define('category', {
     name: {
@@ -13,10 +12,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     //puede no tener descripción pero sí o sí nombre de la categoría.
-    description:{
+    description: {
       type: DataTypes.STRING,
-       //Agrego más caracteres o dejo 255 por defecto?
-      }
+      //Agrego más caracteres o dejo 255 por defecto?
+    }
   });
 };
 
