@@ -1,16 +1,30 @@
-import { GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT } from '../constants/productContants.js';
+import {GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT } from '../constants/productConstants.js';
 
 const initialState = {
     product: [],
+    filteredProduct: [],
+    categories: [],
     products: []
 };
 
-export const productById = (state = initialState, action) => {
+export const ProductById = (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
                 product: action.payload
+            }
+            
+        case GET_PRODUCT_BY_CATEGORY:
+            return {
+                ...state,
+                filteredProduct: action.payload,
+            }
+            
+        case GET_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload
             }
             
         case GET_PRODUCTS:
@@ -25,6 +39,8 @@ export const productById = (state = initialState, action) => {
 
         default:
             return state;
+        
     }
-}
+};
+
 
