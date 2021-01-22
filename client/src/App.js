@@ -1,6 +1,9 @@
 import React from 'react';
 import '../src/Styles/App.scss';
 import Product from './components/Product.jsx';
+import Footer from './components/Footer.jsx'
+import Main from './components/Main.jsx'
+
 
 const product = {
   name: "Collar Premium Trixie",
@@ -18,11 +21,12 @@ function App() {
       </header>
 
       <main>
+        <Main/>
         <Product data={product} />
       </main>
 
       <footer>
-
+         <Footer/>
       </footer>
     </div>
   );
