@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-import { GET_PRODUCT_BY_ID } from '../constants/productContants.js';
-import { GET_PRODUCTS} from '../constants/products.js'
+import { GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT } from '../constants/productContants.js';
 
 
 export const getProductById = (id) => async (dispatch) => {
@@ -28,5 +27,16 @@ export const getProducts = ()=> async (dispatch) => {
     }
 }
 
+export const searchProduct= (name)=> async (dispatch) => {
+    try {
+        const resp = await axios.get(`http://localhost:3001/products/search?value=${name}` );
+        dispatch({
+            type: SEARCH_PRODUCT,
+            payload: resp.data
+        });
+    }catch (error){
+        console.log("Error: " + error)
+    }
+}
 
 
