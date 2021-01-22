@@ -4,6 +4,7 @@ import Navbar from './components/navBar/NavBar';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import Catalogue from './components/catalogue/Catalogue.js';
 import Product from './components/Product.jsx';
+import CrudProduct from './components/CrudProduct.jsx'
 
 // const product = {
 //   name: "Collar Premium Trixie",
@@ -23,7 +24,8 @@ function App() {
 
         <main>
           <Route exact path='/products' component={Catalogue}></Route>
-          <Route exact path="/products/:id" render={({ match }) => <Product id={match.params.id} />} />
+          <Route exact path="/products/detalle/:id" render={({ match }) => <Product id={match.params.id} />} />
+          <Route exact path='/products/admin' component={CrudProduct}></Route>
         </main>
 
         <footer>
