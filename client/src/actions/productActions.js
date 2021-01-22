@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-
-import {GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES, SEARCH_PRODUCT, GET_PRODUCTS} from '../constants/productConstants.js';
-
-
+import {GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES, SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT} from '../constants/productConstants.js';
 
 export const getProductById = (id) => async (dispatch) => {
     try {
@@ -48,8 +45,6 @@ export function getCategories() {
     };
 }
 
-
-
 export const searchProduct= (name)=> async (dispatch) => {
     try {
         const resp = await axios.get(`http://localhost:3001/products/search?value=${name}` );
@@ -61,5 +56,26 @@ export const searchProduct= (name)=> async (dispatch) => {
         console.log("Error: " + error)
     }
 }
+export const deleteProduct = (id) => async dispatch => {
+    await axios.delete(`http://localhost:3001/products/${id}`);
+    dispatch({
+        type: DELETE_PRODUCT,
+        payload: id
+    })
+}
+export const insertProduct = (product) => async dispatch => {
+    const response = await axios.post('http://localhost:3001/products/', product);
+    dispatch({
+        type: POST_PRODUCT,
+        payload: response.data
+    });
+}
+    export const editProduct = product => async dispatch => {
+        const respuesta = await axios.put(`http://localhost:3001/products/${product.id}`, product);
+        dispatch({
+            type: UPDATE_PRODUCT,
+            payload: respuesta.data
+        });
+    }
 
 
