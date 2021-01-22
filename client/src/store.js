@@ -1,15 +1,11 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { productById } from './reducers/reducerProducts.js';
-
-// const initialState = {
-//     product: [],
-// };
+import { ProductById } from './reducers/reducerProducts.js';
 
 const reducer = combineReducers({
-    product: productById
+    product: ProductById,
 })
-    ;
+
 //REDUX DETVOOLS en google, instalar thunk
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
