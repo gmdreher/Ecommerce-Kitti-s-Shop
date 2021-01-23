@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import '../Styles/App.scss';
-import image from '../01.jpg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../actions/productActions.js';
@@ -21,7 +20,7 @@ export default function Product({ id }) {
             <button className="arrow">Volver</button>
             <div className="detail">
                 <div className="imagen">
-                    <img src={image} alt="img" />
+                    <img src={data.images} alt="img" />
                 </div>
                 <div className="data">
                     <h2>{data.name}</h2>

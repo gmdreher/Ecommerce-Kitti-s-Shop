@@ -269,27 +269,29 @@ server.delete('/:id', function (req, res) {
 });
 
 server.post('/:idProducto/category/:idCategory', (req, res) => {
-	const {idProducto, idCategory} = req.params;
-	
-	Product.update({categoryId: idCategory}, {where: {
-			idProducto:idProducto
-		}}
-		
-	).then((product) => {
-		res.json(product);
-	})
-	.catch((err) => {
-		return res.send({ data: err }).status(400);
-})
+  const { idProducto, idCategory } = req.params;
+
+  Product.update({ categoryId: idCategory }, {
+    where: {
+      idProducto: idProducto
+    }
+  }
+
+  ).then((product) => {
+    res.json(product);
+  })
+    .catch((err) => {
+      return res.send({ data: err }).status(400);
+    })
 })
 
 server.delete('/:idProducto/category/:idCategoria', (req, res) => {
-	const {idProducto, idCategoria} = req.params;
-		Product.find({where:{productId:idProducto}})
-		.then((product)=>{
-			product.destroy(idCategoria)
-		})
-		.catch(error=>res.send(error))
+  const { idProducto, idCategoria } = req.params;
+  Product.find({ where: { productId: idProducto } })
+    .then((product) => {
+      product.destroy(idCategoria)
+    })
+    .catch(error => res.send(error))
 });
 
 module.exports = server;
