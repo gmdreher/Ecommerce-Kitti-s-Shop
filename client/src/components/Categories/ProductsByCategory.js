@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import ProductCard from '../productCard/ProductCard.js';
-import Categories from "../Categories/Categories";
 import { getProductByCategory } from '../../actions/productActions';
 import '../../Styles/App.scss';
 import { connect } from 'react-redux';
@@ -15,7 +14,6 @@ function ProductsByCategory(props){
   
   return(
     <div className={styles.catalogue}>
-      <Categories />
       <div className= {styles.contentcards}>
         {props.productsByCategory.map((e)=>{
           return <ProductCard data={e} key={e.id}/>

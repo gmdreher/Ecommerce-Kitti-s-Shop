@@ -1,25 +1,13 @@
-.categoryBar{
-  display: grid;
-  grid-template-columns: auto 10em 10em 10em;
+.dropCategory{
+  display: flex;
+  grid-template-columns: auto 10em 10em 10em 10em;
   align-items: center;
   justify-content: space-evenly;
 
-
-  .nameCategoryDrop{
-    color: black;
-    margin: 10px;
+  .navLink{
     text-decoration: none;
-
+    background-color: lavender;
   }
-  .nameCategory{
-
-    color: black;
-    border: 1px solid black;
-    padding: 10px;
-    border-radius: 20px;
-    text-decoration: none;
-
-    
     &:hover {
       background-color: #e1e4e8;
       color: black;
@@ -27,14 +15,8 @@
       border: 1px solid #e1e4e8;
     }
 
-  }
 
-  .ctnCategoryName{
-    display: grid;
-    grid-template-columns: 10em 10em 10em;
-    margin-left: 3em;
 
-  }
 
 }
 
