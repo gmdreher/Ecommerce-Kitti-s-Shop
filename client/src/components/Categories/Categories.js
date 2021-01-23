@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { connect } from "react-redux";
-import { getCategories } from "../../actions/productActions";
+import { connect, useDispatch } from "react-redux";
+import { getCategories, getProductById } from "../../actions/productActions";
 import styles from './categories.module.scss';
-
+import { getProductByCategory } from '../../actions/productActions'
 
 function Categories (props) {
   
+  let dispatch= useDispatch()
+
   useEffect(()=>{
    props.getCategories()
     console.log(props)
@@ -22,9 +24,10 @@ function Categories (props) {
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {props.categories.map((e)=>{
             return <ul>
-              <Link exact to={`/products/category/${e.name}`}>
-              <li><a className="dropdown-item" href="#">{e.name}</a></li>
-              </Link>
+              <li onClick={()=>{
+                dispatch(getProductByCategory(e.name))
+              }}><a className="dropdown-item" >{e.name}</a>
+              </li> 
             </ul>
           })}
         </ul>
