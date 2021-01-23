@@ -24,10 +24,9 @@ function Categories (props) {
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {props.categories.map((e)=>{
             return <ul>
-              <li onClick={()=>{
-                dispatch(getProductByCategory(e.name))
-              }}><a className="dropdown-item" >{e.name}</a>
-              </li> 
+              <Link exact to={`/products/category/${e.name}`}>
+              <li><a className="dropdown-item" href="#">{e.name}</a></li>
+              </Link> 
             </ul>
           })}
         </ul>
