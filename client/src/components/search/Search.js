@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import style from './search.module.scss'
 import {searchProduct} from '../../actions/productActions.js'
 import {useDispatch} from 'react-redux'
+import { useHistory } from "react-router-dom";
+
 
 
 export default  function Search(){
@@ -9,14 +11,15 @@ export default  function Search(){
     const[input, setInput]= useState({search:''})
     const dispatch= useDispatch();
 
+
 function handleChange(e){
     setInput({...input, [e.target.name]: e.target.value })
 }
 
 function handleSubmit(e){
     e.preventDefault();
+
     dispatch( searchProduct(input.search) )
-    
 }
 
     return(
