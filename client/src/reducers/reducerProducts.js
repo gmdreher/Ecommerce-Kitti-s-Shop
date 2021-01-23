@@ -1,4 +1,4 @@
-import {GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT } from '../constants/productConstants.js';
+import {GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT} from '../constants/productConstants.js';
 
 const initialState = {
     product: [],
@@ -36,6 +36,21 @@ export const ProductById = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
+        case POST_PRODUCT:
+            return {
+                ...state,
+                products: [...state.products, action.payload]
+            }
+        case DELETE_PRODUCT:
+            return {
+                ...state,
+                products: state.products.filter( product => product.id !== action.payload )
+                }
+        case UPDATE_PRODUCT:
+            return {
+                ...state,
+                products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
+                    }
 
         default:
             return state;

@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category } = require('../db.js');
+const { Product, Category, Image } = require('../db.js');
 const { Op } = require("sequelize");
 
 
@@ -14,11 +14,11 @@ server.get("/search", (req, res) => {
             [Op.iLike]: `%${producto}%`
           }
         },
-          {
-            description: {
-              [Op.iLike]: `%${producto}%`
-            }
+        {
+          description: {
+            [Op.iLike]: `%${producto}%`
           }
+        }
         ]
     },
   })
@@ -116,10 +116,16 @@ server.delete('/category/:id', function (req, res) {
 server.get('/', (req, res, next) => {
 
   Product.findAll({
-    include: {
-      model: Category,
-      as: 'categories'
-    }
+    include: [
+      {
+        model: Category,
+        as: 'categories'
+      },
+      {
+        model: Image,
+      }
+    ]
+
   })
     .then(products => {
       res.send(products);
@@ -173,7 +179,7 @@ server.post('/:productId/category/:categoryId', (req, res) => {
 server.get('/category/:categoryName', (req, res, next) => {
   let categoryName = req.params.categoryName;
   Product.findAll({
-   
+
     include: [
       {
         model: Category, as: 'categories',
@@ -190,13 +196,15 @@ server.get('/category/:categoryName', (req, res, next) => {
 });
 
 
+
 //task 24
 server.get("/:id", (req, res) => {
   const id = req.params.id;
   Product.findOne({
-    where: {
-      id: id,
-    },
+    where: { id: id },
+    include: [
+      { model: Image }
+    ],
   })
     .then((product) => {
       res.json(product);
@@ -208,20 +216,27 @@ server.get("/:id", (req, res) => {
 
 //task 25
 server.post('/', function (req, res) {
-  let { name, description, price, stock } = req.body;
+  let { name, description, price, stock, image } = req.body;
 
   Product.create({
     name: name,
     description: description,
     price: price,
     stock: stock
-  }).then((product) => {
-    res.status(201).json(product);
   })
-    .catch(error => {
-      res.status(400).send(`Error: ${error}`)
+
+    .then((product) => {
+      if (image) {
+        image.map(img => img.productId = product.id);
+        Image.bulkCreate(image)
+        return product
+      }
     })
-});
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(400).json(err))
+
+})
+
 
 //task 26
 server.put('/:id', function (req, res) {
@@ -253,6 +268,32 @@ server.delete('/:id', function (req, res) {
   }).catch(error => {
     res.status(400).send(`Error ${error}`)
   })
+});
+
+server.post('/:idProducto/category/:idCategory', (req, res) => {
+  const { idProducto, idCategory } = req.params;
+
+  Product.update({ categoryId: idCategory }, {
+    where: {
+      idProducto: idProducto
+    }
+  }
+
+  ).then((product) => {
+    res.json(product);
+  })
+    .catch((err) => {
+      return res.send({ data: err }).status(400);
+    })
+})
+
+server.delete('/:idProducto/category/:idCategoria', (req, res) => {
+  const { idProducto, idCategoria } = req.params;
+  Product.find({ where: { productId: idProducto } })
+    .then((product) => {
+      product.destroy(idCategoria)
+    })
+    .catch(error => res.send(error))
 });
 
 module.exports = server;

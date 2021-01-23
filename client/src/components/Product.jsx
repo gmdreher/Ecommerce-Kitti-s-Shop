@@ -1,27 +1,32 @@
 import React, { useEffect } from 'react';
 import '../Styles/App.scss';
-import image from '../01.jpg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../actions/productActions.js';
+import { Link } from 'react-router-dom';
+
 
 export default function Product({ id }) {
 
     const dispatch = useDispatch();
     const data = useSelector((store) => store.product.product);
 
-    console.log(data);
+    console.log("mostrar data", data.images);
 
     useEffect(() => {
         dispatch(getProductById(id));
     }, [dispatch])
 
+
+
     return (
         <div className="containe" >
-            <button className="arrow">Volver</button>
+            <Link to={`/`}>
+                <button className="arrow">Volver</button>
+            </Link>
             <div className="detail">
                 <div className="imagen">
-                    <img src={image} alt="img" />
+                    <img src={data.images} alt="img" />
                 </div>
                 <div className="data">
                     <h2>{data.name}</h2>
