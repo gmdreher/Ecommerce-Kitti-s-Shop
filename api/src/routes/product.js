@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category } = require('../db.js');
+const { Product, Category, Image } = require('../db.js');
 const { Op } = require("sequelize");
 
 
@@ -14,11 +14,11 @@ server.get("/search", (req, res) => {
             [Op.iLike]: `%${producto}%`
           }
         },
-          {
-            description: {
-              [Op.iLike]: `%${producto}%`
-            }
+        {
+          description: {
+            [Op.iLike]: `%${producto}%`
           }
+        }
         ]
     },
   })
@@ -116,10 +116,16 @@ server.delete('/category/:id', function (req, res) {
 server.get('/', (req, res, next) => {
 
   Product.findAll({
-    include: {
-      model: Category,
-      as: 'categories'
-    }
+    include: [
+      {
+        model: Category,
+        as: 'categories'
+      },
+      {
+        model: Image,
+      }
+    ]
+
   })
     .then(products => {
       res.send(products);
@@ -173,7 +179,7 @@ server.post('/:productId/category/:categoryId', (req, res) => {
 server.get('/category/:categoryName', (req, res, next) => {
   let categoryName = req.params.categoryName;
   Product.findAll({
-   
+
     include: [
       {
         model: Category, as: 'categories',
@@ -208,20 +214,27 @@ server.get("/:id", (req, res) => {
 
 //task 25
 server.post('/', function (req, res) {
-  let { name, description, price, stock } = req.body;
+  let { name, description, price, stock, image } = req.body;
 
   Product.create({
     name: name,
     description: description,
     price: price,
     stock: stock
-  }).then((product) => {
-    res.status(201).json(product);
   })
-    .catch(error => {
-      res.status(400).send(`Error: ${error}`)
+
+    .then((product) => {
+      if (image) {
+        image.map(img => img.productId = product.id);
+        Image.bulkCreate(image)
+        return product
+      }
     })
-});
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(400).json(err))
+
+})
+
 
 //task 26
 server.put('/:id', function (req, res) {
