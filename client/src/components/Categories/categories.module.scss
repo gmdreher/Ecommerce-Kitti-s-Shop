@@ -1,6 +1,13 @@
-.categories{
-  border: 4px solid #e1e4e8;
+.categoryBar{
+  display: grid;
+  grid-template-columns: auto 10em 10em 10em;
+  align-items: center;
+  justify-content: space-around;
 
-
-
+  .nameCategory{
+    border: 4px solid #e1e4e8;
+  }
 }
+
+
+

@@ -24,10 +24,6 @@ export default function Catalogue(){
                     return <ProductCard data={infoProducto}/>
                 })}
             </div>
-            <div className={styles.categories}>
-                <h3>Categories</h3>
-                
-            </div>
         </div>
     )
 }

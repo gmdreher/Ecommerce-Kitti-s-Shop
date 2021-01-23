@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from "react-redux";
 import { getCategories } from "../../actions/productActions";
 import styles from './categories.module.scss';
@@ -13,21 +13,31 @@ function Categories (props) {
   },[])
   
     return (
-      
-      <div className="dropdown">
-        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-bs-toggle="dropdown" aria-expanded="false">
-          Categories
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div className={styles.categoryBar}>
+        <div className="dropdown">
+          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {props.categories.map((e)=>{
+              return <div className={styles.nameCategory}>
+                <NavLink exact to={`/products/category/${e.name}`}>
+                  <li><a className="dropdown-item" href="#">{e.name}</a></li>
+                </NavLink>
+              </div>
+            })}
+          </ul>
+        </div>
+        <div>
           {props.categories.map((e)=>{
-            return <ul>
+            return <div className={styles.nameCategory}>
               <Link exact to={`/products/category/${e.name}`}>
-              <li><a className="dropdown-item" href="#">{e.name}</a></li>
+                <a className="dropdown-item" href="#">{e.name}</a>
               </Link>
-            </ul>
-          })}
-        </ul>
+            </div>
+          }) }
+        </div>
       </div>
     )
 };
