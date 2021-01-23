@@ -2,11 +2,40 @@
   display: grid;
   grid-template-columns: auto 10em 10em 10em;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 
-  .nameCategory{
-    border: 4px solid #e1e4e8;
+
+  .nameCategoryDrop{
+    color: black;
+    margin: 10px;
+    text-decoration: none;
+
   }
+  .nameCategory{
+
+    color: black;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+
+    
+    &:hover {
+      background-color: #e1e4e8;
+      color: black;
+      text-decoration: none;
+      border: 1px solid #e1e4e8;
+    }
+
+  }
+
+  .ctnCategoryName{
+    display: grid;
+    grid-template-columns: 10em 10em 10em;
+    margin-left: 3em;
+
+  }
+
 }
 
 
