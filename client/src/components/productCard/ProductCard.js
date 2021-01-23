@@ -24,8 +24,10 @@ export default function ProductCard({ data }) {
                 <Link to={`/products/detalle/${data.id}`}>
                     <button class="card-link">Ver mas </button>
                     {/* <a href="#" class="card-link" onClick >Más info.</a> */}
+
                 </Link>
             </div>
         </div>
     )
 }
+

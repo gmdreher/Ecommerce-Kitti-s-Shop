@@ -196,6 +196,7 @@ server.get('/category/:categoryName', (req, res, next) => {
 });
 
 
+
 //task 24
 server.get("/:id", (req, res) => {
   const id = req.params.id;

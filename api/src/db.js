@@ -46,6 +46,7 @@ Product.belongsToMany(Category, { as: 'categories', through: 'product_category',
 Category.belongsToMany(Product, { as: 'products', through: 'product_category', foreignKey: { name: 'category_id', allowNull: false } });
 
 
+
 Product.hasMany(Image);
 Image.belongsTo(Product);
 

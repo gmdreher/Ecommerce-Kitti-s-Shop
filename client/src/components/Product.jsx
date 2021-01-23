@@ -17,6 +17,8 @@ export default function Product({ id }) {
         dispatch(getProductById(id));
     }, [dispatch])
 
+
+
     return (
         <div className="containe" >
             <Link to={`/`}>

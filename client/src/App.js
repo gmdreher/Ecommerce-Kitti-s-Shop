@@ -17,6 +17,8 @@ function App() {
           <Navbar />
         </header>
 
+
+
         <main>
 
           <Route exact path="/" component={Main} />
