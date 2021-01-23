@@ -2,6 +2,7 @@ import {GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS
 
 const initialState = {
     product: [],
+    filteredProduct: [],
     categories: [],
     products: []
 };
@@ -17,7 +18,7 @@ export const ProductById = (state = initialState, action) => {
         case GET_PRODUCT_BY_CATEGORY:
             return {
                 ...state,
-                products: action.payload,
+                filteredProduct: action.payload,
             }
             
         case GET_CATEGORIES:

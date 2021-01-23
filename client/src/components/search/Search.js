@@ -10,6 +10,7 @@ export default  function Search(){
 
     const[input, setInput]= useState({search:''})
     const dispatch= useDispatch();
+    const history =useHistory()
 
 
 function handleChange(e){
@@ -18,7 +19,7 @@ function handleChange(e){
 
 function handleSubmit(e){
     e.preventDefault();
-
+    history.push("/products?search="+input.search)
     dispatch( searchProduct(input.search) )
 }
 
