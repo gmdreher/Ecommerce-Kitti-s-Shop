@@ -1,22 +1,28 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup } from 'reactstrap'
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup ,Label, Input} from 'reactstrap'
 
+import {connect} from 'react-redux';
+import {getProducts,getCategories,searchProduct,insertProduct,deleteProduct,editProduct} from '../actions/productActions';
 
-export default class CrudProductForm extends React.Component {
-    state = {
-        search: '',
-        form: {
-            name: '',
-            description: '',
-            price: '',
-            stock: '',
-            categoria: '',
-            imagenes: ''
-        },
-        modalInsertar: false,
-        modalEditar: false
-    }
+class CrudProductForm extends React.Component {
+   
+    constructor(props) {
+        super(props);
+        this.state = {
+            form: {
+                id:'',
+                name: '',
+                description: '',
+                price: '',
+                stock: ''
+            },
+            modalInsertar: false,
+            modalEditar: false,
+            search: '',
+        };
+      }
+   
     handleChange = e => {
         this.setState({
             form: {
@@ -28,16 +34,41 @@ export default class CrudProductForm extends React.Component {
 
     mostrarModalInsertar = () => {
         this.setState({ modalInsertar: true })
+        this.props.getCategories();
     }
-    mostrarModalEditar = () => {
-        this.setState({ modalEditar: true })
+    mostrarModalEditar = (product) => {
+        this.setState({ modalEditar: true ,form: product })
     }
     ocultarModalInsertar = () => {
         this.setState({ modalInsertar: false })
     }
-    ocultarModalEditar = () => {
-        this.setState({ modalEditar: false })
+    ocultarModalEditar = (product) => {
+        this.setState({ modalEditar: false });
+        if(product){
+           this.props.putProduct(product) 
+        }
+        
+
     }
+    handleSubmit(event) {
+        event.preventDefault();
+        this.props.chargeProducts(this.state.form.search);
+      }
+      handleDelete(id){
+          //event.preventDefault();
+          this.props.destroyProduct(id);
+          this.props.getAllProducts();
+
+      }
+      handleEdit(product){
+        this.mostrarModalEditar(product)
+
+      }
+      componentDidMount(){
+          this.props.getAllProducts();
+      }
+
+      
     render() {
         return (
             <>
@@ -49,8 +80,9 @@ export default class CrudProductForm extends React.Component {
                     </div>
 
                     <div>
-                        <input type="text" name='name' value={this.state.search} onChange={this.handleChange} />
-                        <Button color='primary'>Buscar</Button>
+                    
+                        <input  name='search' type="text"  onChange={this.handleChange} />
+                        <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
                     </div>
 
                     <Table>
@@ -60,23 +92,28 @@ export default class CrudProductForm extends React.Component {
                                 <th>Descripcion</th>
                                 <th>Precio</th>
                                 <th>Stock</th>
-                                <th>Categoria</th> {/* este va a ser un desplegable al momemto de crear */}
-                                <th>Imagenes</th> {/* este va a ser un boton con url de imagen al momento de crear */}
-                            </tr>
+                             {/*    <th>Categoria</th> {/* este va a ser un desplegable al momemto de crear */}
+                             {/*    <th>Imagenes</th> este va a ser un boton con url de imagen al momento de crear */}
+                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Nombre de Producto</td>
-                                <td>Desc_producto</td>
-                                <td>Precio_Producto</td>
-                                <td>Stock_producto</td>
-                                <td>Categoria_producto</td>
-                                <td>Imagenes</td> {/*este va a ser una ventana emergente que me va a mostrar las iagenes y va a tener la posibilidad de hacer un crud en ellas*/}
+                        {console.log(this.props)}
+                            {this.props.products && this.props.products.map((product=>(
+                                <tr>
+                                    {console.log('mapea el producto'+product)}
+                                    <td>{product.name}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.stock}</td>
+                                {/* <td>Categoria_producto</td>
+                                <td>Imagenes</td> */} {/*este va a ser una ventana emergente que me va a mostrar las iagenes y va a tener la posibilidad de hacer un crud en ellas*/}
                                 <td>
-                                    <Button color='primary' onClick={() => this.mostrarModalEditar()}>Edit</Button>
-                                    <Button color='danger'>Delete</Button>
+                                    <Button color='primary' onClick ={() => this.handleEdit(product)}>Edit</Button>
+                                    <Button color='danger' onClick  ={(e)=>this.handleDelete(product.id)}>Delete</Button>
                                 </td>
-                            </tr>
+                            </tr>  
+                            )))}
+                                
                         </tbody>
                     </Table>
 
@@ -93,23 +130,23 @@ export default class CrudProductForm extends React.Component {
                     <ModalBody>
                         <FormGroup>
                             <label>Nombre</label>
-                            <input name='name' type='text' onChange={this.handleChange} />
+                            <input name='name' type='text' value={this.state.form.name} onChange={this.handleChange} />
                         </FormGroup>
                         <FormGroup>
                             <label>Descripcion</label>
-                            <input name='description' type='text' onChange={this.handleChange} />
+                            <input name='description' type='text' value={this.state.form.description} onChange={this.handleChange} />
                         </FormGroup><FormGroup>
                             <label>Precio</label>
-                            <input name='price' type='text' onChange={this.handleChange} />
+                            <input name='price' type='text' value={this.state.form.price} onChange={this.handleChange} />
                         </FormGroup>
                         <FormGroup>
                             <label>Stock</label>
-                            <input name='stock' type='text' onChange={this.handleChange} />
+                            <input name='stock' type='text' value={this.state.form.stock} onChange={this.handleChange} />
                         </FormGroup>
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary'>Editar</Button>
+                        <Button color='primary' onClick={() =>this.ocultarModalEditar(this.state.form)}>Editar</Button>
                         <Button color='primary' onClick={() => this.ocultarModalEditar()}>Cancelar</Button>
                     </ModalFooter>
                 </Modal>
@@ -130,7 +167,8 @@ export default class CrudProductForm extends React.Component {
                         <FormGroup>
                             <label>Descripcion</label>
                             <input name='description' type='text' onChange={this.handleChange} />
-                        </FormGroup><FormGroup>
+                        </FormGroup>
+                        <FormGroup>
                             <label>Precio</label>
                             <input name='price' type='text' onChange={this.handleChange} />
                         </FormGroup>
@@ -138,15 +176,52 @@ export default class CrudProductForm extends React.Component {
                             <label>Stock</label>
                             <input name='stock' type='text' onChange={this.handleChange} />
                         </FormGroup>
+                        <h4>Categorias</h4>
+                        <FormGroup >
+                         
+                             {this.props.categories && this.props.categories.map((cate=>(
+                                <Label check> 
+                                    <Input type="checkbox" />
+                                    {console.log('mapea las categorias' + cate)}
+                                    {'      '}
+                                    {cate.name}
+                                    {'      '}
+                                
+                                </Label>
+                             )))}
+                            
+                          
+                        </FormGroup>
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary'>Insertar</Button>
+                        <Button color='primary' onClick={()=>this.props.postProducts({name:this.state.form.name,description:this.state.form.description,price:this.state.form.price,stock:this.state.form.stock})}>Insertar</Button>
                         <Button color='primary' onClick={() => this.ocultarModalInsertar()}>Cancelar</Button>
                     </ModalFooter>
                 </Modal>
 
+                
             </>
+
         )
     }
 }
+
+const mapsStateToProps = (state) =>{
+    return{
+        products: state.product.products,
+        categories:state.product.categories
+    }
+}
+const mapDispatchToprops = (dispatch) => {
+    return{
+        chargeProducts: search =>dispatch(searchProduct(search)),
+        getCategories: ()=>dispatch(getCategories()),
+        postProducts: (products) =>dispatch(insertProduct(products)),
+        destroyProduct:(id)=> dispatch(deleteProduct(id)),
+        getAllProducts: () => dispatch(getProducts()),
+        putProduct:(payload) => dispatch(editProduct(payload))
+
+    }
+}
+export default  connect(mapsStateToProps,mapDispatchToprops)(CrudProductForm)

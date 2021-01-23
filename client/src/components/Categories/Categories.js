@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { NavLink } from 'react-router-dom';
-import { connect } from "react-redux";
-import { getCategories } from "../../actions/productActions";
+import { connect, useDispatch } from "react-redux";
+import { getCategories, getProductById } from "../../actions/productActions";
 import styles from './categories.module.scss';
-
+import { getProductByCategory } from '../../actions/productActions'
 
 function Categories (props) {
   
+  let dispatch= useDispatch()
+
   useEffect(()=>{
    props.getCategories()
     console.log(props)

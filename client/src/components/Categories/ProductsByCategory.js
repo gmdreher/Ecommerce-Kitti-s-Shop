@@ -5,16 +5,16 @@ import '../../Styles/App.scss';
 import { connect } from 'react-redux';
 import styles from "../catalogue/catalogue.module.scss";
 
-function ProductsByCategory(props){
-  
-  useEffect(()=>{
+function ProductsByCategory(props) {
+
+  useEffect(() => {
     props.getProductByCategory(props.categoryName);
   }, [])
   
   
   return(
     <div className={styles.catalogue}>
-      <div className= {styles.contentcards}>
+      <div className={styles.contentcards}>
         {props.productsByCategory.map((e)=>{
           return <ProductCard data={e} key={e.id}/>
         })}
@@ -23,7 +23,7 @@ function ProductsByCategory(props){
   )
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     productsByCategory: state.product.filteredProduct
   }
