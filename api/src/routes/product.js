@@ -200,9 +200,10 @@ server.get('/category/:categoryName', (req, res, next) => {
 server.get("/:id", (req, res) => {
   const id = req.params.id;
   Product.findOne({
-    where: {
-      id: id,
-    },
+    where: { id: id },
+    include: [
+      { model: Image }
+    ],
   })
     .then((product) => {
       res.json(product);

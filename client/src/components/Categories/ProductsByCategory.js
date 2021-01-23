@@ -6,25 +6,25 @@ import axios from "axios";
 
 import { connect } from 'react-redux';
 
-function ProductsByCategory(props){
-  
-  useEffect(()=>{
+function ProductsByCategory(props) {
+
+  useEffect(() => {
     props.getProductByCategory(props.categoryName);
   }, [])
-  
-  return(
+
+  return (
     <div className=''>
-      <div className= ''>
+      <div className=''>
         <Categories />
-        {props.productsByCategory.map((e)=>{
-          return <ProductCard data={e}/>
+        {props.productsByCategory.map((e) => {
+          return <ProductCard data={e} />
         })}
       </div>
     </div>
   )
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     productsByCategory: state.product.filteredProduct
   }
