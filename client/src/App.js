@@ -21,7 +21,7 @@ function App() {
         </header>
 
         <main>
-          <Main exact path="/" component={Catalogue}/>
+          <Route exact path='/' component={Main}/>
           <Route exact path='/products' component={Catalogue}/>
           <Route exact path="/products/detalle/:id" render={({ match }) => <Product id={match.params.id} />} />
           <Route exact path='/products/admin' component={CrudProduct}/>
