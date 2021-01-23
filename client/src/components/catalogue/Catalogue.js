@@ -14,22 +14,19 @@ export default function Catalogue(){
     const dispatch= useDispatch();
     const products= useSelector((store) => store.product.products);
     useEffect(()=>{
-
-        if(history.location.search.length===0) return dispatch( getProducts() )
-        dispatch( searchProduct(history.location.search.slice(8)) )
+        
+        if(history.location.search.length===0) dispatch( getProducts() )
+        if(history.location.search.length>0)dispatch( searchProduct(history.location.search.slice(8)) ) 
 
     }, [])
-    useEffect(()=>{
-        console.log(history.location.search.slice(7))
-    })
-  
+
     return(
         <div className={styles.catalogue}>
             <h2>NUESTRO CATALOGO</h2>
             <Categories />
             <div className= {styles.contentcards}>
                 { products&&products.map((infoProducto)=>{
-                    console.log(infoProducto);
+                    
                     return <ProductCard data={infoProducto}/>
                 })}
             </div>
