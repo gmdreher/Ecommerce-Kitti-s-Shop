@@ -21,6 +21,9 @@ server.get("/search", (req, res) => {
         }
         ]
     },
+    include: [
+      { model: Image }
+    ],
   })
     .then((product) => {
       res.status(200).json(product);

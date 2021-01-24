@@ -2,14 +2,21 @@ import React from 'react';
 import styles from './productCard.module.scss';
 import { Link } from 'react-router-dom';
 
-// import pic from '../../images/logo-cat.jpeg';
+import noImage from '../../img/noImage.jpg';
+
 export default function ProductCard({ data }) {
     console.log(data);
 
     return (
         <div className={'card ' + styles.card} >
-            <img src={data.images[0].url} class="card-img-top" alt="Cargando..." onClick={() => alert('data.name')} />
-            <div class={"card-body " + styles.cardbody}>
+{/*             <img src={data.images[0].url} class="card-img-top" alt="..." onClick={() => alert('data.name')} />
+ */}
+        {data.images? (
+        <img src={data.images[0].url} class="card-img-top" />)
+        :
+       ( <img src= {noImage}/>)
+        }
+         <div class={"card-body " + styles.cardbody}>
                 <h3 class="card-title"> {data.name}</h3>
             </div>
             <ul class="list-group list-group-flush">
