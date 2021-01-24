@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../Styles/App.scss';
+import styles from './carrusel.module.scss';
 
 import {
   Carousel,
@@ -66,7 +67,7 @@ const Example = (props) => {
   });
 
   return (
-      <div className="MainWelcome">
+      <div className={styles.mainWelcome}>
     <Carousel
       activeIndex={activeIndex}
       next={next}

@@ -1,24 +1,22 @@
 import React, { useEffect } from 'react';
 import '../Styles/App.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductById } from '../actions/productActions.js';
+// import { useDispatch, useSelector } from 'react-redux';
+import { getProductById} from '../actions/productActions.js';
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 
-
-export default function Product({ id }) {
-
-    const dispatch = useDispatch();
-    const data = useSelector((store) => store.product.product);
-
-    console.log("mostrar data", data.images);
-
+function Product(props) {
+    
+ 
+    
     useEffect(() => {
-        dispatch(getProductById(id));
-    }, [dispatch])
-
-
-
+        props.getProductById(props.id);
+    }, [])
+    let imageUrl;
+    if(props.product.images){
+         imageUrl = props.product.images[0].url;
+    }
     return (
         <div className="containe" >
             <Link to={`/`}>
@@ -26,17 +24,17 @@ export default function Product({ id }) {
             </Link>
             <div className="detail">
                 <div className="imagen">
-                    <img src={data.images} alt="img" />
+                        <img src={imageUrl} alt="Cargando imagen..." />
                 </div>
                 <div className="data">
-                    <h2>{data.name}</h2>
+                    <h2>{props.product.name}</h2>
                     <div className="start">
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />
                     </div>
-                    <p><strong>Precio: </strong> ${data.price}</p>
+                    <p><strong>Precio: </strong> ${props.product.price}</p>
                     <form>
                         <label for="quanty"><strong>Cantidad: </strong></label>
                         <select name="quanty" id="quanty">
@@ -50,7 +48,7 @@ export default function Product({ id }) {
                         <button className="btn btn-outline-dark">Agregar a Carrito</button>
                         <button className="btn btn-outline-dark">Comprar</button>
                     </div>
-                    <p><strong>Descripción: </strong> {data.description}</p>
+                    <p><strong>Descripción: </strong> {props.product.description}</p>
                 </div>
             </div>
             <div className="reviews">
@@ -68,4 +66,11 @@ export default function Product({ id }) {
         </div>
     )
 };
+function mapStateToProps(state){
+    console.log('este el el state:', state)
+    return {
+        product: state.product.product
+    }
+}
 
+export default connect(mapStateToProps, { getProductById })(Product);
