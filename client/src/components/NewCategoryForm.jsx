@@ -2,37 +2,46 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
-
 import {insertCategory, getCategories, editCategory, deleteCategory} from '../actions/productActions';
+import styles from './newCategoryForm.module.scss'
 
 
  function  NewCategoryForm(props) {
- // ESTADOS
-
+     // ESTADOS
     //estado inputs
     const [input, setInput] = useState({
         name: '',
         description: '',
         id: ''
       });
+    //estado errores
+  const [errors, setErrors] = useState({});
 
-      
-      //modal1
+      //modal nueva categoria
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-    //modal2
+    //modal2 editar categoria
     const [modal2, setModal2] = useState(false);
-    const toggle2 = () => {
-      setModal2(!modal2)
-       
-    };
+    const toggle2 = () => setModal2(!modal2);
 
+    //modal3 borrar categoria
+    const [modal3, setModal3] = useState(false);
+  const toggle3 = () => setModal3(!modal3);
+       
     //FUNCIONES
     //get categorias
     useEffect(()=>{
         props.getCategories()
        },[])
+    //validacion inputs
+    const validate = function(input){
+        let errors = {};
+        if (!input.name){
+            errors.name = '**Requiere un nombre';
+        }
+        return errors;
+    }
 
     //funcion de estado inputs
     const handleInputChange = function(e) {
@@ -40,28 +49,39 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
           ...input,
           [e.target.name]: e.target.value
         });
+        setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+          }));
     }
-   
+
+    // info de boton EDITAR de cada categoria
     const handleEdit = function(category) {
-      toggle2();
-      setInput(category);
+        toggle2();
+        setInput(category);
     }
     
+    
+    // funcionalidad a boton EDITAR
     const handleEditModal = function(category) {
-      
       props.putCategory(category);
       props.getCategories();
       toggle2()
       category.preventDefault();
     }
- 
-    const handleDeleteModal = function(id) {
-      props.destroyCategory(id);
-      props.getCategories();
+    // info de boton BORRAR de cada categoria
+    const handleDelete = function(category) {
+        toggle3();
+        setInput(category);
     }
-      
-    
-
+    // funcionalidad a boton BORRAR
+    const handleDeleteModal = function(category) {
+        props.destroyCategory(category);
+        props.getCategories();
+        toggle3()
+        category.preventDefault();
+    }
+      // COMPONENTE
     return ( 
         <Container>
           <h2>Administrar Categorías</h2>
@@ -83,8 +103,8 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
                   
                      <td>
                        
-                       <Button color='primary' name={category.name} description={category.description} id={category.id} onClick={() =>handleEdit(category)} >Editar</Button>
-                       <Button color='danger' onClick={() => handleDeleteModal(category.id)}>Borrar</Button>
+                       <Button color='primary' onClick={() =>handleEdit(category)} >Editar</Button>
+                       <Button color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
                      </td>
                       </tr>
                 )))}
@@ -92,7 +112,7 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
             </tbody>
             </Table>
 
-        {/* modal post */}
+                         {/* -------------MODAL POST--------------- */}
             <div>
       <Modal isOpen={modal} toggle={toggle} className={props.className}>
       <Form>
@@ -101,7 +121,10 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
        
         <FormGroup>
         <Label for="name"> Nombre</Label>
-                  <Input type="text" className="form-group" name="name" id='name' value={input.name}  onChange={handleInputChange} />
+                  <Input type="text" className={`${errors.name && 'danger', "form-group"}`} name="name" id='name' value={input.name}  onChange={handleInputChange} />
+                  {errors.name && (
+                      <p className={styles.danger}>{errors.name}</p>
+                  )}
          </FormGroup>
          <FormGroup>
          <Label for="description"> Descripción   </Label>
@@ -110,7 +133,8 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
          
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" type="submit" onClick={()=>props.postCategories({name: input.name, description: input.description})}>Crear Categoría</Button>{' '}
+            {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> : <Button color="primary" type="submit" onClick={()=>props.postCategories({name: input.name, description: input.description})}>Crear Categoría</Button>}
+          
           <Button color="secondary" onClick={toggle}>Salir</Button>
         
         </ModalFooter>
@@ -118,7 +142,7 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
       </Modal>
     </div>
 
-        {/* modal put */}
+                  {/* -----------------MODAL PUT------------------- */}
 
     <div>
       <Modal isOpen={modal2} toggle={toggle2} className={props.className}>
@@ -129,7 +153,7 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
         
         <FormGroup>
         <Label for="name">Nombre</Label>
-                  <Input type="text" className="form-group" name="name" id='name' value={input.name}  onChange={handleInputChange} />
+                  <Input type="text" className="form-group" name="name" id='name' value={input.name} onChange={handleInputChange} />
          </FormGroup>
          <FormGroup>
          <Label for="description"> Descripción</Label>
@@ -144,19 +168,34 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
         </Form>
       </Modal>
     </div>
-            </Container>
-         
+
+
+                    {/* ----------------MODAL DELETE------------------- */}
+    <div>
+      <Modal isOpen={modal3} toggle={toggle3} className={props.className}>
+      <Form>
+        <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
+        
+        <ModalFooter>
+          <Button color="primary" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</Button>
+          <Button color="secondary" onClick={toggle3}>No</Button>
+        </ModalFooter>
+        </Form>
+      </Modal>
+    </div>
+            </Container>         
 );
 
+       // ---------------REDUX-----------------
     }
-
+    //estados redux
     const mapStateToProps = (state) =>{
         return{
             categories:state.product.categories
         }
     }
+    //acciones redux
     const mapDispatchToProps = (dispatch) => {
-  
         return{
             getCategories: ()=>dispatch(getCategories()),
             postCategories: (categories) =>dispatch(insertCategory(categories)),
@@ -165,5 +204,5 @@ import {insertCategory, getCategories, editCategory, deleteCategory} from '../ac
     
         }
     }
-
+    //store redux
     export default connect(mapStateToProps, mapDispatchToProps)(NewCategoryForm);
