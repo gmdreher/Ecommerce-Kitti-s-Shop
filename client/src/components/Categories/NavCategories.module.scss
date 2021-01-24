@@ -1,0 +1,51 @@
+.navbar {
+  height: 56px;
+  width: 100%;
+  background-color: #D9F0F0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  .compCategories {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 100%;
+  }
+
+  .listItem {
+    display: flex;
+    height: 100%;
+    width: auto;
+    align-items: center;
+    padding: 5px;
+    justify-content: space-evenly;
+
+
+    .nameCategory {
+      display: inline-block;
+      margin: 20px;
+      border: 1px solid lightslategray;
+      border-radius: 30px;
+      padding: 10px;
+      width: 120px;
+      text-align: center;
+      background-color: #e1e4e8;
+      color: black;
+      justify-content: space-evenly;
+    }
+  }
+}
+

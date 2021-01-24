@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from '../productCard/ProductCard.js';
-import Categories from "../Categories/Categories";
 import { getProductByCategory } from '../../actions/productActions';
-import axios from "axios";
-
+import '../../Styles/App.scss';
 import { connect } from 'react-redux';
+import styles from "../catalogue/catalogue.module.scss";
 
 function ProductsByCategory(props) {
 
   useEffect(() => {
     props.getProductByCategory(props.categoryName);
   }, [])
-
-  return (
-    <div className=''>
-      <div className=''>
-        <Categories />
-        {props.productsByCategory.map((e) => {
-          return <ProductCard data={e} />
+  
+  
+  return(
+    <div className={styles.catalogue}>
+      <div className={styles.contentcards}>
+        {props.productsByCategory.map((e)=>{
+          return <ProductCard data={e} key={e.id}/>
         })}
       </div>
     </div>
@@ -31,3 +30,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { getProductByCategory })(ProductsByCategory);
+

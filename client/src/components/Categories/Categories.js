@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect, useDispatch } from "react-redux";
 import { getCategories, getProductById } from "../../actions/productActions";
 import styles from './categories.module.scss';
@@ -14,25 +14,26 @@ function Categories (props) {
     console.log(props)
   },[])
   
+ 
     return (
-      
-      <div className="dropdown">
-        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-bs-toggle="dropdown" aria-expanded="false">
-          Categories
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          {props.categories.map((e)=>{
-            return <ul>
-              <Link exact to={`/products/category/${e.name}`}>
-              <li><a className="dropdown-item" href="#">{e.name}</a></li>
-              </Link> 
-            </ul>
-          })}
-        </ul>
+      <div className={styles.dropCategory}>
+        <div className="dropdown">
+          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {props.categories.map((e)=>{
+              return <div key={e.id} >
+                <NavLink exact to={`/products/category/${e.name}`}  activeStyle={{fontWeight: "bold"}} >
+                  <a >{e.name}</a>
+                </NavLink>
+              </div>
+            })}
+          </ul>
+        </div>
       </div>
     )
-};
+}
 
 function mapStateToProps(state){
   console.log(state)
