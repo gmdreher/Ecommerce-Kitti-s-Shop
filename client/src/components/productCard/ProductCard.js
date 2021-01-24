@@ -8,7 +8,7 @@ export default function ProductCard({ data }) {
 
     return (
         <div className={'card ' + styles.card} >
-            <img src={data.images[0].url} class="card-img-top" alt="..." onClick={() => alert('data.name')} />
+            <img src={data.images[0].url} class="card-img-top" alt="Cargando..." onClick={() => alert('data.name')} />
             <div class={"card-body " + styles.cardbody}>
                 <h3 class="card-title"> {data.name}</h3>
             </div>

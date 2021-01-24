@@ -7,7 +7,7 @@ const initialState = {
     products: []
 };
 
-export const ProductById = (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCT_BY_ID:
             return {
