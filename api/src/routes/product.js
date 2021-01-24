@@ -70,9 +70,11 @@ server.delete('/:productId/category/:categoryId', (req, res) => {
 //task 18
 server.post('/category', (req, res) => {
   let { name, description } = req.body;
-  Category.create({
-    name: name,
-    description: description,
+  Category.findOrCreate({
+    where:{
+      name: name,
+      description: description,
+    }
   }).then(category => {
     res.status(201).json(category);
   })
@@ -80,6 +82,7 @@ server.post('/category', (req, res) => {
       res.status(400).send(`Error: ${err}`)
     })
 });
+
 
 //task 20
 server.put('/category/:id', function (req, res) {
@@ -181,15 +184,20 @@ server.post('/:productId/category/:categoryId', (req, res) => {
 
 server.get('/category/:categoryName', (req, res, next) => {
   let categoryName = req.params.categoryName;
+  // categoryName.toLower()
   Product.findAll({
 
     include: [
       {
         model: Category, as: 'categories',
         where: {
-          name: categoryName
+          name: {
+            [Op.iLike]: categoryName}
         },
       },
+      {
+        model: Image,
+      }
     ],
   })
     .then(products => {
@@ -197,7 +205,6 @@ server.get('/category/:categoryName', (req, res, next) => {
     })
     .catch(next);
 });
-
 
 
 //task 24
@@ -218,9 +225,12 @@ server.get("/:id", (req, res) => {
 });
 
 //task 25
-server.post('/', function (req, res) {
+server.post('/', function (req, res,) {
   let { name, description, price, stock, image } = req.body;
-
+  
+  if(!image){
+    res.status(400).json( 'Debe llenar el campo "image"')
+  }
   Product.create({
     name: name,
     description: description,

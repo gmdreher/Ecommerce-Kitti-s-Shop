@@ -10,10 +10,10 @@ export default function ProductCard({ data }) {
     return (
         <div className={'card ' + styles.card} >
 {/*             <img src={data.images[0].url} class="card-img-top" alt="..." onClick={() => alert('data.name')} />
- */}           
+ */}
         {data.images? (
         <img src={data.images[0].url} class="card-img-top" />)
-        : 
+        :
        ( <img src= {noImage}/>)
         }
          <div class={"card-body " + styles.cardbody}>
