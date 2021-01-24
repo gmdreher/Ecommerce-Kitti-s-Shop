@@ -5,7 +5,7 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import Catalogue from './components/catalogue/Catalogue.js';
 import Product from './components/Product.jsx';
 import CrudProduct from './components/CrudProduct.jsx'
-
+import NewCategoryForm from './components/NewCategoryForm'
 
 import Main from './components/Main'
 
@@ -29,7 +29,9 @@ function App() {
           <Route exact path="/products/detalle/:id" render={({ match }) => <Product id={match.params.id} />} />
 
 
-          <Route exact path='/products/admin' component={CrudProduct} />
+          <Route exact path='/admin/products' component={CrudProduct} />
+          <Route exact path='/admin/categories' component={NewCategoryForm} />
+
 
           <Route
             path="/products/category/:categoryName"
