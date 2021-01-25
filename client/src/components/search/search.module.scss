@@ -18,9 +18,13 @@
             -moz-box-shadow: none;
             -webkit-box-shadow: none;        
         }
-        i{
-            font-size: 25px;
-            margin: 10px;
+        button{
+            background-color: white;
+            border: none;
+            i{
+                font-size: 25px;
+                margin: 10px;
+            }
         }
     }
 }

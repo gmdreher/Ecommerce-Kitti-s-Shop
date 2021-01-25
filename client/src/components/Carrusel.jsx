@@ -13,17 +13,17 @@ import {
 
 const items = [
   {
-    src: require('../img/FinalGatitoCarrusel2.jpg'),
+    src: require('../img/21.jpg'),
     altText: 'Gatito',
     
   },
   {
-    src: require('../img/Alimento.jpg'),
+    src: require('../img/22.jpg'),
     altText: 'Slide 2',
     
   },
   {
-    src: require('../img/GatitoCarrusel.jpg'),
+    src: require('../img/24.jpg'),
     altText: 'Slide 3',
    
   }
