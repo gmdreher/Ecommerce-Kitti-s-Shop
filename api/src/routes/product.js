@@ -64,7 +64,7 @@ server.delete('/:productId/category/:categoryId', (req, res) => {
           res.status(400).send(`Error: ${err}`)
         })
     })
-
+ 
 });
 
 //task 18
@@ -300,13 +300,21 @@ server.post('/:idProducto/category/:idCategory', (req, res) => {
     })
 })
 
-server.delete('/:idProducto/category/:idCategoria', (req, res) => {
-  const { idProducto, idCategoria } = req.params;
-  Product.find({ where: { productId: idProducto } })
-    .then((product) => {
-      product.destroy(idCategoria)
-    })
-    .catch(error => res.send(error))
-});
+
+server.get('/:idProduct/categories',(req,res,next)=>{
+  const {idProduct} = req.params;
+    Category.findAll({
+      include: [
+        {
+          model: Product, as: 'products',
+          where: {
+            id:idProduct
+          },},],
+    }).then(categories => {
+        res.json(categories)
+      })
+      .catch(next);
+  
+}) 
 
 module.exports = server;
