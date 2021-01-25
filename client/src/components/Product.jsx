@@ -66,6 +66,7 @@ function Product(props) {
         </div>
     )
 };
+
 function mapStateToProps(state){
     console.log('este el el state:', state)
     return {
