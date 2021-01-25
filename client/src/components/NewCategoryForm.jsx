@@ -121,7 +121,7 @@ import styles from './newCategoryForm.module.scss'
        
         <FormGroup>
         <Label for="name"> Nombre</Label>
-                  <Input type="text" className={`${errors.name && 'danger', "form-group"}`} name="name" id='name' value={input.name}  onChange={handleInputChange} />
+                  <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name}  onChange={handleInputChange} />
                   {errors.name && (
                       <p className={styles.danger}>{errors.name}</p>
                   )}

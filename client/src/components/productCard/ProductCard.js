@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import noImage from '../../img/noImage.jpg';
 
 export default function ProductCard({ data }) {
-    console.log(data);
 
     return (
         <div className={'card ' + styles.card} >
