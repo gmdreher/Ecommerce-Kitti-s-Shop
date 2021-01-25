@@ -17,6 +17,7 @@ export default function NavCategories () {
             <NavLink className={styles.nameCategory} to="/products/category/salud" >Salud</NavLink>
             <NavLink className={styles.nameCategory} to="/products/category/accesorios" >Accesorios</NavLink>
             <NavLink className={styles.nameCategory} to="/products/category/merchandising" >Cat lovers</NavLink>
+            <NavLink className={styles.nameCategory} exact to="/products" >Ver todo</NavLink>
           </li>
       </nav>
     </header>
