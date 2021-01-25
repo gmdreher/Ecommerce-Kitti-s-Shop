@@ -34,11 +34,6 @@ function App() {
           <Route exact path='/admin/products' component={CrudProduct} />
           <Route exact path='/admin/categories' component={NewCategoryForm} />
 
-
-          <Route
-            path="/products/category/:categoryName"
-            render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}
-          />
         </main>
 
         <footer>
