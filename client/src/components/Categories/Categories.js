@@ -35,7 +35,6 @@ function Categories (props) {
 }
 
 function mapStateToProps(state){
-  console.log(state)
   return {
     categories: state.product.categories
   }

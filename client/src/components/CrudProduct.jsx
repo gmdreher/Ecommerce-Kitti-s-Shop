@@ -94,7 +94,7 @@ class CrudProductForm extends React.Component {
 
       }
       cambio(id){
-        //  console.log(`selecciono una categoria ${id}`);
+        //  console.log(`selecciono una categoría ${id}`);
           const index = this.state.checkBoxes.indexOf(id);
          
          // console.log('el array es '+ this.state.checkBoxes)
@@ -137,7 +137,7 @@ class CrudProductForm extends React.Component {
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Descripcion</th>
+                                <th>Descripción</th>
                                 <th>Precio</th>
                                 <th>Stock</th>                            
                              </tr>
@@ -201,9 +201,9 @@ class CrudProductForm extends React.Component {
                                         </div>
                                         )))}
                         </FormGroup>
-                        <FormGroup>
-                            <input type='file'/>
-                        </FormGroup>
+                        {/*<FormGroup>*/}
+                        {/*    <input type='file'/>*/}
+                        {/*</FormGroup>*/}
                        
                     </ModalBody>
                     <ModalFooter>
@@ -226,7 +226,7 @@ class CrudProductForm extends React.Component {
                             <input className={styles.input} name='name' type='text' onChange={this.handleChange} />
                         </FormGroup>
                         <FormGroup>
-                            <label>Descripcion</label>
+                            <label>Descripción</label>
                             <input className={styles.input} name='description' type='text' onChange={this.handleChange} />
                         </FormGroup>
                         <FormGroup>
@@ -237,26 +237,30 @@ class CrudProductForm extends React.Component {
                             <label>Stock</label>
                             <input className={styles.input}name='stock' type='text' onChange={this.handleChange} />
                         </FormGroup>
-                        <h4>Categorias</h4>
-                        <FormGroup >
+                        <h4>Categorías</h4>
+                        <FormGroup check>
                          
                              {this.props.categories && this.props.categories.map((cate=>(
-                                 <div className={styles.div}>
-                                <Label check> 
-                                    <Input className={styles.checkbox} type="checkbox" name='isChecked' onChange={()=>this.cambio(cate.id)}/>
-                                    {/*console.log('mapea las categorias' + cate)*/}
-                                    {'      '}
-                                    {cate.name}
-                                    {'      '}
+                                 <div className="form-check form-check-inline">
+                                     <FormGroup check>
+                                         <Label check>
+                                             <Input className="form-check-input" type="checkbox"
+                                                    value="option1" id="inlineCheckbox1" name='isChecked'
+                                                    onChange={()=>this.cambio(cate.id)}/>
+                                             {/*console.log('mapea las categorías' + cate)*/}
+                                             {'      '}
+                                             {cate.name}
+                                             {'      '}
+                                         </Label>
+                                     </FormGroup>
                                 
-                                </Label>
                                 </div>
                              )))}
                         
                         </FormGroup>
                        <FormGroup>
                            <input type='text' name='url' onChange={this.handleChange}/>
-                           <input type='file' name='file' onChange={this.handleChangeImage}/>
+                           {/*<input type='file' name='file' onChange={this.handleChangeImage}/>*/}
 
                        </FormGroup>
 
