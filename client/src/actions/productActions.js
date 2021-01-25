@@ -87,18 +87,48 @@ export const searchProduct= (name)=> async (dispatch) => {
 }
 export const deleteProduct = (id) => async dispatch => {
     await axios.delete(`http://localhost:3001/products/${id}`);
-    dispatch({
-        type: DELETE_PRODUCT,
-        payload: id
+    const categorias = await axios.get(`http://localhost:3001/products/${id}/categories/`);
+    if(categorias){
+        categorias.map((categoria)=>{
+            axios.delete(`http://localhost:3001/products/${id}/category/${categoria.id}`)
+             .then(()=>{
+                 dispatch({
+                    type: DELETE_PRODUCT,
+                    payload: id
+                 });
+             })
+         })
+    }
+}
+export const insertProduct = (datos) => async dispatch => {
+    console.log('esta es la imagen')
+    console.log(datos.product.Image)
+    const response = await axios.post('http://localhost:3001/products/', datos.product);
+    console.log(response.data)
+    datos.cate.map((categoria)=>{
+       axios.post(`http://localhost:3001/products/${response.data.id}/category/${categoria}`)
+        .then((responseProdCat)=>{
+            dispatch({
+            type: POST_PRODUCT,
+            payload: responseProdCat.data
+            });
+        })
     })
+    /* const fd = new FormData();
+    fd.append('image', datos.img,datos.img.name)
+    axios.post(`http://localhost:3001/products/${response.data.id}/upload/`, fd)
+    .then(res=>{
+        console.log(res)
+    }) */
 }
-export const insertProduct = (product) => async dispatch => {
-    const response = await axios.post('http://localhost:3001/products/', product);
-    dispatch({
-        type: POST_PRODUCT,
-        payload: response.data
-    });
-}
+
+   /*  export const productCategoryAll = product => async dispatch =>{
+        const response = await axios.get(`http://localhost:3001/products/${product.id}/categories`)
+        console.log('estas son las categorias del producto');
+        console.log(response);
+
+    } */
+
     export const editProduct = product => async dispatch => {
         const respuesta = await axios.put(`http://localhost:3001/products/${product.id}`, product);
         dispatch({
