@@ -24,7 +24,7 @@ export default function Catalogue(){
             <div className= {styles.contentcards}>
                 { products&&products.map((infoProducto)=>{
                     
-                    return <ProductCard data={infoProducto}/>
+                    return <ProductCard key={infoProducto.id} data={infoProducto}/>
                 })}
             </div>
         </div>

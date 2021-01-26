@@ -29,7 +29,7 @@ const items = [
   }
 ];
 
-const Example = (props) => {
+const Example = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 

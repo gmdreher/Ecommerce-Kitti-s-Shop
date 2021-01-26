@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {getProducts,getCategories,searchProduct,insertProduct,deleteProduct,editProduct} from '../actions/productActions'
 
 class CrudProductForm extends React.Component {
-   
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -27,8 +27,8 @@ class CrudProductForm extends React.Component {
             cateEdit:[]
         };
         
-      }
-   
+    }
+    
     handleChange = e => {
         this.setState({
             form: {
@@ -37,7 +37,7 @@ class CrudProductForm extends React.Component {
             }
         })
     }
-
+    
     mostrarModalInsertar = () => {
         this.setState({ modalInsertar: true })
         this.props.getCategories();
@@ -350,8 +350,8 @@ const mapDispatchToprops = (dispatch) => {
         destroyProduct:(id)=> dispatch(deleteProduct(id)),
         getAllProducts: () => dispatch(getProducts()),
         putProduct:(payload) => dispatch(editProduct(payload)),
-       //getCategoriesByProduct: (payload)=>dispatch(productCategoryAll(payload))
-
+        //getCategoriesByProduct: (payload)=>dispatch(productCategoryAll(payload))
+        
     }
 }
 export default  connect(mapsStateToProps,mapDispatchToprops)(CrudProductForm)

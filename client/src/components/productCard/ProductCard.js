@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import noImage from '../../img/noImage.jpg';
 
 export default function ProductCard({ data }) {
-    console.log(data);
 
     return (
         <div className={'card ' + styles.card} >
@@ -24,8 +23,14 @@ export default function ProductCard({ data }) {
 
             </ul>
             <div class="card-body">
-                <Link>
-                    <button>Carrito</button>
+
+                <Link > 
+               
+                    <button disabled={data.stock<1 }>Carrito</button>
+                    <label id="stock"></label>
+                     {data.stock<1?<label >Producto Agotado</label>:<label></label>}
+                     
+                    
                 </Link>
                 {/* <a href="#" class="card-link " onClick={() => alert('Carrito')}>Añadir al Carrito</a> */}
                 <Link to={`/products/detalle/${data.id}`}>

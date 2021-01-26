@@ -129,31 +129,23 @@ export const insertProduct = (datos) => async dispatch => {
 
     } */
 
-    export const editProduct = product => async dispatch => {
-       // const productDeta = {name:product.name,description:product.description,price:product.price,stock:product.stock}
-        const respuesta = await axios.put(`http://localhost:3001/products/${product.id}`, product);
-        const categorias = await axios.get(`http://localhost:3001/products/${product.id}/categories/`);
-        console.log(categorias)
-
-        var borrar;
-        if(categorias){
+export const editProduct = product => async dispatch => {
+    // const productDeta = {name:product.name,description:product.description,price:product.price,stock:product.stock}
+    const respuesta = await axios.put(`http://localhost:3001/products/${product.id}`, product);
+    const categorias = await axios.get(`http://localhost:3001/products/${product.id}/categories/`);
+    console.log(categorias)
+    
+    var borrar;
+    if(categorias){       
+        for(var i=0;i<categorias.data.length;i++){
+            borrar = await axios.delete(`http://localhost:3001/products/${product.id}/category/${categorias.data[i].id}`)
             
-            for(var i=0;i<categorias.data.length;i++){
-               borrar = await axios.delete(`http://localhost:3001/products/${product.id}/category/${categorias.data[i].id}`)
-                 
-            }
         }
-        console.log('estas son las que voy a agregar')
-        console.log(product.categories)
-       
-            for(var i=0;i<product.categories.length;i++){
-               axios.post(`http://localhost:3001/products/${product.id}/category/${product.categories[i].id}`)
-            }
-           
-        // })
-
-
-        
     }
-
+    console.log('estas son las que voy a agregar')
+    console.log(product.categories)
+    for(var i=0;i<product.categories.length;i++){
+        axios.post(`http://localhost:3001/products/${product.id}/category/${product.categories[i].id}`)
+    }
+}
 
