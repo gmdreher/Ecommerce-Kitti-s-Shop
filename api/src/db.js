@@ -47,7 +47,6 @@ Order.belongsTo(User);
  User.hasMany(Order);
 
 
-
 Product.belongsToMany(Order, {through: OrderDetails})
 Order.belongsToMany(Product, {through: OrderDetails})
 

@@ -2,6 +2,7 @@ import React from 'react';
 import './footer.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
 export default function Footer(props) {
 
     return (

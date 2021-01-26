@@ -4,7 +4,6 @@ import {  Table, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Contai
 import styles from './crud.module.scss'
 import {connect} from 'react-redux';
 import {getProducts,getCategories,searchProduct,insertProduct,deleteProduct,editProduct} from '../../actions/productActions'
-
 class CrudProductForm extends React.Component {
     
     constructor(props) {

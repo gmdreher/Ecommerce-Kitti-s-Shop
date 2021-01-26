@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 //import '../Styles/App.scss';
 import styles from './carrusel.module.scss';
-
 import {
   Carousel,
   CarouselItem,

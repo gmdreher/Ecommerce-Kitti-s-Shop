@@ -3,7 +3,6 @@ import Carrusel from '../Carrusel/Carrusel'
 import Catalogue from '../catalogue/Catalogue'
 
 
-
 export default function Main(props) {
 
   return (

@@ -12,6 +12,7 @@ import Main from './components/Main/Main'
 import ProductsByCategory from "./components/Categories/ProductsByCategory";
 import Footer from "./components/Footer/Footer"
 
+
 function App() {
   return (
     <BrowserRouter>

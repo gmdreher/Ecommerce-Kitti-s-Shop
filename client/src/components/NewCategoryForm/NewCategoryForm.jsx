@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import {insertCategory, getCategories, editCategory, deleteCategory} from "../../actions/productActions";
 import styles from './newCategoryForm.module.scss'
 
-
  function  NewCategoryForm(props) {
      // ESTADOS
     //estado inputs

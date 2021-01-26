@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 function Product(props) {
     
  
-    
     useEffect(() => {
         props.getProductById(props.id);
     }, [])

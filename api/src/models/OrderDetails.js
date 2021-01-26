@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 //linea de orden
+
 module.exports = (sequelize) => {
   const OrderDetails =  sequelize.define('OrderDetails', {
         
