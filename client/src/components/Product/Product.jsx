@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import '../Styles/App.scss';
+import './Product.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { useDispatch, useSelector } from 'react-redux';
-import { getProductById} from '../actions/productActions.js';
+import { getProductById} from '../../actions/productActions.js';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 

@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {  Table, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup ,Label, Input, Form} from 'reactstrap'
 import styles from './crud.module.scss'
 import {connect} from 'react-redux';
-import {getProducts,getCategories,searchProduct,insertProduct,deleteProduct,editProduct} from '../actions/productActions'
+import {getProducts,getCategories,searchProduct,insertProduct,deleteProduct,editProduct} from '../../actions/productActions'
 
 class CrudProductForm extends React.Component {
     

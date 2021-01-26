@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Carrusel from './Carrusel'
-import Catalogue from './catalogue/Catalogue'
+import Carrusel from '../Carrusel/Carrusel'
+import Catalogue from '../catalogue/Catalogue'
 
 
 

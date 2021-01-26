@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
-import {insertCategory, getCategories, editCategory, deleteCategory} from '../actions/productActions';
+import {insertCategory, getCategories, editCategory, deleteCategory} from "../../actions/productActions";
 import styles from './newCategoryForm.module.scss'
 
 

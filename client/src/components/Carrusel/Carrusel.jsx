@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../Styles/App.scss';
+//import '../Styles/App.scss';
 import styles from './carrusel.module.scss';
 
 import {
@@ -13,17 +13,17 @@ import {
 
 const items = [
   {
-    src: require('../img/21.jpg'),
+    src: require('../../img/21.jpg'),
     altText: 'Gatito',
     
   },
   {
-    src: require('../img/22.jpg'),
+    src: require('../../img/22.jpg'),
     altText: 'Slide 2',
     
   },
   {
-    src: require('../img/24.jpg'),
+    src: require('../../img/24.jpg'),
     altText: 'Slide 3',
    
   }

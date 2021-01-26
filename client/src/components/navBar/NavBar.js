@@ -1,6 +1,6 @@
 import React from 'react'
 import Search from '../search/Search.js'
-import logo from '../../images/logo-cat.jpeg'
+import logo from '../../img/logo-cat.jpeg'
 import style from './navBar.module.scss'
 import { Link } from 'react-router-dom'
 
