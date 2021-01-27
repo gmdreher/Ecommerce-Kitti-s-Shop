@@ -11,6 +11,8 @@ import NewCategoryForm from './components/NewCategoryForm/NewCategoryForm'
 import Main from './components/Main/Main'
 import ProductsByCategory from "./components/Categories/ProductsByCategory";
 import Footer from "./components/Footer/Footer"
+import OrderDetails from "./components/Order/OrderDetails";
+import OrderTable from "./components/Order/OrderTable";
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route exact path="/" component={Main} />
           <Route exact path='/products' component={Catalogue} />
           <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />
+          <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
+          <Route exact path="/orders" render={({ match }) => <OrderTable key={match.params.id} id={match.params.id} />} />
 
 
           <Route exact path='/admin/products' component={CrudProduct} />

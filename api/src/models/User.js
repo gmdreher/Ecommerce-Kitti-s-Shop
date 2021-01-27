@@ -5,6 +5,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
     allowNull: false,     
     },
+    username: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      unique: true
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -17,11 +22,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(64),
         is: /^[0-9a-f]{64}$/i
     },
-    username: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        unique: true
-    },
+   
     rol:{
         type: DataTypes.STRING,
         allowNull:false
