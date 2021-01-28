@@ -12,44 +12,69 @@ server.post('/', (req, res) => {
             email: email,
         })
             .then(user => {
-          res.status(201).json(user);
-        })
-          .catch(err => {
-            res.status(400).send(`Error al crear usuario ${err}`)
-          })
+                res.status(201).json(user);
+            })
+            .catch(err => {
+                res.status(400).send(`Error al crear usuario ${err}`)
+            })
     } else {
         res.status(400).send("Error, campos sin completar")
     }
-  });
+});
 
+//task 35 PUT users/:id
+server.put('/:id', function (req, res) {
+    const { id } = req.params;
+    const { fullName, email, password, rol } = req.body;
+    console.log(req.body);
+    User.findByPk(id)
+        .then((user => {
+            user.update(
+                {
+                    fullName: fullName,
+                    email: email,
+                    password: password,
+                    rol: rol,
+                })
+        })
+        )
+        .then(() => {
+            res.status(200).json("Datos cambiados con éxito")
+        })
+        .catch(error => {
+            res.status(400).send(`Error ${error}`);
+        })
+});
 
-//ruta para obtener todos los usuarios
-  server.get('/', (req, res) => {
+// task 36 GET /users
+server.get('/', (req, res) => {
     User.findAll({
-      attributes: ["id","fullname", "email"]
+        //en la ruta de Canela no estaban los atributos
+        atributtes:[ "id", "fullname", "email"]
     })
-      .then(users => {
-        res.json(users);
-      })
-      .catch(err => {
-          res.status(400).send(`Error: ${err}`)
-      });
-  });
+        .then(users => {
+            res.json(users);
+        })
+        .catch(err => {
+            res.status(400).send(`Error: ${err}`)
+        });
+});
+
 
 //agregar item al carrito
-server.post('/:userId/order',(req, res)=>{
-    let {userId}= req.params;
-    let {productId, price, quantity}= req.body;
+server.post('/:userId/order', (req, res) => {
+    let { userId } = req.params;
+    let { productId, price, quantity } = req.body;
 
     Order.findOrCreate({
-        where:{
-            userId:userId,
+        where: {
+            userId: userId,
             state: "carrito"
         },
-            userId:userId,
-            state: "carrito"
+        userId: userId,
+        state: "carrito"
 
-    }).then((order)=>{
+    }).then((order) => {
         OrderDetails.create({
             orderId: order[0].id,
             productId: productId,
