@@ -22,6 +22,20 @@ server.post('/', (req, res) => {
     }
   });
 
+
+//ruta para obtener todos los usuarios
+  server.get('/', (req, res) => {
+    User.findAll({
+      attributes: ["id","fullname", "email"]
+    })
+      .then(users => {
+        res.json(users);
+      })
+      .catch(err => {
+          res.status(400).send(`Error: ${err}`)
+      });
+  });
+
 //agregar item al carrito
 server.post('/:userId/order',(req, res)=>{
     let {userId}= req.params;
@@ -98,30 +112,6 @@ server.delete("/:userId/order",(req,res)=>{
         res.status(400).json("no se borro correctamente"+ err)
     })
 })
-//ruta que retorna todas las ordenes
-server.get("/search", (req, res) => {
-    let state = req.query.state;
-    Order.findAll({
-        attributes: ["id", "state", "userId"],
-      where: { state: state },
-      include: [
-        {
-          model: Product,
-          attributes: ["name", "stock", "price"],
-          exclude:{attributes: ["OrderDetails"]} ,
-        },
-        {
-          model: User,
-          attributes: ["fullName", "email"],
-        },
-      ],
-    })
-    .then(
-        (orders) => res.status(200).json(orders)
-        )
-        .catch(
-            (err => res.status(400).json("Se ha producido un error" + err))
-            )
-  });
+
 
 module.exports = server;
