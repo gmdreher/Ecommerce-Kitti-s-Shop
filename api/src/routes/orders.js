@@ -26,7 +26,7 @@ server.put('/:id', (req, res) => {
 
 
 
-//ruta que retorna todas las ordenes por
+//ruta que retorna todas las ordenes filtrando por estados
 server.get("/search", (req, res) => {
     let state = req.query.state;
     
@@ -75,5 +75,45 @@ server.delete("/:orderId",(req,res)=>{
         })
     })
     
+
+// 41) modificar cantidades del carrito por id usuario
+server.put('/:idUser/cart', (req, res) => {
+    const { idUser } = req.params;
+    const {productId, quantity} = req.body;
+  
+    Order.findOne({
+        where: {
+            [Op.and]: [
+                { userId: idUser }, 
+                { state: {
+                    [Op.or]: ['carrito', 'creada']
+                }} 
+            ]
+        }, 
+        include: {
+            model: OrderDetails,
+            where: {
+                productId: productId
+            }
+        }
+    })   
+    .then((detail)=> {
+        // console.log(detail.OrderDetail)
+        detail.OrderDetail.update({
+          quantity: quantity
+        });
+    })
+    .then(()=> {
+      res.status(200)
+      .send(`Cantidad de producto de id: ${productId} cambiada a: ${quantity}`)
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(400)
+        .send("Error al modificar la cantidad de:  "+ productId + error )
+    })
+  })
+
+
 
 module.exports = server;
