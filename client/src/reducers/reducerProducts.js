@@ -1,10 +1,12 @@
-import {POST_CATEGORY, GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, DELETE_CATEGORY, UPDATE_CATEGORY} from '../constants/productConstants.js';
+import {POST_CATEGORY, GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT,
+        DELETE_PRODUCT, POST_PRODUCT, DELETE_CATEGORY, UPDATE_CATEGORY, GET_ORDERS} from '../constants/productConstants.js';
 
 const initialState = {
     product: [],
     filteredProduct: [],
     categories: [],
-    products: []
+    products: [],
+    allOrders: []
 };
 
 export default (state = initialState, action) => {
@@ -67,6 +69,12 @@ export default (state = initialState, action) => {
                 ...state,
                 products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
                     }
+    
+        case GET_ORDERS:
+            return {
+                ...state,
+                allOrders: action.payload
+            }
 
         default:
             return state;

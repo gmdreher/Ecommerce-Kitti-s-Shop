@@ -1,18 +1,23 @@
-h2{
-  margin-left: 50px;
+
+.primerDiv{
+  display: flex;
+  flex-direction: column;
+
+
+  .container {
+    border: 3px solid lightslategray;
+    padding: 20px;
+    margin: 20px;
+    width: 50%;
+    align-self: center;
+
+    .membrete{
+      width: 100%;
+      border: 1px solid gray;
+    }
+
+    .memtable{
+      margin-bottom: 0;
+    }
+  }
 }
-
-.container {
-  border: 3px solid lightslategray;
-  padding: 20px;
-  margin-left: 50px;
-
-  .membrete{
-    width: 100%;
-    border: 1px solid gray;
-  }
-
-  .memtable{
-    margin-bottom: 0;
-  }
- }

@@ -6,6 +6,10 @@ module.exports = (sequelize) => {
       state: {
         type: DataTypes.ENUM(["carrito", "creada", "procesando", "cancelada", "completa"])
       },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE
+      }
       
     },);
   };

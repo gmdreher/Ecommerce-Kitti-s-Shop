@@ -32,12 +32,8 @@ server.get('/', (req, res) =>{
   Order.findAll({
     include: [
       {
-        model: User,
-        attributes: ["fullname"]
-      },
-      {
-        model: Product,
-      },
+        model: Product
+      }
     ]
   })
     .then(orders =>{
