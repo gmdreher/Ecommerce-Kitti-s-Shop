@@ -142,8 +142,6 @@ export const editProduct = product => async dispatch => {
             
         }
     }
-    console.log('estas son las que voy a agregar')
-    console.log(product.categories)
     for(var i=0;i<product.categories.length;i++){
         axios.post(`http://localhost:3001/products/${product.id}/category/${product.categories[i].id}`)
     }

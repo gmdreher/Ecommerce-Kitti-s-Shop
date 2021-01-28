@@ -1,12 +1,10 @@
 import React from 'react'
 import Search from '../search/Search.js'
-import logo from '../../images/logo-cat.jpeg'
+import logo from '../../img/logo-cat.jpeg'
 import style from './navBar.module.scss'
 import { Link } from 'react-router-dom'
 
 export default function NavBar() {
-
-
 
     return (
         <header className={style.navBar}>
@@ -24,6 +22,10 @@ export default function NavBar() {
               <li> <a className="dropdown-item" href="#"></a> </li> </Link>
             <Link to={'/admin/categories'} className="dropdown-item" >Categorías
             <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+            
+            {/* Copiar todo completo al momento de cabiar de lugar el link  */}
+            <Link to={'/user'} className="dropdown-item" >SingUp
+              <li> <a className="dropdown-item" href="#"></a> </li> </Link>
             </ul>
          </div>
             <label className='carrito'> <i class="fas fa-shopping-cart"></i> $00,00</label>

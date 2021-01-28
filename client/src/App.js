@@ -1,16 +1,19 @@
 import React from 'react';
-import '../src/Styles/App.scss';
+import '../src/App.scss';
 import Navbar from './components/navBar/NavBar';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Catalogue from './components/catalogue/Catalogue.js';
-import Product from './components/Product.jsx';
+import Product from './components/Product/Product.jsx';
 import NavCategories from "./components/Categories/NavCategories";
-import CrudProduct from './components/CrudProduct.jsx'
-import NewCategoryForm from './components/NewCategoryForm'
+import CrudProduct from './components/CrudProduct/CrudProduct.jsx'
+import NewCategoryForm from './components/NewCategoryForm/NewCategoryForm'
 
-import Main from './components/Main'
+import SignUp from './components/User/SingUp'
+
+import Main from './components/Main/Main'
 import ProductsByCategory from "./components/Categories/ProductsByCategory";
-import Footer from './components/Footer'
+import Footer from "./components/Footer/Footer"
+
 
 function App() {
   return (
@@ -33,6 +36,8 @@ function App() {
 
           <Route exact path='/admin/products' component={CrudProduct} />
           <Route exact path='/admin/categories' component={NewCategoryForm} />
+
+          <Route exact path='/user' component={SignUp} />
 
         </main>
 

@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import '../Styles/App.scss';
+import './Product.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { useDispatch, useSelector } from 'react-redux';
-import { getProductById} from '../actions/productActions.js';
+import { getProductById} from '../../actions/productActions.js';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
 function Product(props) {
     
  
-    
     useEffect(() => {
         props.getProductById(props.id);
     }, [])
@@ -43,10 +42,13 @@ function Product(props) {
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
+                        {props.product.stock<1?<label className='agotado'>Producto Agotado</label>:<label className='stock'>Stock: {props.product.stock}</label>}
                     </form>
                     <div className="butt">
-                        <button className="btn btn-outline-dark">Agregar a Carrito</button>
-                        <button className="btn btn-outline-dark">Comprar</button>
+                 
+                     {props.product.stock>0?<button className="btn btn-outline-dark">Agregar a Carrito</button>:null}
+                     {props.product.stock>0?<button className="btn btn-outline-dark">Comprar</button>:null}
+                    
                     </div>
                     <p><strong>Descripción: </strong> {props.product.description}</p>
                 </div>

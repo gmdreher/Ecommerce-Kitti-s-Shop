@@ -1,10 +1,11 @@
-import {POST_CATEGORY, GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, DELETE_CATEGORY, UPDATE_CATEGORY} from '../constants/productConstants.js';
+import {POST_CATEGORY, GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, DELETE_CATEGORY, UPDATE_CATEGORY, POST_USER} from '../constants/productConstants.js';
 
 const initialState = {
     product: [],
     filteredProduct: [],
     categories: [],
-    products: []
+    products: [],
+    user:[]
 };
 
 export default (state = initialState, action) => {
@@ -67,6 +68,12 @@ export default (state = initialState, action) => {
                 ...state,
                 products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
                     }
+        case POST_USER:
+            console.log('reducer del post usuario recibe como action '+ action);
+            return {
+                ...state,
+                user: [...state.user, action.payload]
+            }
 
         default:
             return state;
