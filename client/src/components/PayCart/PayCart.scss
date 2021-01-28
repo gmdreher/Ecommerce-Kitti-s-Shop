@@ -1,0 +1,35 @@
+.contenedor{
+    border-radius: 10px;
+    padding: 1rem;
+    flex-direction: row;
+    max-width: 400px;
+    margin-top: 2rem;
+    border-top: 1px solid rgb(202, 202, 202);
+    border-left: 1px solid rgb(202, 202, 202);
+    box-shadow: 7px 7px 5px rgb(202, 202, 202);
+    justify-content: center;
+
+    .pagar{
+        display: flex;
+        align-self: center;
+        max-width: 400px;
+        justify-content: center;
+        align-items: center;
+
+        button {
+        width: 400px;
+        justify-content: center;
+        align-items: center;
+        border-style: none;
+        border-top: 1px solid rgb(202, 202, 202);
+        border-left: 1px solid rgb(202, 202, 202);
+        box-shadow: 7px 7px 5px rgb(202, 202, 202);
+        }
+    }
+
+    .juntar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+}
