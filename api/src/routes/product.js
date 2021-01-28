@@ -325,4 +325,9 @@ server.get('/:idProduct/categories',(req,res,next)=>{
   
 })
 
+
+
+
+
+
 module.exports = server;

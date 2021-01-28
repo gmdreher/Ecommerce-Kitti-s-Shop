@@ -44,7 +44,7 @@ Product.hasMany(Image);
 Image.belongsTo(Product);
 
 Order.belongsTo(User);
- User.hasMany(Order);
+User.hasMany(Order);
 
 
 Product.belongsToMany(Order, {through: OrderDetails})
