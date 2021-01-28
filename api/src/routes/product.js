@@ -71,7 +71,7 @@ server.delete('/:productId/category/:categoryId', (req, res) => {
 server.post('/category', (req, res) => {
   let { name, description } = req.body;
   Category.findOrCreate({
-    where:{
+    where: {
       name: name,
       description: description,
     }
@@ -192,7 +192,8 @@ server.get('/category/:categoryName', (req, res, next) => {
         model: Category, as: 'categories',
         where: {
           name: {
-            [Op.iLike]: categoryName}
+            [Op.iLike]: categoryName
+          }
         },
       },
       {
@@ -227,9 +228,9 @@ server.get("/:id", (req, res) => {
 //task 25
 server.post('/', function (req, res,) {
   let { name, description, price, stock, image } = req.body;
-  
-  if(!image){
-    res.status(400).json( 'Debe llenar el campo "image"')
+
+  if (!image) {
+    res.status(400).json('Debe llenar el campo "image"')
   }
   Product.create({
     name: name,
@@ -309,20 +310,21 @@ server.post('/:idProducto/category/:idCategory', (req, res) => {
 //     .catch(error => res.send(error))
 // });
 
-server.get('/:idProduct/categories',(req,res,next)=>{
-  const {idProduct} = req.params;
+server.get('/:idProduct/categories', (req, res, next) => {
+  const { idProduct } = req.params;
   Category.findAll({
     include: [
       {
         model: Product, as: 'products',
         where: {
-          id:idProduct
-        },},],
+          id: idProduct
+        },
+      },],
   }).then(categories => {
     res.json(categories)
   })
     .catch(next);
-  
+
 })
 
 module.exports = server;

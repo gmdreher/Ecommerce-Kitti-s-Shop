@@ -16,15 +16,17 @@ export default function NavBar() {
             </div>
             <Search />
             <div className="dropdown">
-            <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">MI CUENTA</button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <Link to={'/admin/products'} className="dropdown-item" >Productos
+                <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">MI CUENTA</button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <Link to={'/admin/products'} className="dropdown-item" >Productos
               <li> <a className="dropdown-item" href="#"></a> </li> </Link>
-            <Link to={'/admin/categories'} className="dropdown-item" >Categorías
+                    <Link to={'/admin/categories'} className="dropdown-item" >Categorías
             <li> <a className="dropdown-item" href="#"></a> </li> </Link>
-            </ul>
-         </div>
-            <label className='carrito'> <i class="fas fa-shopping-cart"></i> $00,00</label>
+                </ul>
+            </div>
+            <Link to={`/users`}>
+                <label className='carrito'> <i class="fas fa-shopping-cart"></i> $00,00</label>
+            </Link >
         </header>
     )
 }

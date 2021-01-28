@@ -44,12 +44,16 @@ Product.hasMany(Image);
 Image.belongsTo(Product);
 
 Order.belongsTo(User);
- User.hasMany(Order);
+User.hasMany(Order);
 
+Order.hasOne(OrderDetails);
+OrderDetails.belongsTo(Order);
 
-Product.belongsToMany(Order, {through: OrderDetails})
-Order.belongsToMany(Product, {through: OrderDetails})
+Product.belongsToMany(Order, { through: OrderDetails })
+Order.belongsToMany(Product, { through: OrderDetails })
 
+Order.hasOne(OrderDetails)
+OrderDetails.belongsTo(Order)
 
 
 module.exports = {
