@@ -84,8 +84,6 @@ export default (state = initialState, action) => {
                 products: state.products.map(product => product.id === action.payload.id ? product = action.payload : product)
             }
         case ADD_TO_CART:
-            console.log("este es el reducer de cart:");
-            console.log(action.payload);
             return {
                 ...state,
                 cart: [...state.cart, action.payload]

@@ -4,24 +4,25 @@ import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart, deleteTotalCart } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
+import Catalogue from '../catalogue/Catalogue';
 
 export default function ViewOrder(props) {
 
     const dispatch = useDispatch();
 
-    // const [data, setData] = React.useState();
-
-    const cartProduct = useSelector(store => store.product.cart);
-    // console.log(" VIEWORDEN ", props);
-    // console.log("STORE");
-    // console.log(cartProduct);
-    // setData(cartProduct)
-
-    useEffect(function () {
-        dispatch(getProductsCart({ userId: 1, state: "carrito" }));
-    }, [])
+    const cartProduct = useSelector(store => store.cart.cartItems);
+    //modificamos para que traiga el store de cart
 
 
+    // const cartProduct = useSelector(store => store.product.cart);
+
+    //    useEffect(function () {
+    //        dispatch(getProductsCart({ userId: 1, state: "carrito" }));
+    //    }, [])
+
+    // useEffect(function () {
+    //     dispatch(getProductsCart({ state: "carrito" }));
+    // }, [])
 
     let priceList = [];
     function totalHandler() {
@@ -36,7 +37,7 @@ export default function ViewOrder(props) {
 
     return (
 
-        <div className="containe" >
+        <div className="contain" >
             <div className="titulo">
                 <button onClick={() => {
                     dispatch(deleteTotalCart({ userId: 1, orderId: cartProduct.orderId }))
@@ -44,14 +45,19 @@ export default function ViewOrder(props) {
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
+                        console.log("esto es info")
+                        console.log(info)
                         var subTot = 0;
                         subTot = info.price * info.quantity;
                         priceList.push(subTot);
+
                         return <OrderCard data={info} />
+
                     })}
                 </div>
             </div>
             <div className="parte-dos">
+
                 <PayCart dato={totalHandler()} />
             </div>
         </div>

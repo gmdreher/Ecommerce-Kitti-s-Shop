@@ -1,11 +1,10 @@
 const server = require('express').Router();
-const { User, Order, OrderDetails } = require('../db.js');
+const { Order, User, OrderDetails, Product } = require('../db.js');
 
-//Ruta de crear usuario
-//Pau
+
 server.post('/', (req, res) => {
-    let { fullname, email, password, rol } = req.body;
-    if (fullname && email && password) {
+    let { fullname, email, password, rol} = req.body;
+    if(fullname && email && password){
         User.create({
             fullname: fullname,
             password: password,
@@ -49,7 +48,10 @@ server.put('/:id', function (req, res) {
 
 // task 36 GET /users
 server.get('/', (req, res) => {
-    User.findAll()
+    User.findAll({
+        //en la ruta de Canela no estaban los atributos
+        atributtes:[ "id", "fullname", "email"]
+    })
         .then(users => {
             res.json(users);
         })
@@ -92,63 +94,63 @@ server.post('/:userId/order', (req, res) => {
             productId: productId,
             price: price,
             quantity: quantity
+        })   
+        .then((order_detalle)=>{
+            res.status(200).json(order_detalle)
         })
-            .then((order_detalle) => {
-                res.status(200).json(order_detalle)
-            })
+})
+    .catch(err=>{
+        res.status(400).send("Error al agregar item a la orden:"+ err)
     })
-        .catch(err => {
-            res.status(400).send("Error al agregar item a la orden:" + err)
-        })
 });
 
 //obtener todos los items del carrito
-server.get("/:userId/order/:state", (req, res) => {
-    let { userId, state } = req.params;
+server.get("/:userId/order/:state",(req,res)=>{
+    let { userId, state }= req.params;
 
     Order.findOne({
-        where: {
-            userId: userId,
-            state: state
-        }
-    }).then((order) => {
-        OrderDetails.findAll({
-            where: {
+        where: { userId: userId,
+                 state: state
+                }
+    }).then((order)=>{
+      OrderDetails.findAll({
+            where:{
                 orderId: order.id,
             }
         })
-            .then(detalle => {
-                res.status(200).json(detalle)
-            })
-
-    }).catch((err) => {
-        res.status(400).json("Error al traer todos los items de la orden" + err)
+        .then(detalle=>{
+            res.status(200).json(detalle)
+        })
+        
+    }).catch((err)=>{
+        res.status(400).json("Error al traer todos los items de la orden"+ err)
     })
 });
 
 //vaciar carrito
-server.delete("/:userId/order", (req, res) => {
-    let { orderId } = req.body;
+server.delete("/:userId/order",(req,res)=>{
+    let { orderId }= req.body;
     let { userId } = req.params;
 
     Order.destroy({
-        where: {
+        where:{
             id: orderId,
             userId: userId
         }
     })
-        .then(() => {
-            OrderDetails.destroy({
-                where: {
-                    orderId: orderId
-                }
-            })
-                .then((order_destroy) => {
-                    res.status(200).json(order_destroy)
-                })
-        }).catch(err => {
-            res.status(400).json("no se borro correctamente" + err)
+    .then(()=>{
+        OrderDetails.destroy({
+            where:{
+                orderId: orderId
+            }
         })
+        .then((order_destroy)=>{
+            res.status(200).json(order_destroy)
+        })
+    }).catch(err=>{
+        res.status(400).json("no se borro correctamente"+ err)
+    })
 })
+
 
 module.exports = server;

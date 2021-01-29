@@ -13,7 +13,7 @@ export default function ProductCard({ data }) {
     const dispatch = useDispatch();
 
     const handleClick = (data) => {
-        dispatch(addProductCart({ productId: data.id, userId: 1, price: data.price, quantity: 4 }));
+        dispatch(addProductCart({ productId: data.id, price: data.price}));
     };
 
     return (
