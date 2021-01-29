@@ -2,19 +2,18 @@ import React, { useEffect } from 'react';
 import './Product.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { useDispatch, useSelector } from 'react-redux';
-import { getProductById} from '../../actions/productActions.js';
+import { getProductById } from '../../actions/productActions.js';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 
 function Product(props) {
-    
- 
+
     useEffect(() => {
         props.getProductById(props.id);
     }, [])
     let imageUrl;
-    if(props.product.images){
-         imageUrl = props.product.images[0].url;
+    if (props.product.images) {
+        imageUrl = props.product.images[0].url;
     }
     return (
         <div className="containe" >
@@ -23,7 +22,7 @@ function Product(props) {
             </Link>
             <div className="detail">
                 <div className="imagen">
-                        <img src={imageUrl} alt="Cargando imagen..." />
+                    <img src={imageUrl} alt="Cargando imagen..." />
                 </div>
                 <div className="data">
                     <h2>{props.product.name}</h2>
@@ -69,7 +68,7 @@ function Product(props) {
     )
 };
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     console.log('este el el state:', state)
     return {
         product: state.product.product

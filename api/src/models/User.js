@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
         is: /^[0-9a-f]{64}$/i
     },
     rol:{
-        type:DataTypes.ENUM(['Guest','Admin','User']),
+        type:DataTypes.STRING,
         allowNull:false
     }
   });

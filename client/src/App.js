@@ -7,12 +7,13 @@ import Product from './components/Product/Product.jsx';
 import NavCategories from "./components/Categories/NavCategories";
 import CrudProduct from './components/CrudProduct/CrudProduct.jsx'
 import NewCategoryForm from './components/NewCategoryForm/NewCategoryForm'
-
 import SignUp from './components/User/SingUp'
 
 import Main from './components/Main/Main'
 import ProductsByCategory from "./components/Categories/ProductsByCategory";
 import Footer from "./components/Footer/Footer"
+import ViewOrder from './components/ViewOrder/ViewOrder';
+
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         </header>
         <main>
 
+
           <Route exact path="/" component={Main} />
           <Route exact path='/products' component={Catalogue} />
           <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />
@@ -38,6 +40,8 @@ function App() {
           <Route exact path='/admin/categories' component={NewCategoryForm} />
 
           <Route exact path='/user' component={SignUp} />
+          <Route exact path="/user/order" component={ViewOrder} />
+
 
         </main>
 

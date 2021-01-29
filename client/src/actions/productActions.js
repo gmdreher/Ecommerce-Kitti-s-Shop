@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES, SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT} from '../constants/productConstants.js';
+import { DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES, SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT } from '../constants/productConstants.js';
 
 export const getProductById = (id) => async (dispatch) => {
     try {
@@ -15,24 +15,24 @@ export const getProductById = (id) => async (dispatch) => {
     }
 };
 
-export const getProducts = ()=> async (dispatch) => {
+export const getProducts = () => async (dispatch) => {
     try {
         const respuesta = await axios.get('http://localhost:3001/products/');
         dispatch({
             type: GET_PRODUCTS,
             payload: respuesta.data
         });
-    }catch (error){
+    } catch (error) {
         console.log("Error: " + error)
     }
 }
 export function getProductByCategory(categoryName) {
-    return function(dispatch) {
+    return function (dispatch) {
         return axios.get(`http://localhost:3001/products/category/${categoryName}`)
-          .then(products => {
-              dispatch({ type: GET_PRODUCT_BY_CATEGORY, payload: products.data });
-          })
-          .catch(err => console.log(err))
+            .then(products => {
+                dispatch({ type: GET_PRODUCT_BY_CATEGORY, payload: products.data });
+            })
+            .catch(err => console.log(err))
     };
 }
 
@@ -46,11 +46,11 @@ export const insertCategory = (category) => async dispatch => {
 
 
 export function getCategories() {
-    return function(dispatch) {
+    return function (dispatch) {
         return axios.get('http://localhost:3001/products/categories')
-          .then(categories => {
-              dispatch({ type: GET_CATEGORIES, payload: categories.data });
-          });
+            .then(categories => {
+                dispatch({ type: GET_CATEGORIES, payload: categories.data });
+            });
     };
 }
 
@@ -60,44 +60,45 @@ export const deleteCategory = (id) => async dispatch => {
         type: DELETE_CATEGORY,
         payload: id
     });
-    
+
 }
 
 export const editCategory = category => async dispatch => {
-    try{let answer = await axios.put(`http://localhost:3001/products/category/${category.id}`, category);
-    dispatch({
-        type: UPDATE_CATEGORY,
-        payload: answer.data
-    });
-}catch(error){
-    console.log("Error" + error)
-}
+    try {
+        let answer = await axios.put(`http://localhost:3001/products/category/${category.id}`, category);
+        dispatch({
+            type: UPDATE_CATEGORY,
+            payload: answer.data
+        });
+    } catch (error) {
+        console.log("Error" + error)
+    }
 }
 
-export const searchProduct= (name)=> async (dispatch) => {
+export const searchProduct = (name) => async (dispatch) => {
     try {
-        const resp = await axios.get(`http://localhost:3001/products/search?value=${name}` );
+        const resp = await axios.get(`http://localhost:3001/products/search?value=${name}`);
         dispatch({
             type: SEARCH_PRODUCT,
             payload: resp.data
         });
-    }catch (error){
+    } catch (error) {
         console.log("Error: " + error)
     }
 }
 export const deleteProduct = (id) => async dispatch => {
     await axios.delete(`http://localhost:3001/products/${id}`);
     const categorias = await axios.get(`http://localhost:3001/products/${id}/categories/`);
-    if(categorias){
-        categorias.map((categoria)=>{
+    if (categorias) {
+        categorias.map((categoria) => {
             axios.delete(`http://localhost:3001/products/${id}/category/${categoria.id}`)
-             .then(()=>{
-                 dispatch({
-                    type: DELETE_PRODUCT,
-                    payload: id
-                 });
-             })
-         })
+                .then(() => {
+                    dispatch({
+                        type: DELETE_PRODUCT,
+                        payload: id
+                    });
+                })
+        })
     }
 }
 export const insertProduct = (datos) => async dispatch => {
@@ -122,24 +123,24 @@ export const insertProduct = (datos) => async dispatch => {
     }) */
 }
 
-   /*  export const productCategoryAll = product => async dispatch =>{
-        const response = await axios.get(`http://localhost:3001/products/${product.id}/categories`)
-        console.log('estas son las categorias del producto');
-        console.log(response);
+/*  export const productCategoryAll = product => async dispatch =>{
+     const response = await axios.get(`http://localhost:3001/products/${product.id}/categories`)
+     console.log('estas son las categorias del producto');
+     console.log(response);
 
-    } */
+ } */
 
 export const editProduct = product => async dispatch => {
     // const productDeta = {name:product.name,description:product.description,price:product.price,stock:product.stock}
     const respuesta = await axios.put(`http://localhost:3001/products/${product.id}`, product);
     const categorias = await axios.get(`http://localhost:3001/products/${product.id}/categories/`);
     console.log(categorias)
-    
+
     var borrar;
     if(categorias){       
         for(var i=0;i<categorias.data.length;i++){
             borrar = await axios.delete(`http://localhost:3001/products/${product.id}/category/${categorias.data[i].id}`)
-            
+
         }
     }
     for(var i=0;i<product.categories.length;i++){
