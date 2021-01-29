@@ -27,7 +27,7 @@ function handleSubmit(e){
         <div className= {style.searchBar} >
             <form onSubmit={handleSubmit}>
                 <input name= 'search' type= 'text' placeholder='Buscar...' onChange={handleChange}></input>
-                <button> <i className="fas fa-search"></i> </button>
+                <button><i class="fas fa-search" ></i></button>
             </form>
         </div>
     )

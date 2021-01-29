@@ -24,9 +24,13 @@ export default function NavBar(props) {
               <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                     <Link to={'/admin/categories'} className="dropdown-item" >Categorías
             <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+
+                    {/* Copiar todo completo al momento de cabiar de lugar el link  */}
+                    <Link to={'/user'} className="dropdown-item" >SingUp
+              <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                 </ul>
             </div>
-            <Link to={`/users/${props.id}/cart`}>
+            <Link to={`/user/order`}>
                 <label className='carrito'> <i class="fas fa-shopping-cart"></i> $00,00</label>
             </Link >
         </header>
