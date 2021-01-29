@@ -16,7 +16,7 @@ function Product(props) {
         imageUrl = props.product.images[0].url;
     }
     return (
-        <div className="containe" >
+        <div className="container" >
             <Link to={`/`}>
                 <button className="arrow">Volver</button>
             </Link>

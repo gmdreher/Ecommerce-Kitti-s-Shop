@@ -92,8 +92,6 @@ export default (state = initialState, action) => {
                 user: [...state.user, action.payload]
             }
         case ADD_TO_CART:
-            console.log("este es el reducer de cart:");
-            console.log(action.payload);
             return {
                 ...state,
                 cart: [...state.cart, action.payload]
