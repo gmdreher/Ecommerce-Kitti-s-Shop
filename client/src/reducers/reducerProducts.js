@@ -1,3 +1,18 @@
+import {
+    POST_CATEGORY,
+    GET_CATEGORIES,
+    GET_PRODUCT_BY_CATEGORY,
+    GET_PRODUCT_BY_ID,
+    GET_PRODUCTS,
+    SEARCH_PRODUCT,
+    UPDATE_PRODUCT,
+    DELETE_PRODUCT,
+    POST_PRODUCT,
+    DELETE_CATEGORY,
+    UPDATE_CATEGORY,
+    ADD_TO_CART,
+    GET_PRODUCT_CART
+} from '../constants/productConstants.js';
 import {POST_CATEGORY, GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT,
         DELETE_PRODUCT, POST_PRODUCT, DELETE_CATEGORY, UPDATE_CATEGORY, GET_ORDERS} from '../constants/productConstants.js';
 
@@ -7,6 +22,9 @@ const initialState = {
     categories: [],
     products: [],
     allOrders: []
+    products: [],
+    cart: [],
+
 };
 
 export default (state = initialState, action) => {
@@ -17,7 +35,7 @@ export default (state = initialState, action) => {
                 ...state,
                 product: action.payload
             }
-            
+
         case GET_PRODUCT_BY_CATEGORY:
             return {
                 ...state,
@@ -37,16 +55,16 @@ export default (state = initialState, action) => {
         case DELETE_CATEGORY:
             return {
                 ...state,
-                categories: state.categories.filter( category => category.id !== action.payload )
-                }
+                categories: state.categories.filter(category => category.id !== action.payload)
+            }
         case UPDATE_CATEGORY:
             return {
                 ...state,
-                categories: state.categories.map( category => category.id === action.payload.id ? category = action.payload :category)
+                categories: state.categories.map(category => category.id === action.payload.id ? category = action.payload : category)
             }
-            
+
         case GET_PRODUCTS:
-            let estado= {...state, products: action.payload }
+            let estado = { ...state, products: action.payload }
             return estado;
 
         case SEARCH_PRODUCT:
@@ -62,11 +80,25 @@ export default (state = initialState, action) => {
         case DELETE_PRODUCT:
             return {
                 ...state,
-                products: state.products.filter( product => product.id !== action.payload )
-                }
+                products: state.products.filter(product => product.id !== action.payload)
+            }
         case UPDATE_PRODUCT:
             return {
                 ...state,
+                products: state.products.map(product => product.id === action.payload.id ? product = action.payload : product)
+            }
+        case ADD_TO_CART:
+            console.log("este es el reducer de cart:");
+            console.log(action.payload);
+            return {
+                ...state,
+                cart: [...state.cart, action.payload]
+            }
+        case GET_PRODUCT_CART:
+            return {
+                ...state,
+                cart: [...state.cart, action.payload]
+            }
                 products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
                     }
     
@@ -78,7 +110,7 @@ export default (state = initialState, action) => {
 
         default:
             return state;
-        
+
     }
 };
 

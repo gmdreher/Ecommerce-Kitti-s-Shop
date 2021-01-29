@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   const User = sequelize.define('user', {
-    fullname:{
+    fullname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -9,14 +9,15 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true,
-      validation:{
-          isEmail:true,
+      unique: true,
+      validation: {
+        isEmail: true,
       },
     },
+
     password: {
-        type: DataTypes.STRING(64),
-        is: /^[0-9a-f]{64}$/i
+      type: DataTypes.STRING(64),
+      is: /^[0-9a-f]{64}$/i
     },
    
     rol:{
