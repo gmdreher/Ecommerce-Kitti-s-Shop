@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Order, User, OrderDetails, Product } = require('../db.js');
+const { Order, User, OrderDetails, Product, Image } = require('../db.js');
 const { Op } = require("sequelize");
 
 //modificar el estado de la orden
@@ -108,7 +108,7 @@ server.get('/', (req, res) =>{
   Order.findAll({
     include: [
       {
-        model: Product
+        model: Product, include:{model: Image}
       },
     ]
   })
@@ -125,8 +125,7 @@ server.get('/:id', (req, res) =>{
   let { id } = req.params;
   Order.findByPk(id, {
     include:[
-      {model: OrderDetails},
-      {model: Product}
+      {model: Product, include:{model: Image}},
       ]
   })
     .then(order =>{
