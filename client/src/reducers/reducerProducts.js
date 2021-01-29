@@ -12,7 +12,8 @@ import {
     UPDATE_CATEGORY,
     ADD_TO_CART,
     GET_PRODUCT_CART,
-    POST_USER
+    POST_USER,
+    DELETE_TOTAL_CART
 } from '../constants/productConstants.js';
 
 const initialState = {

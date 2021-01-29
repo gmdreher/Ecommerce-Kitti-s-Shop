@@ -4,27 +4,23 @@ import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart, deleteTotalCart } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
-import Catalogue from '../catalogue/Catalogue';
+
 
 export default function ViewOrder(props) {
 
     const dispatch = useDispatch();
 
-    const cartProduct = useSelector(store => store.cart.cartItems);
+    const cartProduct = useSelector(store => store.cart.cart);
     const usersData = useSelector(store => store.product.user);
     //modificamos para que traiga el store de cart
     console.log("user");
     console.log(usersData[usersData.length - 1]);
     const user = usersData[usersData.length - 1];
-    //  useEffect(function () {
-    //      if(user!== []){
-    //         dispatch(getProductsCart({ userId: user.id, state: "carrito" }));
-    //      }
-    //      else{
-    //         dispatch(getProductsCart({state: "carrito" }));
-    //      }
+    useEffect(function () {
+        dispatch(getProductsCart(user !== undefined ? { userId: user.id, state: "carrito" } : { state: "carrito" }));
 
-    //  }, [])
+
+    }, [])
 
     let priceList = [];
     function totalHandler() {
