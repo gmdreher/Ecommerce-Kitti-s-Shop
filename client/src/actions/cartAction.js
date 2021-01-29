@@ -2,7 +2,8 @@ import axios from 'axios';
 import { ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE, GET_PRODUCT_CART, GET_PRODUCT_CART_LOCALSTORAGE} from '../constants/productConstants.js';
 
 export const addProductCart = (data) => async (dispatch, getState) => {
-
+    console.log('eso es data en el action de agregar al carrito')
+    console.log(data)
     if(!data.userId){
         const res= await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
