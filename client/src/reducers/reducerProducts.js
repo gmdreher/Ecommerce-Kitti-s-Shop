@@ -11,7 +11,8 @@ import {
     DELETE_CATEGORY,
     UPDATE_CATEGORY,
     ADD_TO_CART,
-    GET_PRODUCT_CART
+    GET_PRODUCT_CART,
+    POST_USER
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
     filteredProduct: [],
     categories: [],
     products: [],
-    cart: [],
+    user:[],
+    cart: []
 
 };
 
@@ -81,7 +83,15 @@ export default (state = initialState, action) => {
         case UPDATE_PRODUCT:
             return {
                 ...state,
-                products: state.products.map(product => product.id === action.payload.id ? product = action.payload : product)
+                products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
+             }
+        case POST_USER:
+            console.log('reducer del post usuario recibe como action '+ action);
+            console.log(action)
+            console.log(state.user)
+            return {
+                ...state,
+                user: [...state.user, action.payload]
             }
         case ADD_TO_CART:
             return {
