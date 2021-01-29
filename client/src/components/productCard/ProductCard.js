@@ -13,9 +13,12 @@ export default function ProductCard({ data }) {
     const dispatch = useDispatch();
     const userData = useSelector(store => store.product.user) 
     const user = userData[userData.length-1];
+    console.log('este es el user registrado')
+    console.log(user)
+    console.log(userData)
 
     function handleClick (data){
-        dispatch(addProductCart({ userId:user.id, productId: data.id, price: data.price}));
+        dispatch(addProductCart(user!== undefined ?{ userId:user.id, productId: data.id, price: data.price, quantity:1}:{productId: data.id, price: data.price, quantity:1}));
     };
 
     return (
