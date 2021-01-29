@@ -11,11 +11,20 @@ export default function ViewOrder(props) {
     const dispatch = useDispatch();
 
     const cartProduct = useSelector(store => store.cart.cartItems); 
+    const usersData = useSelector(store => store.product.user);
        //modificamos para que traiga el store de cart
-   
-    // useEffect(function () {
-    //     dispatch(getProductsCart({ state: "carrito" }));
-    // }, [])
+   console.log("user");
+   console.log(usersData[usersData.length-1]);
+   const user = usersData[usersData.length-1];
+    //  useEffect(function () {
+    //      if(user!== []){
+    //         dispatch(getProductsCart({ userId: user.id, state: "carrito" }));
+    //      }
+    //      else{
+    //         dispatch(getProductsCart({state: "carrito" }));
+    //      }
+         
+    //  }, [])
 
     let priceList = [];
     function totalHandler() {

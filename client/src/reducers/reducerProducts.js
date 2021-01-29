@@ -87,6 +87,8 @@ export default (state = initialState, action) => {
              }
         case POST_USER:
             console.log('reducer del post usuario recibe como action '+ action);
+            console.log(action)
+            console.log(state.user)
             return {
                 ...state,
                 user: [...state.user, action.payload]
