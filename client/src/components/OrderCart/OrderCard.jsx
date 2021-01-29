@@ -10,7 +10,7 @@ export default function OrderCard(props) {
     if (props.data.images) {
         imagenes = props.data.images[0].url;
     }
-
+    
     return (
         <div>
             <div className="abc" >
