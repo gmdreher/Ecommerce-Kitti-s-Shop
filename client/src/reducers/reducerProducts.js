@@ -11,7 +11,8 @@ import {
     DELETE_CATEGORY,
     UPDATE_CATEGORY,
     ADD_TO_CART,
-    GET_PRODUCT_CART
+    GET_PRODUCT_CART,
+    DELETE_TOTAL_CART
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -20,7 +21,6 @@ const initialState = {
     categories: [],
     products: [],
     cart: [],
-
 };
 
 export default (state = initialState, action) => {
@@ -94,6 +94,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 cart: [...state.cart, action.payload]
+            }
+        case DELETE_TOTAL_CART:
+            return {
+                ...state,
+                cart: state.cart.filter(produc => produc.id !== action.payload)
             }
 
         default:

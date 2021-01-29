@@ -8,7 +8,7 @@ import { addProductCart } from '../../actions/cartAction.js';
 
 export default function ProductCard({ data }) {
 
-    console.log("Informacion que viene desde Catalogo", data);
+    // console.log("Informacion que viene desde Catalogo", data);
 
     const dispatch = useDispatch();
 

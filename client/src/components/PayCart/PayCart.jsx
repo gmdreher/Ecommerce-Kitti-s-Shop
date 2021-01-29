@@ -4,8 +4,8 @@ import '../PayCart/PayCart.scss';
 
 export default function PayCart(props) {
 
-    console.log("Paycart");
-    console.log(props.dato);
+    // console.log("Paycart");
+    // console.log(props);
 
     return (
         <div className="contenedor">

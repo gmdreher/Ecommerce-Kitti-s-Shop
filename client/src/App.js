@@ -37,7 +37,8 @@ function App() {
           <Route exact path='/admin/products' component={CrudProduct} />
           <Route exact path='/admin/categories' component={NewCategoryForm} />
 
-          <Route exact path="/users" component={ViewOrder} />
+          {/* <Route exact path="/users" component={ViewOrder} /> */}
+          <Route exact path="/users/:id/cart" render={({ match }) => <ViewOrder id={match.params.id} />} />
 
 
         </main>

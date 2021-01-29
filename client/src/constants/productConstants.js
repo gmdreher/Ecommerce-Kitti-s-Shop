@@ -11,6 +11,7 @@ export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_PRODUCT_CART = "GET_PRODUCT_CART";
+export const DELETE_TOTAL_CART = "DELETE_TOTAL_CART";
 
 
 

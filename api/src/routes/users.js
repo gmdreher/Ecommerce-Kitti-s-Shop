@@ -59,6 +59,20 @@ server.get('/', (req, res) => {
 });
 
 
+//Traer id de usuario
+server.get("/:id", (req, res) => {
+    const id = req.params.id;
+    User.findOne({
+        where: { id: id },
+    })
+        .then((users) => {
+            res.json(users);
+        })
+        .catch((err) => {
+            return res.send({ data: err }).status(400);
+        });
+});
+
 //agregar item al carrito
 server.post('/:userId/order', (req, res) => {
     let { userId } = req.params;

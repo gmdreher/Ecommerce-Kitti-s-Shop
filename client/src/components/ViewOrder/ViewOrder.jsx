@@ -2,21 +2,28 @@ import React, { useEffect, useState } from 'react';
 import './ViewOrder.scss';
 import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProductsCart } from '../../actions/cartAction.js';
+import { getProductsCart, deleteTotalCart } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
 
 export default function ViewOrder(props) {
 
     const dispatch = useDispatch();
 
+    // const [data, setData] = React.useState();
+
     const cartProduct = useSelector(store => store.product.cart);
+    // console.log(" VIEWORDEN ", props);
+    // console.log("STORE");
+    // console.log(cartProduct);
+    // setData(cartProduct)
 
     useEffect(function () {
         dispatch(getProductsCart({ userId: 1, state: "carrito" }));
     }, [])
 
-    let priceList = [];
 
+
+    let priceList = [];
     function totalHandler() {
         if (priceList.length > 0) {
             var total = 0;
@@ -31,6 +38,9 @@ export default function ViewOrder(props) {
 
         <div className="containe" >
             <div className="titulo">
+                <button onClick={() => {
+                    dispatch(deleteTotalCart({ userId: 1, orderId: cartProduct.orderId }))
+                }}> Borrar </button>
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
@@ -49,49 +59,4 @@ export default function ViewOrder(props) {
 
 };
 
-
-
-
-
-// export default function ViewOrder(props) {
-
-//     const dispatch = useDispatch();
-
-//     const cartProduct = useSelector(store => store.product.cart);
-
-//     // const [suma, setSuma] = React.useState(0);
-
-//     useEffect(function () {
-//         dispatch(getProductsCart({ userId: 1, state: "carrito" }));
-//     }, [])
-
-//     let [suma, setSuma] = React.useState(0);
-
-//     // function suma(a, b) {
-//     //     var total;
-//     //     total = total + (a * b);
-//     //     return total;
-//     // }
-
-//     return (
-
-//         <div className="containe" >
-//             <div className="titulo">
-//                 <h2>Pedidos de tu carrito</h2>
-//                 <div className="parte-uno">
-//                     {cartProduct && cartProduct.map((info) => {
-//                         // setSuma({ ...suma + (info.price * info.quantity) })
-//                         setSuma = suma + (info.price * info.quantity);
-//                         console.log("el valor de la suma es", setSuma);
-//                         return <OrderCard data={info} />
-//                     })}
-//                 </div>
-//             </div>
-//             <div className="parte-dos">
-//                 <PayCart dato={setSuma} />
-//             </div>
-//         </div>
-//     )
-
-// };
 

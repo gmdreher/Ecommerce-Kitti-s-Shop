@@ -4,7 +4,9 @@ import logo from '../../img/logo-cat.jpeg'
 import style from './navBar.module.scss'
 import { Link } from 'react-router-dom'
 
-export default function NavBar() {
+export default function NavBar(props) {
+
+    console.log("Navbar", props);
 
     return (
         <header className={style.navBar}>
@@ -24,7 +26,7 @@ export default function NavBar() {
             <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                 </ul>
             </div>
-            <Link to={`/users`}>
+            <Link to={`/users/${props.id}/cart`}>
                 <label className='carrito'> <i class="fas fa-shopping-cart"></i> $00,00</label>
             </Link >
         </header>
