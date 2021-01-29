@@ -1,7 +1,9 @@
 
 .primerDiv{
-  display: flex;
+  display: grid;
   flex-direction: column;
+  align-content: center;
+  margin-left: 50px;
 
 
   .container {
@@ -11,13 +13,96 @@
     width: 50%;
     align-self: center;
 
-    .membrete{
-      width: 100%;
-      border: 1px solid gray;
+    .letterhead{
+      display: flex;
+      margin-left: 20px;
     }
 
-    .memtable{
-      margin-bottom: 0;
+    .containerproducts{
+      display:flex;
+      align-content: center;
+      height: 80px;
+      margin-top: 10px;
+
+      .image{
+        //background-color: rgb(245, 245, 245);
+        border-right: 1px solid rgb(202, 202, 202);
+        border-bottom: 1px solid rgb(202, 202, 202);
+        border-radius: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
+        height: 80%;
+        padding: 5px;
+
+
+
+        .img-responsive{
+          max-width: 90px;
+          max-height: 90px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .name{
+        //background-color: rgb(245, 245, 245);
+        border-right: 1px solid rgb(202, 202, 202);
+        border-bottom: 1px solid rgb(202, 202, 202);
+        border-radius: 5px;
+        margin-right: 3px;
+        margin-top: 5px;
+        margin-left: auto;
+        height: 80%;
+        padding: 5px;
+      }
+      .quantity{
+        height: 80%;
+        //background-color: rgb(245, 245, 245);
+        border-right: 1px solid rgb(202, 202, 202);
+        border-bottom: 1px solid rgb(202, 202, 202);
+        border-radius: 5px;
+        margin-right: 3px;
+        margin-top: 5px;
+        margin-left: auto;
+        padding: 5px;
+        justify-content: center;
+        text-align: center;
+
+
+      }
+      .price{
+        height: 80%;
+        //background-color: rgb(245, 245, 245);
+        border-right: 1px solid rgb(202, 202, 202);
+        border-bottom: 1px solid rgb(202, 202, 202);
+        border-radius: 5px;
+        margin-right: 3px;
+        margin-top: 5px;
+        margin-left: auto;
+        padding: 5px;
+
+      }
     }
+
+
   }
 }
+
+.ctnTotal{
+  display: flex;
+  justify-content: flex-end;
+  //align-content: flex-end;
+  .totalTable{
+    display: inline-flex;
+    border-radius: 10px;
+    padding: 1rem;
+    max-width: 300px;
+    border-top: 1px solid rgb(202, 202, 202);
+    border-left: 1px solid rgb(202, 202, 202);
+    box-shadow: 3px 4px 4px rgb(202, 202, 202);
+    margin-right: 0;
+
+
+  }
+}
+

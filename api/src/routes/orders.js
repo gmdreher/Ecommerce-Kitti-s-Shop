@@ -6,7 +6,6 @@ const { Op } = require("sequelize");
 server.put('/:id', (req, res) => {
     const { id } = req.params;
     const {state} = req.body;
-    
   
     Order.findByPk(id)
     .then((order)=>{
@@ -24,37 +23,27 @@ server.put('/:id', (req, res) => {
     })
   });
 
-
-
-//ruta que retorna todas las ordenes filtrando por estados
 server.get("/search", (req, res) => {
-    let state = req.query.state;
-    
-    Order.findAll({
-        attributes: ["id", "state", "userId"],
-      where: {
-           state: state
-         },
-      include: [
-        {
-          model: Product,
-          attributes: ["name", "stock", "price"],
-          exclude:{attributes: ["OrderDetails"]} ,
-        },
-        {
-          model: User,
-          attributes: ["fullname", "email"],
-        },
-      ],
-    })
+  let state = req.query.state;
+  Order.findAll({
+    attributes: ["id", "state", "userId"],
+    where: { state: state },
+    include: [
+      {
+        model: Product,
+      },
+      {
+        model: User,
+      },
+    ],
+  })
     .then(
-        (orders) => res.status(200).json(orders)
-        )
-        .catch(
-            (err => res.status(400).json("Se ha producido un error" + err))
-            )
-  });
-
+      (orders) => res.status(200).json(orders)
+    )
+    .catch(
+      (err => res.status(400).json("Se ha producido un error" + err))
+    )
+});
 
 //eliminar un items de la orden
 server.delete("/:orderId",(req,res)=>{
@@ -114,6 +103,44 @@ server.put('/:idUser/cart', (req, res) => {
     })
   })
 
+//Ruta que retorne todas las ordenes
+server.get('/', (req, res) =>{
+  Order.findAll({
+    include: [
+      {
+        model: Product
+      },
+    ]
+  })
+    .then(orders =>{
+      res.status(200).json(orders)
+    })
+    .catch(err => {
+      res.status(400).send('' + err)
+    })
+});
+
+// GET /orders/:id retorna una orden en particular
+server.get('/:id', (req, res) =>{
+  let { id } = req.params;
+  Order.findByPk(id, {
+    include:[
+      {model: OrderDetails},
+      {model: Product}
+      ]
+  })
+    .then(order =>{
+      console.log(order);
+      res.status(200).json(order)
+    })
+    .catch(err => {
+      res.status(400).send('' + err)
+    })
+});
+
 
 
 module.exports = server;
+
+
+

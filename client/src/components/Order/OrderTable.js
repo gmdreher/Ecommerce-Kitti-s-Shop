@@ -2,7 +2,7 @@ import React, {Fragment,} from "react";
 import { getAllOrders } from '../../actions/productActions';
 import { connect } from 'react-redux';
 import styles from './orderTable.module.scss'
-import {Link, NavLink} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class OrderTable extends React.Component {
  
@@ -10,6 +10,7 @@ class OrderTable extends React.Component {
     this.props.getAllOrders()
   }
 
+  
   render(){
   return(
     <Fragment>
@@ -23,6 +24,7 @@ class OrderTable extends React.Component {
             <th scope="col">Estado</th>
             <th scope="col">Monto</th>
             <th scope="col">Fecha</th>
+            <th scope="col">  </th>
           </tr>
           </thead>
           <tbody >
@@ -30,13 +32,17 @@ class OrderTable extends React.Component {
             this.props.allOrders.map(order =>{
                 return (
                     <tr key={order.id}>
-                      <Link exact to={`/users/${order.id}/orders`}  >
+                      <Link exact to={`/orders/${order.id}`}  >
                         <th scope="row">{order.id}</th>
                       </Link>
                       <td>{order.userId}</td>
-                      <td>{order.state}</td>
+                      <td>{order.state}
+                      </td>
                       <td>$4650*</td>
                       <td>{order.createdAt}</td>
+                      <td>
+                       <button>Editar</button>
+                      </td>
                     </tr>
                 )
             })

@@ -12,6 +12,7 @@ export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const GET_ORDERS = "GET_ORDERS"
 export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_PRODUCT_CART = "GET_PRODUCT_CART";
+export const GET_SPECIFIC_ORDER = "GET_SPECIFIC_ORDER";
 
 
 

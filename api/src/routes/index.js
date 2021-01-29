@@ -3,8 +3,7 @@ const { Router } = require('express');
 const productRouter = require('./product.js');
 const usersRouter= require('./users.js');
 const ordersRouter= require ('./orders.js')
-const userRouter = require('./user');
-const orderRouter = require('./order');
+const orderRouter = require('./orders');
 
 
 const router = Router();
@@ -15,7 +14,6 @@ const router = Router();
 router.use('/products', productRouter);
  router.use('/users', usersRouter)
  router.use('/orders', ordersRouter)
-router.use('/users', userRouter);
 router.use('/orders', orderRouter);
 
 module.exports = router;

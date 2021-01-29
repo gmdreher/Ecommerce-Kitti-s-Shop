@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-import {DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES,
-        SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS} from '../constants/productConstants.js';
+import {
+    DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES,
+    SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER
+} from '../constants/productConstants.js';
 
 export const getProductById = (id) => async (dispatch) => {
     try {
@@ -163,4 +165,13 @@ export function getAllOrders() {
     };
 }
 
+
+export function getUserOrder(id) {
+    return function(dispatch) {
+        return axios.get(`http://localhost:3001/orders/${id}`)
+          .then(userOrders => {
+              dispatch({ type: GET_SPECIFIC_ORDER, payload: userOrders.data });
+          });
+    };
+}
 

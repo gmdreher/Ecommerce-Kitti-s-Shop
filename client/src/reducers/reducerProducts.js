@@ -11,19 +11,20 @@ import {
     DELETE_CATEGORY,
     UPDATE_CATEGORY,
     ADD_TO_CART,
-    GET_PRODUCT_CART
+    GET_PRODUCT_CART,
+    GET_ORDERS,
+    GET_SPECIFIC_ORDER
 } from '../constants/productConstants.js';
-import {POST_CATEGORY, GET_CATEGORIES, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_PRODUCTS, SEARCH_PRODUCT, UPDATE_PRODUCT,
-        DELETE_PRODUCT, POST_PRODUCT, DELETE_CATEGORY, UPDATE_CATEGORY, GET_ORDERS} from '../constants/productConstants.js';
+
 
 const initialState = {
     product: [],
     filteredProduct: [],
     categories: [],
-    products: [],
-    allOrders: []
+    allOrders: [],
     products: [],
     cart: [],
+    order: []
 
 };
 
@@ -99,13 +100,18 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: [...state.cart, action.payload]
             }
-                products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
-                    }
     
         case GET_ORDERS:
             return {
                 ...state,
                 allOrders: action.payload
+            }
+    
+        case GET_SPECIFIC_ORDER:
+            console.log('esta es la accion', action)
+            return {
+                ...state,
+                order: action.payload
             }
 
         default:

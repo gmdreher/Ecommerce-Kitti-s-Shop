@@ -1,61 +1,77 @@
-import React, {Fragment} from "react";
+import React from "react";
 import styles from './orderdetails.module.scss'
+import { connect } from 'react-redux';
+import { getUserOrder } from "../../actions/productActions";
 
-
-export default function OrderDetails() {
+class OrderDetails extends React.Component {
+  
+ 
+  componentDidMount() {
+    this.props.getUserOrder(this.props.id)
+  }
+  
+  render(){
+    let { id, state, createdAt, userId, OrderDetail, products} = this.props.order;
+    
     return (
-      <Fragment>
-        
-        <div className={styles.primerDiv}>
-          <h2 className='ml-10'>Detalle de compra</h2>
-          <div className={styles.container}>
-            <div className="row">
-              <div className="col-6">
-                <div className={styles.membrete}>
-                  <table className={"table " + styles.memtable}>
-                    <tbody>
-                    <tr>
-                      <th scope="row">Id de la compra</th>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Fecha</th>
-                      <td>2021-06-6 12:10:22</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="col-6"></div>
-            </div>
-    
-    
-            <div>
-              <br/>
-              Aca van los productos comprados
-              <br/>
-              <br/>
-            </div>
+      <div className={styles.primerDiv}>
+        <h2>Detalle de compra</h2>
+        <div className={styles.container}>
+          <div>
             <table>
               <tbody>
               <tr>
-                <th scope="row">Id de la compra</th>
-                <td>1</td>
-              </tr>
-              <tr>
                 <th scope="row">Fecha</th>
-                <td>2021-06-6 12:10:22</td>
+                <td className={styles.letterhead}>{createdAt}</td>
               </tr>
               <tr>
-                <th scope="row">Cantidad</th>
-                <td>2</td>
+                <th scope="row">Id de Usuario</th>
+                <td className={styles.letterhead}>{userId}</td>
+              </tr>
+              <tr>
+                <th scope="row" >Estado de la orden</th>
+                <td className={styles.letterhead}>{state}</td>
+              </tr>
+              <tr>
+                <th scope="row" >Numero de orden</th>
+                <td className={styles.letterhead}>{id}</td>
               </tr>
               </tbody>
             </table>
           </div>
+          {
+            products && products.map(product => {
+              return <div className={styles.containerproducts}>
+                <div className={'d-inline ' + styles.image}>
+                  <img className="img-responsive" src='imagenes' alt="Cargando imagen..." /></div>
+                <div className={'d-inline ' + styles.name}>{product.name}</div>
+                <div className={'d-inline ' + styles.quantity}>{product.stock}</div>
+                <div className={'d-inline ' + styles.price}>${product.price}</div>
+              </div>
+            })
+          }
+          <div className={styles.ctnTotal}>
+            <div className={styles.totalTable}>
+              <h5 className="grupo">Total a pagar: </h5>
+              <div className="grupo">
+                <h4 className='ml-3'> {OrderDetail? OrderDetail.quantity : ''}</h4>
+              </div>
+            </div>
+          </div>
         </div>
-        
-      </Fragment>
-    );
+      </div>
+  
+    )
+  }
+  
 }
+
+function mapStateToProps(state) {
+  console.log("este es el state0", state.product.order)
+  return {
+    order: state.product.order
+  }
+}
+
+export default connect(mapStateToProps, { getUserOrder })(OrderDetails);
 

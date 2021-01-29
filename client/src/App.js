@@ -35,8 +35,8 @@ function App() {
           <Route exact path="/" component={Main} />
           <Route exact path='/products' component={Catalogue} />
           <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />
-          <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
-          <Route exact path="/orders" render={({ match }) => <OrderTable key={match.params.id} id={match.params.id} />} />
+          <Route exact path="/orders" component={OrderTable} />
+          <Route exact path="/orders/:id" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
 
 
           <Route exact path='/admin/products' component={CrudProduct} />
