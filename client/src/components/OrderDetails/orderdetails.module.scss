@@ -14,18 +14,22 @@
     .letterhead{
       display: flex;
       margin-left: 20px;
+      padding-left: 5px;
+
     }
 
     .editar{
-      margin-left: 10px;
-      padding-left: 1px;
       border-radius: 5px;
+      background-color: gainsboro;
+
+      &:hover{
+        cursor: pointer;
+      }
     }
 
     .containerProducts{
       padding-top: 5%;
       display: grid;
-
 
       .divProducts1{
         display: flex;

@@ -14,8 +14,8 @@ class OrderTable extends React.Component {
     return(
       <Fragment>
         <h2>Ordenes de Usuario:</h2>
-        <div className= {'table-responsive ' + styles.container}>
-          <table className="table table-hover table-sm" >
+        <div className= {"table-responsive " + styles.container}>
+          <table className="table table-sm" >
             <thead>
             <tr>
               <th scope="col">Número de Compra</th>

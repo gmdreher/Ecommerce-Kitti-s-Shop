@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './orderdetails.module.scss'
+import styles from './orderdetails.module.scss';
 import { connect } from 'react-redux';
 import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
 
@@ -76,7 +76,7 @@ class OrderDetails extends React.Component {
               </tr>
               <tr>
                 <th scope="row" className='mr-3'>Estado de la orden:</th>
-                <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
+                <td className={styles.letterhead}><div className="btn-sm">{this.state.editing? " " :state}</div>
                 <div className={styles.editar} onClick={this.handleState}>
                   {this.state.editing? (<form onSubmit={this.handleSubmit}>
                   <label htmlFor="state">Elige un estado</label>
@@ -88,8 +88,8 @@ class OrderDetails extends React.Component {
                     <option value="completa">completa</option>
                   </select>
                   <br></br>
-                    <input className="btn btn-light btn-sm" type="submit" value="Aceptar"/>
-                </form>) : <div className={"btn btn-light btn-sm" + styles.editar}>Editar</div>
+                    <input className="btn btn-info btn-sm" type="submit" value="Aceptar"/>
+                </form>) : <div className={"btn-sm " + styles.editar}>Editar</div>
                   }
                   </div>
                   </td>
