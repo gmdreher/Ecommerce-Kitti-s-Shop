@@ -13,7 +13,7 @@ import {
     ADD_TO_CART,
     GET_PRODUCT_CART,
     GET_ORDERS,
-    GET_SPECIFIC_ORDER
+    GET_SPECIFIC_ORDER,
 } from '../constants/productConstants.js';
 
 
@@ -24,14 +24,13 @@ const initialState = {
     allOrders: [],
     products: [],
     cart: [],
-    order: []
+    order: [],
 
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCT_BY_ID:
-            console.log('esta es la accion', action)
             return {
                 ...state,
                 product: action.payload
@@ -108,12 +107,11 @@ export default (state = initialState, action) => {
             }
     
         case GET_SPECIFIC_ORDER:
-            console.log('esta es la accion', action)
             return {
                 ...state,
                 order: action.payload
             }
-
+        
         default:
             return state;
 

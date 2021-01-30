@@ -4,19 +4,26 @@ import { connect } from 'react-redux';
 import { getUserOrder } from "../../actions/productActions";
 
 
+
 class OrderDetails extends React.Component {
-  
  
   componentDidMount() {
-    this.props.getUserOrder(this.props.id)
-  
-    
+    this.props.getUserOrder(this.props.id);
   }
   
-  render(){
-    
+  render () {
+    let priceOrder=[];
+    function getPriceOrder() {
+      if (priceOrder.length > 0) {
+        let total = 0;
+        for(let i = 0; i <priceOrder.length; i++){
+          total = total + priceOrder[i];
+        }
+        return total.toFixed(2);
+      }
+    }
     let { id, state, createdAt, userId, products } = this.props.order;
-    console.log(products)
+   
     return (
       <div className={styles.primerDiv}>
         <h2 className="main-Footer">Detalle de compra</h2>
@@ -45,35 +52,38 @@ class OrderDetails extends React.Component {
             </table>
           </div>
           <div className={styles.containerProducts}>
-            
             {
               products && products.map(product => {
+                let quantity = product.OrderDetails.quantity;
+                let subTot = product.price * quantity;
+                priceOrder.push(subTot);
+                
                 return <div className={styles.divProducts1} >
                   <div className={styles.image}>
                     <img className={styles.imgResponsive} src={product.images? product.images[0].url : ''} alt="Cargando imagen..." />
+                  </div>
+                  <div className={styles.quantity}>
+                    <h5>{quantity}</h5>
                   </div>
                     <div className={styles.name}>
                       <h5 className="ml-3">{product.name}</h5>
                   </div>
                     <div className={styles.quantity}>
-                      <h5>{product.stock} </h5>
+                      <h5>${product.price} </h5>
                     </div>
                   <div className={styles.price}>
-                      <h6>${product.price}</h6>
-                  </div>
-                  <div className={styles.price}>
-                    <h5>${}</h5>
+                      <h6>${product.price * quantity}</h6>
                   </div>
                 </div>
                 
-              })}
+              })
+            }
           </div>
-          
           <div className={styles.ctnTotal}>
             <div className={styles.totalTable}>
               <h5 className="grupo">Total a pagar: </h5>
               <div className="grupo">
-                <h4 className='ml-3'>$10500</h4>
+                  <h4 className='ml-3'>${getPriceOrder()}</h4>
               </div>
             </div>
           </div>
@@ -84,9 +94,10 @@ class OrderDetails extends React.Component {
   }}
 
 function mapStateToProps(state) {
-  console.log("este es el state0", state.product.order)
+  console.log("este es el state0", state)
   return {
-    order: state.product.order
+    order: state.product.order,
+   
   }
 }
 

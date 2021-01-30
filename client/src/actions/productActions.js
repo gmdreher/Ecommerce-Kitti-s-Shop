@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
     DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES,
-    SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER
+    SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER,
 } from '../constants/productConstants.js';
 
 export const getProductById = (id) => async (dispatch) => {
@@ -173,5 +173,4 @@ export function getUserOrder(id) {
               dispatch({ type: GET_SPECIFIC_ORDER, payload: userOrders.data });
           });
     };
-}
-
+};

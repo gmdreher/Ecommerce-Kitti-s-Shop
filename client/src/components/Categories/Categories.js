@@ -7,7 +7,6 @@ import styles from './categories.module.scss';
 
 function Categories (props) {
   
-  // let dispatch= useDispatch()
 
   useEffect(()=>{
    props.getCategories()
@@ -24,10 +23,11 @@ function Categories (props) {
             {props.categories.map((e)=>{
               return <div key={e.id} >
                 <NavLink exact to={`/products/category/${e.name}`}  activeStyle={{fontWeight: "bold"}} >
-                  <a >{e.name}</a>
+                  <a>{e.name}</a>
                 </NavLink>
               </div>
-            })}
+            })
+            }
           </ul>
         </div>
       </div>
