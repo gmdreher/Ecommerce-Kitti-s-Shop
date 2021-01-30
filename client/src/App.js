@@ -7,6 +7,7 @@ import Product from './components/Product/Product.jsx';
 import NavCategories from "./components/Categories/NavCategories";
 import CrudProduct from './components/CrudProduct/CrudProduct.jsx'
 import NewCategoryForm from './components/NewCategoryForm/NewCategoryForm'
+import SignUp from './components/User/SingUp'
 
 import Main from './components/Main/Main'
 import ProductsByCategory from "./components/Categories/ProductsByCategory";
@@ -42,7 +43,8 @@ function App() {
           <Route exact path='/admin/products' component={CrudProduct} />
           <Route exact path='/admin/categories' component={NewCategoryForm} />
 
-          <Route exact path="/users" component={ViewOrder} />
+          <Route exact path='/user' component={SignUp} />
+          <Route exact path="/user/order" component={ViewOrder} />
 
 
         </main>

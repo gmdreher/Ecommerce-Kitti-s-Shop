@@ -5,18 +5,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
 
+
 export default function ViewOrder(props) {
 
     const dispatch = useDispatch();
 
-    const cartProduct = useSelector(store => store.product.cart);
-
-    useEffect(function () {
-        dispatch(getProductsCart({ userId: 1, state: "carrito" }));
-    }, [])
+    const cartProduct = useSelector(store => store.cart.cart); 
+    const usersData = useSelector(store => store.product.user);
+       //modificamos para que traiga el store de cart
+   console.log("user");
+   console.log(usersData[usersData.length-1]);
+   const user = usersData[usersData.length-1];
+     useEffect(function () {
+            dispatch(getProductsCart(user!==undefined?{ userId: user.id, state: "carrito" }:{state: "carrito" }));
+  
+         
+     }, [])
 
     let priceList = [];
-
     function totalHandler() {
         if (priceList.length > 0) {
             var total = 0;
@@ -34,14 +40,19 @@ export default function ViewOrder(props) {
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
-                        var subTot = 0;
-                        subTot = info.price * info.quantity;
-                        priceList.push(subTot);
-                        return <OrderCard data={info} />
+                        console.log("esto es info")
+                        console.log(info)
+                            var subTot = 0;
+                            subTot = info.price * info.quantity;
+                            priceList.push(subTot);
+
+                            return <OrderCard data={info} />
+                        
                     })}
                 </div>
             </div>
             <div className="parte-dos">
+                
                 <PayCart dato={totalHandler()} />
             </div>
         </div>
