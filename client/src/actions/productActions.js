@@ -5,7 +5,7 @@ import { DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGOR
 export const getProductById = (id) => async (dispatch) => {
     try {
         const res = await axios.get(`http://localhost:3001/products/${id}`);
-        console.log('este es la respuesta de la action', res)
+       // console.log('este es la respuesta de la action', res)
         dispatch({
             type: GET_PRODUCT_BY_ID,
             payload: res.data
@@ -102,18 +102,18 @@ export const deleteProduct = (id) => async dispatch => {
     }
 }
 export const insertProduct = (datos) => async dispatch => {
-    console.log('esta es la imagen')
-    console.log(datos.product.Image)
+    //console.log('esta es la imagen')
+    //console.log(datos.product.Image)
     const response = await axios.post('http://localhost:3001/products/', datos.product);
-    console.log(response.data)
-    datos.cate.map((categoria) => {
-        axios.post(`http://localhost:3001/products/${response.data.id}/category/${categoria}`)
-            .then((responseProdCat) => {
-                dispatch({
-                    type: POST_PRODUCT,
-                    payload: responseProdCat.data
-                });
-            })
+    //console.log(response.data)
+    datos.cate.map((categoria)=>{
+       axios.post(`http://localhost:3001/products/${response.data.id}/category/${categoria}`)
+        .then((responseProdCat)=>{
+            dispatch({
+            type: POST_PRODUCT,
+            payload: responseProdCat.data
+            });
+        })
     })
     /* const fd = new FormData();
     fd.append('image', datos.img,datos.img.name)
@@ -137,17 +137,13 @@ export const editProduct = product => async dispatch => {
     console.log(categorias)
 
     var borrar;
-    if (categorias) {
-
-        for (var i = 0; i < categorias.data.length; i++) {
+    if(categorias){       
+        for(var i=0;i<categorias.data.length;i++){
             borrar = await axios.delete(`http://localhost:3001/products/${product.id}/category/${categorias.data[i].id}`)
 
         }
     }
-    console.log('estas son las que voy a agregar')
-    console.log(product.categories)
-
-    for (var i = 0; i < product.categories.length; i++) {
+    for(var i=0;i<product.categories.length;i++){
         axios.post(`http://localhost:3001/products/${product.id}/category/${product.categories[i].id}`)
     }
 }

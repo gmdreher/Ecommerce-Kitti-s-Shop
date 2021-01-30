@@ -52,9 +52,6 @@ OrderDetails.belongsTo(Order);
 Product.belongsToMany(Order, { through: OrderDetails })
 Order.belongsToMany(Product, { through: OrderDetails })
 
-Order.hasOne(OrderDetails)
-OrderDetails.belongsTo(Order)
-
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

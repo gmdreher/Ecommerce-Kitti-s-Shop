@@ -1,9 +1,11 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/reducerProducts.js';
+import cartReducer from './reducers/reducerCart.js'
 
 const reducer = combineReducers({
     product: rootReducer,
+    cart: cartReducer
 })
 
 //REDUX DETVOOLS en google, instalar thunk

@@ -11,12 +11,13 @@ export default function Catalogue() {
 
     const dispatch = useDispatch();
     const products = useSelector((store) => store.product.products);
+
     useEffect(() => {
 
         if (history.location.search.length === 0) dispatch(getProducts())
         if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
 
-    }, [])
+    }, [history.location.search.length > 0])
 
     return (
         <div className={styles.catalogue}>
