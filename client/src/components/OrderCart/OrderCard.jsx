@@ -6,23 +6,23 @@ import { editQuantity } from '../../actions/cartAction.js';
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function OrderCard(props) {
-    console.log("Mi data de OrderCard");
-    console.log(props.data);
+    // console.log("Mi data de OrderCard");
+    // console.log(props.data);
 
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
     const user = usersData[usersData.length - 1];
+    console.log("--- user ---", user);
 
 
     var quantity = props.data.quantity;
     var productId = props.data.id;
 
     function sumar() {
-        console.log("este es el PRODUCT ID", productId);
+        quantity = quantity + 1
+        console.log('--- --- Actualización --- --- :', productId, quantity);
         dispatch(editQuantity({ idUser: user.id, productId: productId, quantity: quantity }))
-        console.log("-------------------------------", quantity);
-
     }
 
 

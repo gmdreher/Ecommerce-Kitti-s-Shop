@@ -12,8 +12,8 @@ export default function ViewOrder(props) {
 
     const usersData = useSelector(store => store.product.user);
     //modificamos para que traiga el store de cart
-    console.log("Datos de USERDATA");
-    console.log(usersData[usersData.length - 1]);
+    // console.log("Datos de USERDATA");
+    // console.log(usersData[usersData.length - 1]);
     const user = usersData[usersData.length - 1];
 
     const cartProduct = useSelector(user !== undefined ? (store => store.product.cart) : (store => store.cart.cartItems));
@@ -59,8 +59,8 @@ export default function ViewOrder(props) {
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
-                        console.log("esto es info")
-                        console.log(info)
+                        // console.log("esto es info")
+                        // console.log(info)
                         var subTot = 0;
                         subTot = info.price * info.quantity;
                         priceList.push(subTot);

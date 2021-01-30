@@ -111,11 +111,11 @@ export default (state = initialState, action) => {
                 cart: state.cart.filter(produc => produc.id !== action.payload)
             }
         case UPDATE_COUNT_PRODUCT:
-            console.log('---------------action---------- ' + cart);
-            console.log(cart)
+            console.log(`--- CART ---`, state.cart)
+            console.log('--- STATE ---', state)
             return {
                 ...state,
-                cart: state.cart.map(produc => produc.id === action.payload.id ? produc = action.payload : produc)
+                cart: [...state.cart, action.payload]
             }
         default:
             return state;
