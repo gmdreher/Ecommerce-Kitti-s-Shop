@@ -1,0 +1,22 @@
+h2{
+  margin-left: 50px;
+  margin-top: 10px;
+}
+.container{
+  display: flex;
+  border: 2px solid gainsboro;
+  width: auto;
+  align-self: center;
+  margin: 50px;
+
+        table{
+          text-align: center;
+          align-content: space-evenly;
+          margin-bottom: 0;
+              th{
+                    text-align: center;
+                    width: 20px;
+              }
+        }
+
+}

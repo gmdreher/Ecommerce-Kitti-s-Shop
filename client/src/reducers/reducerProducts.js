@@ -12,16 +12,18 @@ import {
     UPDATE_CATEGORY,
     ADD_TO_CART,
     GET_PRODUCT_CART,
-    POST_USER
+    POST_USER,
 } from '../constants/productConstants.js';
 
 const initialState = {
     product: [],
     filteredProduct: [],
     categories: [],
+    allOrders: [],
     products: [],
     user:[],
-    cart: []
+    cart: [],
+    order: [],
 
 };
 
@@ -39,7 +41,7 @@ export default (state = initialState, action) => {
                 ...state,
                 filteredProduct: action.payload,
             }
-
+            
         case GET_CATEGORIES:
             return {
                 ...state,
@@ -103,7 +105,7 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: [...state.cart, action.payload]
             }
-
+            
         default:
             return state;
 
