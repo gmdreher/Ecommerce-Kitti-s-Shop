@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE, GET_PRODUCT_CART, GET_PRODUCT_CART_LOCALSTORAGE, DELETE_TOTAL_CART } from '../constants/productConstants.js';
+import { ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE, GET_PRODUCT_CART, GET_PRODUCT_CART_LOCALSTORAGE, DELETE_TOTAL_CART, UPDATE_COUNT_PRODUCT } from '../constants/productConstants.js';
 
 export const addProductCart = (data) => async (dispatch, getState) => {
     console.log('eso es data en el action de agregar al carrito')
@@ -54,33 +54,6 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 
 export const getProductsCart = (data) => async (dispatch) => {
 
-
-
-    // if(!data.userId){
-    //     let orderItems = JSON.parse(localStorage.getItem('cartItems'))
-    //     let order;
-
-    //     orderItems && orderItems.map((e)=>{
-    //         axios.get(`http://localhost:3001/products/${e.id}`)
-    //         .then((e)=>{
-    //             // console.log("eeeesto es")
-    //             // console.log(e)
-    //             order = {
-    //                     description: e.data.description,
-    //                     id: e.data.id,
-    //                     images: e.data.images,
-    //                     name: e.data.name,
-    //                     price: e.data.price,
-    //                     quantity: e.data.quantity
-    //             }
-    //             dispatch({
-    //                 type: GET_PRODUCT_CART_LOCALSTORAGE,
-    //                 payload: order
-    //             })
-    //         })
-    //     })
-    // }else{
-
     try {
         const res = await axios.get(`http://localhost:3001/users/${data.userId}/order/${data.state}`);
         res.data.map((valor) => {
@@ -114,14 +87,35 @@ export const deleteTotalCart = (data) => async dispatch => {
     console.log(data);
     try {
 
-        const res = await axios.delete(`http://localhost:3001/users/${data.userId}/order`, data.orderId);
+        const res = await axios.delete(`http://localhost:3001/users/${data.userId}/order/${data.orderId}`);
 
         console.log("delete accion");
         dispatch({
             type: DELETE_TOTAL_CART,
-            payload: res.data.orderId
+            payload: data.orderId
         });
     } catch (error) {
         console.log("Error: " + error);
     }
 }
+
+
+export const editQuantity = (data) => async dispatch => {
+
+    console.log("Info de editQuantity");
+    console.log(data);
+    try {
+
+        const res = await axios.put(`http://localhost:3001/user/${data.idUser}/cart`, data);
+
+        console.log("EDIT accion");
+        console.log(res.data);
+        dispatch({
+            type: UPDATE_COUNT_PRODUCT,
+            payload: res.data
+        });
+    } catch (error) {
+        console.log("Error: " + error);
+    }
+}
+

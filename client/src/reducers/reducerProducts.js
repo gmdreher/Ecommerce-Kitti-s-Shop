@@ -13,7 +13,8 @@ import {
     ADD_TO_CART,
     GET_PRODUCT_CART,
     POST_USER,
-    DELETE_TOTAL_CART
+    DELETE_TOTAL_CART,
+    UPDATE_COUNT_PRODUCT
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -109,7 +110,13 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: state.cart.filter(produc => produc.id !== action.payload)
             }
-
+        case UPDATE_COUNT_PRODUCT:
+            console.log('---------------action---------- ' + cart);
+            console.log(cart)
+            return {
+                ...state,
+                cart: state.cart.map(produc => produc.id === action.payload.id ? produc = action.payload : produc)
+            }
         default:
             return state;
 
