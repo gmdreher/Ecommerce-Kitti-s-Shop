@@ -1,5 +1,5 @@
 import React, {Fragment,} from "react";
-import { getAllOrders } from '../../actions/productActions';
+import { getAllOrders } from '../../actions/orderActions';
 import { connect } from 'react-redux';
 import styles from './orderTable.module.scss'
 import { Link } from "react-router-dom";
@@ -60,7 +60,7 @@ class OrderTable extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    allOrders: state.product.allOrders
+    allOrders: state.orderStore.allOrders
   }
 }
 

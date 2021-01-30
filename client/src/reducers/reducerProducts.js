@@ -12,10 +12,7 @@ import {
     UPDATE_CATEGORY,
     ADD_TO_CART,
     GET_PRODUCT_CART,
-    GET_ORDERS,
-    GET_SPECIFIC_ORDER,
     POST_USER,
-    UPDATE_STATE_ORDER
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -108,25 +105,6 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: [...state.cart, action.payload]
             }
-    
-        case GET_ORDERS:
-            return {
-                ...state,
-                allOrders: action.payload
-            }
-    
-        case GET_SPECIFIC_ORDER:
-            return {
-                ...state,
-                order: action.payload
-            }
-            
-        case UPDATE_STATE_ORDER:
-            return {
-                ...state,
-                order: action.payload
-            }
-        
             
         default:
             return state;

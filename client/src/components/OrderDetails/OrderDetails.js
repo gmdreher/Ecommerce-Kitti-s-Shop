@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './orderdetails.module.scss'
 import { connect } from 'react-redux';
-import { getUserOrder, updateStateOrder } from "../../actions/productActions";
+import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
 
 
 
@@ -149,7 +149,7 @@ class OrderDetails extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    order: state.product.order,
+    order: state.orderStore.order,
    
   }
 }

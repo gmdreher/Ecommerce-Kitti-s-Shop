@@ -150,33 +150,3 @@ export const editProduct = product => async dispatch => {
         axios.post(`http://localhost:3001/products/${product.id}/category/${product.categories[i].id}`)
     }
 }
-
-//obtener todas las ordenes
-export function getAllOrders() {
-    return function(dispatch) {
-        return axios.get('http://localhost:3001/orders')
-          .then(orders => {
-              dispatch({ type: GET_ORDERS, payload: orders.data });
-          });
-    };
-}
-
-
-export function getUserOrder(id) {
-    return function(dispatch) {
-        return axios.get(`http://localhost:3001/orders/${id}`)
-          .then(userOrders => {
-              dispatch({ type: GET_SPECIFIC_ORDER, payload: userOrders.data });
-          });
-    };
-};
-
-export function updateStateOrder(orderId, state) {
-    return function(dispatch) {
-        return axios.put(`http://localhost:3001/orders/${orderId}`, {"state": state})
-          .then(order =>{
-              console.log("esta es la order action", order)
-             dispatch({type: UPDATE_STATE_ORDER, payload: order.data})
-          });
-    };
-};
