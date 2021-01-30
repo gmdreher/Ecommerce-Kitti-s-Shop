@@ -55,17 +55,20 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 export const getProductsCart = (data) => async (dispatch) => {
 
     try {
+        let user = data.userId;
         const res = await axios.get(`http://localhost:3001/users/${data.userId}/order/${data.state}`);
+        console.log("TRAE RES", res);
         res.data.map((valor) => {
             let dato1 = valor.quantity;
             let ordeId = valor.orderId;
+            let product = valor.productId;
             axios.get(`http://localhost:3001/products/${valor.productId}`)
                 .then((data) => {
-                    // console.log("Todos los productos de un usuario en su carrito");
+                    console.log("Todos los productos de un usuario en su carrito");
                     let order = {
                         description: data.data.description, id: data.data.id,
                         images: data.data.images, name: data.data.name,
-                        price: data.data.price, quantity: dato1, orderId: ordeId,
+                        price: data.data.price, quantity: dato1, orderId: ordeId, productId: product, userId: user,
                     }
                     // console.log(order);
                     dispatch({

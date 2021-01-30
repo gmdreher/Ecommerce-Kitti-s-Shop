@@ -156,9 +156,7 @@ server.delete("/:userId/order/:orderId", (req, res) => {
 })
 
 
-
-// 41) modificar cantidades del carrito por id usuario
-server.put('/:idUser/cart', (req, res) => {
+server.put('/:idUser/cart', (req, res, next) => {
     const { idUser } = req.params;
     const { productId, quantity } = req.body;
     Order.findOne({
@@ -180,21 +178,53 @@ server.put('/:idUser/cart', (req, res) => {
         }
     })
         .then((detail) => {
-            // console.log(detail.OrderDetail)
             detail.OrderDetail.update({
+                ...detail.OrderDetail,
                 quantity: quantity
             });
+            res.send(detail)
         })
-        .then(() => {
-            res.status(200)
-                .send(`Cantidad de producto de id: ${productId} cambiada a: ${quantity}`)
-        })
-        .catch(error => {
-            console.log(error)
-            res.status(400)
-                .send("Error al modificar la cantidad de:  " + productId + error)
-        })
+        .catch(next)
 })
+
+// 41) modificar cantidades del carrito por id usuario
+// server.put('/:idUser/cart', (req, res) => {
+//     const { idUser } = req.params;
+//     const { productId, quantity } = req.body;
+//     Order.findOne({
+//         where: {
+//             [Op.and]: [
+//                 { userId: idUser },
+//                 {
+//                     state: {
+//                         [Op.or]: ['carrito', 'creada']
+//                     }
+//                 }
+//             ]
+//         },
+//         include: {
+//             model: OrderDetails,
+//             where: {
+//                 productId: productId
+//             }
+//         }
+//     })
+// .then((detail) => {
+//     // console.log(detail.OrderDetail)
+//     detail.OrderDetail.update({
+//         quantity: quantity
+//     });
+// })
+//         .then(() => {
+//             res.status(200)
+//                 .send(`Cantidad de producto de id: ${productId} cambiada a: ${quantity}`)
+//         })
+//         .catch(error => {
+//             console.log(error)
+//             res.status(400)
+//                 .send("Error al modificar la cantidad de:  " + productId + error)
+//         })
+// })
 
 
 module.exports = server;

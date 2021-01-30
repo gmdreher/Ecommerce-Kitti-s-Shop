@@ -4,6 +4,7 @@ import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart, deleteTotalCart } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
+import axios from 'axios';
 
 
 export default function ViewOrder(props) {
@@ -13,7 +14,6 @@ export default function ViewOrder(props) {
     const usersData = useSelector(store => store.product.user);
     //modificamos para que traiga el store de cart
     // console.log("Datos de USERDATA");
-    // console.log(usersData[usersData.length - 1]);
     const user = usersData[usersData.length - 1];
 
     const cartProduct = useSelector(user !== undefined ? (store => store.product.cart) : (store => store.cart.cartItems));
@@ -21,6 +21,7 @@ export default function ViewOrder(props) {
         dispatch(getProductsCart(user !== undefined ? { userId: user.id, state: "carrito" } : { state: "carrito" }));
     }, [])
 
+    console.log("CARDPRODUCT", cartProduct);
 
     let priceList = [];
     function totalHandler() {
@@ -48,6 +49,18 @@ export default function ViewOrder(props) {
         }
     }
 
+    function sumar(data) {
+        console.log("MIERDA");
+        console.log(data);
+        if (cartProduct.length > 0) {
+            var idProd = data.id;
+            var idUsr = data.userId;
+            var qty = data.quantity + 1
+            axios.put(`http://localhost:3001/users/${idUsr}/cart`, { productId: idProd, quantity: qty })
+                .then(res => console.log('salio de axios'))
+        }
+    }
+
 
     return (
 
@@ -64,7 +77,53 @@ export default function ViewOrder(props) {
                         var subTot = 0;
                         subTot = info.price * info.quantity;
                         priceList.push(subTot);
-                        return <OrderCard data={info} />
+                        return (
+                            <div>
+                                <div className="abc" >
+                                    <div className="foto" >
+                                        {/* <img className="img-responsive" src={imagenes} alt="Cargando imagen..." /> */}
+                                    </div>
+                                    <div className="datoName" >
+                                        <div className="datoName2">
+                                            <h5>{info.name}</h5>
+                                        </div>
+                                    </div>
+                                    <div className="add" >
+                                        <div className="dataAdd">
+                                            <button ><i class="fas fa-minus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div className="dataQuanty" >
+                                        <div className="dataQuanty2">
+                                            <h5>{info.quantity}</h5>
+                                        </div>
+                                    </div>
+                                    <div className="add" >
+                                        <div className="dataAdd">
+                                            <button onClick={() => {
+                                                sumar(info)
+                                            }} ><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div className="dataPrice" >
+                                        <div>
+                                            <h5>$ {info.price}</h5>
+                                        </div>
+                                    </div>
+                                    <div className="dataPrice" >
+                                        <div>
+                                            <h5>$ {info.price * info.quantity}  </h5>
+                                        </div>
+                                    </div>
+                                    <div className="add" >
+                                        <div className="dataAdd">
+                                            <button><i class="far fa-trash-alt"></i></button>
+                                        </div>
+                                    </div>
+                                </div >
+                            </div>
+                        )
+
                     })}
                 </div>
             </div>
