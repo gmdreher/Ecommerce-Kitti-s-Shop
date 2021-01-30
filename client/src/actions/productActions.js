@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
     DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES,
-    SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER,
+    SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER
 } from '../constants/productConstants.js';
 
 export const getProductById = (id) => async (dispatch) => {
@@ -167,6 +167,16 @@ export function getUserOrder(id) {
         return axios.get(`http://localhost:3001/orders/${id}`)
           .then(userOrders => {
               dispatch({ type: GET_SPECIFIC_ORDER, payload: userOrders.data });
+          });
+    };
+};
+
+export function updateStateOrder(orderId, state) {
+    return function(dispatch) {
+        return axios.put(`http://localhost:3001/orders/${orderId}`, {"state": state})
+          .then(order =>{
+              console.log("esta es la order action", order)
+             dispatch({type: UPDATE_STATE_ORDER, payload: order.data})
           });
     };
 };

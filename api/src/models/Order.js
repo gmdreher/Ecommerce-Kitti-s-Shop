@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     const Order = sequelize.define('order', {
       state: {
-        type: DataTypes.ENUM(["Carrito", "Creada", "Procesando", "Cancelada", "Completa"])
+        type: DataTypes.ENUM(["carrito", "creada", "procesando", "cancelada", "completa"])
       },
       createdAt: {
         allowNull: false,

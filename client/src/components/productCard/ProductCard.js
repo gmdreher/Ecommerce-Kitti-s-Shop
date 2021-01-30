@@ -38,7 +38,7 @@ export default function ProductCard({ data }) {
             </ul>
             <div class="card-body">
               
-                    <button disabled={data.stock<1}  onClick={() => handleClick(data)}>Carrito</button>
+                    <button disabled={data.stock<1}  onClick={() => handleClick(data)}>Añadir al carrito</button>
                     <label id="stock"></label>
                      {data.stock<1?<label >Producto Agotado</label>:<label></label>}
     

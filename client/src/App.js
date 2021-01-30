@@ -1,5 +1,5 @@
 import React from 'react';
-import '../src/App.scss';
+// import './Styles/App.scss';
 import Navbar from './components/navBar/NavBar';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Catalogue from './components/catalogue/Catalogue.js';
@@ -8,12 +8,11 @@ import NavCategories from "./components/Categories/NavCategories";
 import CrudProduct from './components/CrudProduct/CrudProduct.jsx'
 import NewCategoryForm from './components/NewCategoryForm/NewCategoryForm'
 import SignUp from './components/User/SingUp'
-
 import Main from './components/Main/Main'
 import ProductsByCategory from "./components/Categories/ProductsByCategory";
 import Footer from "./components/Footer/Footer"
-import OrderDetails from "./components/Order/OrderDetails";
-import OrderTable from "./components/Order/OrderTable";
+import OrderDetails from "./components/OrderDetails/OrderDetails";
+import OrderTable from "./components/OrderTable/OrderTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
 
 

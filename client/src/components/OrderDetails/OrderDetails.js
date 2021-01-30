@@ -1,17 +1,52 @@
 import React from "react";
 import styles from './orderdetails.module.scss'
 import { connect } from 'react-redux';
-import { getUserOrder } from "../../actions/productActions";
+import { getUserOrder, updateStateOrder } from "../../actions/productActions";
 
 
 
 class OrderDetails extends React.Component {
- 
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      OrderState: "",
+      editing: false,
+    };
+    this.handleState = this.handleState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
   componentDidMount() {
     this.props.getUserOrder(this.props.id);
   }
   
+  handleState() {
+    this.setState({
+      editing: true
+    })
+  }
+  handleChange = event => {
+    this.setState({
+      OrderState: event.target.value,
+    })
+  }
+  
+  handleSubmit(event) {
+    event.preventDefault();
+    
+    this.setState({
+      editing: false,
+      OrderState: event.target.value,
+    });
+    
+      this.props.updateStateOrder(this.props.id, this.state.OrderState);
+    
+  }
+  
   render () {
+    
     let priceOrder=[];
     function getPriceOrder() {
       if (priceOrder.length > 0) {
@@ -29,7 +64,7 @@ class OrderDetails extends React.Component {
         <h2 className="main-Footer">Detalle de compra</h2>
         <div className={styles.container}>
           <div>
-            <table>
+            <table className="table-responsive-m">
               <tbody>
               <tr>
                 <th scope="row">Fecha:</th>
@@ -40,15 +75,34 @@ class OrderDetails extends React.Component {
                 <td className={styles.letterhead}>{userId}</td>
               </tr>
               <tr>
-                <th scope="row" >Estado de la orden:</th>
-                <td className={styles.letterhead}>{state}</td>
+                <th scope="row" className='mr-3'>Estado de la orden:</th>
+                <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
+                <div className={styles.editar} onClick={this.handleState}>
+                  {this.state.editing? (<form onSubmit={this.handleSubmit}>
+                  <label htmlFor="state">Elige un estado</label>
+                  <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
+                    <option value="carrito">carrito</option>
+                    <option value="creada">creada</option>
+                    <option value="procesando">procesando</option>
+                    <option value="cancelada">cancelada</option>
+                    <option value="completa">completa</option>
+                  </select>
+                  <br></br>
+                    <input className="btn btn-light btn-sm" type="submit" value="Aceptar"/>
+                </form>) : <div className={"btn btn-light btn-sm" + styles.editar}>Editar</div>
+                  }
+                  </div>
+                  </td>
               </tr>
               <tr>
                 <th scope="row" >Numero de orden</th>
                 <td className={styles.letterhead}>{id}</td>
               </tr>
+              <tr>
+                <th>Productos:</th>
+                <th> </th>
+              </tr>
               </tbody>
-              <th>Productos:</th>
             </table>
           </div>
           <div className={styles.containerProducts}>
@@ -94,12 +148,11 @@ class OrderDetails extends React.Component {
   }}
 
 function mapStateToProps(state) {
-  console.log("este es el state0", state)
   return {
     order: state.product.order,
    
   }
 }
 
-export default connect(mapStateToProps, { getUserOrder })(OrderDetails);
+export default connect(mapStateToProps, { getUserOrder, updateStateOrder })(OrderDetails);
 

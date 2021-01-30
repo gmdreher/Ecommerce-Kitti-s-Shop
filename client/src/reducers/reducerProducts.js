@@ -14,8 +14,8 @@ import {
     GET_PRODUCT_CART,
     GET_ORDERS,
     GET_SPECIFIC_ORDER,
-    GET_PRODUCT_CART,
-    POST_USER
+    POST_USER,
+    UPDATE_STATE_ORDER
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -25,7 +25,6 @@ const initialState = {
     allOrders: [],
     products: [],
     user:[],
-    cart: []
     cart: [],
     order: [],
 
@@ -121,7 +120,14 @@ export default (state = initialState, action) => {
                 ...state,
                 order: action.payload
             }
+            
+        case UPDATE_STATE_ORDER:
+            return {
+                ...state,
+                order: action.payload
+            }
         
+            
         default:
             return state;
 

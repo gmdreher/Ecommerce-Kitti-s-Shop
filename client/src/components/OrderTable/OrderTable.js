@@ -59,7 +59,6 @@ class OrderTable extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log('este es el allOrders:,', state.product.allOrders)
   return {
     allOrders: state.product.allOrders
   }

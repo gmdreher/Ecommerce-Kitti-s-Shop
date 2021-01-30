@@ -7,16 +7,22 @@ server.put('/:id', (req, res) => {
     const { id } = req.params;
     const {state} = req.body;
   
-    Order.findByPk(id)
+    Order.findByPk(id, {
+      include:[
+        {model: Product, include:{model: Image}},
+      ]
+    })
     .then((order)=>{
-      order.update(
+      return order.update(
         {
           state: state 
         })
     })
-    .then((order)=> res.status(200)
-    .send("Estado cambiado"))
-    .catch(error => {
+    .then((order)=> {
+      
+      res.status(200).json(order)
+    })
+      .catch(error => {
         console.log(error)
         res.status(400)
         .send("Error al tratar de cambiar el estado" + error)
