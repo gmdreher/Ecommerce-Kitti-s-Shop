@@ -102,7 +102,10 @@ server.get("/:userId/order/:state",(req,res)=>{
       OrderDetails.findAll({
             where:{
                 orderId: order.id,
-            }
+            },
+            order:[
+                ['productId', 'ASC']
+            ]
         })
         .then(detalle=>{
             res.status(200).json(detalle)
@@ -114,26 +117,18 @@ server.get("/:userId/order/:state",(req,res)=>{
 });
 
 //vaciar carrito
-server.delete("/:userId/order",(req,res)=>{
-    let { orderId }= req.body;
-    let { userId } = req.params;
+server.delete("/:userId/order/:orderId",(req,res)=>{
+
+    let { userId,orderId } = req.params;
 
     Order.destroy({
         where:{
             id: orderId,
             userId: userId
         }
-    })
-    .then(()=>{
-        OrderDetails.destroy({
-            where:{
-                orderId: orderId
-            }
-        })
-        .then((order_destroy)=>{
-            res.status(200).json(order_destroy)
-        })
-    }).catch(err=>{
+    }).then((order)=>{
+            res.status(200).json(order)
+        }).catch(err=>{
         res.status(400).json("no se borro correctamente"+ err)
     })
 })

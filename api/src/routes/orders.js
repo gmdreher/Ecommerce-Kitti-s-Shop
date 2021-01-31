@@ -57,9 +57,8 @@ server.get("/search", (req, res) => {
 
 
 //eliminar un items de la orden
-server.delete("/:orderId",(req,res)=>{
-    let {orderId} = req.params;
-    let {productId } = req.body;
+server.delete("/:orderId/:productId",(req,res)=>{
+    let {orderId,productId} = req.params;
     
     OrderDetails.destroy({
             where:{
@@ -79,8 +78,10 @@ server.delete("/:orderId",(req,res)=>{
 // 41) modificar cantidades del carrito por id usuario
 server.put('/:idUser/cart', (req, res) => {
     const { idUser } = req.params;
-    const {productId, quantity} = req.body;
-  
+    const {productId, quantity, orderId} = req.body;
+  console.log('este es el id del productooooooooooooooooooooooooooooooooooooooooooo')  
+  console.log(productId);
+  /* 
     Order.findOne({
         where: {
             [Op.and]: [
@@ -96,16 +97,20 @@ server.put('/:idUser/cart', (req, res) => {
                 productId: productId
             }
         }
-    })   
-    .then((detail)=> {
+    }) */   
+   // .then((detail)=> {
         // console.log(detail.OrderDetail)
-        detail.OrderDetail.update({
-          quantity: quantity
-        });
-    })
-    .then(()=> {
-      res.status(200)
-      .send(`Cantidad de producto de id: ${productId} cambiada a: ${quantity}`)
+        OrderDetails.update({
+          quantity: quantity},
+          {
+            where:{
+            orderId:orderId,
+            productId:productId
+          },
+          })
+    //})
+    .then((det)=> {
+      res.status(200).json(det)
     })
     .catch(error => {
         console.log(error)
