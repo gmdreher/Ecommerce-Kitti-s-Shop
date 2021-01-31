@@ -23,9 +23,11 @@ const initialState = {
     product: [],
     filteredProduct: [],
     categories: [],
+    allOrders: [],
     products: [],
     user:[],
-    cart: []
+    cart: [],
+    order: [],
 
 };
 
@@ -42,7 +44,7 @@ export default (state = initialState, action) => {
                 ...state,
                 filteredProduct: action.payload,
             }
-
+            
         case GET_CATEGORIES:
             return {
                 ...state,
@@ -125,9 +127,9 @@ export default (state = initialState, action) => {
                                                 product.quantity = action.payload.quantity:
                                                 product.quantity)
                 
-                //cart: state.cart.map(product => product.productId === action.payload.productId ? category = action.payload : category)
+    
             }
-
+            
         default:
             return state;
 

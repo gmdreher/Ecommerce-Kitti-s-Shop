@@ -5,8 +5,8 @@ import { ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE,
         DELETE_ITEM_LC,UPDATE_COUNT_PRODUCT} from '../constants/productConstants.js';
 
 export const addProductCart = (data) => async (dispatch, getState) => {
-    //console.log('eso es data en el action de agregar al carrito')
-    //console.log(data)
+    console.log('eso es data en el action de agregar al carrito')
+    console.log(data)
     if(!data.userId){
         const res= await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
@@ -72,12 +72,12 @@ export const getProductsCart = (data) => async  (dispatch)=> {
         const res = await axios.get(`http://localhost:3001/users/${data.userId}/order/${data.state}`);
         const valor = res.data;
         for(var i = 0 ; i<valor.length;i++){
-            //console.log('entra al maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaap')
+            console.log('entra al maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaap')
             let dato1 = valor[i].quantity;
             let userId= data.userId;
             let orderId= valor[i].orderId
             let dataprod = await axios.get(`http://localhost:3001/products/${valor[i].productId}`)
-                    // console.log("Todos los productos de un usuario en su carrito");
+                     console.log("Todos los productos de un usuario en su carrito");
                     order = {
                         description: dataprod.data.description, id: dataprod.data.id,
                         images: dataprod.data.images, name: dataprod.data.name,

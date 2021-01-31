@@ -7,9 +7,6 @@ import PayCart from '../PayCart/PayCart.jsx';
 
 
 export default function ViewOrder(props) {
-  //  const [quantity , setQuantity] = React.useState(1)
-  //  console.log('este esl uantity antes de cambiarrrrrrrrrrrrrrrrrrrrrrr')
-  //  console.log(quantity)
 
     const dispatch = useDispatch();
 
@@ -66,26 +63,24 @@ export default function ViewOrder(props) {
         
         console.log("DISPATCH EDITQUANTI");
         console.log(data);
-          //  if (cartProduct.length > 0) {
                 var idProd = data.id;
                 var idUsr = data.userId;
                 var orderId = data.orderId
                 var qty = data.quantity + 1
                 dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty,orderId }))
-                dispatch(getProductsCart(user!==undefined?{ userId: user.id, state: "carrito" }:null));   
-                // }
+                dispatch(getProductsCart({ userId: user.id, state: "carrito" }));   
             
     } function restar(data) {
         
         console.log("DISPATCH EDITQUANTI");
         console.log(data);
-           if (data.quantity) {
+           if (data.quantity>0) {
                 var idProd = data.id;
                 var idUsr = data.userId;
                 var orderId = data.orderId
                 var qty = data.quantity - 1
                 dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty,orderId }))
-                dispatch(getProductsCart(user!==undefined?{ userId: user.id, state: "carrito" }:null));   
+                dispatch(getProductsCart({ userId: user.id, state: "carrito" }));   
             }
             
     }
@@ -108,7 +103,7 @@ export default function ViewOrder(props) {
                         return (
 
                             <div>
-                                { info ?
+                                { info.name ?
                                     <div className="abc" >
                                         <div className="foto" >
                                         <img className="img-responsive" src={info.images?info.images[0].url:console.log('no tiene imagen')} alt="Cargando imagen..." />

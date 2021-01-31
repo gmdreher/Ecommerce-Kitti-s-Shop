@@ -83,7 +83,7 @@ import styles from './newCategoryForm.module.scss'
       // COMPONENTE
     return ( 
         <Container>
-          <h2>Administrar Categorías</h2>
+          <h1>Administrar Categorías</h1>
           <Button color='primary' onClick={toggle}> + Agregar Categoría</Button>
           <Table>
               <thead>
@@ -126,7 +126,7 @@ import styles from './newCategoryForm.module.scss'
                   )}
          </FormGroup>
          <FormGroup>
-         <Label for="description"> Descripción   </Label>
+         <Label for="description"> Descripción </Label>
                   <Input type="textarea" className="form-group" name="description" id="description" rows="1" value={input.description} onChange={handleInputChange} />
         </FormGroup>
          
