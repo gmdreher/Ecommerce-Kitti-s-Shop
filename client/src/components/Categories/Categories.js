@@ -7,6 +7,7 @@ import styles from './categories.module.scss';
 
 function Categories (props) {
   
+  // let dispatch= useDispatch()
 
   useEffect(()=>{
    props.getCategories()
@@ -17,17 +18,16 @@ function Categories (props) {
       <div className={styles.dropCategory}>
         <div className="dropdown">
           <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Categories
+            Categorías
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {props.categories.map((e)=>{
               return <div key={e.id} >
                 <NavLink exact to={`/products/category/${e.name}`}  activeStyle={{fontWeight: "bold"}} >
-                  <a>{e.name}</a>
+                  <a >{e.name}</a>
                 </NavLink>
               </div>
-            })
-            }
+            })}
           </ul>
         </div>
       </div>
