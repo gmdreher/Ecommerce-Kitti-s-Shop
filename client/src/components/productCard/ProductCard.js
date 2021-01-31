@@ -22,21 +22,24 @@ export default function ProductCard({ data }) {
     };
 
     return (
-        <div className={'card ' + styles.card} >
+        <div className={ styles.card} >
+            <div>
             {/*<img src={data.images[0].url} class="card-img-top" alt="..." onClick={() => alert('data.name')} /> */}
             {data.images ? (
                 <img src={data.images[0].url} class="card-img-top" />)
                 :
                 (<img src={noImage} />)
             }
-            <div class={"card-body " + styles.cardbody}>
-                <h3 class="card-title"> {data.name}</h3>
+
             </div>
-            <ul class="list-group list-group-flush">
+            <div class={ styles.cardbody}>
+                <h3 > {data.name}</h3>
+            </div>
+            <ul >
                 <li class="list-group-item">Precio: {'$ ' + data.price}</li>
 
             </ul>
-            <div class="card-body">
+            <div >
               
                     <button disabled={data.stock<1}  onClick={() => handleClick(data)}>Añadir al carrito</button>
                     <label id="stock"></label>
@@ -44,7 +47,7 @@ export default function ProductCard({ data }) {
     
                 {/* <a href="#" class="card-link " onClick={() => alert('Carrito')}>Añadir al Carrito</a> */}
                 <Link to={`/products/detalle/${data.id}`}>
-                    <button class="card-link">Ver mas </button>
+                    <button>Ver mas </button>
                 </Link>
             </div>
         </div>
