@@ -84,7 +84,7 @@ import styles from './newCategoryForm.module.scss'
     return ( 
         <Container>
           <h1>Administrar Categorías</h1>
-          <Button color='primary' onClick={toggle}> + Agregar Categoría</Button>
+          <Button className="buttonForm" color='primary' onClick={toggle}> + Agregar Categoría</Button>
           <Table>
               <thead>
                   <tr>
@@ -102,8 +102,8 @@ import styles from './newCategoryForm.module.scss'
                   
                      <td>
                        
-                       <Button color='primary' onClick={() =>handleEdit(category)} >Editar</Button>
-                       <Button color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
+                       <Button className="buttonForm" color='primary' onClick={() =>handleEdit(category)} >Editar</Button>
+                       <Button className="buttonForm" color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
                      </td>
                       </tr>
                 )))}
@@ -161,8 +161,8 @@ import styles from './newCategoryForm.module.scss'
          
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" type="submit" onClick={() => handleEditModal({id: input.id, name: input.name, description: input.description})}>Modificar Categoría</Button>{' '}
-          <Button color="secondary" onClick={toggle2}>Salir</Button>
+          <Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({id: input.id, name: input.name, description: input.description})}>Modificar Categoría</Button>{' '}
+          <Button className="buttonForm" color="secondary" onClick={toggle2}>Salir</Button>
         </ModalFooter>
         </Form>
       </Modal>
@@ -176,8 +176,8 @@ import styles from './newCategoryForm.module.scss'
         <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
         
         <ModalFooter>
-          <Button color="primary" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</Button>
-          <Button color="secondary" onClick={toggle3}>No</Button>
+          <Button className="buttonForm" color="primary" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</Button>
+          <Button className="buttonForm" color="secondary" onClick={toggle3}>No</Button>
         </ModalFooter>
         </Form>
       </Modal>

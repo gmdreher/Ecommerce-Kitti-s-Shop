@@ -51,7 +51,7 @@ server.get("/search", (req, res) => {
     )
 });
 
-//eliminar un items de la orden
+//eliminar un items del carrito
 server.delete("/:orderId",(req,res)=>{
     let {orderId} = req.params;
     let {productId } = req.body;
@@ -116,7 +116,9 @@ server.get('/', (req, res) =>{
       {
         model: Product, include:{model: Image}
       },
-    ]
+    ],
+    order: [
+      ['id', 'ASC']]
   })
     .then(orders =>{
       res.status(200).json(orders)
