@@ -7,6 +7,7 @@
   padding: 0 20px;
   flex-direction: row;
   justify-content: space-evenly;
+  border-radius: 10px;
 
   .compCategories {
     display: flex;
@@ -37,7 +38,6 @@
     .nameCategory {
       display: inline-block;
       margin: 20px;
-      border: 1px solid lightslategray;
       border-radius: 30px;
       padding: 10px;
       width: 120px;
@@ -45,6 +45,7 @@
       background-color: #e1e4e8;
       color: black;
       justify-content: space-evenly;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     }
   }
 }
