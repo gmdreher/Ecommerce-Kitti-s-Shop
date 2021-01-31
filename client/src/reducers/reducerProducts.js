@@ -115,6 +115,7 @@ export default (state = initialState, action) => {
             console.log('--- STATE ---', state)
             return {
                 ...state,
+                cart: state.cart.filter(product => product.productId !== action.payload.productId),
                 cart: [...state.cart, action.payload]
             }
         default:

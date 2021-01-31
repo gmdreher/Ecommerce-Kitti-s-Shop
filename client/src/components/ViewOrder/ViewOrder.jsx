@@ -2,21 +2,24 @@ import React, { useEffect, useState } from 'react';
 import './ViewOrder.scss';
 import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProductsCart, deleteTotalCart } from '../../actions/cartAction.js';
+import { getProductsCart, deleteTotalCart, editQuantity } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
 import axios from 'axios';
 
 
 export default function ViewOrder(props) {
+    console.log("MIRAME");
+    console.log(props);
 
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-    //modificamos para que traiga el store de cart
-    // console.log("Datos de USERDATA");
     const user = usersData[usersData.length - 1];
+    console.log("USUARIO", usersData);
+
 
     const cartProduct = useSelector(user !== undefined ? (store => store.product.cart) : (store => store.cart.cartItems));
+
     useEffect(function () {
         dispatch(getProductsCart(user !== undefined ? { userId: user.id, state: "carrito" } : { state: "carrito" }));
     }, [])
@@ -49,17 +52,19 @@ export default function ViewOrder(props) {
         }
     }
 
+
     function sumar(data) {
-        console.log("MIERDA");
+        console.log("DISPATCH EDITQUANTI");
         console.log(data);
         if (cartProduct.length > 0) {
             var idProd = data.id;
             var idUsr = data.userId;
             var qty = data.quantity + 1
-            axios.put(`http://localhost:3001/users/${idUsr}/cart`, { productId: idProd, quantity: qty })
-                .then(res => console.log('salio de axios'))
+            dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty }))
+            dispatch(getProductsCart(user !== undefined ? { userId: user.id, state: "carrito" } : { state: "carrito" }));
         }
     }
+
 
 
     return (
@@ -74,53 +79,58 @@ export default function ViewOrder(props) {
                     {cartProduct && cartProduct.map((info) => {
                         // console.log("esto es info")
                         // console.log(info)
-                        var subTot = 0;
-                        subTot = info.price * info.quantity;
-                        priceList.push(subTot);
+                        if (info !== undefined) {
+                            var subTot = 0;
+                            subTot = info.price * info.quantity;
+                            priceList.push(subTot);
+                        }
                         return (
+
                             <div>
-                                <div className="abc" >
-                                    <div className="foto" >
-                                        {/* <img className="img-responsive" src={imagenes} alt="Cargando imagen..." /> */}
-                                    </div>
-                                    <div className="datoName" >
-                                        <div className="datoName2">
-                                            <h5>{info.name}</h5>
+                                { info ?
+                                    <div className="abc" >
+                                        <div className="foto" >
+                                            {/* <img className="img-responsive" src={imagenes} alt="Cargando imagen..." /> */}
                                         </div>
-                                    </div>
-                                    <div className="add" >
-                                        <div className="dataAdd">
-                                            <button ><i class="fas fa-minus"></i></button>
+                                        <div className="datoName" >
+                                            <div className="datoName2">
+                                                <h5>{info.name}</h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="dataQuanty" >
-                                        <div className="dataQuanty2">
-                                            <h5>{info.quantity}</h5>
+                                        <div className="add" >
+                                            <div className="dataAdd">
+                                                <button ><i class="fas fa-minus"></i></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="add" >
-                                        <div className="dataAdd">
-                                            <button onClick={() => {
-                                                sumar(info)
-                                            }} ><i class="fas fa-plus"></i></button>
+                                        <div className="dataQuanty" >
+                                            <div className="dataQuanty2">
+                                                <h5>{info.quantity}</h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="dataPrice" >
-                                        <div>
-                                            <h5>$ {info.price}</h5>
+                                        <div className="add" >
+                                            <div className="dataAdd">
+                                                <button onClick={() => {
+                                                    sumar(info)
+                                                }} ><i class="fas fa-plus"></i></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="dataPrice" >
-                                        <div>
-                                            <h5>$ {info.price * info.quantity}  </h5>
+                                        <div className="dataPrice" >
+                                            <div>
+                                                <h5>$ {info.price}</h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="add" >
-                                        <div className="dataAdd">
-                                            <button><i class="far fa-trash-alt"></i></button>
+                                        <div className="dataPrice" >
+                                            <div>
+                                                <h5>$ {info.price * info.quantity}  </h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div >
+                                        <div className="add" >
+                                            <div className="dataAdd">
+                                                <button><i class="far fa-trash-alt"></i></button>
+                                            </div>
+                                        </div>
+                                    </div >
+                                    : console.log("NO HAY NADA")}
                             </div>
                         )
 

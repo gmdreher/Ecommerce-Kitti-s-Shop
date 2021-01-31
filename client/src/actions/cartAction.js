@@ -103,23 +103,24 @@ export const deleteTotalCart = (data) => async dispatch => {
 }
 
 
-export const editQuantity = (data) => async dispatch => {
+export const editQuantity = ({ idUser, productId, quantity }) => async dispatch => {
 
-    console.log("Info de editQuantity", data);
-    var orderUser = data.idUser;
-    var orderBody = { productId: data.productId, quantity: data.quantity }
-    // console.log('-- -- orderBody: -- --', orderBody)
+    console.log("Info de editQuantity");
+    var orderBody = { productId, quantity }
+    console.log('-- -- orderBody: -- --', orderBody)
     try {
 
-        const res = await axios.put(`http://localhost:3001/users/${orderUser}/cart`, orderBody);
-        console.log('-- -- res: -- --', res);
+        const res = await axios.put(`http://localhost:3001/users/${idUser}/cart`, orderBody);
+
+        console.log('-- -- res EDITQUANTITY: -- --', res);
+        console.log("AQUIII-----");
+        console.log(res.data.OrderDetail);
 
         dispatch({
             type: UPDATE_COUNT_PRODUCT,
-            payload: res.data.orderBody,
+            payload: res.data.OrderDetail,
         });
     } catch (error) {
         console.log("Error: " + error);
     }
 }
-

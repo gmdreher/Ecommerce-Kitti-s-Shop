@@ -159,6 +159,7 @@ server.delete("/:userId/order/:orderId", (req, res) => {
 server.put('/:idUser/cart', (req, res, next) => {
     const { idUser } = req.params;
     const { productId, quantity } = req.body;
+    console.log(idUser, productId, quantity);
     Order.findOne({
         where: {
             [Op.and]: [
@@ -206,8 +207,8 @@ server.put('/:idUser/cart', (req, res, next) => {
 //             model: OrderDetails,
 //             where: {
 //                 productId: productId
-//             }
-//         }
+// //             }
+// //         }
 //     })
 // .then((detail) => {
 //     // console.log(detail.OrderDetail)
