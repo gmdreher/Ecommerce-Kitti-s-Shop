@@ -13,17 +13,17 @@ import {
     ADD_TO_CART,
     GET_PRODUCT_CART,
     POST_USER,
-    DELETE_TOTAL_CART,
-    UPDATE_COUNT_PRODUCT
 } from '../constants/productConstants.js';
 
 const initialState = {
     product: [],
     filteredProduct: [],
     categories: [],
+    allOrders: [],
     products: [],
     user: [],
-    cart: []
+    cart: [],
+    order: [],
 
 };
 
@@ -105,19 +105,7 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: [...state.cart, action.payload]
             }
-        case DELETE_TOTAL_CART:
-            return {
-                ...state,
-                cart: state.cart.filter(produc => produc.id !== action.payload)
-            }
-        case UPDATE_COUNT_PRODUCT:
-            console.log(`--- CART ---`, state.cart)
-            console.log('--- STATE ---', state)
-            return {
-                ...state,
-                cart: state.cart.filter(product => product.productId !== action.payload.productId),
-                cart: [...state.cart, action.payload]
-            }
+
         default:
             return state;
 

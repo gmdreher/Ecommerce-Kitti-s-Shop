@@ -1,78 +1,73 @@
 const server = require('express').Router();
-const { Order, User, OrderDetails, Product } = require('../db.js');
+const { Order, User, OrderDetails, Product, Image } = require('../db.js');
 const { Op } = require("sequelize");
 
 //modificar el estado de la orden
 server.put('/:id', (req, res) => {
-    const { id } = req.params;
-    const { state } = req.body;
+  const { id } = req.params;
+  const { state } = req.body;
 
-
-    Order.findByPk(id)
-        .then((order) => {
-            order.update(
-                {
-                    state: state
-                })
+  Order.findByPk(id, {
+    include: [
+      { model: Product, include: { model: Image } },
+    ]
+  })
+    .then((order) => {
+      return order.update(
+        {
+          state: state
         })
-        .then((order) => res.status(200)
-            .send("Estado cambiado"))
-        .catch(error => {
-            console.log(error)
-            res.status(400)
-                .send("Error al tratar de cambiar el estado" + error)
-        })
-});
-
-
-
-//ruta que retorna todas las ordenes filtrando por estados
-server.get("/search", (req, res) => {
-    let state = req.query.state;
-
-    Order.findAll({
-        attributes: ["id", "state", "userId"],
-        where: {
-            state: state
-        },
-        include: [
-            {
-                model: Product,
-                attributes: ["name", "stock", "price"],
-                exclude: { attributes: ["OrderDetails"] },
-            },
-            {
-                model: User,
-                attributes: ["fullname", "email"],
-            },
-        ],
     })
-        .then(
-            (orders) => res.status(200).json(orders)
-        )
-        .catch(
-            (err => res.status(400).json("Se ha producido un error" + err))
-        )
+    .then((order) => {
+
+      res.status(200).json(order)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(400)
+        .send("Error al tratar de cambiar el estado" + error)
+    })
 });
 
+server.get("/search", (req, res) => {
+  let state = req.query.state;
+  Order.findAll({
+    attributes: ["id", "state", "userId"],
+    where: { state: state },
+    include: [
+      {
+        model: Product,
+      },
+      {
+        model: User,
+      },
+    ],
+  })
+    .then(
+      (orders) => res.status(200).json(orders)
+    )
+    .catch(
+      (err => res.status(400).json("Se ha producido un error" + err))
+    )
+});
 
 //eliminar un items de la orden
 server.delete("/:orderId", (req, res) => {
-    let { orderId } = req.params;
-    let { productId } = req.body;
+  let { orderId } = req.params;
+  let { productId } = req.body;
 
-    OrderDetails.destroy({
-        where: {
-            orderId: orderId,
-            productId: productId,
-        }
-    }).then((product_delete) => {
-        console.log(product_delete)
-        res.status(200).json(product_delete)
+  OrderDetails.destroy({
+    where: {
+      orderId: orderId,
+      productId: productId,
+    }
+  }).then((product_delete) => {
+    console.log(product_delete)
+    res.status(200).json(product_delete)
 
-    }).catch((err) => {
-        res.status(400).json("no se pudo borrar el producto" + err)
-    })
+  }).catch((err) => {
+    res.status(400).json("no se pudo borrar el producto" + err)
+  })
 })
 
 
@@ -116,6 +111,43 @@ server.delete("/:orderId", (req, res) => {
 // })
 
 
+//Ruta que retorne todas las ordenes
+server.get('/', (req, res) => {
+  Order.findAll({
+    include: [
+      {
+        model: Product, include: { model: Image }
+      },
+    ]
+  })
+    .then(orders => {
+      res.status(200).json(orders)
+    })
+    .catch(err => {
+      res.status(400).send('' + err)
+    })
+});
+
+// GET /orders/:id retorna una orden en particular
+server.get('/:id', (req, res) => {
+  let { id } = req.params;
+  Order.findByPk(id, {
+    include: [
+      { model: Product, include: { model: Image } },
+    ]
+  })
+    .then(order => {
+      console.log(order);
+      res.status(200).json(order)
+    })
+    .catch(err => {
+      res.status(400).send('' + err)
+    })
+});
+
 
 
 module.exports = server;
+
+
+

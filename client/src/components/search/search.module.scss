@@ -4,9 +4,10 @@
 
     form{
         border-radius: 9999px;
-        border: 1px solid black;
+        border: none;
         padding: 0 1em;
         display: flex;
+        background-color: #dee2e6;
         align-items: center;
         input{
             border: none;
@@ -16,10 +17,11 @@
             outline-width: 0 !important;
             box-shadow: none;
             -moz-box-shadow: none;
-            -webkit-box-shadow: none;        
+            -webkit-box-shadow: none;  
+            background-color: #dee2e6;       
         }
         button{
-           background-color:white;
+            background-color:#dee2e6;
            border: none;
            
             i{

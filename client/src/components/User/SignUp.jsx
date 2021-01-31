@@ -10,12 +10,13 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Modal } from 'reactstrap'
+import { Modal, ModalHeader, Row } from 'reactstrap'
 import logo from '../../img/logo-cat.jpeg'
 import { connect } from 'react-redux'
 import { postUser } from '../../actions/userAction'
-function Copyright() {
+import { useHistory } from 'react-router-dom'
 
+function Copyright() {
 
 
   return (
@@ -52,6 +53,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp(props) {
   const classes = useStyles();
+  const history = useHistory()
+
   const [input, setInput] = useState({
     fullname: '',
     email: '',
@@ -59,7 +62,10 @@ function SignUp(props) {
     rol: 'User'
   })
   const [modal, setModal] = useState(true);
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    history.push("/");
+    setModal(!modal);
+  }
 
   const handleChange = e => {
     setInput({
@@ -76,14 +82,20 @@ function SignUp(props) {
 
   return (//aqui puedo probar si envolviendolo en un modal puedo tenerlo todo mostrado en una modal para que se quede en la parte de atras de lo que estoy viendo, o renderizar en un oton cuando lo llamo
     <Modal isOpen={modal} toggle={toggle}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar alt="Kitty's Shop" src={logo} />
 
-          <Typography component="h1" variant="h5">
-            Sign up
-        </Typography>
+      <ModalHeader toggle={toggle}>
+        {/* <CssBaseline /> */}
+
+
+        <Avatar alt="Kitty's Shop" src={logo} />
+
+        {/* <Typography component="h1" variant="h5"> */}
+        <h1>Regístrame</h1>
+        {/* </Typography> */}
+
+      </ModalHeader>
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
           <form onSubmit={(e) => regUser(e)}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -137,14 +149,14 @@ function SignUp(props) {
                 />
               </Grid>
             </Grid>
+            {/* </Grid> */}
             <Button El boton de registro
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
-            >
-              Sign Up
+              className={classes.submit}>
+              Registrarse
           </Button>
             <Grid container justify="flex-end">
               <Grid item>
@@ -159,7 +171,7 @@ function SignUp(props) {
           <Copyright />
         </Box>
       </Container>
-    </Modal>
+    </Modal >
   );
 }
 function mapStateToProps(state) {

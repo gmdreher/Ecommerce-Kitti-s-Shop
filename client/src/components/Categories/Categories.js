@@ -18,7 +18,7 @@ function Categories (props) {
       <div className={styles.dropCategory}>
         <div className="dropdown">
           <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Categories
+            Categorías
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {props.categories.map((e)=>{

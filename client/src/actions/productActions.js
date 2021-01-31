@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-import { DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES, SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT } from '../constants/productConstants.js';
+import {
+    DELETE_CATEGORY, UPDATE_CATEGORY, POST_CATEGORY, GET_PRODUCT_BY_CATEGORY, GET_PRODUCT_BY_ID, GET_CATEGORIES,
+    SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER
+} from '../constants/productConstants.js';
 
 export const getProductById = (id) => async (dispatch) => {
     try {
@@ -147,4 +150,3 @@ export const editProduct = product => async dispatch => {
         axios.post(`http://localhost:3001/products/${product.id}/category/${product.categories[i].id}`)
     }
 }
-
