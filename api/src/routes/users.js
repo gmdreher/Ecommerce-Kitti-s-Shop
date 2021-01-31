@@ -79,10 +79,10 @@ server.post('/:userId/order', (req, res) => {
   Order.findOrCreate({
     where: {
       userId: userId,
-      state: "completa"
+      state: "carrito"
     },
     userId: userId,
-    state: "completa"
+    state: "carrito"
     
   }).then((order) => {
     OrderDetails.create({
@@ -101,52 +101,46 @@ server.post('/:userId/order', (req, res) => {
 });
 
 //obtener todos los items del carrito
-server.get("/:userId/order/:state", (req, res) => {
-  let { userId, state } = req.params;
-  
-  Order.findOne({
-    where: {
-      userId: userId,
-      state: state
-    }
-  }).then((order) => {
-    OrderDetails.findAll({
-      where: {
-        orderId: order.id,
-      }
-    })
-      .then(detalle => {
-        res.status(200).json(detalle)
-      })
-    
-  }).catch((err) => {
-    res.status(400).json("Error al traer todos los items de la orden" + err)
+server.get("/:userId/order/:state",(req,res)=>{
+    let { userId, state }= req.params;
+
+    Order.findOne({
+        where: { userId: userId,
+                 state: state
+                }
+    }).then((order)=>{
+      OrderDetails.findAll({
+            where:{
+                orderId: order.id,
+            },
+            order:[
+                ['productId', 'ASC']
+            ]
+        })
+        .then(detalle=>{
+            res.status(200).json(detalle)
+        })
+        
+    }).catch((err)=>{
+        res.status(400).json("Error al traer todos los items de la orden"+ err)
   })
 });
 
 //vaciar carrito
-server.delete("/:userId/order", (req, res) => {
-  let { orderId } = req.body;
-  let { userId } = req.params;
-  
-  Order.destroy({
-    where: {
-      id: orderId,
-      userId: userId
-    }
-  })
-    .then(() => {
-      OrderDetails.destroy({
-        where: {
-          orderId: orderId
+server.delete("/:userId/order/:orderId",(req,res)=>{
+
+    let { userId,orderId } = req.params;
+
+    Order.destroy({
+        where:{
+            id: orderId,
+            userId: userId
         }
-      })
-        .then((order_destroy) => {
-          res.status(200).json(order_destroy)
-        })
-    }).catch(err => {
-    res.status(400).json("no se borro correctamente" + err)
-  })
+    }).then((order)=>{
+            res.status(200).json(order)
+        }).catch(err=>{
+        res.status(400).json("no se borro correctamente"+ err)
+    })
 })
 
 // task 45 GET /users/:id/orders.. ruta que retorne todas las ordenes de los usuarios
