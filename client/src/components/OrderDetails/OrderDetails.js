@@ -75,10 +75,10 @@ class OrderDetails extends React.Component {
               </tr>
               <tr>
                 <th scope="row" className='mr-3'>Estado de la orden:</th>
-                <td className={styles.letterhead}><div className="btn-sm">{this.state.editing? " " :state}</div>
+                <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
                 <div className={styles.editar} onClick={this.handleState}>
                   {this.state.editing? (<form onSubmit={this.handleSubmit}>
-                  <label htmlFor="state">Elige un estado</label>
+                  <label>Elige un estado</label>
                   <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
                     <option value="carrito">carrito</option>
                     <option value="creada">creada</option>
@@ -88,7 +88,7 @@ class OrderDetails extends React.Component {
                   </select>
                   <br></br>
                     <input className="btn btn-info btn-sm" type="submit" value="Aceptar"/>
-                </form>) : <div className={"btn-sm " + styles.editar}>Editar</div>
+                </form>) : <div className="btn-sm "><i title="Editar" className={"fas fa-edit " + styles.icon}/></div>
                   }
                   </div>
                   </td>
