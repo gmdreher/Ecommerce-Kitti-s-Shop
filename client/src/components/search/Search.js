@@ -10,7 +10,7 @@ export default  function Search(){
 
     const[input, setInput]= useState({search:''})
     const dispatch= useDispatch();
-    const history =useHistory()
+    const history = useHistory();
 
 
 function handleChange(e){

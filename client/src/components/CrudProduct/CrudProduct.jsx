@@ -185,8 +185,8 @@ class CrudProductForm extends React.Component {
                                     <td>{product.stock}</td>
                                    
                                 <td>
-                                    <Button color='primary' onClick ={() => this.handleEdit(product)}>Edit</Button>
-                                    <Button color='danger' onClick  ={(e)=>this.handleDelete(product.id)}>Delete</Button>
+                                    <Button color='primary' onClick ={() => this.handleEdit(product)}>Editar</Button>
+                                    <Button color='danger' onClick  ={(e)=>this.handleDelete(product.id)}>Borrar</Button>
                                 </td>
                             </tr>  
                             )))}
@@ -196,8 +196,6 @@ class CrudProductForm extends React.Component {
 
 
                 </Container>
-
-
                 <Modal isOpen={this.state.modalEditar}>
                     <ModalHeader>
                         <div>
