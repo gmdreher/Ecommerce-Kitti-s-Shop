@@ -3,7 +3,7 @@ import { getAllOrders } from '../../actions/orderActions';
 import { connect } from 'react-redux';
 import styles from './orderTable.module.scss'
 import { Link } from "react-router-dom";
-import moment from 'moment';
+import Moment from 'moment';
 
 class OrderTable extends React.Component {
 
@@ -12,7 +12,7 @@ class OrderTable extends React.Component {
   }
   
   formatDate(date) {
-    let formatDate = new moment(date);
+    let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
   
@@ -52,7 +52,7 @@ class OrderTable extends React.Component {
                       <td>${total.toFixed(2)}</td>
                       <td>{this.formatDate(order.createdAt)}</td>
                       <td>
-                        <button type="button" className="btn btn-secondary btn-sm">Eliminar</button>
+                        <button type="button" className="btn btn-secondary btn-sm">Editar</button>
                       </td>
                     </tr>
                   )
