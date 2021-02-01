@@ -85,7 +85,7 @@ function NewCategoryForm(props) {
 
     <Container className={styles.container}>
       <h1>Administrar Categorías</h1>
-      <Button color='primary' onClick={toggle}> + Agregar Categoría</Button>
+      <Button className="buttonForm" color='primary' onClick={toggle}> + Agregar Categoría</Button>
       <Table>
         <thead>
           <tr>
@@ -103,8 +103,8 @@ function NewCategoryForm(props) {
 
               <td>
 
-                <Button color='primary' onClick={() => handleEdit(category)} >Editar</Button>
-                <Button color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
+                <Button className="buttonForm" color='primary' onClick={() => handleEdit(category)} >Editar</Button>
+                <Button className="buttonForm" color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
               </td>
             </tr>
           )))}
@@ -167,8 +167,8 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-            {errors.name ? <Button color="danger" onClick={toggle2}>Modificar Categoría</Button> :<Button color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>}
-              <Button color="secondary" onClick={toggle2}>Salir</Button>
+            {errors.name ? <Button color="danger" onClick={toggle2}>Modificar Categoría</Button> :<Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>}
+              <Button className="buttonForm" color="secondary" onClick={toggle2}>Salir</Button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -182,8 +182,8 @@ function NewCategoryForm(props) {
             <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>
-              <Button color="primary" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</Button>
-              <Button color="secondary" onClick={toggle3}>No</Button>
+              <Button className="buttonForm" color="primary" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</Button>
+              <Button className="buttonForm" color="secondary" onClick={toggle3}>No</Button>
             </ModalFooter>
           </Form>
         </Modal>
