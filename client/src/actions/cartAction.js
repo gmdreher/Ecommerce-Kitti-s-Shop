@@ -7,8 +7,7 @@ import {
 } from '../constants/productConstants.js';
 
 export const addProductCart = (data) => async (dispatch, getState) => {
-    console.log('eso es data en el action de agregar al carrito')
-    console.log(data)
+
     if (!data.userId) {
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
@@ -18,7 +17,8 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 
             if (x.id == data.productId) {
                 alreadyExists = true;
-                x.quantity++;
+                alert('El Producto ya se encuentra en el carrito!!')
+              //  x.quantity++;
             }
         });
 
@@ -45,6 +45,17 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 
     } else {
         try {
+            const cart = getState().product.cart.slice();
+            let alreadyExists = false;
+    
+            cart && cart.forEach((x) => {
+    
+                if (x.id == data.productId) {
+                   // alreadyExists = true;
+                    alert('El Producto ya se encuentra en el carrito!!')
+                  //  x.quantity++;
+                }
+            });
             const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
             const prod = await axios.get(`http://localhost:3001/products/${res.productId}`)
             let order = {
@@ -74,12 +85,10 @@ export const getProductsCart = (data) => async (dispatch) => {
             const res = await axios.get(`http://localhost:3001/users/${data.userId}/order/${data.state}`);
             const valor = res.data;
             for (var i = 0; i < valor.length; i++) {
-                console.log('entra al maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaap')
                 let dato1 = valor[i].quantity;
                 let userId = data.userId;
                 let orderId = valor[i].orderId
                 let dataprod = await axios.get(`http://localhost:3001/products/${valor[i].productId}`)
-                console.log("Todos los productos de un usuario en su carrito");
                 order = {
                     description: dataprod.data.description, id: dataprod.data.id,
                     images: dataprod.data.images, name: dataprod.data.name,
@@ -87,9 +96,6 @@ export const getProductsCart = (data) => async (dispatch) => {
                     orderId: orderId
                 }
                 orderProd.push(order)
-                //console.log('dentro del pam que me manda productos al reducer')
-                //console.log(order)
-                //console.log(orderProd)
             }
 
 
@@ -107,8 +113,6 @@ export const getProductsCart = (data) => async (dispatch) => {
 
 export const deleteTotalCart = (data) => async dispatch => {
 
-    //console.log("Info de delete");
-    //console.log(data);
     const Details = await axios.get(`http://localhost:3001/users/${data.userId}/order/${"carrito"}`);
     Details.data && Details.data.map((det) => {
         axios.delete(`http://localhost:3001/orders/${data.orderId}/${det.productId}`)
@@ -144,22 +148,41 @@ export const deleteItem = (data) => async (dispatch, getState) => {
     }
 
 }
-export const editQuantity = ({ idUser, productId, quantity, orderId }) => async dispatch => {
-
-    //   console.log("Info de editQuantity");
+export const editQuantity = ({ idUser, productId, quantity, orderId }) => async (dispatch,getState) => {
+    if(orderId&&idUser){
     var orderBody = { productId, quantity, orderId }
-    //  console.log('-- -- orderBody: -- --', orderBody)
+    const cart = getState().product.cart.slice();
     try {
 
         const res = await axios.put(`http://localhost:3001/orders/${idUser}/cart`, orderBody);
 
-        console.log('-- -- res EDITQUANTITY: -- --', res);
-
+        cart && cart.forEach((x) => {
+        
+            if (x.id == productId) {
+               // alreadyExists = true;
+                x.quantity=quantity;
+            }
+        });
         dispatch({
             type: UPDATE_COUNT_PRODUCT,
-            payload: orderBody,
+            payload: cart
         });
     } catch (error) {
         console.log("Error: " + error);
-    }
+    } 
+ }else{
+    const cartItems = getState().cart.cartItems.slice();
+    cartItems && cartItems.forEach((x) => {
+    
+        if (x.id == productId) {
+           // alreadyExists = true;
+            x.quantity=quantity;
+        }
+    });
+    dispatch({
+        type: ADD_TO_CART_LOCALSTORAGE,
+        payload: { cartItems }
+    })
+ }
+
 }

@@ -107,6 +107,7 @@ function SignUp(props) {
     e.preventDefault();
 
     props.singUp(input)
+    history.push("/")
 
   }
 
@@ -146,18 +147,6 @@ function SignUp(props) {
               {errors.fullname && (
                     <p className={styles.danger}>{errors.fullname}</p>
                   )}
-              {/*  <Grid item xs={12}>
-              <TextField
-                autoComplete="fname"
-                name="name"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="Nombre de Usuario"
-                autoFocus
-              />
-            </Grid> */}
               <Grid item xs={12}>
                 <TextField
                 className={`${errors.email} && 'danger'`}
@@ -192,9 +181,10 @@ function SignUp(props) {
                     <p className={styles.danger}>{errors.password}</p>
                   )}
             </Grid>
-            {/* </Grid> */}
+            
             {errors.fullname || errors.password || errors.email ?  
-            <Button El boton de registro
+            
+            <Button
               type="submit"
               fullWidth
               variant="contained"

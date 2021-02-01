@@ -133,7 +133,9 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> : <Button color="primary" type="submit" onClick={() => props.postCategories({ name: input.name, description: input.description })}>Crear Categoría</Button>}
+              {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> : <Button color="primary" type="submit" onClick={() => { 
+                props.postCategories({ name: input.name, description: input.description })
+                props.preventDefault()}}>Crear Categoría</Button>}
 
               <Button color="secondary" onClick={toggle}>Salir</Button>
 

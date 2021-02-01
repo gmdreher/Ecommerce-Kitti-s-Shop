@@ -8,9 +8,6 @@ import axios from 'axios';
 
 
 export default function ViewOrder(props) {
-    console.log("MIRAME");
-    console.log(props);
-
     const dispatch = useDispatch();
 
 
@@ -37,11 +34,6 @@ export default function ViewOrder(props) {
         dispatch(deleteItem(data))
     }
 
-    /*  
-      if (props.data.images) {
-          imagenes = props.data.images[0].url;
-      } */
-
     function deleteCart() {
         if (cartProduct.length >= 0 && cartProduct[0].orderId !== undefined) {
             var idOrder = cartProduct[0].orderId;
@@ -63,30 +55,45 @@ export default function ViewOrder(props) {
 
     }
     function sumar(data) {
+        if(data.userId&&data.orderId){
 
-        console.log("DISPATCH EDITQUANTI");
-        console.log(data);
-        var idProd = data.id;
-        var idUsr = data.userId;
-        var orderId = data.orderId
-        var qty = data.quantity + 1
-        dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty, orderId }))
-        dispatch(getProductsCart({ userId: user.id, state: "carrito" }));
-
-    } function restar(data) {
-
-        console.log("DISPATCH EDITQUANTI");
-        console.log(data);
-        if (data.quantity > 0) {
             var idProd = data.id;
             var idUsr = data.userId;
             var orderId = data.orderId
-            var qty = data.quantity - 1
+            var qty = data.quantity + 1
             dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty, orderId }))
-            dispatch(getProductsCart({ userId: user.id, state: "carrito" }));
+     }else{
+
+        var idProd = data.id;
+        var qty = data.quantity + 1
+        dispatch(editQuantity({productId: idProd, quantity: qty}))
+     }
+      
+
+    } function restar(data) {
+
+        if(data.userId&&data.orderId){
+            if (data.quantity>0) {
+                var idProd = data.id;
+                var idUsr = data.userId;
+                var orderId = data.orderId
+                var qty = data.quantity - 1
+                dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty,orderId }))
+            }
+        }else{
+            if (data.quantity>0) {
+            
+                var idProd = data.id;
+                var qty = data.quantity - 1
+                dispatch(editQuantity({productId: idProd, quantity: qty}))
+            }
         }
 
+            
     }
+        
+    
+   
     return (
 
 
@@ -96,10 +103,9 @@ export default function ViewOrder(props) {
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
-                        //  console.log("esto es info")
-                        // console.log(info)
+                       
                         if (info !== undefined) {
-
+                            
                             var subTot = 0;
                             subTot = info.price * info.quantity;
                             priceList.push(subTot);
@@ -117,21 +123,21 @@ export default function ViewOrder(props) {
                                                 <h5>{info.name}</h5>
                                             </div>
                                         </div>
-                                        <div className="add" >
+                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => { restar(info) }}><i class="fas fa-minus"></i></button>
+                                                <button onClick={() => restar(info) }><i class="fas fa-minus"></i></button>
                                             </div>
-                                        </div>
-                                        <div className="dataQuanty" >
+                                </div>
+                                 <div className="dataQuanty" >
                                             <div className="dataQuanty2">
                                                 <h5>{info.quantity}</h5>
                                             </div>
                                         </div>
-                                        <div className="add" >
+                                          <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => { sumar(info) }}><i class="fas fa-plus"></i></button>
+                                                <button onClick={() => sumar(info)}><i class="fas fa-plus"></i></button>
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="dataPrice" >
                                             <div>
                                                 <h5>$ {info.price}</h5>

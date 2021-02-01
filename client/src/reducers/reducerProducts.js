@@ -117,18 +117,11 @@ export default (state = initialState, action) => {
                 cart: state.cart.filter(order => order.orderId !== action.payload)
             }
         case UPDATE_COUNT_PRODUCT:
-            console.log(`--- CART ---`, state.cart)
-            console.log('--- STATE ---', state)
-            return {
+            return { 
                 ...state,
-                cart: state.cart.map(product => (product.id === action.payload.productId &&
-                    product.orderId === action.payload.orderId) ?
-                    product.quantity = action.payload.quantity :
-                    product.quantity)
-
-
-            }
-
+                cart: action.payload 
+            };
+            
         default:
             return state;
 

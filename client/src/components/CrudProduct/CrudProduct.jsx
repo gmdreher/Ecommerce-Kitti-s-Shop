@@ -29,6 +29,7 @@ class CrudProductForm extends React.Component {
     }
 
     handleChange = e => {
+        console.log('handlechange')
         this.setState({
             form: {
                 ...this.state.form,
@@ -38,6 +39,7 @@ class CrudProductForm extends React.Component {
     }
 
     mostrarModalInsertar = () => {
+        console.log('mostrarInsertar')
         this.setState({ modalInsertar: true })
         this.props.getCategories();
     }
@@ -46,102 +48,92 @@ class CrudProductForm extends React.Component {
         this.props.getCategories();
     }
     ocultarModalInsertar = () => {
+        console.log('oculmodalinsertar')
         this.setState({ modalInsertar: false })
-        this.props.getAllProducts()
+       // this.props.getAllProducts()
     }
     ocultarModalEditar = (product) => {
         this.setState({ modalEditar: false });
-        if (product) {
-            if (this.state.form.categories) {
-                this.props.putProduct(product)
-                this.props.getAllProducts()
-            } else {
-                alert('El Producto debe tener 1 categoria asignada')
-            }
-
+        if(product){
+            if(this.state.form.categories){
+              this.props.putProduct(product)
+          }else{
+              alert('El Producto debe tener 1 categoria asignada')
+          }
+           
         }
 
 
     }
     handleSubmit(event) {
+        console.log('submit')
         event.preventDefault();
         this.props.chargeProducts(this.state.form.search);
-    }
-    handleDelete(id) {
-        //event.preventDefault();
-        this.props.destroyProduct(id);
-        this.props.getAllProducts();
+      }
+      handleDelete(id){       
+          this.props.destroyProduct(id);
 
-    }
-    handleEdit(product) {
+      }
+      handleEdit(product){
+                this.mostrarModalEditar(product)
 
-        this.mostrarModalEditar(product)
-        this.props.getAllProducts();
-
-
-
-    }
-    componentDidMount() {
-        this.props.getAllProducts();
-    }
-    handlepost(inputs) {
-
-        if (this.state.checkBoxes.length > 0) {
-            //if(this.state.file){
-
-            this.props.postProducts({ product: inputs, cate: this.state.checkBoxes, img: this.state.file })
-            this.ocultarModalInsertar();
-            // }else{
-            //   alert('Debe seleccionar la/s imagen/es del producto')
-            //}
-
-        } else {
-            alert('Debe Seleccionar la Categoria a asignar')
-        }
-
-
-
-    }
-    cambio(id) {
-
-        const index = this.state.checkBoxes.indexOf(id);
-        if (index > -1) {
-
-            this.state.checkBoxes.splice(index, 1)
-
-        } else {
-            this.state.checkBoxes.push(id)
-
-        }
-    }
-    handleChangeImage = e => {
-        this.setState({
-            file: e.target.files[0]
-            //filename:e.target.files[0].name
-        });
-
-    }
-    checkEdit(catego) {
-
-        const categorias = this.state.form.categories;
-        if (categorias) {
-            for (var i = 0; i < categorias.length; i++) {
-                if (categorias[i].id == catego.id) {
-
-                    return true
-                }
+      }
+      componentDidMount(){
+          this.props.getAllProducts();
+      }
+      handlepost(inputs){
+       
+          if(this.state.checkBoxes.length >0){
+                this.ocultarModalInsertar();
+                this.props.postProducts({product:inputs,cate:this.state.checkBoxes,img:this.state.file})
+                
+             
+          }else{
+               alert('Debe Seleccionar la Categoria a asignar')
+          }
+      }
+      cambio(id){
+          const index = this.state.checkBoxes.indexOf(id);               
+          if(index > -1){
+            
+               this.state.checkBoxes.splice(index,1)
+              
+           } else {
+                this.state.checkBoxes.push(id)
+              
+           }
+      }
+      handleChangeImage = e =>{
+           this.setState({
+              file:e.target.files[0]
+              //filename:e.target.files[0].name
+            });
+           
+      }
+      checkEdit(catego){
+        const categorias =this.state.form.categories;
+        if(categorias){
+           for(var i=0;i<categorias.length;i++){
+            if(categorias[i].id==catego.id){
+            
+                return true
             }
-            return false
         }
 
+
+
     }
-    checkEditClick(cate) {
-        const categorias = this.state.form.categories;
-        for (var i = 0; i < categorias.length; i++) {
-            if (categorias[i].id == cate.id) {
-
-                this.state.form.categories.splice(i, 1);
-
+    
+          
+      }
+      checkEditClick(cate){
+        console.log('checkEditClick')
+        const categorias =this.state.form.categories;
+        for(var i= 0;i<categorias.length;i++){
+            if(categorias[i].id==cate.id){
+              
+                this.state.form.categories.splice(i,1);
+              
                 return
             }
         }

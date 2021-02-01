@@ -11,15 +11,16 @@ export default function ProductCard({ data }) {
     // console.log("Informacion que viene desde Catalogo", data);
 
     const dispatch = useDispatch();
-    const userData = useSelector(store => store.product.user)
-    const user = userData[userData.length - 1];
-    // console.log('este es el user registrado')
-    // console.log(user)
-    // console.log(userData)
+    const userData = useSelector(store => store.product.user) 
+    const prodCart = useSelector(store => store.product.cart) 
+    const user = userData[userData.length-1];
+  
 
-    function handleClick(data) {
-        dispatch(addProductCart(user !== undefined ? { userId: user.id, productId: data.id, price: data.price, quantity: 1 } : { productId: data.id, price: data.price, quantity: 1 }));
+    function handleClick (data){
+        let index = prodCart.indexOf(data.id)
+        dispatch(addProductCart(user!== undefined ?{ userId:user.id, productId: data.id, price: data.price, quantity:1}:{productId: data.id, price: data.price, quantity:1}));
     };
+    
 
     return (
         <div className={styles.card}  >
@@ -37,13 +38,12 @@ export default function ProductCard({ data }) {
                 <li class="list-group-item"><strong>Precio:</strong> {'$ ' + data.price}</li>
 
             </ul>
-
-            <div>
-
-                <button disabled={data.stock < 1} onClick={() => handleClick(data)}><i class="fas fa-cart-plus"></i>  </button>
-                <label id="stock"></label>
-                {data.stock < 1 ? <label >Producto Agotado</label> : <label></label>}
-
+            <div class="card-body">
+              
+                    <button disabled={data.stock<1 || prodCart.find(x=>x.id==data.id)}  onClick={() => handleClick(data)}>Añadir al carrito</button>
+                    <label id="stock"></label>
+                     {data.stock<1?<label >Producto Agotado</label>:<label></label>}
+    
                 {/* <a href="#" class="card-link " onClick={() => alert('Carrito')}>Añadir al Carrito</a> */}
                 <Link to={`/products/detalle/${data.id}`}>
                     <button ><i class="fas fa-plus"></i></button>
