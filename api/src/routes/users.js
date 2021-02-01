@@ -29,14 +29,14 @@ server.put('/:id', function (req, res) {
   const { fullName, email, password, rol } = req.body;
   User.findByPk(id)
     .then((user => {
-        user.update(
-          {
-            fullName: fullName,
-            email: email,
-            password: password,
-            rol: rol,
-          })
-      })
+      user.update(
+        {
+          fullName: fullName,
+          email: email,
+          password: password,
+          rol: rol,
+        })
+    })
     )
     .then(() => {
       res.status(200).json("Datos cambiados con éxito")
@@ -60,7 +60,7 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes:[ "id", "fullname", "email"]
+    atributtes: ["id", "fullname", "email"]
   })
     .then(users => {
       res.json(users);
@@ -71,11 +71,25 @@ server.get('/', (req, res) => {
 });
 
 
+//Traer id de usuario
+server.get("/:id", (req, res) => {
+  const id = req.params.id;
+  User.findOne({
+    where: { id: id },
+  })
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      return res.send({ data: err }).status(400);
+    });
+});
+
 //agregar item al carrito
 server.post('/:userId/order', (req, res) => {
   let { userId } = req.params;
   let { productId, price, quantity } = req.body;
-  
+
   Order.findOrCreate({
     where: {
       userId: userId,
@@ -83,7 +97,7 @@ server.post('/:userId/order', (req, res) => {
     },
     userId: userId,
     state: "carrito"
-    
+
   }).then((order) => {
     OrderDetails.create({
       orderId: order[0].id,
@@ -98,56 +112,60 @@ server.post('/:userId/order', (req, res) => {
     .catch(err => {
       res.status(400).send("Error al agregar item a la orden:" + err)
     })
+    .catch(err => {
+      res.status(400).send("Error al agregar item a la orden:" + err)
+    })
 });
 
 //obtener todos los items del carrito
-server.get("/:userId/order/:state",(req,res)=>{
-    let { userId, state }= req.params;
+server.get("/:userId/order/:state", (req, res) => {
+  let { userId, state } = req.params;
 
-    Order.findOne({
-        where: { userId: userId,
-                 state: state
-                }
-    }).then((order)=>{
-      OrderDetails.findAll({
-            where:{
-                orderId: order.id,
-            },
-            order:[
-                ['productId', 'ASC']
-            ]
-        })
-        .then(detalle=>{
-            res.status(200).json(detalle)
-        })
-        
-    }).catch((err)=>{
-        res.status(400).json("Error al traer todos los items de la orden"+ err)
+  Order.findOne({
+    where: {
+      userId: userId,
+      state: state
+    }
+  }).then((order) => {
+    OrderDetails.findAll({
+      where: {
+        orderId: order.id,
+      },
+      order: [
+        ['productId', 'ASC']
+      ]
+    })
+      .then(detalle => {
+        res.status(200).json(detalle)
+      })
+
+  }).catch((err) => {
+    res.status(400).json("Error al traer todos los items de la orden" + err)
   })
 });
 
 //vaciar carrito
-server.delete("/:userId/order/:orderId",(req,res)=>{
+server.delete("/:userId/order/:orderId", (req, res) => {
 
-    let { userId,orderId } = req.params;
+  let { userId, orderId } = req.params;
 
-    Order.destroy({
-        where:{
-            id: orderId,
-            userId: userId
-        }
-    }).then((order)=>{
-            res.status(200).json(order)
-        }).catch(err=>{
-        res.status(400).json("no se borro correctamente"+ err)
-    })
+  Order.destroy({
+    where: {
+      id: orderId,
+      userId: userId
+    }
+  }).then((order) => {
+    res.status(200).json(order)
+  }).catch(err => {
+    res.status(400).json("no se borro correctamente" + err)
+  })
 })
 
 // task 45 GET /users/:id/orders.. ruta que retorne todas las ordenes de los usuarios
-server.get('/:id/orders', (req, res) =>{
+server.get('/:id/orders', (req, res) => {
   let { id } = req.params;
   Order.findAll({
-    where:{
+    where: {
       userId: id
     }
   })

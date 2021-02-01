@@ -4,30 +4,30 @@ const { Op } = require("sequelize");
 
 //modificar el estado de la orden
 server.put('/:id', (req, res) => {
-    const { id } = req.params;
-    const {state} = req.body;
-  
-    Order.findByPk(id, {
-      include:[
-        {model: Product, include:{model: Image}},
-      ]
-    })
-    .then((order)=>{
+  const { id } = req.params;
+  const { state } = req.body;
+
+  Order.findByPk(id, {
+    include: [
+      { model: Product, include: { model: Image } },
+    ]
+  })
+    .then((order) => {
       return order.update(
         {
-          state: state 
+          state: state
         })
     })
-    .then((order)=> {
-      
+    .then((order) => {
+
       res.status(200).json(order)
     })
-      .catch(error => {
-        console.log(error)
-        res.status(400)
+    .catch(error => {
+      console.log(error)
+      res.status(400)
         .send("Error al tratar de cambiar el estado" + error)
     })
-  });
+});
 
 server.get("/search", (req, res) => {
   let state = req.query.state;
@@ -52,56 +52,59 @@ server.get("/search", (req, res) => {
 });
 
 //eliminar un items de la orden
-server.delete("/:orderId/:productId",(req,res)=>{
-    let {orderId,productId} = req.params;
-    
-    OrderDetails.destroy({
-            where:{
-                orderId: orderId,
-                productId: productId,
-            }
-         }).then((product_delete)=>{
-           //  console.log(product_delete)
-                res.status(200).json(product_delete)
-         
-        }).catch((err)=>{
-            res.status(400).json("no se pudo borrar el producto" + err)
-        })
-    })
-    
+server.delete("/:orderId/:productId", (req, res) => {
+  let { orderId, productId } = req.params;
+
+  OrderDetails.destroy({
+    where: {
+      orderId: orderId,
+      productId: productId,
+    }
+  }).then((product_delete) => {
+    //  console.log(product_delete)
+    res.status(200).json(product_delete)
+
+  }).catch((err) => {
+    res.status(400).json("no se pudo borrar el producto" + err)
+  })
+})
+
 
 // 41) modificar cantidades del carrito por id usuario
 server.put('/:idUser/cart', (req, res) => {
-    const { idUser } = req.params;
-    const {productId, quantity, orderId} = req.body;
+  const { idUser } = req.params;
+  const { productId, quantity, orderId } = req.body;
 
-        OrderDetails.update({
-          quantity: quantity},
-          {
-            where:{
-            orderId:orderId,
-            productId:productId
-          },
-          }).then((det)=> {
+  OrderDetails.update({
+    quantity: quantity
+  },
+    {
+      where: {
+        orderId: orderId,
+        productId: productId
+      },
+    }).then((det) => {
       res.status(200).json(det)
     })
     .catch(error => {
-        console.log(error)
-        res.status(400)
-        .send("Error al modificar la cantidad de:  "+ productId + error )
+      console.log(error)
+      res.status(400)
+        .send("Error al modificar la cantidad de:  " + productId + error)
     })
-  })
+})
+
+
 
 //Ruta que retorne todas las ordenes
-server.get('/', (req, res) =>{
+server.get('/', (req, res) => {
   Order.findAll({
     include: [
       {
-        model: Product, include:{model: Image}
+        model: Product, include: { model: Image }
       },
     ]
   })
-    .then(orders =>{
+    .then(orders => {
       res.status(200).json(orders)
     })
     .catch(err => {
@@ -110,15 +113,15 @@ server.get('/', (req, res) =>{
 });
 
 // GET /orders/:id retorna una orden en particular
-server.get('/:id', (req, res) =>{
+server.get('/:id', (req, res) => {
   let { id } = req.params;
   Order.findByPk(id, {
-    include:[
-      {model: Product, include:{model: Image}},
-      ]
+    include: [
+      { model: Product, include: { model: Image } },
+    ]
   })
-    .then(order =>{
-     
+    .then(order => {
+
       res.status(200).json(order)
     })
     .catch(err => {

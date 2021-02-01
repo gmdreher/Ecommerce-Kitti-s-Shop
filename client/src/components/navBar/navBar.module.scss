@@ -1,21 +1,22 @@
 .navBar{
     display: grid;
-    grid-template-columns: auto 30em 10em 10em 10em;
+    grid-template-columns: auto 30em 5em 5em 5em;
     align-items: center;
     div{
         display: flex;
         align-items: center;
     
         img{
-            height: 100px;
+            height: 120px;
+            margin-left: 60px;
         }
-        span{
-            font-family: cursive;
-            font-size: larger;
-        }
+        // span{
+        //     font-family: cursive;
+        //     font-size: larger;
+        // }
     }
     label, button{
-        background-color: #dee2e6;
+        background-color: #ffffff;
         display: flex;
         align-items: center;
         border: none;
@@ -23,11 +24,14 @@
         height: 46px;
         padding: 0 1em;
         width: fit-content;
+        border: 1px solid #bdbdbd;
+
         .carrito{
             font-size: 25px;
             margin: 10px;
         }
     }
+    
 
 }
 .carritoCont{
@@ -41,3 +45,8 @@
     margin: 2rem;
     
 }
+
+.navBar button :hover {
+    color: orange;
+
+  }

@@ -26,8 +26,10 @@
       padding-top: 5%;
       display: grid;
 
+      
 
       .divProducts1{
+        background-color: white;
         display: flex;
         border-radius: 10px;
         padding: 1rem;
@@ -106,6 +108,7 @@
 }
 
 .ctnTotal{
+  background-color: white;
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
