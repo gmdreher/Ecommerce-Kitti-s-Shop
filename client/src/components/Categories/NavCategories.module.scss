@@ -10,6 +10,7 @@
   padding: 3rem;
   flex-direction: row;
   justify-content: space-evenly;
+  border-radius: 10px;
 
   .compCategories {
     display: flex;
@@ -18,7 +19,7 @@
 
   }
 
-  
+
 
   .list {
     margin: 0;
@@ -51,6 +52,7 @@
       background-color: #ffffff;
       color: black;
       justify-content: space-evenly;
+      box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
       font-family: 'Lato', sans-serif;
 
     }

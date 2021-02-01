@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { getCategories } from "../../actions/productActions";
 import styles from './categories.module.scss';
@@ -25,7 +25,7 @@ function Categories(props) {
           {props.categories.map((e) => {
             return <div key={e.id} >
               <NavLink exact to={`/products/category/${e.name}`} activeStyle={{ fontWeight: "bold" }} >
-                <a >{e.name}</a>
+                <span className={styles.dropList}>{e.name}</span>
               </NavLink>
             </div>
           })}
