@@ -7,7 +7,7 @@ import PayCart from '../PayCart/PayCart.jsx';
 
 
 export default function ViewOrder(props) {
-
+    const [quantity,setQuantity] =React.useState('')
     const dispatch = useDispatch();
 
     
@@ -33,11 +33,6 @@ export default function ViewOrder(props) {
         
         dispatch(deleteItem(data)) 
 }
-
-  /*  
-    if (props.data.images) {
-        imagenes = props.data.images[0].url;
-    } */
 
     function deleteCart() {
         if (cartProduct.length >= 0 && cartProduct[0].orderId !== undefined) {
@@ -80,10 +75,13 @@ export default function ViewOrder(props) {
                 var orderId = data.orderId
                 var qty = data.quantity - 1
                 dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty,orderId }))
-                dispatch(getProductsCart({ userId: user.id, state: "carrito" }));   
+               // dispatch(getProductsCart({ userId: user.id, state: "carrito" }));   
             }
             
     }
+        
+    
+   
     return (
 
         <div className="containe" >
@@ -94,8 +92,9 @@ export default function ViewOrder(props) {
                 {cartProduct && cartProduct.map((info) => {
                        //  console.log("esto es info")
                         // console.log(info)
+                       
                         if (info !== undefined) {
-        
+                            
                             var subTot = 0;
                             subTot = info.price * info.quantity;
                             priceList.push(subTot);
@@ -113,21 +112,21 @@ export default function ViewOrder(props) {
                                                 <h5>{info.name}</h5>
                                             </div>
                                         </div>
-                                        <div className="add" >
+                                         <div className="add" >
                                             <div className="dataAdd">
                                                 <button onClick={() => {restar(info)}}><i class="fas fa-minus"></i></button>
                                             </div>
-                                        </div>
-                                        <div className="dataQuanty" >
+                                </div>
+                                 <div className="dataQuanty" >
                                             <div className="dataQuanty2">
                                                 <h5>{info.quantity}</h5>
                                             </div>
                                         </div>
-                                        <div className="add" >
+                                          <div className="add" >
                                             <div className="dataAdd">
                                             <button onClick={() => {sumar(info)}}><i class="fas fa-plus"></i></button>
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="dataPrice" >
                                             <div>
                                                 <h5>$ {info.price}</h5>

@@ -29,6 +29,7 @@ class CrudProductForm extends React.Component {
     }
     
     handleChange = e => {
+        console.log('handlechange')
         this.setState({
             form: {
                 ...this.state.form,
@@ -38,23 +39,27 @@ class CrudProductForm extends React.Component {
     }
     
     mostrarModalInsertar = () => {
+        console.log('mostrarInsertar')
         this.setState({ modalInsertar: true })
         this.props.getCategories();
     }
     mostrarModalEditar = (product) => {
+        console.log('mostrarEditar')
         this.setState({ modalEditar: true ,form: product })
         this.props.getCategories();
     }
     ocultarModalInsertar = () => {
+        console.log('oculmodalinsertar')
         this.setState({ modalInsertar: false })
-        this.props.getAllProducts()
+       // this.props.getAllProducts()
     }
     ocultarModalEditar = (product) => {
+        console.log('oculmodalEditar')
         this.setState({ modalEditar: false });
         if(product){
             if(this.state.form.categories){
               this.props.putProduct(product)
-              this.props.getAllProducts() 
+             // this.props.getAllProducts() 
           }else{
               alert('El Producto debe tener 1 categoria asignada')
           }
@@ -64,46 +69,43 @@ class CrudProductForm extends React.Component {
 
     }
     handleSubmit(event) {
+        console.log('submit')
         event.preventDefault();
         this.props.chargeProducts(this.state.form.search);
       }
       handleDelete(id){
+          console.log('handledelete')
           //event.preventDefault();
           this.props.destroyProduct(id);
-          this.props.getAllProducts();
+         // this.props.getAllProducts();
 
       }
       handleEdit(product){
-          
+        console.log('handleedit')
                 this.mostrarModalEditar(product)
-                this.props.getAllProducts();
+              //  this.props.getAllProducts();
           
         
 
       }
       componentDidMount(){
+        console.log('didmount')
           this.props.getAllProducts();
       }
       handlepost(inputs){
        
           if(this.state.checkBoxes.length >0){
-              //if(this.state.file){
-              
-                this.props.postProducts({product:inputs,cate:this.state.checkBoxes,img:this.state.file})
+              console.log('handlepost')
                 this.ocultarModalInsertar();
-             // }else{
-               //   alert('Debe seleccionar la/s imagen/es del producto')
-              //}
+                this.props.postProducts({product:inputs,cate:this.state.checkBoxes,img:this.state.file})
+                
              
           }else{
                alert('Debe Seleccionar la Categoria a asignar')
           }
-          
-          
-
       }
       cambio(id){
-       
+        console.log('cambio')
           const index = this.state.checkBoxes.indexOf(id);               
           if(index > -1){
             
@@ -115,6 +117,7 @@ class CrudProductForm extends React.Component {
            }
       }
       handleChangeImage = e =>{
+        console.log('image')
            this.setState({
               file:e.target.files[0]
               //filename:e.target.files[0].name
@@ -122,7 +125,7 @@ class CrudProductForm extends React.Component {
            
       }
       checkEdit(catego){
-       
+        console.log('checkEdit')
         const categorias =this.state.form.categories;
         if(categorias){
            for(var i=0;i<categorias.length;i++){
@@ -136,6 +139,7 @@ class CrudProductForm extends React.Component {
           
       }
       checkEditClick(cate){
+        console.log('checkEditClick')
         const categorias =this.state.form.categories;
         for(var i= 0;i<categorias.length;i++){
             if(categorias[i].id==cate.id){

@@ -146,7 +146,7 @@ export const removeFromCartLS = (product) => dispatch => {
 
  //   console.log("Info de editQuantity");
     var orderBody = { productId, quantity , orderId}
-  //  console.log('-- -- orderBody: -- --', orderBody)
+   console.log('-- -- orderBody: -- --', orderBody)
     try {
 
         const res = await axios.put(`http://localhost:3001/orders/${idUser}/cart`, orderBody);
