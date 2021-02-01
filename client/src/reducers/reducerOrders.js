@@ -8,7 +8,7 @@ import {
 const initialState = {
   allOrders: [],
   order: [],
-  
+
 };
 
 export default (state = initialState, action) => {
@@ -18,22 +18,21 @@ export default (state = initialState, action) => {
         ...state,
         allOrders: action.payload
       }
-    
+
     case GET_SPECIFIC_ORDER:
       return {
         ...state,
         order: action.payload
       }
-    
+
     case UPDATE_STATE_ORDER:
       return {
         ...state,
         order: action.payload
       }
-    
-    
+
+
     default:
       return state;
-    
   }
 };

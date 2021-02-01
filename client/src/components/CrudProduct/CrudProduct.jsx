@@ -1,33 +1,33 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {  Table, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup ,Label, Input, Form} from 'reactstrap'
+import { Table, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup, Label, Input, Form } from 'reactstrap'
 import styles from './crud.module.scss'
-import {connect} from 'react-redux';
-import {getProducts,getCategories,searchProduct,insertProduct,deleteProduct,editProduct} from '../../actions/productActions'
+import { connect } from 'react-redux';
+import { getProducts, getCategories, searchProduct, insertProduct, deleteProduct, editProduct } from '../../actions/productActions'
 class CrudProductForm extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
             form: {
-                id:'',
+                id: '',
                 name: '',
                 description: '',
                 price: '',
                 stock: '',
-                url:''
+                url: ''
             },
             modalInsertar: false,
             modalEditar: false,
             search: '',
-            isChecked:false,
-            checkBoxes:[],
-            file:null,
-            cateEdit:[]
+            isChecked: false,
+            checkBoxes: [],
+            file: null,
+            cateEdit: []
         };
-        
+
     }
-    
+
     handleChange = e => {
         this.setState({
             form: {
@@ -36,13 +36,13 @@ class CrudProductForm extends React.Component {
             }
         })
     }
-    
+
     mostrarModalInsertar = () => {
         this.setState({ modalInsertar: true })
         this.props.getCategories();
     }
     mostrarModalEditar = (product) => {
-        this.setState({ modalEditar: true ,form: product })
+        this.setState({ modalEditar: true, form: product })
         this.props.getCategories();
     }
     ocultarModalInsertar = () => {
@@ -51,119 +51,120 @@ class CrudProductForm extends React.Component {
     }
     ocultarModalEditar = (product) => {
         this.setState({ modalEditar: false });
-        if(product){
-            if(this.state.form.categories){
-              this.props.putProduct(product)
-              this.props.getAllProducts() 
-          }else{
-              alert('El Producto debe tener 1 categoria asignada')
-          }
-           
+        if (product) {
+            if (this.state.form.categories) {
+                this.props.putProduct(product)
+                this.props.getAllProducts()
+            } else {
+                alert('El Producto debe tener 1 categoria asignada')
+            }
+
         }
-        
+
 
     }
     handleSubmit(event) {
         event.preventDefault();
         this.props.chargeProducts(this.state.form.search);
-      }
-      handleDelete(id){
-          //event.preventDefault();
-          this.props.destroyProduct(id);
-          this.props.getAllProducts();
+    }
+    handleDelete(id) {
+        //event.preventDefault();
+        this.props.destroyProduct(id);
+        this.props.getAllProducts();
 
-      }
-      handleEdit(product){
-          
-                this.mostrarModalEditar(product)
-                this.props.getAllProducts();
-          
-        
+    }
+    handleEdit(product) {
 
-      }
-      componentDidMount(){
-          this.props.getAllProducts();
-      }
-      handlepost(inputs){
-       
-          if(this.state.checkBoxes.length >0){
-              //if(this.state.file){
-              
-                this.props.postProducts({product:inputs,cate:this.state.checkBoxes,img:this.state.file})
-                this.ocultarModalInsertar();
-             // }else{
-               //   alert('Debe seleccionar la/s imagen/es del producto')
-              //}
-             
-          }else{
-               alert('Debe Seleccionar la Categoria a asignar')
-          }
-          
-          
+        this.mostrarModalEditar(product)
+        this.props.getAllProducts();
 
-      }
-      cambio(id){
-       
-          const index = this.state.checkBoxes.indexOf(id);               
-          if(index > -1){
-            
-               this.state.checkBoxes.splice(index,1)
-              
-           } else {
-                this.state.checkBoxes.push(id)
-              
-           }
-      }
-      handleChangeImage = e =>{
-           this.setState({
-              file:e.target.files[0]
-              //filename:e.target.files[0].name
-            });
-           
-      }
-      checkEdit(catego){
-       
-        const categorias =this.state.form.categories;
-        if(categorias){
-           for(var i=0;i<categorias.length;i++){
-            if(categorias[i].id==catego.id){
-            
-                return true
+
+
+    }
+    componentDidMount() {
+        this.props.getAllProducts();
+    }
+    handlepost(inputs) {
+
+        if (this.state.checkBoxes.length > 0) {
+            //if(this.state.file){
+
+            this.props.postProducts({ product: inputs, cate: this.state.checkBoxes, img: this.state.file })
+            this.ocultarModalInsertar();
+            // }else{
+            //   alert('Debe seleccionar la/s imagen/es del producto')
+            //}
+
+        } else {
+            alert('Debe Seleccionar la Categoria a asignar')
+        }
+
+
+
+    }
+    cambio(id) {
+
+        const index = this.state.checkBoxes.indexOf(id);
+        if (index > -1) {
+
+            this.state.checkBoxes.splice(index, 1)
+
+        } else {
+            this.state.checkBoxes.push(id)
+
+        }
+    }
+    handleChangeImage = e => {
+        this.setState({
+            file: e.target.files[0]
+            //filename:e.target.files[0].name
+        });
+
+    }
+    checkEdit(catego) {
+
+        const categorias = this.state.form.categories;
+        if (categorias) {
+            for (var i = 0; i < categorias.length; i++) {
+                if (categorias[i].id == catego.id) {
+
+                    return true
+                }
             }
+            return false
         }
-            return false 
-        }
-          
-      }
-      checkEditClick(cate){
-        const categorias =this.state.form.categories;
-        for(var i= 0;i<categorias.length;i++){
-            if(categorias[i].id==cate.id){
-              
-                this.state.form.categories.splice(i,1);
-              
+
+    }
+    checkEditClick(cate) {
+        const categorias = this.state.form.categories;
+        for (var i = 0; i < categorias.length; i++) {
+            if (categorias[i].id == cate.id) {
+
+                this.state.form.categories.splice(i, 1);
+
                 return
             }
         }
         this.state.form.categories.push(cate)
-         
-      }
-      
+
+    }
+
+
     render() {
         return (
             <>
-                <Container>
-                <div>
+                <Container className={styles.container}>
+                    <div>
                         <h1>Administrar Productos</h1>
                         <Button color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </Button>
                     </div>
-                        <br/>
-                        <FormGroup>
-                    <div>
-                        <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
-                        <Input name='search' type="text" className="col-md-3 mb-3" placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} /> 
-                    </div>
-                        </FormGroup>
+                    <br />
+                    <FormGroup>
+                        <div>
+                            <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
+                            <Input name='search' type="text" className="col-md-3 mb-3" placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
+                        </div>
+                    </FormGroup>
 
                     <Table>
                         <thead>
@@ -171,26 +172,26 @@ class CrudProductForm extends React.Component {
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
                                 <th>Precio</th>
-                                <th>Stock</th>                            
-                             </tr>
+                                <th>Stock</th>
+                            </tr>
                         </thead>
                         <tbody>
-                       
-                            {this.props.products && this.props.products.map((product=>(
+
+                            {this.props.products && this.props.products.map((product => (
                                 <tr>
-                                
+
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
                                     <td>{product.price}</td>
                                     <td>{product.stock}</td>
-                                   
-                                <td>
-                                    <Button color='primary' onClick ={() => this.handleEdit(product)}>Editar</Button>
-                                    <Button color='danger' onClick  ={(e)=>this.handleDelete(product.id)}>Borrar</Button>
-                                </td>
-                            </tr>  
+
+                                    <td>
+                                        <Button color='primary' onClick={() => this.handleEdit(product)}>Editar</Button>
+                                        <Button color='danger' onClick={(e) => this.handleDelete(product.id)}>Borrar</Button>
+                                    </td>
+                                </tr>
                             )))}
-                                
+
                         </tbody>
                     </Table>
 
@@ -202,55 +203,55 @@ class CrudProductForm extends React.Component {
                             <h3>Editar Producto</h3>
                         </div>
                     </ModalHeader>
-                   <ModalBody>
+                    <ModalBody>
                         <FormGroup>
-                            
+
                             <Label sm={3}>Nombre</Label>
                             <Col sm={20}>
-                            <Input name='name'  type='text' value={this.state.form.name} onChange={this.handleChange} />
+                                <Input name='name' type='text' value={this.state.form.name} onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Descripcion</Label>
                             <Col sm={20}>
-                            <Input name='description'  type="textarea" value={this.state.form.description} onChange={this.handleChange} />
-                        </Col>
+                                <Input name='description' type="textarea" value={this.state.form.description} onChange={this.handleChange} />
+                            </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Precio</Label>
                             <Col sm={20}>
-                            <Input name='price'  type='text' value={this.state.form.price} onChange={this.handleChange} />
+                                <Input name='price' type='text' value={this.state.form.price} onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Stock</Label>
                             <Col sm={20}>
-                            <Input name='stock' type='text' value={this.state.form.stock} onChange={this.handleChange} />
+                                <Input name='stock' type='text' value={this.state.form.stock} onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup check>
-                                                        
-                                        {this.props.categories && this.props.categories.map((cateProd=>(
-                                            <div className="form-check form-check-inline">
-                                                <Label check>
-                                                 <Input row className="form-check-input" type="checkbox"
-                                                      name='isChecked' defaultChecked={this.checkEdit(cateProd)} 
-                                                      onChange={()=>this.checkEditClick(cateProd)}/>
-                                            
-                                                {'    '}
-                                                {cateProd.name}
-                                                {'    '}
-                                            </Label>
-                                        </div>
-                                        )))}
+
+                            {this.props.categories && this.props.categories.map((cateProd => (
+                                <div className="form-check form-check-inline">
+                                    <Label check>
+                                        <Input row className="form-check-input" type="checkbox"
+                                            name='isChecked' defaultChecked={this.checkEdit(cateProd)}
+                                            onChange={() => this.checkEditClick(cateProd)} />
+
+                                        {'    '}
+                                        {cateProd.name}
+                                        {'    '}
+                                    </Label>
+                                </div>
+                            )))}
                         </FormGroup>
                         <FormGroup>
                             {/* <input type='file'/> */}
                         </FormGroup>
-                       
+
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={() =>this.ocultarModalEditar(this.state.form)}>Editar</Button>
+                        <Button color='primary' onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</Button>
                         <Button color='primary' onClick={() => this.ocultarModalEditar()}>Cancelar</Button>
                     </ModalFooter>
                 </Modal>
@@ -264,91 +265,91 @@ class CrudProductForm extends React.Component {
                         </div>
                     </ModalHeader>
                     <ModalBody>
-                    <FormGroup>
+                        <FormGroup>
                             <Label sm={3}>Nombre</Label>
-                                 <Col sm={20}>
-                            <Input className={styles.input} name='name' type='text' onChange={this.handleChange} />
-                                </Col>
+                            <Col sm={20}>
+                                <Input className={styles.input} name='name' type='text' onChange={this.handleChange} />
+                            </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Descripcion</Label>
-                                 <Col sm={20}>
-                            <Input className={styles.input} name='description' type="textarea" onChange={this.handleChange} />
-                                 </Col>
+                            <Col sm={20}>
+                                <Input className={styles.input} name='description' type="textarea" onChange={this.handleChange} />
+                            </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Precio</Label>
-                                 <Col sm={20}>
-                            <Input className={styles.input} name='price' type='text' onChange={this.handleChange} />
-                                  </Col>
+                            <Col sm={20}>
+                                <Input className={styles.input} name='price' type='text' onChange={this.handleChange} />
+                            </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Stock</Label>
-                                <Col sm={20}>
-                            <Input className={styles.input}name='stock' type='text' onChange={this.handleChange} />
-                                 </Col>
+                            <Col sm={20}>
+                                <Input className={styles.input} name='stock' type='text' onChange={this.handleChange} />
+                            </Col>
                         </FormGroup>
                         <h4>Categorias</h4>
                         <FormGroup check>
-                         
-                             {this.props.categories && this.props.categories.map((cate=>(
-                                 <div className="form-check form-check-inline">
-                                    
-                                <FormGroup check>
-                                <Label check> 
-                                
-                                    <Input row className="form-check-input" type="checkbox"
-                                     value="option1" id="inlineCheckbox1" name='isChecked'
-                                       onChange={()=>this.cambio(cate.id)}/>
-                                      
-                                    {/*console.log('mapea las categorias' + cate)*/}
-                                    {'      '}
-                                    {cate.name}
-                                    {'      '}
-                                
-                                </Label>
-                                </FormGroup>
-                                </div>
-                             )))}
-                        
-                        </FormGroup>
-                       <FormGroup>
-                       <Label>Url imagen</Label>
-                           <Input type='text' name='url' onChange={this.handleChange}/>
-                           {/* <input type='file' name='file' onChange={this.handleChangeImage}/> */}
 
-                       </FormGroup>
+                            {this.props.categories && this.props.categories.map((cate => (
+                                <div className="form-check form-check-inline">
+
+                                    <FormGroup check>
+                                        <Label check>
+
+                                            <Input row className="form-check-input" type="checkbox"
+                                                value="option1" id="inlineCheckbox1" name='isChecked'
+                                                onChange={() => this.cambio(cate.id)} />
+
+                                            {/*console.log('mapea las categorias' + cate)*/}
+                                            {'      '}
+                                            {cate.name}
+                                            {'      '}
+
+                                        </Label>
+                                    </FormGroup>
+                                </div>
+                            )))}
+
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Url imagen</Label>
+                            <Input type='text' name='url' onChange={this.handleChange} />
+                            {/* <input type='file' name='file' onChange={this.handleChangeImage}/> */}
+
+                        </FormGroup>
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={()=>this.handlepost({name:this.state.form.name,description:this.state.form.description,price:this.state.form.price,stock:this.state.form.stock,image:[{url:this.state.form.url}]})}>Insertar</Button>
+                        <Button color='primary' onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</Button>
                         <Button color='primary' onClick={() => this.ocultarModalInsertar()}>Cancelar</Button>
                     </ModalFooter>
                 </Modal>
 
-                
+
             </>
 
         )
     }
 }
 
-const mapsStateToProps = (state) =>{
-    return{
+const mapsStateToProps = (state) => {
+    return {
         products: state.product.products,
-        categories:state.product.categories
+        categories: state.product.categories
     }
 }
 const mapDispatchToprops = (dispatch) => {
-    return{
-        chargeProducts: search =>dispatch(searchProduct(search)),
-        getCategories: ()=>dispatch(getCategories()),
-        postProducts: (products) =>dispatch(insertProduct(products)),
-        destroyProduct:(id)=> dispatch(deleteProduct(id)),
+    return {
+        chargeProducts: search => dispatch(searchProduct(search)),
+        getCategories: () => dispatch(getCategories()),
+        postProducts: (products) => dispatch(insertProduct(products)),
+        destroyProduct: (id) => dispatch(deleteProduct(id)),
         getAllProducts: () => dispatch(getProducts()),
-        putProduct:(payload) => dispatch(editProduct(payload)),
+        putProduct: (payload) => dispatch(editProduct(payload)),
         //getCategoriesByProduct: (payload)=>dispatch(productCategoryAll(payload))
-        
+
     }
 }
-export default  connect(mapsStateToProps,mapDispatchToprops)(CrudProductForm)
+export default connect(mapsStateToProps, mapDispatchToprops)(CrudProductForm)

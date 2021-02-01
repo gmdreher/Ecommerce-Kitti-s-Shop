@@ -14,13 +14,14 @@ module.exports = (sequelize) => {
         isEmail: true,
       },
     },
-     password: {
-        type: DataTypes.STRING(64),
-        is: /^[0-9a-f]{64}$/i
+    password: {
+      type: DataTypes.STRING(64),
+      is: /^[0-9a-f]{64}$/i
     },
-    rol:{
-        type:DataTypes.STRING,
-        allowNull:false
+    rol: {
+      type: DataTypes.STRING,
+      allowNull: false
+
     }
   })
 };

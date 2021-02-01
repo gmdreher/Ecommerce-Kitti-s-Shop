@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 
 
 class OrderDetails extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,7 @@ class OrderDetails extends React.Component {
   componentDidMount() {
     this.props.getUserOrder(this.props.id);
   }
-  
+
   handleState() {
     this.setState({
       editing: true
@@ -39,33 +39,33 @@ class OrderDetails extends React.Component {
       OrderState: event.target.value,
     })
   }
-  
+
   handleSubmit(event) {
     event.preventDefault();
-    
+
     this.setState({
       editing: false,
       OrderState: event.target.value,
     });
-    
-      this.props.updateStateOrder(this.props.id, this.state.OrderState);
-    
+
+    this.props.updateStateOrder(this.props.id, this.state.OrderState);
+
   }
-  
-  render () {
-    
-    let priceOrder=[];
+
+  render() {
+
+    let priceOrder = [];
     function getPriceOrder() {
       if (priceOrder.length > 0) {
         let total = 0;
-        for(let i = 0; i <priceOrder.length; i++){
+        for (let i = 0; i < priceOrder.length; i++) {
           total = total + priceOrder[i];
         }
         return total.toFixed(2);
       }
     }
     let { id, state, createdAt, userId, products } = this.props.order;
-   
+
     return (
       <div className={styles.primerDiv}>
         <Link to={"/admin/orders"}>
@@ -76,9 +76,9 @@ class OrderDetails extends React.Component {
           <div>
             <table className="table-responsive-m">
               <tbody>
-              <tr>
-                <th scope="row">Fecha:</th>
-                <td className={styles.letterhead}>{this.formatDate(createdAt)}</td>
+                <tr>
+                  <th scope="row">Fecha:</th>
+                  <td className={styles.letterhead}>{this.formatDate(createdAt)}</td>
               </tr>
               <tr>
                 <th scope="row">Id de Usuario:</th>
@@ -108,18 +108,18 @@ class OrderDetails extends React.Component {
                     
                   </form>
                   ) : <div className="btn-sm "><i title="Editar" className={"fas fa-edit " + styles.icon}/></div>
-                  }
-                  </div>
+                      }
+                    </div>
                   </td>
-              </tr>
-              <tr>
-                <th scope="row" >Numero de orden</th>
-                <td className={styles.letterhead}>{id}</td>
-              </tr>
-              <tr>
-                <th>Productos:</th>
-                <th> </th>
-              </tr>
+                </tr>
+                <tr>
+                  <th scope="row" >Numero de orden</th>
+                  <td className={styles.letterhead}>{id}</td>
+                </tr>
+                <tr>
+                  <th>Productos:</th>
+                  <th> </th>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -129,25 +129,26 @@ class OrderDetails extends React.Component {
                 let quantity = product.OrderDetails.quantity;
                 let subTot = product.price * quantity;
                 priceOrder.push(subTot);
-                
+
                 return <div className={styles.divProducts1} >
                   <div className={styles.image}>
-                    <img className={styles.imgResponsive} src={product.images? product.images[0].url : ''} alt="Cargando imagen..." />
+                    <img className={styles.imgResponsive} src={product.images ? product.images[0].url : ''} alt="Cargando imagen..." />
                   </div>
                   <div className={styles.quantity}>
                     <h5>{quantity}</h5>
                   </div>
-                    <div className={styles.name}>
-                      <h5 className="ml-3">{product.name}</h5>
+                  <div className={styles.name}>
+                    <h5 className="ml-3">{product.name}</h5>
                   </div>
-                    <div className={styles.quantity}>
-                      <h5>${product.price} </h5>
-                    </div>
+                  <div className={styles.quantity}>
+                    <h5>${product.price} </h5>
+                  </div>
                   <div className={styles.price}>
-                      <h6>${product.price * quantity}</h6>
+                    <h6>${product.price * quantity}</h6>
                   </div>
                 </div>
-                
+
+
               })
             }
           </div>
@@ -155,7 +156,7 @@ class OrderDetails extends React.Component {
             <div className={styles.totalTable}>
               <h5 className="grupo">Total a pagar: </h5>
               <div className="grupo">
-                  <h4 className='ml-3'>${getPriceOrder()}</h4>
+                <h4 className='ml-3'>${getPriceOrder()}</h4>
               </div>
             </div>
           </div>

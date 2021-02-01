@@ -15,6 +15,8 @@ import OrderTable from "./components/OrderTable/OrderTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
 import './Styles/App.scss'
 
+import './App.scss';
+
 
 
 
@@ -32,7 +34,7 @@ function App() {
             />
           </header>
           <main>
-      
+      <div className="transparencia">
       
             <Route exact path="/" component={Main} />
             <Route exact path='/products' component={Catalogue} />
@@ -47,7 +49,7 @@ function App() {
       
             <Route exact path='/user/signup' component={SignUp} />
             <Route exact path="/user/order" component={ViewOrder} />
-    
+    </div>
     
           </main>
     
@@ -56,7 +58,6 @@ function App() {
           </footer>
         </div>
       </div>
-      
     </BrowserRouter>
   );
 }
