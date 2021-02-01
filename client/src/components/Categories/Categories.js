@@ -25,7 +25,7 @@ function Categories(props) {
           {props.categories.map((e) => {
             return <div key={e.id} >
               <NavLink exact to={`/products/category/${e.name}`} activeStyle={{ fontWeight: "bold" }} >
-                <a >{e.name}</a>
+                <span className={styles.dropList}>{e.name}</span>
               </NavLink>
             </div>
           })}
