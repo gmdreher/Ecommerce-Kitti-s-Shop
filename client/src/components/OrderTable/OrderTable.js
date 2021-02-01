@@ -3,27 +3,33 @@ import { getAllOrders } from '../../actions/orderActions';
 import { connect } from 'react-redux';
 import styles from './orderTable.module.scss'
 import { Link } from "react-router-dom";
+import Moment from 'moment';
 
 class OrderTable extends React.Component {
 
   componentDidMount() {
     this.props.getAllOrders()
   }
-
-  render() {
-    return (
+  
+  formatDate(date) {
+    let formatDate = new Moment(date);
+    return formatDate.format('DD/MM/YY - HH:mm:ss')
+  }
+  
+  
+  render(){
+    return(
       <Fragment>
-        <br />
         <h2>Ordenes de Usuario:</h2>
-        <div className={'table-responsive ' + styles.container}>
-          <table className="table table-hover table-sm" >
+        <div className={"table-responsive " + styles.container}>
+          <table className="table table-sm" >
             <thead>
               <tr>
                 <th scope="col">Número de Compra</th>
                 <th scope="col">Id del Usuario</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Monto</th>
-                <th scope="col">Fecha</th>
+                <th scope="col">Fecha y hora</th>
                 <th scope="col">  </th>
               </tr>
             </thead>
@@ -44,9 +50,9 @@ class OrderTable extends React.Component {
                       <td>{order.state}
                       </td>
                       <td>${total.toFixed(2)}</td>
-                      <td>{order.createdAt}</td>
+                      <td>{this.formatDate(order.createdAt)}</td>
                       <td>
-                        <button>Editar</button>
+                        <button type="button" className="btn btn-secondary btn-sm">Editar</button>
                       </td>
                     </tr>
                   )

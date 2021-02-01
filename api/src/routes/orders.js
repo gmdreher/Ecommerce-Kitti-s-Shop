@@ -102,7 +102,9 @@ server.get('/', (req, res) => {
       {
         model: Product, include: { model: Image }
       },
-    ]
+    ],
+    order: [
+      ['id', 'ASC']]
   })
     .then(orders => {
       res.status(200).json(orders)

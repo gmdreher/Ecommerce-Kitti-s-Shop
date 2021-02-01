@@ -1,9 +1,26 @@
+.inlineLabel {
+  margin-right: 0.25em;
+}
 
+.btnExtraSmall {
+  line-height: 1;
+}
 .primerDiv{
   display: flex;
   flex-direction: column;
   align-content: center;
   margin-left: auto;
+
+  .volver{
+    display: grid;
+    background: white;
+    box-shadow: 0 0 5px rgba(0,0,0,.3);
+    padding: .5em 2em;
+    border-radius: 5px;
+    border: none;
+    margin-top: 1em;
+    margin-left: 50px;
+  }
 
   .container {
     padding: 40px;
@@ -13,20 +30,42 @@
 
     .letterhead{
       display: flex;
+      margin-right: 5px;
       margin-left: 20px;
+      padding-left: 5px;
+
     }
 
     .editar{
-      margin-left: 10px;
-      padding-left: 1px;
-      border-radius: 5px;
+      text-align: left;
+      //border-radius: 5px;
+      //padding: 0;
+      //margin-left: 5px;
+      //box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+      //label{
+      //  margin-right: 4px;
+      //}
+
+      &:hover{
+        cursor: pointer;
+      }
+
+      .icon{
+        padding: 0;
+      }
+
+      .input{
+        padding: 0;
+        background-color: cornflowerblue;
+        margin-top: 0;
+      }
     }
 
     .containerProducts{
       padding-top: 5%;
       display: grid;
 
-      
 
       .divProducts1{
         background-color: white;

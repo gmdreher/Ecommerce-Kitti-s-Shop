@@ -1,7 +1,9 @@
 import React from "react";
-import styles from './orderdetails.module.scss'
+import styles from './orderdetails.module.scss';
 import { connect } from 'react-redux';
 import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
+import Moment from "moment";
+import {Link} from "react-router-dom";
 
 
 
@@ -16,8 +18,13 @@ class OrderDetails extends React.Component {
     this.handleState = this.handleState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.formatDate = this.formatDate.bind(this);
   }
-
+  
+  formatDate(date) {
+    let formatDate = new Moment(date);
+    return formatDate.format('DD/MM/YY - HH:mm:ss')
+  }
   componentDidMount() {
     this.props.getUserOrder(this.props.id);
   }
@@ -61,6 +68,9 @@ class OrderDetails extends React.Component {
 
     return (
       <div className={styles.primerDiv}>
+        <Link to={"/admin/orders"}>
+          <button className={"btn-light " + styles.volver}>Volver</button>
+        </Link>
         <h2 className="main-Footer">Detalle de compra</h2>
         <div className={styles.container}>
           <div>
@@ -68,28 +78,36 @@ class OrderDetails extends React.Component {
               <tbody>
                 <tr>
                   <th scope="row">Fecha:</th>
-                  <td className={styles.letterhead}>{createdAt}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Id de Usuario:</th>
-                  <td className={styles.letterhead}>{userId}</td>
-                </tr>
-                <tr>
-                  <th scope="row" className='mr-3'>Estado de la orden:</th>
-                  <td className={styles.letterhead}><div>{this.state.editing ? " " : state}</div>
-                    <div className={styles.editar} onClick={this.handleState}>
-                      {this.state.editing ? (<form onSubmit={this.handleSubmit}>
-                        <label htmlFor="state">Elige un estado</label>
-                        <select name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
-                          <option value="carrito">carrito</option>
-                          <option value="creada">creada</option>
-                          <option value="procesando">procesando</option>
-                          <option value="cancelada">cancelada</option>
-                          <option value="completa">completa</option>
-                        </select>
-                        <br></br>
-                        <input className="btn btn-light btn-sm" type="submit" value="Aceptar" />
-                      </form>) : <div className={"btn btn-light btn-sm" + styles.editar}>Editar</div>
+                  <td className={styles.letterhead}>{this.formatDate(createdAt)}</td>
+              </tr>
+              <tr>
+                <th scope="row">Id de Usuario:</th>
+                <td className={styles.letterhead}>{userId}</td>
+              </tr>
+              <tr>
+                <th scope="row" className='mr-3'>Estado de la orden:</th>
+                <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
+                <div className={styles.editar} onClick={this.handleState}>
+                  {this.state.editing? (
+                    <form onSubmit={this.handleSubmit}>
+                      <div className="row">
+                        <div className="col-9">
+                          <label className={styles.inlineLabel}>Elige un estado</label>
+                          <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
+                            <option value="carrito">carrito</option>
+                            <option value="creada">creada</option>
+                            <option value="procesando">procesando</option>
+                            <option value="cancelada">cancelada</option>
+                            <option value="completa">completa</option>
+                          </select>
+                        </div>
+                        <div className="col-3">
+                          <input className={styles.btnExtraSmall + " btn btn-info btn-sm"} type="submit" value="Aceptar"/>
+                        </div>
+                      </div>
+                    
+                  </form>
+                  ) : <div className="btn-sm "><i title="Editar" className={"fas fa-edit " + styles.icon}/></div>
                       }
                     </div>
                   </td>
@@ -144,15 +162,14 @@ class OrderDetails extends React.Component {
           </div>
         </div>
       </div>
-
+  
     )
-  }
-}
+  }}
 
 function mapStateToProps(state) {
   return {
     order: state.orderStore.order,
-
+   
   }
 }
 
