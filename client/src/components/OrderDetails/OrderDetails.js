@@ -6,7 +6,7 @@ import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
 
 
 class OrderDetails extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,11 +17,11 @@ class OrderDetails extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  
+
   componentDidMount() {
     this.props.getUserOrder(this.props.id);
   }
-  
+
   handleState() {
     this.setState({
       editing: true
@@ -32,33 +32,33 @@ class OrderDetails extends React.Component {
       OrderState: event.target.value,
     })
   }
-  
+
   handleSubmit(event) {
     event.preventDefault();
-    
+
     this.setState({
       editing: false,
       OrderState: event.target.value,
     });
-    
-      this.props.updateStateOrder(this.props.id, this.state.OrderState);
-    
+
+    this.props.updateStateOrder(this.props.id, this.state.OrderState);
+
   }
-  
-  render () {
-    
-    let priceOrder=[];
+
+  render() {
+
+    let priceOrder = [];
     function getPriceOrder() {
       if (priceOrder.length > 0) {
         let total = 0;
-        for(let i = 0; i <priceOrder.length; i++){
+        for (let i = 0; i < priceOrder.length; i++) {
           total = total + priceOrder[i];
         }
         return total.toFixed(2);
       }
     }
     let { id, state, createdAt, userId, products } = this.props.order;
-   
+
     return (
       <div className={styles.primerDiv}>
         <h2 className="main-Footer">Detalle de compra</h2>
@@ -66,42 +66,42 @@ class OrderDetails extends React.Component {
           <div>
             <table className="table-responsive-m">
               <tbody>
-              <tr>
-                <th scope="row">Fecha:</th>
-                <td className={styles.letterhead}>{createdAt}</td>
-              </tr>
-              <tr>
-                <th scope="row">Id de Usuario:</th>
-                <td className={styles.letterhead}>{userId}</td>
-              </tr>
-              <tr>
-                <th scope="row" className='mr-3'>Estado de la orden:</th>
-                <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
-                <div className={styles.editar} onClick={this.handleState}>
-                  {this.state.editing? (<form onSubmit={this.handleSubmit}>
-                  <label htmlFor="state">Elige un estado</label>
-                  <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
-                    <option value="carrito">carrito</option>
-                    <option value="creada">creada</option>
-                    <option value="procesando">procesando</option>
-                    <option value="cancelada">cancelada</option>
-                    <option value="completa">completa</option>
-                  </select>
-                  <br></br>
-                    <input className="btn btn-light btn-sm" type="submit" value="Aceptar"/>
-                </form>) : <div className={"btn btn-light btn-sm" + styles.editar}>Editar</div>
-                  }
-                  </div>
+                <tr>
+                  <th scope="row">Fecha:</th>
+                  <td className={styles.letterhead}>{createdAt}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Id de Usuario:</th>
+                  <td className={styles.letterhead}>{userId}</td>
+                </tr>
+                <tr>
+                  <th scope="row" className='mr-3'>Estado de la orden:</th>
+                  <td className={styles.letterhead}><div>{this.state.editing ? " " : state}</div>
+                    <div className={styles.editar} onClick={this.handleState}>
+                      {this.state.editing ? (<form onSubmit={this.handleSubmit}>
+                        <label htmlFor="state">Elige un estado</label>
+                        <select name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
+                          <option value="carrito">carrito</option>
+                          <option value="creada">creada</option>
+                          <option value="procesando">procesando</option>
+                          <option value="cancelada">cancelada</option>
+                          <option value="completa">completa</option>
+                        </select>
+                        <br></br>
+                        <input className="btn btn-light btn-sm" type="submit" value="Aceptar" />
+                      </form>) : <div className={"btn btn-light btn-sm" + styles.editar}>Editar</div>
+                      }
+                    </div>
                   </td>
-              </tr>
-              <tr>
-                <th scope="row" >Numero de orden</th>
-                <td className={styles.letterhead}>{id}</td>
-              </tr>
-              <tr>
-                <th>Productos:</th>
-                <th> </th>
-              </tr>
+                </tr>
+                <tr>
+                  <th scope="row" >Numero de orden</th>
+                  <td className={styles.letterhead}>{id}</td>
+                </tr>
+                <tr>
+                  <th>Productos:</th>
+                  <th> </th>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -111,25 +111,26 @@ class OrderDetails extends React.Component {
                 let quantity = product.OrderDetails.quantity;
                 let subTot = product.price * quantity;
                 priceOrder.push(subTot);
-                
+
                 return <div className={styles.divProducts1} >
                   <div className={styles.image}>
-                    <img className={styles.imgResponsive} src={product.images? product.images[0].url : ''} alt="Cargando imagen..." />
+                    <img className={styles.imgResponsive} src={product.images ? product.images[0].url : ''} alt="Cargando imagen..." />
                   </div>
                   <div className={styles.quantity}>
                     <h5>{quantity}</h5>
                   </div>
-                    <div className={styles.name}>
-                      <h5 className="ml-3">{product.name}</h5>
+                  <div className={styles.name}>
+                    <h5 className="ml-3">{product.name}</h5>
                   </div>
-                    <div className={styles.quantity}>
-                      <h5>${product.price} </h5>
-                    </div>
+                  <div className={styles.quantity}>
+                    <h5>${product.price} </h5>
+                  </div>
                   <div className={styles.price}>
-                      <h6>${product.price * quantity}</h6>
+                    <h6>${product.price * quantity}</h6>
                   </div>
                 </div>
-                
+
+
               })
             }
           </div>
@@ -137,20 +138,21 @@ class OrderDetails extends React.Component {
             <div className={styles.totalTable}>
               <h5 className="grupo">Total a pagar: </h5>
               <div className="grupo">
-                  <h4 className='ml-3'>${getPriceOrder()}</h4>
+                <h4 className='ml-3'>${getPriceOrder()}</h4>
               </div>
             </div>
           </div>
         </div>
       </div>
-  
+
     )
-  }}
+  }
+}
 
 function mapStateToProps(state) {
   return {
     order: state.orderStore.order,
-   
+
   }
 }
 

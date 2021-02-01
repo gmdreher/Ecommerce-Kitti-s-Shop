@@ -21,7 +21,7 @@ export default function Catalogue() {
 
     return (
         <div className={styles.catalogue}>
-            <h2>NUESTRO CATALOGO</h2>
+            <h2>Nuestro Catálogo</h2>
             <div className={styles.contentcards}>
                 {products && products.map((infoProducto) => {
 
@@ -30,5 +30,7 @@ export default function Catalogue() {
             </div>
         </div>
     )
+
 }
+
 

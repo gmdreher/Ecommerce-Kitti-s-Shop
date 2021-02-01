@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false,
