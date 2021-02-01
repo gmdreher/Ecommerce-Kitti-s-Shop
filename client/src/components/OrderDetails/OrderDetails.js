@@ -2,7 +2,7 @@ import React from "react";
 import styles from './orderdetails.module.scss';
 import { connect } from 'react-redux';
 import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
-import moment from "moment";
+import Moment from "moment";
 import {Link} from "react-router-dom";
 
 
@@ -22,7 +22,7 @@ class OrderDetails extends React.Component {
   }
   
   formatDate(date) {
-    let formatDate = new moment(date);
+    let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
   componentDidMount() {

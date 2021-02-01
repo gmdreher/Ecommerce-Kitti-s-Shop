@@ -153,7 +153,10 @@ function NewCategoryForm(props) {
 
               <FormGroup>
                 <Label for="name">Nombre</Label>
-                <Input type="text" className="form-group" name="name" id='name' value={input.name} onChange={handleInputChange} />
+                <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
+                {errors.name && (
+                  <p className={styles.danger}>{errors.name}</p>
+                )}
               </FormGroup>
               <FormGroup>
                 <Label for="description"> Descripción</Label>
@@ -162,7 +165,7 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              <Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>{' '}
+            {errors.name ? <Button color="danger" onClick={toggle2}>Modificar Categoría</Button> :<Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>}
               <Button className="buttonForm" color="secondary" onClick={toggle2}>Salir</Button>
             </ModalFooter>
           </Form>
