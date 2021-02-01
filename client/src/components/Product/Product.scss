@@ -7,11 +7,13 @@
       display: grid;
       justify-items: start;
       background: white;
-      box-shadow: 0 0 5px rgba(0,0,0,.3);
+      box-shadow: 3px 3px 5px rgb(139, 139, 139);
       padding: .5em 2em;
       border-radius: 5px;
-      border: none;
+      border: 1px solid #bdbdbd;
       margin-top: 1em;
+      border-radius: 25px;
+      
     }
     
     .detail{

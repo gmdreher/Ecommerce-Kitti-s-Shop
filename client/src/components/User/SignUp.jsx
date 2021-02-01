@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Modal, ModalHeader, Row } from 'reactstrap'
-import logo from '../../img/logo-cat.jpeg'
+import logo from '../../img/logo.png'
 import { connect } from 'react-redux'
 import { postUser } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'

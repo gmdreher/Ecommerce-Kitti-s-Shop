@@ -5,36 +5,36 @@ import { getCategories } from "../../actions/productActions";
 import styles from './categories.module.scss';
 
 
-function Categories (props) {
-  
+function Categories(props) {
+
   // let dispatch= useDispatch()
 
-  useEffect(()=>{
-   props.getCategories()
-  },[])
-  
- 
-    return (
-      <div className={styles.dropCategory}>
-        <div className="dropdown">
-          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Categorías
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {props.categories.map((e)=>{
-              return <div key={e.id} >
-                <NavLink exact to={`/products/category/${e.name}`}  activeStyle={{fontWeight: "bold"}} >
-                  <a >{e.name}</a>
-                </NavLink>
-              </div>
-            })}
-          </ul>
-        </div>
+  useEffect(() => {
+    props.getCategories()
+  }, [])
+
+
+  return (
+    <div className={styles.dropCategory}>
+      <div className="dropdown">
+        <button className={styles.botonsito} type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Categorías<i class="fas fa-caret-down"></i>
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {props.categories.map((e) => {
+            return <div key={e.id} >
+              <NavLink exact to={`/products/category/${e.name}`} activeStyle={{ fontWeight: "bold" }} >
+                <a >{e.name}</a>
+              </NavLink>
+            </div>
+          })}
+        </ul>
       </div>
-    )
+    </div>
+  )
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
     categories: state.product.categories
   }

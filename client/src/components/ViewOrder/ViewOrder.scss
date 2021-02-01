@@ -3,7 +3,7 @@
     padding: 5rem;
     display: grid;
     grid-template-columns: 50% 50%;
-
+    
     .parte-dos{
         display: grid;
         justify-content: space-around;
@@ -12,6 +12,7 @@
     }
 
     .abc{
+        background-color: white;
         display: flex;
         border-radius: 10px;
         padding: 1rem;
@@ -19,6 +20,7 @@
         display: flex;
         flex-direction: row;
         max-width: 750px;
+        max-height: 200px;
         margin-top: 2rem;
         border-top: 1px solid rgb(202, 202, 202);
         border-left: 1px solid rgb(202, 202, 202);
@@ -112,7 +114,7 @@
             }
         }
         .dataPrice{
-            width: 100px;
+            width: 110px;
             height: 100px;
             background-color: rgb(245, 245, 245);
             border-right: 1px solid rgb(202, 202, 202);
@@ -135,5 +137,51 @@
 }
 
 
+@media screen and (max-width: 1200px){
+    .contain{
+    width:100%;
+    height:auto;
+    margin-left:10px;
+    display: flex;
 
 
+    h5 {
+        font-size: 14px;
+        color: rgb(0, 0, 0);
+    }
+
+    .abc {
+        max-width: 500px;
+        height: 100px;
+        display: flex;
+
+
+        .foto {
+            display: flex;
+            height: 70px;
+
+                .img-responsive{
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+            }
+        }
+        .datoName {
+            display: flex;
+            height: 70px;
+        }
+        .add {
+            display: flex;
+            height: 70px;
+        }
+        .dataQuanty {
+            display: flex;
+            height: 70px;
+        }
+        .dataPrice {
+            display: flex;
+            height: 70px;
+        }
+    }
+    }
+}
