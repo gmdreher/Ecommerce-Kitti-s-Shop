@@ -16,6 +16,7 @@ class OrderTable extends React.Component {
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
   
+  
   render(){
     return(
       <Fragment>
@@ -50,7 +51,7 @@ class OrderTable extends React.Component {
                         <td>${total.toFixed(2)}</td>
                         <td>{this.formatDate(order.createdAt)}</td>
                         <td>
-                         <button type="button" className="btn btn-secondary btn-sm">Editar</button>
+                         <button type="button" className="btn btn-secondary btn-sm">Eliminar</button>
                         </td>
                       </tr>
                   )

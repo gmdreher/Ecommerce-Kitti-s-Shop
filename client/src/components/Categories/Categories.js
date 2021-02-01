@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { getCategories } from "../../actions/productActions";
 import styles from './categories.module.scss';
@@ -15,17 +15,17 @@ function Categories (props) {
   
  
     return (
-      <div className={styles.dropCategory}>
+      <div>
         <div className="dropdown">
-          <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <button className={"btn btn-light dropdown-toggle " + styles.buttonCate} type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             Categorías
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <ul className="dropdown-menu">
             {props.categories.map((e)=>{
-              return <div key={e.id} >
-                <NavLink exact to={`/products/category/${e.name}`}  activeStyle={{fontWeight: "bold"}} >
-                  <a >{e.name}</a>
-                </NavLink>
+              return <div className={styles.containerList} key={e.id} >
+                <Link exact to={`/products/category/${e.name}`} >
+                  <span className={styles.dropList}>{e.name}</span>
+                </Link>
               </div>
             })}
           </ul>

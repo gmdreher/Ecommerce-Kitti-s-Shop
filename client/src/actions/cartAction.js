@@ -17,7 +17,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
             if (x.id == data.productId) {
                 alreadyExists = true;
                 x.quantity++;
-                } 
+            }
         });
 
          if (!alreadyExists ) {
