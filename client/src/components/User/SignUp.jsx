@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function SignUp(props) {
   const classes = useStyles();
   const history = useHistory()

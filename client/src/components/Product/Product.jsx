@@ -27,6 +27,7 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
+
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />

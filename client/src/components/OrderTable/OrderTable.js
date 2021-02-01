@@ -28,6 +28,7 @@ class OrderTable extends React.Component {
               </tr>
             </thead>
             <tbody >
+
               {
                 this.props.allOrders.map(order => {
                   let total = 0;

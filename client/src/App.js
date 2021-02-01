@@ -33,8 +33,6 @@ function App() {
         <main>
           <div className="transparencia">
 
-
-
             <Route exact path="/" component={Main} />
             <Route exact path='/products' component={Catalogue} />
             <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />

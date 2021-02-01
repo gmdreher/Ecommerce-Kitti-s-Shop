@@ -82,6 +82,7 @@ function NewCategoryForm(props) {
   }
   // COMPONENTE
   return (
+
     <Container className={styles.container}>
       <h1>Administrar Categorías</h1>
       <Button color='primary' onClick={toggle}> + Agregar Categoría</Button>

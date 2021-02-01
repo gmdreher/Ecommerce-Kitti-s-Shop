@@ -111,7 +111,6 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: state.cart.filter(product => product.id !== action.payload)
             }
-
         case DELETE_TOTAL_CART:
             return {
                 ...state,

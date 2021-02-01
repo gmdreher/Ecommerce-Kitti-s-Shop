@@ -6,6 +6,7 @@ import styles from './NavCategories.module.scss';
 
 export default function NavCategories() {
 
+
   return (
     <header className={styles.navbar}>
       <div className={styles.compCategories}>

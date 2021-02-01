@@ -6,9 +6,10 @@ import Catalogue from '../catalogue/Catalogue'
 export default function Main(props) {
 
   return (
-   <div>
-     <Carrusel/>
-     <Catalogue/>
-   </div> 
+    <div>
+      <Carrusel />
+      <Catalogue />
+    </div>
   )
+
 }

@@ -30,5 +30,7 @@ export default function Catalogue() {
             </div>
         </div>
     )
+
 }
+
 

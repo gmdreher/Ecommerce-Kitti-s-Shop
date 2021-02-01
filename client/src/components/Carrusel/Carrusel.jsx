@@ -13,17 +13,17 @@ const items = [
   {
     src: require('../../img/21.jpg'),
     altText: 'Gatito',
-    
+
   },
   {
     src: require('../../img/22.jpg'),
     altText: 'Slide 2',
-    
+
   },
   {
     src: require('../../img/24.jpg'),
     altText: 'Slide 3',
-   
+
   }
 ];
 
@@ -50,9 +50,9 @@ const Example = () => {
 
   const slides = items.map((item) => {
     return (
-   
+
       <CarouselItem
-      
+
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
         key={item.src}
@@ -60,24 +60,25 @@ const Example = () => {
         <img src={item.src} alt={item.altText} />
         <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
       </CarouselItem>
-      
+
     );
   });
 
   return (
-      <div className={styles.mainWelcome}>
-    <Carousel
-      activeIndex={activeIndex}
-      next={next}
-      previous={previous}
-    >
-      <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-      {slides}
-      <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-      <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
-    </Carousel>
+    <div className={styles.mainWelcome}>
+      <Carousel
+        activeIndex={activeIndex}
+        next={next}
+        previous={previous}
+      >
+        <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+        {slides}
+        <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+        <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+      </Carousel>
     </div>
   );
+
 }
 
 export default Example;

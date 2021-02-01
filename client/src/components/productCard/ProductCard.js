@@ -37,6 +37,7 @@ export default function ProductCard({ data }) {
                 <li class="list-group-item"><strong>Precio:</strong> {'$ ' + data.price}</li>
 
             </ul>
+
             <div>
 
                 <button disabled={data.stock < 1} onClick={() => handleClick(data)}><i class="fas fa-cart-plus"></i>  </button>

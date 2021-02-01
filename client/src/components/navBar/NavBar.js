@@ -9,6 +9,7 @@ import Badge from '@material-ui/core/Badge';
 
 export default function NavBar(props) {
 
+
     console.log("Navbar", props);
 
     return (

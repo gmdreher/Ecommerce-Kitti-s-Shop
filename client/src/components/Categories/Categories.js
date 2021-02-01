@@ -14,6 +14,7 @@ function Categories(props) {
   }, [])
 
 
+
   return (
     <div className={styles.dropCategory}>
       <div className="dropdown">

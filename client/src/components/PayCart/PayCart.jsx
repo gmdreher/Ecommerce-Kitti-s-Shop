@@ -23,5 +23,6 @@ export default function PayCart(props) {
                 <button>Finalizar Pago</button>
             </div>
         </div>
+
     )
 };
