@@ -10,13 +10,14 @@ function ProductsByCategory(props) {
   useEffect(() => {
     props.getProductByCategory(props.categoryName);
   }, [])
-  
-  
-  return(
+
+
+
+  return (
     <div className={styles.catalogue}>
       <div className={styles.contentcards}>
-        {props.productsByCategory.map((e)=>{
-          return <ProductCard data={e} key={e.id}/>
+        {props.productsByCategory.map((e) => {
+          return <ProductCard data={e} key={e.id} />
         })}
       </div>
     </div>

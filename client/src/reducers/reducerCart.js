@@ -1,4 +1,4 @@
-import { ADD_TO_CART_LOCALSTORAGE, GET_PRODUCT_CART_LOCALSTORAGE,DELETE_CART_LS,DELETE_ITEM_LC } from "../constants/productConstants";
+import { ADD_TO_CART_LOCALSTORAGE, GET_PRODUCT_CART_LOCALSTORAGE, DELETE_CART_LS, DELETE_ITEM_LC } from "../constants/productConstants";
 
 
 
@@ -11,21 +11,20 @@ export default (
       return { cartItems: action.payload.cartItems };
 
     case GET_PRODUCT_CART_LOCALSTORAGE:
-      return{
+      return {
         ...state,
         cartItems: [...state.cartItems, action.payload]
-    }
-    case DELETE_CART_LS:
-      return{
-        ...state,
-        cartItems:[]
       }
-    
-      case DELETE_ITEM_LC:
-        return { 
-          cartItems: action.payload.cartItems 
-        };
-        
+    case DELETE_CART_LS:
+      return {
+        ...state,
+        cartItems: []
+      }
+    case DELETE_ITEM_LC:
+      return {
+        cartItems: action.payload.cartItems
+      };
+
     default:
       return state;
   }

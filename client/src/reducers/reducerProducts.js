@@ -25,7 +25,7 @@ const initialState = {
     categories: [],
     allOrders: [],
     products: [],
-    user:[],
+    user: [],
     cart: [],
     order: [],
 
@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
                 ...state,
                 filteredProduct: action.payload,
             }
-            
+
         case GET_CATEGORIES:
             return {
                 ...state,
@@ -88,8 +88,8 @@ export default (state = initialState, action) => {
         case UPDATE_PRODUCT:
             return {
                 ...state,
-                products: state.products.map( product => product.id === action.payload.id ? product = action.payload : product )
-             }
+                products: state.products.map(product => product.id === action.payload.id ? product = action.payload : product)
+            }
         case POST_USER:
             return {
                 ...state,
@@ -104,31 +104,23 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 cart: action.payload
-            
-            }
-                case DELETE_ITEMS_CART:
-                return {
-                    ...state,
-                    cart: state.cart.filter(product => product.id !== action.payload)
-                }
 
-            case DELETE_TOTAL_CART:
+            }
+        case DELETE_ITEMS_CART:
+            return {
+                ...state,
+                cart: state.cart.filter(product => product.id !== action.payload)
+            }
+        case DELETE_TOTAL_CART:
             return {
                 ...state,
                 cart: state.cart.filter(order => order.orderId !== action.payload)
             }
-            case UPDATE_COUNT_PRODUCT:
-            console.log(`--- CART ---`, state.cart)
-            console.log('--- STATE ---', state)
-            return {
+        case UPDATE_COUNT_PRODUCT:
+            return { 
                 ...state,
-                cart: state.cart.map(product => (product.id === action.payload.productId &&
-                                                product.orderId === action.payload.orderId)?
-                                                product.quantity = action.payload.quantity:
-                                                product.quantity)
-                
-    
-            }
+                cart: action.payload 
+            };
             
         default:
             return state;

@@ -44,6 +44,7 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
+
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />
                         <i class="fa fa-star fa-lg" />
@@ -57,7 +58,7 @@ function Product(props) {
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
-                        {props.product.stock<1?<label className='agotado'>Producto Agotado</label>:<label className='stock'>Stock: {props.product.stock}</label>}
+                        {props.product.stock < 1 ? <label className='agotado'>Producto Agotado</label> : <label className='stock'>Stock: {props.product.stock}</label>}
                     </form>
                     <div className="butt">
                  
