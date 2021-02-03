@@ -48,16 +48,6 @@ server.put('/:id', function (req, res) {
     })
 });
 
-// // task 36 GET /users
-// server.get('/', (req, res) => {
-//   User.findAll()
-//     .then(users => {
-//       res.json(users);
-//     })
-//     .catch(err => {
-//       res.status(400).send(`Error: ${err}`)
-//     });
-// });
 
 server.get('/', (req, res) => {
   User.findAll({

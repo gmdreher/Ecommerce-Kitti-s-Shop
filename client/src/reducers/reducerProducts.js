@@ -17,6 +17,7 @@ import {
     POST_USER,
     GET_USER,
     UPDATE_USER,
+    UPDATE_PROMOTE,
     UPDATE_COUNT_PRODUCT
 
 } from '../constants/productConstants.js';
@@ -101,14 +102,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload
-            }
-        case UPDATE_USER:
-            console.log("------REDUX UPDATE_USER-----");
-            console.log(state.user);
-            return {
-                ...state,
-                user: state.user.map(use => use.id === action.payload.id ? use = action.payload : use)
-
             }
         case ADD_TO_CART:
             return {

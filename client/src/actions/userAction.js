@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER } from '../constants/productConstants.js';
+import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE } from '../constants/productConstants.js';
 
 
 export const getUsers = () => async (dispatch) => {
@@ -45,7 +45,32 @@ export const bloquearUsers = ({ id, blockade, fullname, email, password, rol }) 
     }
 }
 
+export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
+    if (id) {
+        const users = getState().product.user.slice();
+
+        try {
+            const res = await axios.put(`http://localhost:3001/auth/promote/${id}`);
+
+            users && users.forEach((x) => {
+
+                if (x.id == id && x.rol !== "admin") {
+                    x.rol = "admin";
+                }
+            });
+
+            console.log("SE VA------", users);
+
+            dispatch({
+                type: UPDATE_PROMOTE,
+                payload: users
+            });
+        } catch (error) {
+            console.log("Error: " + error)
+        }
+    }
+}
 
 
 

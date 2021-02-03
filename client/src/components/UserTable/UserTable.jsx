@@ -20,7 +20,7 @@ export default function UserTable() {
 
 
     function handlerBloquear(info) {
-        console.log("ME TRAE", info);
+        console.log("HANDLERBLOQUEAR", info);
         if (info.id !== undefined) {
             var usuario = info.id;
             var llave = info.blockade;
@@ -29,27 +29,33 @@ export default function UserTable() {
             var password = info.password;
             var rol = info.rol;
 
-            console.log("-------handlerBloquear DATA-------");
+            console.log("-------handlerBloquear DATA Seleccionado-------");
             console.log(llave, usuario);
 
             if (window.confirm(`¿ Desea bloquear al usuario id: ${usuario} ?`)) {
                 dispatch(bloquearUsers({ id: usuario, blockade: llave, fullname: name, email: mail, password: password, rol: rol }))
             } else {
-                window.alert('No se ha asignado como administrador')
+                window.alert('No se ha bloqueado al usuario')
             }
         }
     }
 
-    // function handlerDelete() {
-    //     if (usersData.length >= 0 && usersData[0].id !== undefined) {
-    //         var usuario = usersData[0].id;
-    //         if (window.confirm(`¿ Desea bloquear al usuario id: ${usuario} ?`)) {
-    //             dispatch(deleteUsers())
-    //         } else {
-    //             window.alert('No se ha bloqueado')
-    //         }
-    //     }
-    // }
+    function handlerAdmin(info) {
+        console.log("HANDLERADMIN", info);
+        if (info.id !== undefined) {
+            var usuario = info.id;
+            var rol = info.rol;
+
+            console.log("-------handlerAdmin DATA Seleccionado-------");
+            console.log(usuario, rol);
+
+            if (window.confirm(`¿ Desea hacer administrador al usuario id: ${usuario} ?`)) {
+                dispatch(updateToAdmin({ id: usuario, rol: rol }))
+            } else {
+                window.alert('No se ha asignado como administrador')
+            }
+        }
+    }
 
     return (
         <Fragment>
@@ -76,7 +82,7 @@ export default function UserTable() {
                                         <td>{info.fullname}</td>
                                         <td>{info.email}</td>
                                         <td>
-                                            <button type="button" className="btn btn-secondary btn-sm" >Admin</button>
+                                            <button type="button" className="btn btn-secondary btn-sm" onClick={() => handlerAdmin(info)}>Admin</button>
                                         </td>
                                         <td>
                                             <button type="button" className="btn btn-secondary btn-sm" onClick={() => handlerBloquear(info)}>Bloquear</button>
