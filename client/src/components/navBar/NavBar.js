@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import Badge from '@material-ui/core/Badge';
+import MyAccount from "../User/MyAccount";
 
 export default function NavBar(props) {
 
@@ -20,6 +21,7 @@ export default function NavBar(props) {
                 </Link>
             </div>
             <Search />
+            <MyAccount />
             <div className="dropdown">
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
