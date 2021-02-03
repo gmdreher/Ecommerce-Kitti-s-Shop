@@ -13,6 +13,7 @@ import Footer from "./components/Footer/Footer"
 import OrderDetails from "./components/OrderDetails/OrderDetails";
 import OrderTable from "./components/OrderTable/OrderTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
+import Login from './components/User/Login'
 import './Styles/App.scss'
 
 import './App.scss';
@@ -48,6 +49,7 @@ function App() {
             <Route exact path="/admin/orders" component={OrderTable} />
       
             <Route exact path='/user/signup' component={SignUp} />
+            <Route exact path='/auth/login' component={Login} />
             <Route exact path="/user/order" component={ViewOrder} />
     </div>
     

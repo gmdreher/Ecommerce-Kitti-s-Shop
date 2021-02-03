@@ -1,0 +1,51 @@
+.globalContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .formContainer{
+    padding: 20px;
+    width: 40%;
+    border-radius: 10px;
+    background-color: white;
+    align-items: center;
+    border: 1px solid rgb(233, 185, 83);
+    box-shadow: 0px 2px 2px 0px rgb(175, 128, 56);
+
+    &:hover{
+      transform : translateY(-15px);
+      border: 2px solid rgb(233, 185, 83);
+      box-shadow: 0px 2px 2px 0px  rgb(248, 219, 157);
+
+    }
+
+    .title{
+      margin: 10px 20%;
+    }
+
+    .form{
+      margin: 30px 30px;
+
+      .btnIniciarSesion{
+        margin-top: 10px;
+
+
+        .btnText{
+          font-weight: bold;
+
+          &:hover{
+            color: gainsboro;
+          }
+        }
+      }
+    }
+
+    .input{
+      border: 1px solid black;
+      box-shadow: none;
+
+    }
+
+  }
+}
+

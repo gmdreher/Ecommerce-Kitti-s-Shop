@@ -28,6 +28,8 @@ export default function NavBar(props) {
                     {/* Copiar todo completo al momento de cabiar de lugar el link  */}
                     <Link to={'/user/signup'} className="dropdown-item" >Registrarse
               <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+                  <Link to={'/auth/login'} className="dropdown-item" >Iniciar sesión
+                    <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                 </ul>
             </div>
             <div>
