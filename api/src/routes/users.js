@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Order, User, OrderDetails } = require('../db.js');
+const { Order, User, OrderDetails, Review } = require('../db.js');
 
 //Ruta de crear usuario
 //Pau
@@ -175,6 +175,23 @@ server.get('/:id/orders', (req, res) => {
     .catch(err => {
       res.status(400).send('' + err)
     })
+});
+
+//obtener todos los reviews de un usuario
+server.get("/:id/review/", (req, res) => {
+  const userId = req.params.id;
+  Review.findAll({ 
+    where: {
+      userId: userId 
+      }
+      })
+    .then((review) => 
+    res.status(200)
+    .json(review))
+    .catch((err) => {
+      console.log("No se pudieron obtener los reviews " + err);
+      res.send(err);
+    });
 });
 
 
