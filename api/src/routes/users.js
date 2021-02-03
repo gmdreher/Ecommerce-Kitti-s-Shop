@@ -1,11 +1,16 @@
 const server = require('express').Router();
 const { Order, User, OrderDetails, Review } = require('../db.js');
+const bcrypt = require('bcrypt');
+const jwt =require('jsonwebtoken');
+const authConfig = require('../config/auth');
 
 //Ruta de crear usuario
 //Pau
 server.post('/', (req, res) => {
-  let { fullname, email, password, rol } = req.body;
-  if (fullname && email && password) {
+  let { fullname, email, rol } = req.body;
+
+  let password = bcrypt.hashSync(req.body.password,+authConfig.rounds)
+  //if (fullname && email && password) {
     User.create({
       fullname: fullname,
       password: password,
@@ -13,14 +18,15 @@ server.post('/', (req, res) => {
       email: email,
     })
       .then(user => {
-        res.status(201).json(user);
-      })
-      .catch(err => {
+        let token = jwt.sign({user:user},authConfig.secret,{
+            expiresIn:authConfig.expires
+        })
+        res.status(201).json({user:user,token:token});
+
+      }).catch(err => {
         res.status(400).send(`Error al crear usuario ${err}`)
       })
-  } else {
-    res.status(400).send("Error, campos sin completar")
-  }
+
 });
 
 //PUT users/:id S35 : Ruta para modificar Usuario
