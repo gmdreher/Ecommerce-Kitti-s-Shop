@@ -21,7 +21,11 @@ module.exports = (sequelize) => {
     rol: {
       type: DataTypes.STRING,
       allowNull: false
+    },
 
+    blockade: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   })
 };

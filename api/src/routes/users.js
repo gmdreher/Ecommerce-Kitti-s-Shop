@@ -11,6 +11,7 @@ server.post('/', (req, res) => {
       password: password,
       rol: rol,
       email: email,
+      blockade: false,
     })
       .then(user => {
         res.status(201).json(user);
@@ -26,15 +27,16 @@ server.post('/', (req, res) => {
 //PUT users/:id S35 : Ruta para modificar Usuario
 server.put('/:id', function (req, res) {
   const { id } = req.params;
-  const { fullName, email, password, rol } = req.body;
+  const { fullname, email, password, rol, blockade } = req.body;
   User.findByPk(id)
     .then((user => {
       user.update(
         {
-          fullName: fullName,
+          fullname: fullname,
           email: email,
           password: password,
           rol: rol,
+          blockade: blockade,
         })
     })
     )
@@ -60,7 +62,7 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email"]
+    atributtes: ["id", "fullname", "email", "blockade"]
   })
     .then(users => {
       res.json(users);
