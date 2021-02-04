@@ -1,14 +1,15 @@
 import React from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
+import { connect } from 'react-redux';
+import { loginUser } from "../../actions/userAction";
 
 
- export default function Login () {
+
+function Login (props) {
    
    const [ input, setInput ] = React.useState({email: "", password: ""});
    const [ errors, setErrors ] = React.useState({});
-   const [ loginUsername, setLoginUsername ] = React.useState("");
-   const [ loginPassword, setLoginPassword ] = React.useState("");
    
    const validate = (input) => {
      let errors = {};
@@ -39,17 +40,23 @@ import {Link} from "react-router-dom";
        [event.target.name]: event.target.value
      });
   
-     setLoginUsername(event.target.value)
-     setLoginPassword(event.target.value)
+ 
    }
-    const loginUser = (e) =>{
-      //aca dispacho la accion
+    const handleSubmit = (event) =>{
+     event.preventDefault();
+      setInput({
+        ...input,
+        [event.target.name]: event.target.value
+      });
+      
+      props.loginUser(input);
+      console.log(input)
     }
     return (
       <div className={'container ' + styles.globalContainer}>
           <div className={styles.formContainer}>
             <h1 className={styles.title}>Iniciar sesión</h1>
-            <form className={styles.form} action="/login" method="POST" onClick={login}>
+            <form className={styles.form} onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Correo electrónico*</label>
                 <input
@@ -68,6 +75,7 @@ import {Link} from "react-router-dom";
                 <input
                   type="password"
                   name="password"
+                  value={input.value}
                   className={"form-control " + styles.input + `${errors.password && ' is-invalid'}`}
                   id="exampleInputPassword1"
                   onChange={handleInputChange}
@@ -89,11 +97,5 @@ import {Link} from "react-router-dom";
     )
 }
 
-// function mapStateToProps(state) {
-//   return {
-//
-//
-//   }
-// }
 
-// export default connect(mapStateToProps, { getUserOrder, updateStateOrder })(Login);
+export default connect(null, { loginUser })(Login);
