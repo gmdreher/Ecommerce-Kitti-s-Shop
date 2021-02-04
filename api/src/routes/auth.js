@@ -1,36 +1,28 @@
+require('dotenv').config();
 const server = require('express').Router();
-const {User} = require('../db.js');
-const bcrypt = require('bcrypt');
-const jwt =require('jsonwebtoken');
-const authConfig = require('../config/auth');
+const passport = require('passport')
 
-//login
-server.post('/login', function(req,res){
-    let {email, password} = req.body
 
-      User.findOne({
-        where:{
-          email:email
-        }
-      }).then(user=>{
+server.post('/login', passport.authenticate('login',{session:true}), (req, res) => {
+ try{
+  res.send(req.user);
+ }catch(err){
+  res.status(400).send(err);
+ }
+  
+  
+});
 
-        if(!user){
-            res.status(400).json({msg:"Correo No Encontrado"})
-        }else{
-              if(bcrypt.compareSync(password, user.password)){
+server.post('/logout', (req, res) => {
+	if (req.isAuthenticated()) {
+		req.logout();
+		return res.sendStatus(200);
+	}
+});
+server.get('/me', (req, res) => {
+	if (req.isAuthenticated()) return res.send(req.user);
+	else return res.status(401).send('Debes Iniciar Sesion');
+});
 
-                let token = jwt.sign({user:user},authConfig.secret,{
-                  expiresIn:authConfig.expires
-                });
-                res.json({
-                  user:user,
-                  token:token
-                })
 
-              }else{
-                res.status(401).json({msg:"Contraseña Incorrecta"})
-              }
-        }
-      })
-
-  })
+  module.exports = server;
