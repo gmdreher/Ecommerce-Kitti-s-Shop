@@ -1,13 +1,10 @@
 import axios from 'axios';
 
-import {POST_USER,ADD_TO_CART} from '../constants/productConstants.js';
+import {POST_USER, ADD_TO_CART, LOGIN_USER, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
 
 export const postUser = (data) =>async (dispatch, getState)=>{
 
     const response = await axios.post('http://localhost:3001/users/', data);
-    console.log('buscado el id de usuariooooooooooooooooo')
-    console.log(response.data.user)
-  
     dispatch({
         type:POST_USER,
         payload :response.data.user
@@ -35,4 +32,14 @@ export const postUser = (data) =>async (dispatch, getState)=>{
     }
     
 
+}
+
+export function loginUser () {
+  return function (dispatch) {
+    return axios.post('http://localhost:3001/auth/login')
+      .then(res => {
+        dispatch({ type: LOGIN_USER, payload: res.data });
+      })
+      .catch(err => console.log(err))
+  };
 }
