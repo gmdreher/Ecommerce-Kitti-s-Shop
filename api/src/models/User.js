@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const authConfig = require('../config/auth');
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
   const User = sequelize.define('user', {
@@ -35,5 +37,22 @@ module.exports = (sequelize) => {
 
     }
   })
+  const setSaltAndPassword = async function(user) {
+    if (user.changed('password')) {
+      const salt = bcrypt.genSaltSync(+authConfig.rounds);
+      user.password = bcrypt.hashSync(user.password, salt);
+    }
+  };
+
+  User.prototype.validPassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
+  };
+
+  User.beforeCreate(setSaltAndPassword);
+  User.beforeUpdate(setSaltAndPassword);
+
+  return User;
 };
+
+
 
