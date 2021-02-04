@@ -15,12 +15,12 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
-export const bloquearUsers = ({ id, blockade, fullname, email, password, rol }) => async (dispatch, getState) => {
+export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) => async (dispatch, getState) => {
 
     if (id) {
 
         const users = getState().product.user.slice();
-        var body = { id, blockade, fullname, email, password, rol }
+        var body = { id, banned, fullname, email, password, rol }
 
         try {
             const res = await axios.put(`http://localhost:3001/users/${id}`, body);
@@ -28,7 +28,7 @@ export const bloquearUsers = ({ id, blockade, fullname, email, password, rol }) 
             users && users.forEach((x) => {
 
                 if (x.id == id) {
-                    x.blockade = true;
+                    x.banned = true;
                 }
             });
 
@@ -77,6 +77,8 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 export const postUser = (data) => async (dispatch, getState) => {
 
     const response = await axios.post('http://localhost:3001/users/', data);
+    console.log('buscado el id de usuariooooooooooooooooo')
+    console.log(response.data)
 
     dispatch({
         type: POST_USER,

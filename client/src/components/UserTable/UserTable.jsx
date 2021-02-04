@@ -23,7 +23,7 @@ export default function UserTable() {
         console.log("HANDLERBLOQUEAR", info);
         if (info.id !== undefined) {
             var usuario = info.id;
-            var llave = info.blockade;
+            var llave = info.banned;
             var name = info.fullname;
             var mail = info.email;
             var password = info.password;
@@ -33,7 +33,7 @@ export default function UserTable() {
             console.log(llave, usuario);
 
             if (window.confirm(`¿ Desea bloquear al usuario id: ${usuario} ?`)) {
-                dispatch(bloquearUsers({ id: usuario, blockade: llave, fullname: name, email: mail, password: password, rol: rol }))
+                dispatch(bloquearUsers({ id: usuario, banned: llave, fullname: name, email: mail, password: password, rol: rol }))
             } else {
                 window.alert('No se ha bloqueado al usuario')
             }

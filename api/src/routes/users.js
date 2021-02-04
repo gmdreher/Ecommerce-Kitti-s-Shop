@@ -1,33 +1,21 @@
 const server = require('express').Router();
 const { Order, User, OrderDetails } = require('../db.js');
+const passport = require('passport')
 
 //Ruta de crear usuario
 //Pau
-server.post('/', (req, res) => {
-  let { fullname, email, password, rol } = req.body;
-  if (fullname && email && password) {
-    User.create({
-      fullname: fullname,
-      password: password,
-      rol: rol,
-      email: email,
-      blockade: false,
-    })
-      .then(user => {
-        res.status(201).json(user);
-      })
-      .catch(err => {
-        res.status(400).send(`Error al crear usuario ${err}`)
-      })
-  } else {
-    res.status(400).send("Error, campos sin completar")
-  }
-});
+server.post('/', passport.authenticate('signup'), async (req, res) => {
+
+  res.json({
+    message: 'SignUp success',
+    user: req.user
+  })
+})
 
 //PUT users/:id S35 : Ruta para modificar Usuario
 server.put('/:id', function (req, res) {
   const { id } = req.params;
-  const { fullname, email, password, rol, blockade } = req.body;
+  const { fullname, email, password, rol, banned } = req.body;
   User.findByPk(id)
     .then((user => {
       user.update(
@@ -36,7 +24,7 @@ server.put('/:id', function (req, res) {
           email: email,
           password: password,
           rol: rol,
-          blockade: blockade,
+          banned: banned,
         })
     })
     )
@@ -52,7 +40,7 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email", "blockade"]
+    atributtes: ["id", "fullname", "email", "banned"]
   })
     .then(users => {
       res.json(users);
