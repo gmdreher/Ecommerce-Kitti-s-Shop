@@ -49,8 +49,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
             let alreadyExists = false;
     
             cart && cart.forEach((x) => {
-                console.log('dataaaaaaa')
-                console.log(data)
+
                 if (x.id == data.productId) {
                    // alreadyExists = true;
                     alert('El Producto ya se encuentra en el carrito!!')
@@ -58,8 +57,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 }
             });
             const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
-            console.log('reeeeeeeeesssssss')
-            console.log(res)
+
             const prod = await axios.get(`http://localhost:3001/products/${res.data.productId}`)
             let order = {
                 description: prod.data.description, id: prod.data.id,
