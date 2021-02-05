@@ -1,8 +1,9 @@
 import {LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS} from '../constants/productConstants.js';
-
+import decode from "jwt-decode";
 
 const initialState = {
   userInfo: localStorage.getItem("data") ? JSON.parse(localStorage.getItem('data')) : null,
+  
 };
 
 export default (state = initialState, action) => {

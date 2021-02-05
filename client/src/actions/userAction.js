@@ -50,7 +50,11 @@ export const loginUser = (email, password) => async (dispatch) =>{
   }
 }
 
-
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem('data')
+  localStorage.removeItem('cartItems')
+  dispatch({type: LOGOUT_USER})
+}
 // export function logoutUser (user) {
 //   return function (dispatch) {
 //     return axios.post('http://localhost:3001/logout', {email: user.email, password: user.password})

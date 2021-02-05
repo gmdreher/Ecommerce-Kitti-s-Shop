@@ -1,35 +1,41 @@
 import React from "react";
 import styles from './login.module.scss'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import decode from "jwt-decode";
-// import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
-
+import { logoutUser } from "../../actions/userAction";
 
 
 
 class MyAccount extends React.Component {
   
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state ={
-      a: ""
+      user: {}
     }
   }
-  info;
   
   componentDidMount() {
-    
-    this.info = decode(this.props.userInfo.token)
-    console.log(this.info);
-    this.setState({a:"b"})
+    if(localStorage.getItem("data")){
+      this.setState({user:decode(this.props.userInfo.token)})
+    }
+  }
+  
+  logOutHandler = () => {
+      this.props.logoutUser()
+    this.setState({user: {}})
   }
   
   render(){
-        
+        const { fullname } = this.state.user
         return (
           <div className="dropdown">
-            <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i className={"fas fa-user " + styles.icon}/>{this.info? this.info.fullname : ""}</button>
+            <button className="dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"><i className={"fas fa-user " + styles.icon}/>{fullname}</button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <Link to={''} className="dropdown-item">
                 <li><a className="dropdown-item" href="#"/>Mi cuenta</li>
@@ -38,7 +44,7 @@ class MyAccount extends React.Component {
               {/*  <li><a className="dropdown-item" href="#"/></li>*/}
               {/*</Link>*/}
               <hr/>
-              <div className={"dropdown-item " + styles.cerrar}>
+              <div className={"dropdown-item " + styles.cerrar} onClick={this.logOutHandler}>
                 <li><a className="dropdown-item" href="#"/>Cerrar sesión</li>
               </div>
               
@@ -55,4 +61,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(MyAccount);
+export default connect(mapStateToProps, { logoutUser } )(MyAccount);

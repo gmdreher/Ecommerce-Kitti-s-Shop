@@ -31,15 +31,6 @@ import {useSelector} from "react-redux";
 
 function App() {
   
-  // const userInfo = useSelector((state) => state.userInfo)
-  // console.log("esto es userInfo", userInfo)
-  const getToken = () => {
-    return JSON.parse(localStorage.getItem('data'));
-  }
-  let token = getToken();
-  let info = decode(token.token)
-  //
-  // console.log(info)
 
   
   const checkAuth = () => {
@@ -65,7 +56,7 @@ function App() {
       <div className='body'>
         <div className="App">
           <header>
-            <Navbar  id={info.id}/>
+            <Navbar />
             <NavCategories />
             <Route
               path="/products/category/:categoryName"

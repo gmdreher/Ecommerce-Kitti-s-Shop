@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
-import {connect, useDispatch} from 'react-redux';
-import { loginUser } from "../../actions/userAction";
+import { useDispatch} from 'react-redux';
+import { loginUser, logoutUser } from "../../actions/userAction";
 import jwt_decode from "jwt-decode"
 import axios from "axios";
 
@@ -26,7 +26,7 @@ const validate = (input) => {
   return errors;
 };
 
-function Login (props) {
+export default function Login (props) {
    
    const [ input, setInput ] = React.useState({email: "", password: ""});
    const [ errors, setErrors ] = React.useState({});
@@ -59,10 +59,9 @@ function Login (props) {
     });
   }
   
-  // const token = localStorage.getItem("token");
-  // const refreshToken = localStorage.getItem('refreshToken')
+ 
   
-  // action="http://localhost:3001/auth/login" method='post'
+
     return (
       <div className={'container ' + styles.globalContainer}>
           <div className={styles.formContainer}>
@@ -122,4 +121,3 @@ function Login (props) {
 //   }
 // }
 
-export default connect(null, { loginUser })(Login);
