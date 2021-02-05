@@ -34,7 +34,9 @@ module.exports = (sequelize) => {
     rol: {
       type: DataTypes.STRING,
       allowNull: false
-
+    },
+    reset: {
+      type: DataTypes.BOOLEAN,
     }
   })
   const setSaltAndPassword = async function(user) {

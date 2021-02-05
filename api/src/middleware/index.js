@@ -20,9 +20,11 @@ passport.use('signup', new LocalStrategy({
      }else{
         try{
             const user = await User.create({
-                email,password,
+                email,
+                password,
                 fullname: req.body.fullname,
-                rol:req.body.rol
+                rol:req.body.rol,
+                reset: req.body.reset
             })
             return done(null,user)
         }catch(e){

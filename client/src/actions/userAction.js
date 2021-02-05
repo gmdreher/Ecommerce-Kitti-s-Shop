@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {POST_USER,ADD_TO_CART} from '../constants/productConstants.js';
+import {POST_USER, ADD_TO_CART, GET_USER_BY_ID, UPDATE_PASSWORD} from '../constants/productConstants.js';
 
 export const postUser = (data) =>async (dispatch, getState)=>{
 
@@ -35,4 +35,28 @@ export const postUser = (data) =>async (dispatch, getState)=>{
     }
     
 
+}
+
+export const getUserById = (id) => async (dispatch) => {
+    try {
+        const respuesta = await axios.get(`http://localhost:3001/users/${id}`);
+        dispatch({
+            type: GET_USER_BY_ID,
+            payload: respuesta.data
+        });
+    } catch (error) {
+        console.log("Error: " + error)
+    }
+}
+
+export const updatePassword = user => async (dispatch) => {
+    try {
+        let answer = await axios.put(`http://localhost:3001/users/passwordReset/${user.id}`, user);
+        dispatch({
+            type: UPDATE_PASSWORD,
+            payload: answer.data
+        });
+    } catch (error) {
+        console.log("Error" + error)
+    }
 }

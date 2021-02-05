@@ -1,4 +1,4 @@
-import React, { useState, useSelector } from 'react';
+import React, { useState, useEffect, useSelector } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,9 +13,9 @@ import Container from '@material-ui/core/Container';
 import { Modal, ModalHeader, Row } from 'reactstrap'
 import logo from '../../img/logo.png'
 import { connect } from 'react-redux'
-import { postUser } from '../../actions/userAction'
+import { updatePassword, getUserById } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
-import styles from './signUp.module.scss'
+import styles from './resetPass.module.scss'
 
 function Copyright() {
 
@@ -24,7 +24,7 @@ function Copyright() {
       {'Copyright © '}
      
         Kitty's Shop
-     
+        {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -52,42 +52,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
  function validate(input) { 
-  let errors = {};
-  //no escribe nombre
-  if( !input.fullname ){
-    errors.fullname = "**Requiere Nombre"
-  }
-  //no escribe mail
-  if (!input.email) {
-    errors.email = '**Requiere un Correo';
-    //email mal escrito
-  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    //tira este error
-    errors.email = '**Ingresar un correo válido';
-  }
+
+  let errors = {};  
 //password
-if(!input.password){
+if(!input.newPass){
   errors.password = '**Requiere una Contraseña';
 
-} else if(input.password.length<8){
-  errors.password = '**La contraseña debe tener minimo 8 caracteres';
-}else if (!/(?=.*[0-9])/.test(input.password)){
-  errors.password = '**La contraseña debe llevar letras y números';
+} else if(input.newPass.length<8){
+  errors.newPass = '**La contraseña debe tener minimo 8 caracteres';
+}else if (!/(?=.*[0-9])/.test(input.newPass)){
+  errors.newPass = '**La contraseña debe llevar letras y números';
+}
+//no escribe verificacion
+if(!input.verifyPass ){
+    errors.verifyPass = "**Escribe nuevamente la contraseña"
+  }
+if(input.newPass !== input.verifyPass){
+    errors.verifyPass = "**Los campos no coinciden, favor escribir nuevamente"
 }
 //si no hay errores devuelve objeto vacio
   return errors;
 };
 
-function SignUp(props) {
+ function ResetPass(props) {
   const classes = useStyles();
   const history = useHistory()
 
   const [input, setInput] = useState({
-    fullname: '',
-    email: '',
-    password: '',
-    rol: 'User',
-    reset: false
+    newPass: '',
+    verifyPass: '',
   })
   const [modal, setModal] = useState(true);
   const toggle = () => {
@@ -107,85 +100,78 @@ function SignUp(props) {
       [e.target.name]: e.target.value
     }));
   }
-  const regUser = (e) => {
-    e.preventDefault();
-    props.singUp(input)
-    history.push("/")
 
-  }
+//   const regUser = (e) => {
+//     e.preventDefault();
+//     props.singUp(input)
+//     history.push("/")
+//   }
+//get user
+useEffect(() => {
+  props.getUserById(props.id)
+}, [])
 
-  return (//aqui puedo probar si envolviendolo en un modal puedo tenerlo todo mostrado en una modal para que se quede en la parte de atras de lo que estoy viendo, o renderizar en un oton cuando lo llamo
+const handleSubmit = (e) => {
+  e.preventDefault();
+  history.push("/")
+}
+
+const handleEdit = function (password) {
+  console.log(password)
+  props.updatePassword(password);
+}
+
+  return (
     <Modal isOpen={modal} toggle={toggle}>
 
       <ModalHeader toggle={toggle}>
-        {/* <CssBaseline /> */}
-
-
-        {/* <Avatar alt="Kitty's Shop" src={logo} /> */}
-
-        {/* <Typography component="h1" variant="h5"> */}
-        <h1>Regístrame</h1>
-        {/* </Typography> */}
+        
+        <h1>Nueva Contraseña</h1>
+       
 
       </ModalHeader>
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-          <form onSubmit={(e) => regUser(e)}>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  className={`${errors.fullname} && 'danger'`}
-                  autoComplete="fname"
-                  name="fullname"
+               
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="Nombre"
-                  autoFocus
+                  id="newPass"
+                  label="Nueva Contraseña"
+                  name="newPass"
+                  type="password"
+                  value={input.newPass}
                   onChange={handleChange}
-                  
                 />
               </Grid>
-              {errors.fullname && (
-                    <p className={styles.danger}>{errors.fullname}</p>
+              {errors.newPass && (
+                    <p className={styles.danger}>{errors.newPass}</p>
                   )}
+    
               <Grid item xs={12}>
                 <TextField
-                className={`${errors.email} && 'danger'`}
+               
                   variant="outlined"
                   required
                   fullWidth
-                  id="email"
-                  label="Correo Electronico"
-                  name="email"
-                  autoComplete="email"
-                  onChange={handleChange}
-                />
-              </Grid>
-              {errors.email && (
-                    <p className={styles.danger}>{errors.email}</p>
-                  )}
-              <Grid item xs={12}>{/*  campo de contraseña */}
-                <TextField
-                className={`${errors.password} && 'danger'`}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Contraseña"
+                  name="verifyPass"
+                  label="Verificación"
                   type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  id="verifyPass"
+                  value={input.verifyPass}
                   onChange={handleChange}
                 />
               </Grid>
-              {errors.password && (
-                    <p className={styles.danger}>{errors.password}</p>
+              {errors.verifyPass && (
+                    <p className={styles.danger}>{errors.verifyPass}</p>
                   )}
             </Grid>
             
-            {errors.fullname || errors.password || errors.email ?  
+            {errors.newPass || errors.verifyPass  ?  
             
             <Button
               type="submit"
@@ -193,7 +179,7 @@ function SignUp(props) {
               variant="contained"
               disabled
               >
-              Registrarse
+              Cambiar Contraseña
           </Button> 
               :
             <Button El boton de registro
@@ -201,21 +187,17 @@ function SignUp(props) {
               fullWidth
               variant="contained"
               color="primary"
+              onClick={() => handleEdit({id: props.id, newPassword: input.newPass})}
               className={classes.submit}>
-              Registrarse
+              Cambiar Contraseña
           </Button>}
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Ya tienes una cuenta? Ingresa aquí
-              </Link>
-              </Grid>
-            </Grid>
-          </form> {/* posibe erino del modal */}
+            
+          </form> 
         </div>
         <Box mt={5}>
           <Copyright />
         </Box>
+        
       </Container>
     </Modal >
   );
@@ -227,7 +209,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    singUp: payload => dispatch(postUser(payload))
+    getUserById: (id) => dispatch(getUserById(id)),
+    updatePassword: (id, payload) => dispatch(updatePassword(id, payload))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPass)

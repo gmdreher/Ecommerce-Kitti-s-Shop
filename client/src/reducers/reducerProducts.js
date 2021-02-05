@@ -15,7 +15,9 @@ import {
     DELETE_TOTAL_CART,
     DELETE_ITEMS_CART,
     POST_USER,
-    UPDATE_COUNT_PRODUCT
+    UPDATE_COUNT_PRODUCT,
+    GET_USER_BY_ID,
+    UPDATE_PASSWORD
 
 } from '../constants/productConstants.js';
 
@@ -120,6 +122,16 @@ export default (state = initialState, action) => {
             return { 
                 ...state,
                 cart: action.payload 
+            };
+        case GET_USER_BY_ID:
+            return {
+                ...state,
+                user: action.payload
+            }
+            case UPDATE_PASSWORD:
+            return { 
+                ...state,
+                user: [...state.user, action.payload]
             };
             
         default:
