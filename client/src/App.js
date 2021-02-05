@@ -17,11 +17,33 @@ import Login from './components/User/Login'
 import './Styles/App.scss'
 
 import './App.scss';
+import decode from 'jwt-decode'
 
+const checkAuth = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem('refreshToken')
+  
+  if(!token || refreshToken){
+    return false;
+  }
+  try{
+    const exp = decode(refreshToken)
+    if(exp < new Date().getTime()){
+      return false;
+    }
+  }catch (e) {
+    return false
+  }
+}
 
+// const AuthRoute = ({component: Component, ...rest }) => {
+//   <Route {...rest
+// }
 
 
 function App() {
+  
+  
   return (
     <BrowserRouter>
       <div className='body'>

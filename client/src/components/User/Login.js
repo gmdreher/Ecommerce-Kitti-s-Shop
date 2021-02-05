@@ -32,8 +32,6 @@ function Login (props) {
    const [ errors, setErrors ] = React.useState({});
    const [isLoading, setIsLoading] = React.useState(false);
    
- 
- 
   
    const handleInputChange = function(event) {
     
@@ -47,15 +45,24 @@ function Login (props) {
        [event.target.name]: event.target.value
      });
    }
-   useEffect(() =>{
+   
+   const handleSubmit =(event) => {
+     event.preventDefault();
+  
+     setInput({
+       ...input,
+       [event.target.name]: event.target.value
+     });
+  
      props.loginUser(input)
-   }, [])
-    
+   }
+ 
+  // action="http://localhost:3001/auth/login" method='post'
     return (
       <div className={'container ' + styles.globalContainer}>
           <div className={styles.formContainer}>
             <h1 className={styles.title}>Iniciar sesión</h1>
-            <form className={styles.form} action="http://localhost:3001/auth/login" method='post'>
+            <form className={styles.form} onSubmit={handleSubmit} >
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Correo electrónico*</label>
                 <input

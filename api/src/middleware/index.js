@@ -36,7 +36,7 @@ passport.use('signup', new LocalStrategy({
     usernameField:'email',
     passwordField:'password',
     passReqToCallback: true
-}, async (req, res, email,password,done)=>{
+}, async (req, email,password,done)=>{
    console.log("este es req.sessionId", req.sessionID)
     try{
         const user = await User.findOne({where:{email:email}})
@@ -47,7 +47,6 @@ passport.use('signup', new LocalStrategy({
         if(!validate){
             return done(null,false,{message:'Wrong password'})
         }
-     
         return done(null,user,{message:'Login successfull'})
     }catch(e){
             return done(e)
