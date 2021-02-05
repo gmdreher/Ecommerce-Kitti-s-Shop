@@ -32,22 +32,23 @@ export const postUser = (data) =>async (dispatch, getState)=>{
     }
 }
 
-export function loginUser (user) {
+export function loginUser (data) {
   return function (dispatch) {
-    return axios.post('http://localhost:3001/auth/login', {email: user.email, password: user.password})
+    return axios.post('http://localhost:3001/auth/login', {email: data.email, password: data.password})
       .then(res => {
         dispatch({ type: LOGIN_USER, payload: res.data });
+        console.log("esto es res,data", res.data)
       })
       .catch(err => console.log(err))
   };
 }
 
-export function logoutUser (user) {
-  return function (dispatch) {
-    return axios.post('http://localhost:3001/logout', {email: user.email, password: user.password})
-      .then(res => {
-        dispatch({ type: LOGOUT_USER, payload: res.data });
-      })
-      .catch(err => console.log(err))
-  };
-}
+// export function logoutUser (user) {
+//   return function (dispatch) {
+//     return axios.post('http://localhost:3001/logout', {email: user.email, password: user.password})
+//       .then(res => {
+//         dispatch({ type: LOGOUT_USER, payload: res.data });
+//       })
+//       .catch(err => console.log(err))
+//   };
+// }

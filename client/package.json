@@ -24,7 +24,8 @@
     "react-scripts": "3.4.1",
     "reactstrap": "^8.9.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "validator": "^13.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "lodash.isempty": "^4.4.0",
     "redux-devtools": "^3.7.0"
   }
 }

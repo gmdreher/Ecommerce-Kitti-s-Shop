@@ -9,8 +9,7 @@ import {
 const initialState = {
   allOrders: [],
   order: [],
-  user: {},
-
+  user: [],
 };
 
 export default (state = initialState, action) => {
