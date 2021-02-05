@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -10,28 +12,26 @@ const {User} = require('./db')
 
 
 
-//require('./db.js');
+require('./db.js');
 require('./middleware/index')
 const server = express();
-server.use(cors({
-  origin:'http://localhost:3000',
-  credentials:true
-}));
+server.use(cors());
 
 server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
-server.use(cookieParser());
+server.use(cookieParser('ecommerce-ft08-g07'));
 server.use(morgan('dev'));
 server.use(session({
   secret: 'ecommerce-ft08-g07',
   resave:false,
-  saveUninitialized:true
+  saveUninitialized:false,
 }))
 
 
 passport.serializeUser((user,done)=>{
+  console.log(user)
   done(null,user.id);
 })
 passport.deserializeUser(async (id,done)=>{
@@ -47,8 +47,10 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  console.log(req.cookies);
   next();
 });
+
 
 server.use('/', routes);
 

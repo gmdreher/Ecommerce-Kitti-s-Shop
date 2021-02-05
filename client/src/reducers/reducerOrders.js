@@ -1,14 +1,15 @@
 import {
   GET_ORDERS,
   GET_SPECIFIC_ORDER,
-  UPDATE_STATE_ORDER
+  UPDATE_STATE_ORDER,
 } from '../constants/productConstants.js';
 
 
 const initialState = {
   allOrders: [],
   order: [],
-
+  user: [],
+  
 };
 
 export default (state = initialState, action) => {
@@ -30,7 +31,7 @@ export default (state = initialState, action) => {
         ...state,
         order: action.payload
       }
-
+    
 
     default:
       return state;

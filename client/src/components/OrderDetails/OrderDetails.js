@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './orderdetails.module.scss';
+import styles from './orderDetails.module.scss';
 import { connect } from 'react-redux';
 import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
 import Moment from "moment";
@@ -147,8 +147,6 @@ class OrderDetails extends React.Component {
                     <h6>${product.price * quantity}</h6>
                   </div>
                 </div>
-
-
               })
             }
           </div>
