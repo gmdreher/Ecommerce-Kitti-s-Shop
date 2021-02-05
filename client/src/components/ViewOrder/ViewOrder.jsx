@@ -55,45 +55,45 @@ export default function ViewOrder(props) {
 
     }
     function sumar(data) {
-        if(data.userId&&data.orderId){
+        if (data.userId && data.orderId) {
 
             var idProd = data.id;
             var idUsr = data.userId;
             var orderId = data.orderId
             var qty = data.quantity + 1
             dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty, orderId }))
-     }else{
+        } else {
 
-        var idProd = data.id;
-        var qty = data.quantity + 1
-        dispatch(editQuantity({productId: idProd, quantity: qty}))
-     }
-      
+            var idProd = data.id;
+            var qty = data.quantity + 1
+            dispatch(editQuantity({ productId: idProd, quantity: qty }))
+        }
+
 
     } function restar(data) {
 
-        if(data.userId&&data.orderId){
-            if (data.quantity>0) {
+        if (data.userId && data.orderId) {
+            if (data.quantity > 0) {
                 var idProd = data.id;
                 var idUsr = data.userId;
                 var orderId = data.orderId
                 var qty = data.quantity - 1
-                dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty,orderId }))
+                dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty, orderId }))
             }
-        }else{
-            if (data.quantity>0) {
-            
+        } else {
+            if (data.quantity > 0) {
+
                 var idProd = data.id;
                 var qty = data.quantity - 1
-                dispatch(editQuantity({productId: idProd, quantity: qty}))
+                dispatch(editQuantity({ productId: idProd, quantity: qty }))
             }
         }
 
-            
+
     }
-        
-    
-   
+
+
+
     return (
 
 
@@ -103,9 +103,9 @@ export default function ViewOrder(props) {
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
-                       
+
                         if (info !== undefined) {
-                            
+
                             var subTot = 0;
                             subTot = info.price * info.quantity;
                             priceList.push(subTot);
@@ -123,21 +123,21 @@ export default function ViewOrder(props) {
                                                 <h5>{info.name}</h5>
                                             </div>
                                         </div>
-                                         <div className="add" >
+                                        <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => restar(info) }><i class="fas fa-minus"></i></button>
+                                                <button onClick={() => restar(info)}><i class="fas fa-minus"></i></button>
                                             </div>
-                                </div>
-                                 <div className="dataQuanty" >
+                                        </div>
+                                        <div className="dataQuanty" >
                                             <div className="dataQuanty2">
                                                 <h5>{info.quantity}</h5>
                                             </div>
                                         </div>
-                                          <div className="add" >
+                                        <div className="add" >
                                             <div className="dataAdd">
                                                 <button onClick={() => sumar(info)}><i class="fas fa-plus"></i></button>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div className="dataPrice" >
                                             <div>
                                                 <h5>$ {info.price}</h5>

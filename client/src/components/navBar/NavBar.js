@@ -49,11 +49,13 @@ export default function NavBar(props) {
                     <Link to={'/admin/products'} className="dropdown-item" >Productos
                 <li> <a className="dropdown-item" href="#"></a>  </li>
                     </Link>
-
                     <Link to={'/admin/categories'} className="dropdown-item" >Categorías
                 <li> <a className="dropdown-item" href="#"></a> </li>
                     </Link>
                     <Link to={'/admin/orders'} className="dropdown-item" >Órdenes de Usuario
+                <li> <a className="dropdown-item" href="#"></a> </li>
+                    </Link>
+                    <Link to={'/admin/users'} className="dropdown-item" >Usuarios
                 <li> <a className="dropdown-item" href="#"></a> </li>
                     </Link>
 
