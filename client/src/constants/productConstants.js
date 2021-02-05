@@ -29,6 +29,9 @@ export const UPDATE_COUNT_PRODUCT = "UPDATE_COUNT_PRODUCT"
 export const POST_USER = "POST_USER";
 export const GET_USER_BY_ID = "GET_USER_BY_ID"
 export const UPDATE_PASSWORD = "UPDATE_PASSWORD"
+export const GET_USER = "GET_USER";
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_PROMOTE = "UPDATE_PROMOTE";
 
 
 

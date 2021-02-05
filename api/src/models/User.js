@@ -7,13 +7,13 @@ module.exports = (sequelize) => {
     fullname: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate:{
-        isAlpha:{
-          msg:"El Nombre solo puede contener letras"
+      validate: {
+        isAlpha: {
+          msg: "El Nombre solo puede contener letras"
         },
-        len:{
-          args:[2,255],
-          msg:"El nombre debe tener minimo DOS(2) caracteres"
+        len: {
+          args: [2, 255],
+          msg: "El nombre debe tener minimo DOS(2) caracteres"
         }
       }
     },
@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       unique: true,
       validate: {
         isEmail: {
-              msg: "Debe ingresar un correo válido"   
+          msg: "Debe ingresar un correo válido"
         }
       }
     },
@@ -37,16 +37,20 @@ module.exports = (sequelize) => {
     },
     reset: {
       type: DataTypes.BOOLEAN,
+    },
+    banned: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   })
-  const setSaltAndPassword = async function(user) {
+  const setSaltAndPassword = async function (user) {
     if (user.changed('password')) {
       const salt = bcrypt.genSaltSync(+authConfig.rounds);
       user.password = bcrypt.hashSync(user.password, salt);
     }
   };
 
-  User.prototype.validPassword = async function(password) {
+  User.prototype.validPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
   };
 

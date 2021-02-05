@@ -15,10 +15,12 @@ import {
     DELETE_TOTAL_CART,
     DELETE_ITEMS_CART,
     POST_USER,
+    GET_USER,
+    UPDATE_USER,
+    UPDATE_PROMOTE,
     UPDATE_COUNT_PRODUCT,
     GET_USER_BY_ID,
     UPDATE_PASSWORD
-
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -97,6 +99,11 @@ export default (state = initialState, action) => {
                 ...state,
                 user: [...state.user, action.payload]
             }
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }
         case ADD_TO_CART:
             return {
                 ...state,
@@ -119,9 +126,9 @@ export default (state = initialState, action) => {
                 cart: state.cart.filter(order => order.orderId !== action.payload)
             }
         case UPDATE_COUNT_PRODUCT:
-            return { 
+            return {
                 ...state,
-                cart: action.payload 
+                cart: action.payload
             };
         case GET_USER_BY_ID:
             return {

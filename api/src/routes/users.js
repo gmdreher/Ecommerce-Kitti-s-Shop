@@ -5,26 +5,27 @@ var nodemailer = require('nodemailer');
 
 //Ruta de crear usuario
 //Pau
-server.post('/', passport.authenticate('signup'),async(req,res)=>{
-      
-        res.json({
-          message:'SignUp success',
-          user: req.user
-        })   
+server.post('/', passport.authenticate('signup'), async (req, res) => {
+
+  res.json({
+    message: 'SignUp success',
+    user: req.user
+  })
 })
 
 //PUT users/:id S35 : Ruta para modificar Usuario
 server.put('/:id', function (req, res) {
   const { id } = req.params;
-  const { fullName, email, password, rol } = req.body;
+  const { fullname, email, password, rol, banned } = req.body;
   User.findByPk(id)
     .then((user => {
       user.update(
         {
-          fullName: fullName,
+          fullname: fullname,
           email: email,
           password: password,
           rol: rol,
+          banned: banned,
         })
     })
     )
@@ -36,21 +37,11 @@ server.put('/:id', function (req, res) {
     })
 });
 
-// // task 36 GET /users
-// server.get('/', (req, res) => {
-//   User.findAll()
-//     .then(users => {
-//       res.json(users);
-//     })
-//     .catch(err => {
-//       res.status(400).send(`Error: ${err}`)
-//     });
-// });
 
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email"]
+    atributtes: ["id", "fullname", "email", "banned"]
   })
     .then(users => {
       res.json(users);
