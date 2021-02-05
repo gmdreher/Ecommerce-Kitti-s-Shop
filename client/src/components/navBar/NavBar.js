@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import Search from '../search/Search.js'
 import logo from '../../img/logo.png'
 import style from './navBar.module.scss'
@@ -8,6 +9,14 @@ import deepOrange from '@material-ui/core/colors/deepOrange';
 import Badge from '@material-ui/core/Badge';
 
 export default function NavBar(props) {
+
+    // const [admin, setAdmin] = useState(false);
+
+    // const user = useSelector(store => store.product.user);
+
+    // useEffect(() => {
+    //     if (user.rol === 'admin') setAdmin(true)
+    // }, [])
 
 
     console.log("Navbar", props);
@@ -27,7 +36,7 @@ export default function NavBar(props) {
 
                     {/* Copiar todo completo al momento de cabiar de lugar el link  */}
                     <Link to={'/user/signup'} className="dropdown-item" >Registrarse
-              <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+            <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                 </ul>
             </div>
             <div>
@@ -40,27 +49,25 @@ export default function NavBar(props) {
                     </div> */}
                 </Link >
             </div>
-
-            <div className="dropdown">
-                <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <Link to={'/admin/products'} className="dropdown-item" >Productos
+            {
+                <div className="dropdown">
+                    <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></button>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <Link to={'/admin/products'} className="dropdown-item" >Productos
                 <li> <a className="dropdown-item" href="#"></a>  </li>
-                    </Link>
-                    <Link to={'/admin/categories'} className="dropdown-item" >Categorías
+                        </Link>
+                        <Link to={'/admin/categories'} className="dropdown-item" >Categorías
                 <li> <a className="dropdown-item" href="#"></a> </li>
-                    </Link>
-                    <Link to={'/admin/orders'} className="dropdown-item" >Órdenes de Usuario
+                        </Link>
+                        <Link to={'/admin/orders'} className="dropdown-item" >Órdenes de Usuario
                 <li> <a className="dropdown-item" href="#"></a> </li>
-                    </Link>
-                    <Link to={'/admin/users'} className="dropdown-item" >Usuarios
+                        </Link>
+                        <Link to={'/admin/users'} className="dropdown-item" >Perfiles
                 <li> <a className="dropdown-item" href="#"></a> </li>
-                    </Link>
-
-                    {/* Copiar todo completo al momento de cabiar de lugar el link  */}
-
-                </ul>
-            </div>
+                        </Link>
+                    </ul>
+                </div>
+            }
         </header>
     )
 }

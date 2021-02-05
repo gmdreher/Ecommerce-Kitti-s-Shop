@@ -14,6 +14,7 @@ export const POST_USER = "POST_USER";
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_PROMOTE = "UPDATE_PROMOTE";
+export const POST_RESERT_PASSWORD = "POST_RESERT_PASSWORD";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_PRODUCT_CART = "GET_PRODUCT_CART";
 export const GET_SPECIFIC_ORDER = "GET_SPECIFIC_ORDER";

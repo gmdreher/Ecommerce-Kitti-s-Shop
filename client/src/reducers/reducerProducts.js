@@ -18,6 +18,7 @@ import {
     GET_USER,
     UPDATE_USER,
     UPDATE_PROMOTE,
+    POST_RESERT_PASSWORD,
     UPDATE_COUNT_PRODUCT
 
 } from '../constants/productConstants.js';
@@ -103,6 +104,15 @@ export default (state = initialState, action) => {
                 ...state,
                 user: action.payload
             }
+        case POST_RESERT_PASSWORD:
+
+            console.log("RESERT PASSWORD");
+            console.log(state.user);
+            return {
+                ...state,
+                user: action.payload
+            }
+
         case ADD_TO_CART:
             return {
                 ...state,

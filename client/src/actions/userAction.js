@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE } from '../constants/productConstants.js';
+import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE, POST_RESERT_PASSWORD } from '../constants/productConstants.js';
 
 
 export const getUsers = () => async (dispatch) => {
@@ -24,24 +24,19 @@ export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) =>
 
         try {
             const res = await axios.put(`http://localhost:3001/users/${id}`, body);
-
             users && users.forEach((x) => {
-
-                if (x.id == id) {
+                if (x.id == id && x.banned == false) {
                     x.banned = true;
                 }
             });
-
             console.log(users);
             dispatch({
                 type: UPDATE_USER,
                 payload: users
             });
-
         } catch (error) {
             console.log("Error: " + error)
         }
-
     }
 }
 
@@ -49,17 +44,13 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
     if (id) {
         const users = getState().product.user.slice();
-
         try {
             const res = await axios.put(`http://localhost:3001/auth/promote/${id}`);
-
             users && users.forEach((x) => {
-
                 if (x.id == id && x.rol !== "admin") {
                     x.rol = "admin";
                 }
             });
-
             console.log("SE VA------", users);
 
             dispatch({
@@ -72,7 +63,30 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
     }
 }
 
+export const postResertPassword = ({ id, password }) => async (dispatch, getState) => {
 
+    const users = getState().product.user.slice();
+    console.log('LO QUE RECIBE LA ACCION', id, password);
+    try {
+
+        const res = await axios.post(`http://localhost:3001/auth/${id}/forceReset/`);
+
+        users && users.forEach((x) => {
+            if (x.id == id && x.password !== null) {
+                x.password = null;
+            }
+        });
+
+        console.log("SE VA------", users);
+        dispatch({
+            type: POST_RESERT_PASSWORD,
+            payload: users
+        });
+
+    } catch (error) {
+        console.log("Error: " + error)
+    }
+}
 
 export const postUser = (data) => async (dispatch, getState) => {
 

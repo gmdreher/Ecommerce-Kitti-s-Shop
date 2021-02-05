@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import styles from '../OrderTable/orderTable.module.scss';
-import { getUsers, updateToAdmin, bloquearUsers } from '../../actions/userAction.js';
+import styles from './UserTable.module.scss';
+import { getUsers, updateToAdmin, bloquearUsers, postResertPassword } from '../../actions/userAction.js';
 
 
 
@@ -10,7 +10,7 @@ export default function UserTable() {
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-    const user = usersData[usersData.length - 1];
+    // const user = usersData[usersData.length - 1];
 
     console.log("Data de GETUSERS USERTABLE ", usersData);
 
@@ -57,10 +57,28 @@ export default function UserTable() {
         }
     }
 
+
+    function handlerResert(info) {
+        console.log("HANDLERESERT", info);
+        if (info.id !== undefined) {
+            var usuario = info.id;
+            var password = info.password;
+
+            console.log("-------handlerResert DATA Seleccionado-------");
+            console.log(usuario, password);
+
+            if (window.confirm(`¿ Desea resetear la contraseña del usuario id: ${usuario} ?`)) {
+                dispatch(postResertPassword({ id: usuario, password: password }))
+            } else {
+                window.alert('No se ha reseteado la contraseña')
+            }
+        }
+    }
+
     return (
         <Fragment>
             <br />
-            <h2>Usuarios registrados:</h2>
+            <h2>Perfiles</h2>
             <div className={"table-responsive " + styles.container}>
                 <table className="table table-sm" >
                     <thead>
@@ -68,9 +86,9 @@ export default function UserTable() {
                             <th scope="col">Id de Usuario</th>
                             <th scope="col">Nombre Completo</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Cambiar a Admin</th>
-                            <th scope="col">Bloquear Usuario</th>
-                            <th scope="col">Resetear contraseña</th>
+                            <th scope="col">Administrador</th>
+                            <th scope="col">Bloquear</th>
+                            <th scope="col">Contraseña</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -82,13 +100,13 @@ export default function UserTable() {
                                         <td>{info.fullname}</td>
                                         <td>{info.email}</td>
                                         <td>
-                                            <button type="button" className="btn btn-secondary btn-sm" onClick={() => handlerAdmin(info)}>Admin</button>
+                                            <button type="button" className={styles.admin} onClick={() => handlerAdmin(info)}>Admin.</button>
                                         </td>
                                         <td>
-                                            <button type="button" className="btn btn-secondary btn-sm" onClick={() => handlerBloquear(info)}>Bloquear</button>
+                                            <button type="button" className={styles.bloqueo} onClick={() => handlerBloquear(info)}>Bloquear</button>
                                         </td>
                                         <td>
-                                            <button type="button" className="btn btn-secondary btn-sm" >Resetear</button>
+                                            <button type="button" className={styles.resert} onClick={() => handlerResert(info)}>Resetear</button>
                                         </td>
                                     </tr>
                                 )
@@ -99,7 +117,5 @@ export default function UserTable() {
             </div>
         </Fragment >
     )
-
-
 }
 
