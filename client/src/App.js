@@ -24,14 +24,8 @@ import {useSelector} from "react-redux";
 
 
 
-// const AuthRoute = ({component: Component, ...rest }) => {
-//   <Route {...rest
-// }
-
-
 function App() {
   
-
   
   const checkAuth = () => {
     const token = localStorage.getItem("token");

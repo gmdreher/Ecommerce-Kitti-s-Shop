@@ -11,14 +11,14 @@ export default function ProductCard({ data }) {
     // console.log("Informacion que viene desde Catalogo", data);
 
     const dispatch = useDispatch();
-    const userData = useSelector(store => store.product.user) 
+    const user = useSelector(store => store.auth.userInfo)
     const prodCart = useSelector(store => store.product.cart) 
-    const user = userData[userData.length-1];
+
   
 
     function handleClick (data){
         let index = prodCart.indexOf(data.id)
-        dispatch(addProductCart(user!== undefined ?{ userId:user.id, productId: data.id, price: data.price, quantity:1}:{productId: data.id, price: data.price, quantity:1}));
+        dispatch(addProductCart(user ? { userId:user.id, productId: data.id, price: data.price, quantity:1}:{productId: data.id, price: data.price, quantity:1}));
     };
     
 

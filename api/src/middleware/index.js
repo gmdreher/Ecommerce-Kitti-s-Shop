@@ -37,7 +37,6 @@ passport.use('signup', new LocalStrategy({
     passwordField:'password',
     passReqToCallback: true
 }, async (req, email,password,done)=>{
-   console.log("este es req.sessionId", req.sessionID)
     try{
         const user = await User.findOne({where:{email:email}})
         if(!user){

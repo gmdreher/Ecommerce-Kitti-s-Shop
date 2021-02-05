@@ -25,7 +25,7 @@ function Product(props) {
     console.log(user)
     console.log(props.userData)
     function handleClick (data){
-        props.addProductCart(user!== undefined ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
+        props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
     };
     function change(e){
         setQuantity({
