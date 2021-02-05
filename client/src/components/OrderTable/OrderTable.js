@@ -10,16 +10,17 @@ class OrderTable extends React.Component {
   componentDidMount() {
     this.props.getAllOrders()
   }
-  
+
   formatDate(date) {
     let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
-  
-  
-  render(){
-    return(
+
+
+  render() {
+    return (
       <Fragment>
+        <br />
         <h2>Ordenes de Usuario:</h2>
         <div className={"table-responsive " + styles.container}>
           <table className="table table-sm" >
