@@ -87,7 +87,9 @@ function SignUp(props) {
     email: '',
     password: '',
     rol: 'User',
-    reset: false
+    reset: false,
+    banned: false,
+    
   })
   const [modal, setModal] = useState(true);
   const toggle = () => {

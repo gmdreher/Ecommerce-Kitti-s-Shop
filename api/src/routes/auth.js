@@ -79,4 +79,29 @@ server.post('/:id/forceReset/', (req, res) =>{
 	})
 });
 
+server.put('/:id/banned', function (req, res) {
+    const { id } = req.params;
+    User.findByPk(id)
+      .then((user => {
+          if (user.banned === false){
+            user.update(
+                {
+                  banned: true,
+                }) 
+          } else {
+            user.update(
+                {
+                  banned: false,
+                })
+          }
+      })
+      )
+      .then(() => {
+        res.status(200).json("Estado de usuario ha sido modificado")
+      })
+      .catch(error => {
+        res.status(400).send(`Error ${error}`);
+      })
+  });
+
   module.exports = server;
