@@ -15,26 +15,14 @@ import OrderTable from "./components/OrderTable/OrderTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
 import Login from './components/User/Login'
 import './Styles/App.scss'
+import {Link} from "react-router-dom";
+
 
 import './App.scss';
-import decode from 'jwt-decode'
+import decode from 'jwt-decode';
+import {useSelector} from "react-redux";
 
-const checkAuth = () => {
-  const token = localStorage.getItem("token");
-  const refreshToken = localStorage.getItem('refreshToken')
-  
-  if(!token || refreshToken){
-    return false;
-  }
-  try{
-    const exp = decode(refreshToken)
-    if(exp < new Date().getTime()){
-      return false;
-    }
-  }catch (e) {
-    return false
-  }
-}
+
 
 // const AuthRoute = ({component: Component, ...rest }) => {
 //   <Route {...rest
@@ -43,13 +31,41 @@ const checkAuth = () => {
 
 function App() {
   
+  // const userInfo = useSelector((state) => state.userInfo)
+  // console.log("esto es userInfo", userInfo)
+  const getToken = () => {
+    return JSON.parse(localStorage.getItem('data'));
+  }
+  let token = getToken();
+  let info = decode(token.token)
+  //
+  // console.log(info)
+
+  
+  const checkAuth = () => {
+    const token = localStorage.getItem("token");
+    const refreshToken = localStorage.getItem('refreshToken')
+
+    if(!token || refreshToken){
+      return false;
+    }
+    try{
+      const exp = decode(token.token)
+      console.log(exp)
+      if(exp < new Date().getTime()){
+        return false;
+      }
+    }catch (e) {
+      return false
+    }
+  }
   
   return (
     <BrowserRouter>
       <div className='body'>
         <div className="App">
           <header>
-            <Navbar />
+            <Navbar  id={info.id}/>
             <NavCategories />
             <Route
               path="/products/category/:categoryName"
@@ -71,7 +87,9 @@ function App() {
             <Route exact path="/admin/orders" component={OrderTable} />
       
             <Route exact path='/user/signup' component={SignUp} />
+        
             <Route exact path='/auth/login' component={Login} />
+            
             <Route exact path="/user/order" component={ViewOrder} />
     </div>
     

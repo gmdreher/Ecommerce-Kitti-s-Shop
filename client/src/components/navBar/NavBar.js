@@ -9,9 +9,7 @@ import Badge from '@material-ui/core/Badge';
 import MyAccount from "../User/MyAccount";
 
 export default function NavBar(props) {
-
-
-    console.log("Navbar", props);
+  
 
     return (
         <header className={style.navBar}>
@@ -21,7 +19,7 @@ export default function NavBar(props) {
                 </Link>
             </div>
             <Search />
-            <MyAccount />
+            <MyAccount key={props.id} />
             <div className="dropdown">
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
-import { connect } from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import jwt_decode from "jwt-decode"
 import axios from "axios";
@@ -30,21 +30,10 @@ function Login (props) {
    
    const [ input, setInput ] = React.useState({email: "", password: ""});
    const [ errors, setErrors ] = React.useState({});
-   const [isLoading, setIsLoading] = React.useState(false);
+   // const [isLoading, setIsLoading] = React.useState(false);
    
   
-   const handleInputChange = function(event) {
-    
-     setErrors(validate({
-       ...input,
-       [event.target.name]: event.target.value
-     }))
-    
-     setInput({
-       ...input,
-       [event.target.name]: event.target.value
-     });
-   }
+  const dispatch = useDispatch();
    
    const handleSubmit =(event) => {
      event.preventDefault();
@@ -54,9 +43,25 @@ function Login (props) {
        [event.target.name]: event.target.value
      });
   
-     props.loginUser(input)
+    dispatch(loginUser(input.email, input.password))
    }
- 
+  
+  const handleInputChange = function(event) {
+    
+    setErrors(validate({
+      ...input,
+      [event.target.name]: event.target.value
+    }))
+    
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    });
+  }
+  
+  // const token = localStorage.getItem("token");
+  // const refreshToken = localStorage.getItem('refreshToken')
+  
   // action="http://localhost:3001/auth/login" method='post'
     return (
       <div className={'container ' + styles.globalContainer}>

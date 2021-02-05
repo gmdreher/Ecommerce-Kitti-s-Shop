@@ -1,18 +1,35 @@
 import React from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import decode from "jwt-decode";
 // import { getUserOrder, updateStateOrder } from "../../actions/orderActions";
-// import {Link} from "react-router-dom";
 
 
 
 
-export default class MyAccount extends React.Component {
-      render(){
+class MyAccount extends React.Component {
+  
+  constructor() {
+    super();
+    this.state ={
+      a: ""
+    }
+  }
+  info;
+  
+  componentDidMount() {
+    
+    this.info = decode(this.props.userInfo.token)
+    console.log(this.info);
+    this.setState({a:"b"})
+  }
+  
+  render(){
+        
         return (
           <div className="dropdown">
-            <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i className={"fas fa-user " + styles.icon}/>Angelismar</button>
+            <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i className={"fas fa-user " + styles.icon}/>{this.info? this.info.fullname : ""}</button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <Link to={''} className="dropdown-item">
                 <li><a className="dropdown-item" href="#"/>Mi cuenta</li>
@@ -32,11 +49,10 @@ export default class MyAccount extends React.Component {
     }
     
 
-// function mapStateToProps(state) {
-//   return {
-//
-//
-//   }
-// }
+function mapStateToProps(state) {
+  return {
+    userInfo: state.auth.userInfo
+  }
+}
 
-// export default connect(mapStateToProps, { getUserOrder, updateStateOrder })(Login);
+export default connect(mapStateToProps, null)(MyAccount);

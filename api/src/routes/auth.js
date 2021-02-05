@@ -7,7 +7,7 @@ const authConfig = require("../config/auth");
 
 server.post('/login', passport.authenticate('login',{session:true}), (req, res) => {
  try{
-	 const token = jwt.sign({id:req.user.id},authConfig.secret)
+	 const token = jwt.sign({id:req.user.id, fullname:req.user.fullname}, authConfig.secret)
 	 res.json({token})
    // res.cookie(userId, user.id)
    // res.redirect('/');

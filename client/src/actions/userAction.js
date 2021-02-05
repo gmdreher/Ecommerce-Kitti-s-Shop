@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
+import {POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
 
 export const postUser = (data) =>async (dispatch, getState)=>{
 
@@ -32,16 +32,24 @@ export const postUser = (data) =>async (dispatch, getState)=>{
     }
 }
 
-export function loginUser (data) {
-  return function (dispatch) {
-    return axios.post('http://localhost:3001/auth/login', {email: data.email, password: data.password})
-      .then(res => {
-        dispatch({ type: LOGIN_USER, payload: res.data });
-        console.log("esto es res,data", res.data)
-      })
-      .catch(err => console.log(err))
-  };
+export const loginUser = (email, password) => async (dispatch) =>{
+  dispatch({type: LOGIN_USER, payload: {email, password}});
+  
+  try{
+  const { data } = await axios.post('http://localhost:3001/auth/login', {email, password})
+    dispatch({type: USER_LOGIN_SUCCESS, payload: data})
+    localStorage.setItem('data', JSON.stringify(data))
+  }catch(error){
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+        ? error.response.data.message
+          : error.message,
+    })
+  }
 }
+
 
 // export function logoutUser (user) {
 //   return function (dispatch) {
