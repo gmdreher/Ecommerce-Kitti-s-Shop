@@ -1,5 +1,6 @@
 const server = require('express').Router();
-const { Order, User, OrderDetails } = require('../db.js');
+const { Order, User, OrderDetails, Review, Product } = require('../db.js');
+const { Op } = require("sequelize");
 
 //Ruta de crear usuario
 //Pau
@@ -144,6 +145,33 @@ server.get("/:userId/order/:state", (req, res) => {
   })
 });
 
+//obtener todos los items del carrito
+server.get("/:userId/order/:state", (req, res) => {
+  let { userId, state } = req.params;
+
+  Order.findOne({
+    where: {
+      userId: userId,
+      state: state
+    }
+  }).then((order) => {
+    OrderDetails.findAll({
+      where: {
+        orderId: order.id,
+      },
+      order: [
+        ['productId', 'ASC']
+      ]
+    })
+      .then(detalle => {
+        res.status(200).json(detalle)
+      })
+
+  }).catch((err) => {
+    res.status(400).json("Error al traer todos los items de la orden" + err)
+  })
+});
+
 //vaciar carrito
 server.delete("/:userId/order/:orderId", (req, res) => {
 
@@ -177,7 +205,52 @@ server.get('/:id/orders', (req, res) => {
     })
 });
 
+// ruta que revuelve todas las review de un usuario
+
+server.get("/:id/review", (req, res) => {
+  const userId = req.params.id;
+  Review.findAll({ 
+    where: {
+      userId: userId 
+      },
+      include: [
+        { model: Product }
+      ],
+      })
+    .then((review) => {
+      res.status(200).json( review)
+    })
+    .catch(err => {
+      res.status(400).send('este es el error' + err)
+    })
+});
 
 
-
+//ruta para obtener usuarios con carritos comprados
+server.get('/:id/orders/complete', (req, res)=>{
+  const {id} = req.params;
+  User.findByPk(id)
+  .then((user)=>{
+    Order.findAll({
+      where: { 
+        state: "completa",
+      userId: user.id },
+      include: [
+        {
+          model: Product,
+          as: "products",
+          attributes: ["name", "description", "stock", "price"],
+          // include:[
+          //   {
+          //     model: Review,
+          //     where:{
+          //       userId: user.id
+          //     }
+          //   }
+          // ] 
+        },
+      ],
+    }).then((r) => res.status(200).json(r));
+  });
+})
 module.exports = server;

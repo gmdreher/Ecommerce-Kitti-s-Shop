@@ -15,7 +15,13 @@ import {
     DELETE_TOTAL_CART,
     DELETE_ITEMS_CART,
     POST_USER,
-    UPDATE_COUNT_PRODUCT
+    UPDATE_COUNT_PRODUCT,
+    GET_PRODUCTS_STATE_COMPLETE,
+    GET_ALL_REVIEWS_USER,
+    ADD_REVIEW,
+    EDIT_REVIEW,
+    DELETE_REVIEW,
+    GET_ALL_REVIEW_PRODUCT
 
 } from '../constants/productConstants.js';
 
@@ -28,6 +34,10 @@ const initialState = {
     user: [],
     cart: [],
     order: [],
+    productsComplete: [],
+    reviews: [],
+    review: [],
+    // reviewProduct:[]
 
 };
 
@@ -122,6 +132,47 @@ export default (state = initialState, action) => {
                 cart: action.payload 
             };
             
+
+
+            case GET_PRODUCTS_STATE_COMPLETE:
+                var estadito= {
+                    ...state,
+                    productsComplete: action.payload
+                }
+                // console.log('esto es un estadito:', estadito)
+                return estadito;
+
+            case GET_ALL_REVIEWS_USER:
+                    //  console.log("reducer payload", action.payload);
+                return{
+                    ...state,
+                    reviews: action.payload
+                };
+            case ADD_REVIEW:
+                return{
+                    ...state,
+                    reviews:  [...state.reviews, action.payload]
+                }
+
+            case EDIT_REVIEW:
+                console.log("esto es un reducer ", action.payload);
+                return{
+                    ...state,
+                    review: action.payload
+                }
+
+            case DELETE_REVIEW:
+                return{
+                    ...state,
+                    reviews:  state.reviews.filter(review => review.id !== action.payload)
+                }
+
+            // case GET_ALL_REVIEW_PRODUCT:
+            //     return{
+            //         ...state,
+            //         reviewsProduct:  [...state.reviewsProduct, action.payload]
+            //     }
+
         default:
             return state;
 

@@ -6,6 +6,10 @@ import { getProductById} from '../../actions/productActions.js';
 import { addProductCart} from '../../actions/cartAction';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
+import Review from "../Review/Review"
+
+import Rate from '../CrudReview/Rate';
+import Rewiew from '../Review/Review';
 
 function Product(props) {
     const [quantity,setQuantity] =React.useState('')
@@ -18,11 +22,9 @@ function Product(props) {
         imageUrl = props.product.images[0].url;
     }
     
-  
+
     const user = props.userData[props.userData.length-1];
-    console.log('este es el user registrado')
-    console.log(user)
-    console.log(props.userData)
+
     function handleClick (data){
         props.addProductCart(user!== undefined ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
     };
@@ -68,24 +70,21 @@ function Product(props) {
                     <p><strong>Descripción: </strong> {props.product.description}</p>
                 </div>
             </div>
-            <div className="reviews">
-                <h3>Comentarios</h3>
-                <div className="detail">
-                    <div className="usuario">
-                        <h5>Usuario 1 </h5>
-                    </div>
-                </div>
-                <div className="review">
-                    <h5>Óptimo</h5>
-                    <p>Cumple perfectamente con su función. Me gusta porque cede fácilmente, como así también que se pueda poner el nro de teléfono donde dice muy home.</p>
-                </div>
-            </div>
+            <section>
+                <h2>Comentarios</h2>
+                {props.product.Reviews && props.product.Reviews.map((review)=>{
+                
+                    return <Rewiew key={review.id} data={review}/>
+                })}
+                
+                <Rate/>
+            </section>
         </div>
     )
 };
 
 function mapStateToProps(state) {
-    console.log('este el el state:', state)
+    // console.log('este el el state:', state)
     return {
         product: state.product.product,
         userData:state.product.user,

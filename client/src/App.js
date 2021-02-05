@@ -16,6 +16,7 @@ import ViewOrder from './components/ViewOrder/ViewOrder';
 import './Styles/App.scss'
 
 import './App.scss';
+import CrudReview from './components/CrudReview/CrudReview';
 
 
 
@@ -49,6 +50,8 @@ function App() {
       
             <Route exact path='/user/signup' component={SignUp} />
             <Route exact path="/user/order" component={ViewOrder} />
+            {/* <Route exact path="/user/:1/review" component={CrudReview} /> */}
+            <Route exact path="/user/review/:id" render={({ match }) => <CrudReview key={match.params.id} id={match.params.id} />} />
     </div>
     
           </main>

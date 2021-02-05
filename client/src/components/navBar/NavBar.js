@@ -10,7 +10,7 @@ import Badge from '@material-ui/core/Badge';
 export default function NavBar(props) {
 
 
-    console.log("Navbar", props);
+    // console.log("Navbar", props);
 
     return (
         <header className={style.navBar}>
@@ -24,10 +24,13 @@ export default function NavBar(props) {
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
+                <Link to={'/user/signup'} className="dropdown-item" >Registrarse
+                    <li> <a className="dropdown-item" href="#"></a> </li>
+                </Link>
 
-                    {/* Copiar todo completo al momento de cabiar de lugar el link  */}
-                    <Link to={'/user/signup'} className="dropdown-item" >Registrarse
-              <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+                <Link to={'/user/review'} className="dropdown-item" >Reviews
+                    <li> <a className="dropdown-item" href="#"></a> </li> 
+                </Link>
                 </ul>
             </div>
             <div>
@@ -39,6 +42,7 @@ export default function NavBar(props) {
                         </Badge>
                     </div> */}
                 </Link >
+               
             </div>
 
             <div className="dropdown">

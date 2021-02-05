@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category, Image } = require('../db.js');
+const { Product, Category, Image, Review } = require('../db.js');
 const { Op } = require("sequelize");
 
 
@@ -208,13 +208,14 @@ server.get('/category/:categoryName', (req, res, next) => {
 });
 
 
-//task 24
+//task 24   //incluir modelo review---------------------------------------------
 server.get("/:id", (req, res) => {
   const id = req.params.id;
   Product.findOne({
     where: { id: id },
     include: [
-      { model: Image }
+      { model: Image},
+      {model: Review}
     ],
   })
     .then((product) => {
@@ -319,7 +320,96 @@ server.get('/:idProduct/categories', (req, res, next) => {
 
 })
 
+//Task 54 Crear ruta para crear/agregar Review
+//POST /product/:id/review
+server.post("/:id/review", (req, res) => {
+  const productId = req.params.id;
+  const { userId, rate, description } = req.body; 
 
+  if (rate && description && productId && userId) {
+    Review.create({ 
+      rate:rate,
+      description: description,
+      productId: productId,
+      userId: userId 
+    })
+      .then((review) => 
+      res.status(200)
+      .json(review))
+      .catch((err) => {
+        console.log("Error creando review " + err);
+      });
+  } else {
+    res.status(400).send("Debes completar todos los campos");
+  }
+});
+
+//Task 55 Crear ruta para Modificar Review
+//PUT /product/:id/review/:idReview
+
+server.put("/:id/review/:idReview", (req, res) => {
+  const productId = req.params.id;
+  const reviewId = req.params.idReview;
+  const { rate, description } = req.body;
+
+  Review.update({ 
+    rate: rate,
+     description: description 
+    },
+    { 
+      where: { 
+        id: reviewId,
+        productId: productId, 
+      }})
+    .then((review) =>
+      res.status(200)
+      .json(review))
+    .catch((err) => {
+      console.log("No se pudo cambiar review " + err);
+      res.send(err);
+    });
+});
+
+//Task 56 Crear Ruta para eliminar Review
+//DELETE /product/:id/review/:idReview
+
+server.delete("/:id/review/:idReview", (req, res) => {
+  const productId = req.params.id;
+  const reviewId = req.params.idReview;
+
+  Review.destroy({
+     where:{
+         id: reviewId,
+         productId: productId,
+         }})
+    
+    .then((review) => 
+    res.status(200)
+    .json(review))
+    .catch((err) => {
+      console.log("No se pudo borrar " + err);
+      res.send(err);
+    });
+});
+
+//Task: 57 Crear Ruta para obtener todas las reviews de un producto.
+//GET /product/:id/review/
+
+server.get("/:id/review/", (req, res) => {
+  const productId = req.params.id;
+  Review.findAll({ 
+    where: {
+       productId: productId 
+      }
+      })
+    .then((review) => 
+    res.status(200)
+    .json(review))
+    .catch((err) => {
+      console.log("No se pudieron obtener los reviews " + err);
+      res.send(err);
+    });
+});
 
 
 
