@@ -5,12 +5,11 @@ module.exports = (sequelize) => {
     
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
     rate: {
       type: DataTypes.ENUM('1', '2', '3', '4', '5'),
       allowNull: false,
     }
-  
+    
   });
 };

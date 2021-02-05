@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import {POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
 import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD } from '../constants/productConstants.js';
 
 
@@ -77,9 +78,6 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 export const postUser = (data) => async (dispatch, getState) => {
 
     const response = await axios.post('http://localhost:3001/users/', data);
-    console.log('buscado el id de usuariooooooooooooooooo')
-    console.log(response.data)
-
     dispatch({
         type: POST_USER,
         payload: response.data
@@ -105,7 +103,29 @@ export const postUser = (data) => async (dispatch, getState) => {
             localStorage.clear();
         }
     }
+}
 
+export const loginUser = (email, password) => {
+  return function (dispatch){
+    dispatch({type: LOGIN_USER, payload: {email, password}});
+    return axios.post('http://localhost:3001/auth/login', {email, password})
+      .then(res => {
+        dispatch({type: USER_LOGIN_SUCCESS, payload: res.data})
+        localStorage.setItem('data', res.data);
+        let cartItems = localStorage.getItem('cartItems', )
+        dispatch({type: ADD_TO_CART, payload: cartItems})
+        localStorage.removeItem('cartItems');
+      })
+      .catch(error =>{
+        dispatch({
+          type: USER_LOGIN_FAIL,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        })
+      })
+  }
 }
 
 export const getUserById = (id) => async (dispatch) => {
@@ -131,3 +151,32 @@ export const updatePassword = user => async (dispatch) => {
         console.log("Error" + error)
     }
 }
+
+//   => async (dispatch, getState) => {
+//   dispatch({type: LOGIN_USER, payload: {email, password}});
+//
+//   try {
+//     const {data} = await axios.post('http://localhost:3001/auth/login', {email, password})
+//
+//     dispatch({type: USER_LOGIN_SUCCESS, payload: data})
+//     localStorage.setItem('data', data);
+//   } catch (error) {
+//     dispatch({
+//       type: USER_LOGIN_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     })
+//   }
+// }
+
+
+  
+    export const logoutUser = () => (dispatch) => {
+      localStorage.removeItem('data')
+      dispatch({type: LOGOUT_USER})
+    }
+  
+  
+

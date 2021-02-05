@@ -24,14 +24,20 @@ export const DELETE_CART_LS = "DELETE_CART_LS";
 export const DELETE_ITEM_LC = "DELETE_ITEM_LC";
 
 export const DELETE_ITEM = "DELETE_ITEM";
-export const UPDATE_COUNT_PRODUCT = "UPDATE_COUNT_PRODUCT"
+export const UPDATE_COUNT_PRODUCT = "UPDATE_COUNT_PRODUCT";
 
 export const POST_USER = "POST_USER";
-export const GET_USER_BY_ID = "GET_USER_BY_ID"
-export const UPDATE_PASSWORD = "UPDATE_PASSWORD"
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const UPDATE_PASSWORD = "UPDATE_PASSWORD";
 export const GET_USER = "GET_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_PROMOTE = "UPDATE_PROMOTE";
+export const LOGIN_USER = "LOGIN_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
+
+
 
 
 

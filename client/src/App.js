@@ -15,14 +15,38 @@ import OrderTable from "./components/OrderTable/OrderTable";
 import UserTable from "./components/UserTable/UserTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
 import ResetPass from './components/ResetPass/ResetPass';
+import Login from './components/User/Login'
 import './Styles/App.scss'
+import {Link} from "react-router-dom";
+
 
 import './App.scss';
-
+import decode from 'jwt-decode';
+import {useSelector} from "react-redux";
 
 
 
 function App() {
+  
+  
+  const checkAuth = () => {
+    const token = localStorage.getItem("token");
+    const refreshToken = localStorage.getItem('refreshToken')
+
+    if(!token || refreshToken){
+      return false;
+    }
+    try{
+      const exp = decode(token.token)
+      console.log(exp)
+      if(exp < new Date().getTime()){
+        return false;
+      }
+    }catch (e) {
+      return false
+    }
+  }
+  
   return (
     <BrowserRouter>
       <div className='body'>
@@ -50,12 +74,13 @@ function App() {
               <Route exact path="/admin/orders" component={OrderTable} />
               <Route exact path="/admin/users" component={UserTable} />
 
-
-              <Route exact path='/user/signup' component={SignUp} />
-              <Route exact path="/user/order" component={ViewOrder} />
-              <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />
-            </div>
-
+            <Route exact path='/user/signup' component={SignUp} />
+        
+            <Route exact path='/auth/login' component={Login} />
+            <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />
+            <Route exact path="/user/order" component={ViewOrder} />
+    </div>
+    
           </main>
 
           <footer>
