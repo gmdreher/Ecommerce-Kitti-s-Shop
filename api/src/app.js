@@ -10,13 +10,11 @@ const {User} = require('./db')
 
 
 
-//require('./db.js');
+require('./db.js');
 require('./middleware/index')
+const store = new session.MemoryStore;
 const server = express();
-server.use(cors({
-  origin:'http://localhost:3000',
-  credentials:true
-}));
+server.use(cors());
 
 server.name = 'API';
 
@@ -25,9 +23,11 @@ server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(session({
-  secret: 'ecommerce-ft08-g07',
-  resave:false,
-  saveUninitialized:true
+  cookie:{maxAge: 240 * 60 * 60 * 1000},
+  store:store,
+  saveUninitialized:true,
+  resave:'true',
+  secret: 'ecommerce-ft08-g07'
 }))
 
 

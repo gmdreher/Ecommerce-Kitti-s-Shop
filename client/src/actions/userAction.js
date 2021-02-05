@@ -6,7 +6,7 @@ export const postUser = (data) =>async (dispatch, getState)=>{
 
     const response = await axios.post('http://localhost:3001/users/', data);
     console.log('buscado el id de usuariooooooooooooooooo')
-    console.log(response.data.user)
+    console.log(response.data)
   
     dispatch({
         type:POST_USER,

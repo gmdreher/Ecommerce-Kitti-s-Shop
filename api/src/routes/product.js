@@ -1,6 +1,7 @@
 const server = require('express').Router();
 const { Product, Category, Image } = require('../db.js');
 const { Op } = require("sequelize");
+const protected = require('../middleware/protected')
 
 
 //task 23
@@ -226,7 +227,7 @@ server.get("/:id", (req, res) => {
 });
 
 //task 25
-server.post('/', function (req, res,) {
+server.post('/', protected.isAuthAdmin, function (req, res) {
   let { name, description, price, stock, image } = req.body;
 
   if (!image) {

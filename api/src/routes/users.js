@@ -1,15 +1,20 @@
 const server = require('express').Router();
 const { Order, User, OrderDetails } = require('../db.js');
-const passport = require('passport')
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth');
 
 //Ruta de crear usuario
 //Pau
 server.post('/', passport.authenticate('signup'),async(req,res)=>{
-      
-        res.json({
-          message:'SignUp success',
-          user: req.user
-        })   
+  const token = jwt.sign({id:req.user.id},authConfig.secret)
+  res.json({token})  
+  /* if(req.user){
+    res.json(req.user) 
+  }else{
+    res.status(400).json(req.message)
+  } */
+          
 })
 
 //PUT users/:id S35 : Ruta para modificar Usuario
