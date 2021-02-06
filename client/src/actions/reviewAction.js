@@ -69,13 +69,13 @@ export const editReview = (productId, reviewId, data) => async (dispatch) => {
     try {
         const editar = await axios.put(`http://localhost:3001/products/${productId}/review/${reviewId}`,data);
 
-        console.log('esto es product de put review', editar)
+        // console.log('esto es product de put review', editar)
 
-        // dispatch({
-        //     type: EDIT_REVIEW,
-        //     payload: editar
-        // });
-
+        dispatch({
+            type: EDIT_REVIEW,
+            payload: editar
+        });
+// esto comentado, anda 
     } catch (error) {
         console.log("Error: " + error)
     }
@@ -86,7 +86,7 @@ export const deleteReview = (productId, reviewId) => async (dispatch) => {
     try {
         const eliminar = await axios.delete(`http://localhost:3001/products/${productId}/review/${reviewId}`);
 
-        console.log('este es delete', eliminar)
+        // console.log('este es delete', eliminar)
 
         dispatch({
             type: DELETE_REVIEW,

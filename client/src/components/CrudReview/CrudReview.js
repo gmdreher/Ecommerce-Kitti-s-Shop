@@ -21,6 +21,7 @@ export default function CrudReview(props) {
   const [idProductAdding, setIdProductAdding] = useState()
   const [infoEdit,setInfoEdit] = useState()
   const [deleteRev,setDeleteRev] = useState()
+
   const [productWithReview, setProductWithReview]= useState([])
   const [productWithoutReview, setProductWithoutReview]= useState([])
   
@@ -42,8 +43,6 @@ export default function CrudReview(props) {
     dispatch(getProductStateComplete(props.id))
     dispatch(getAllReviewsUser(props.id))
   }, [])
-
-
   
   //para setear los input
   const handleInputChange = (e)=> {
@@ -51,16 +50,17 @@ export default function CrudReview(props) {
       ...input,
       [e.target.name]: e.target.value
     });
+    // console.log("entra al handleinput")
   }
 
   // añadir un review
   const handleOpenModal = (productId)=>{
-    console.log(productId)
+    // console.log(productId)
     setIdProductAdding(productId)
     toggleAdd()
   }
   const handleAddReview= async (productId)=>{
-    console.log(productId,input)
+    // console.log(productId,input)
     await dispatch(addReview(productId,input))
     await dispatch(getProductStateComplete(props.id))
     await dispatch(getAllReviewsUser(props.id))
@@ -69,16 +69,16 @@ export default function CrudReview(props) {
 
   //editar un review
   const handleEditReview= (productId ,reviewId,data)=>{
-    console.log("data del handleedit", data)
+//  console.log("entra al handke")
     setInfoEdit({productId, reviewId})
     setInput({...input,...data})
     toggleEdit() 
   }
   const handleSendEditReview = ()=>{
     dispatch(editReview(infoEdit.productId,infoEdit.reviewId,input))
-    toggleEdit()
     dispatch(getProductStateComplete(props.id))
     dispatch(getAllReviewsUser(props.id))
+    toggleEdit()
   }
 
   //eliminar un review
@@ -114,8 +114,8 @@ useEffect(()=>{
     }
     if(bandera===0 ) sinRev.push(productsComplete[i])
   }
-console.log("con", conRev);
-console.log("sin", sinRev);
+// console.log("con", conRev);
+// console.log("sin", sinRev);
 
 setProductWithReview(conRev);
 setProductWithoutReview(sinRev)
@@ -174,7 +174,7 @@ setProductWithoutReview(sinRev)
         </thead>
         <tbody>
           {productWithReview.length>0 && productWithReview.map((review, index)=>(
-               console.log("esto es review del map", review),
+              //  console.log("esto es review del map", review),
               <tr key={index}>
                 <td>{review.name}</td>
                 <td>{review.reviews.description}</td>
@@ -248,7 +248,7 @@ setProductWithoutReview(sinRev)
               <Label for="rate"> Puntuacion </Label>
               {/* <Input type="textarea" className="form-group" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange} /> */}
               <select class="form-select" aria-label="Default select example"  name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
-                    
+              <option selected>Puntuá</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

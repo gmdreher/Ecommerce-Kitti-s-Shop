@@ -3,7 +3,7 @@ import styles from './review.module.scss';
 import Moment from 'moment';
 
 export default function Rewiew({data}) {
-    console.log(data)
+    // console.log(data)
 
 function formatDate(date) {
     let formatDate = new Moment(date);

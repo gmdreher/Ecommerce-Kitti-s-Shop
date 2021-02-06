@@ -21,7 +21,24 @@ function Product(props) {
     if (props.product.images) {
         imageUrl = props.product.images[0].url;
     }
-    
+
+    function Promedio(){
+        if(props.product.Reviews){
+
+        let suma= 0
+        let promedio=0;
+        for(var i=0; i< props.product.Reviews.length; i++){
+            suma= (suma + parseInt(props.product.Reviews[i].rate))
+            promedio= suma / props.product.Reviews.length
+        }
+        let promedioGral=Math.round(promedio)
+
+        // console.log("esto es la suma de las rate", promedioGral)
+
+           return promedioGral
+        }
+    }
+
 
     const user = props.userData[props.userData.length-1];
 
@@ -46,11 +63,8 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
+                        <h3>Promedio: {Promedio()}</h3>
 
-                        <i class="fa fa-star fa-lg" />
-                        <i class="fa fa-star fa-lg" />
-                        <i class="fa fa-star fa-lg" />
-                        <i class="fa fa-star fa-lg" />
                     </div>
                     <p><strong>Precio: </strong> ${props.product.price}</p>
                     <form>
