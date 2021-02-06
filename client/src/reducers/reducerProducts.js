@@ -14,13 +14,20 @@ import {
     GET_PRODUCT_CART,
     DELETE_TOTAL_CART,
     DELETE_ITEMS_CART,
+    UPDATE_COUNT_PRODUCT,
+    GET_PRODUCTS_STATE_COMPLETE,
+    GET_ALL_REVIEWS_USER,
+    ADD_REVIEW,
+    EDIT_REVIEW,
+    DELETE_REVIEW,
+    GET_ALL_REVIEW_PRODUCT,
     POST_USER,
     GET_USER,
     UPDATE_USER,
     UPDATE_PROMOTE,
-    UPDATE_COUNT_PRODUCT,
-    GET_USER_BY_ID,
     POST_RESERT_PASSWORD,
+    
+    GET_USER_BY_ID,
     UPDATE_PASSWORD
 } from '../constants/productConstants.js';
 
@@ -33,6 +40,11 @@ const initialState = {
     user: [],
     cart: [],
     order: [],
+    productsComplete: [],
+    reviews: [],
+    review: [],
+    // reviewProduct:[],
+
 
 };
 
@@ -110,7 +122,6 @@ export default (state = initialState, action) => {
                 ...state,
                 user: state.user.map(x => x.id === action.payload.id ? x = action.payload : x)
             }
-
         case UPDATE_PROMOTE:
             return {
                 ...state,
@@ -149,16 +160,59 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: action.payload
             };
-        case GET_USER_BY_ID:
-            return {
-                ...state,
-                user: action.payload
-            }
+            case GET_USER_BY_ID:
+                return {
+                    ...state,
+                    user: action.payload
+                }
             case UPDATE_PASSWORD:
             return { 
                 ...state,
                 user: [...state.user, action.payload]
             };
+
+
+
+            case GET_PRODUCTS_STATE_COMPLETE:
+                var estadito= {
+                    ...state,
+                    productsComplete: action.payload
+                }
+                // console.log('esto es un estadito:', estadito)
+                return estadito;
+
+            case GET_ALL_REVIEWS_USER:
+                    //  console.log("reducer payload", action.payload);
+                return{
+                    ...state,
+                    reviews: action.payload
+                };
+            case ADD_REVIEW:
+                return{
+                    ...state,
+                    reviews:  [...state.reviews, action.payload]
+                }
+
+            case EDIT_REVIEW:
+                console.log("esto es un reducer ", action.payload);
+                return{
+                    ...state,
+                    review: action.payload
+                }
+
+            case DELETE_REVIEW:
+                return{
+                    ...state,
+                    reviews:  state.reviews.filter(review => review.id !== action.payload)
+                }
+
+            // case GET_ALL_REVIEW_PRODUCT:
+            //     return{
+            //         ...state,
+            //         reviewsProduct:  [...state.reviewsProduct, action.payload]
+            //     }
+
+     
             
         default:
             return state;
