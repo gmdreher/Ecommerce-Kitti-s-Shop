@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
     POST_USER, ADD_TO_CART, LOGIN_USER,
     LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
-    POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE
+     GET_USER, UPDATE_USER, UPDATE_PROMOTE, POST_RESERT_PASSWORD
 } from '../constants/productConstants.js';
 
 
