@@ -20,6 +20,7 @@ import {
     UPDATE_PROMOTE,
     UPDATE_COUNT_PRODUCT,
     GET_USER_BY_ID,
+    POST_RESERT_PASSWORD,
     UPDATE_PASSWORD
 } from '../constants/productConstants.js';
 
@@ -104,6 +105,24 @@ export default (state = initialState, action) => {
                 ...state,
                 user: action.payload
             }
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: state.user.map(x => x.id === action.payload.id ? x = action.payload : x)
+            }
+
+        case UPDATE_PROMOTE:
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case POST_RESERT_PASSWORD:
+            return {
+                ...state,
+                user: action.payload
+            }
+
         case ADD_TO_CART:
             return {
                 ...state,

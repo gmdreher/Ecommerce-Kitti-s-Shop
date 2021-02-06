@@ -6,18 +6,22 @@ var nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
 
+const { User } = require('../db.js');
+var nodemailer = require('nodemailer');
 
-server.post('/login', passport.authenticate('login',{session:true}), (req, res) => {
- try{
-	 const token = jwt.sign({id:req.user.id, fullname:req.user.fullname}, authConfig.secret)
-	 res.json(token)
-   // res.cookie(userId, user.id)
-   // res.redirect('/');
- }catch(err){
-  res.status(400).send(err);
- }
- 
- 
+
+
+server.post('/login', passport.authenticate('login', { session: true }), (req, res) => {
+    try {
+        const token = jwt.sign({ id: req.user.id, fullname: req.user.fullname }, authConfig.secret)
+        res.json(token)
+        // res.cookie(userId, user.id)
+        // res.redirect('/');
+    } catch (err) {
+        res.status(400).send(err);
+    }
+
+
 });
 
 server.post('/logout', (req, res) => {
@@ -28,16 +32,16 @@ server.post('/logout', (req, res) => {
 });
 
 server.get('/me', (req, res) => {
-    if (req.isAuthenticated()){
-    console.log(req.user)
-    return res.send(req.user);
-   
-  }
-	
+    if (req.isAuthenticated()) {
+        console.log(req.user)
+        return res.send(req.user);
+
+    }
+
     else return res.status(401).send('Debes Iniciar Sesion');
 });
 
-  // PUT /auth/promote/:id de usuario
+// PUT /auth/promote/:id de usuario
 // Promote convierte al usuario con ID: id a Admin.
 server.put('/promote/:id', (req, res) => {
     const { id } = req.params;
@@ -114,4 +118,28 @@ server.put('/:id/banned', function (req, res) {
       })
   });
 
-  module.exports = server;
+ server.put('/demote/:id', (req, res) => {
+    const { id } = req.params;
+    User.findByPk(id)
+        .then(user => {
+            if (user.rol === "user") {
+                res.json("Este usuario ya es usuario")
+            } else {
+                user.update({
+                    rol: "user"
+                })
+                    .then(() => {
+                        res.status(200)
+                            .json("Usuario ha sido cambiado a usuario")
+                    })
+                    .catch(err => {
+                        res.status(400)
+                            .send(`Error al cambiar a usuario ${err}`)
+                    })
+            }
+        })
+})
+
+
+
+module.exports = server;

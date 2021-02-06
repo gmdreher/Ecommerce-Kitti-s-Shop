@@ -42,7 +42,10 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email", "banned", "reset"]
+    atributtes: ["id", "fullname", "email", "banned", "reset"],
+    order: [
+      ['id', 'ASC'],
+    ],
   })
     .then(users => {
       res.json(users);
@@ -200,28 +203,6 @@ server.put('/promote/:id', (req, res)=>{
     })   
 })
 
-//de admin a user
-server.put('/demote/:id', (req, res)=>{
-  const {id} = req.params;
-  User.findByPk(id)
-  .then(user => {
-    if(user.rol === "user"){
-      res.json("Este usuario ya es usuario")
-    }else{
-      user.update({
-        rol: "user"
-      })
-      .then(() => {
-        res.status(200)
-        .json("Usuario ha sido cambiado a usuario")
-      })
-      .catch(err => {
-        res.status(400)
-        .send( `Error al cambiar a usuario ${err}`)
-      })
-    } 
-    })   
-})
 
 //S70 : Crear Ruta para password reset
 //PUT /users/:id/passwordReset
