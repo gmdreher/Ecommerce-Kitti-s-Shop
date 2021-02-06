@@ -29,6 +29,9 @@ import {
     
 
 
+    UPDATE_COUNT_PRODUCT,
+    GET_USER_BY_ID,
+    UPDATE_PASSWORD
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -132,7 +135,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload
-            }   
+            }
+
         case ADD_TO_CART:
             return {
                 ...state,
@@ -159,9 +163,19 @@ export default (state = initialState, action) => {
                 ...state,
                 cart: action.payload
             };
+            case GET_USER_BY_ID:
+                return {
+                    ...state,
+                    user: action.payload
+                }
+            case UPDATE_PASSWORD:
+            return { 
+                ...state,
+                user: [...state.user, action.payload]
+            };
+
+
             
-
-
             case GET_PRODUCTS_STATE_COMPLETE:
                 var estadito= {
                     ...state,
@@ -201,6 +215,8 @@ export default (state = initialState, action) => {
             //         reviewsProduct:  [...state.reviewsProduct, action.payload]
             //     }
 
+     
+            
         default:
             return state;
 

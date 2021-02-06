@@ -1,6 +1,8 @@
 const server = require('express').Router();
 const { Order, User, OrderDetails, Review, Product } = require('../db.js');
 const passport = require('passport')
+var nodemailer = require('nodemailer');
+const { Op } = require("sequelize");
 
 //Ruta de crear usuario
 //Pau
@@ -40,7 +42,10 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email", "banned"]
+    atributtes: ["id", "fullname", "email", "banned", "reset"],
+    order: [
+      ['id', 'ASC'],
+    ],
   })
     .then(users => {
       res.json(users);
@@ -185,7 +190,6 @@ server.get('/:id/orders', (req, res) => {
 });
 
 // ruta que revuelve todas las review de un usuario
-
 server.get("/:id/review", (req, res) => {
   const userId = req.params.id;
   Review.findAll({ 
@@ -203,6 +207,121 @@ server.get("/:id/review", (req, res) => {
       res.status(400).send('este es el error' + err)
     })
 });
+
+// PUT /auth/promote/:id de usuario
+// Promote convierte al usuario con ID: id a Admin.
+server.put('/promote/:id', (req, res)=>{
+  const {id} = req.params;
+  User.findByPk(id)
+  .then(user => {
+    if(user.rol === "admin"){
+      res.json("Este usuario ya es administrador")
+    }else{
+      user.update({
+        rol: "admin"
+      })
+      .then(() => {
+        res.status(200)
+        .json("Usuario ha sido promovido a administrador")
+      })
+      .catch(err => {
+        res.status(400)
+        .send( `Error al cambiar a admin ${err}`)
+      })
+    } 
+    })   
+})
+
+
+//S70 : Crear Ruta para password reset
+//PUT /users/:id/passwordReset
+server.put('/passwordReset/:id', function (req, res) {
+  const {newPassword } = req.body;
+
+    if(!newPassword){
+    return res.status(400)
+    .json("Debe ingresar su nueva contraseña")
+    }
+
+  User.findByPk(req.params.id)
+    .then(user => {
+        user.update(
+          {
+            password: newPassword
+          })
+      .then(() => {
+        res.status(200).json("Contraseña cambiada")
+      })
+      .catch(error => {
+        res.status(400).send(`Error ${error}`);
+      })
+       }
+   ) 
+});
+
+//get todas las ordenes, con productos de un usuario
+server.get('/:id/orders/complete', (req, res)=>{
+  const {id} = req.params;
+  User.findByPk(id)
+  .then((user)=>{
+    Order.findAll({
+      where: { 
+        state: "completa",
+      userId: user.id },
+      include: [
+        {
+          model: Product,
+          as: "products",
+          attributes: ["name", "description", "stock", "price"],
+          include:[
+            {
+              model: Review,
+              where:{
+                userId: user.id
+              }
+            }
+          ]
+        },
+      ],
+    }).then((r) => res.status(200).json(r));
+  });
+})
+
+//user olvida la contraseña
+server.post('/forgot', (req, res) =>{
+	let email = req.body.email
+	User.findOne(
+		{
+			where: {
+				email: email,
+			}
+		}
+	).then(user =>{
+		var transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+			  user: process.env.AUTH_MAIL,
+			  pass: process.env.AUTH_PASS
+			}
+		  })
+		  transporter.sendMail({
+			  from: process.env.AUTH_MAIL,
+			  to: email,
+			  subject: 'Cambiar tu contraseña',
+			  text: `Parece que has olvidado tu contraseña! Porfavor has click en el siguiente link: http://localhost:3000/user/resetPass/${user.id} `
+		  },(error, info)=>{
+			  if(error){(res.status(500).send("no se pudo enviar" + error)) }
+			  else {
+				res.status(200).send("Mail enviado" + info)
+			  }
+		  })
+	}).catch(err => {
+		res.status(400)
+		.json("Este usuario no se encuentra registrado" + err)
+	})
+});
+
+
 
 
 //ruta para obtener usuarios con carritos comprados
