@@ -40,7 +40,7 @@ export default function ProductCard({ data }) {
             </ul>
             <div class="card-body">
               
-                    <button disabled={data.stock<1 || prodCart.find(x=>x.id==data.id)}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"></i></button>
+                    <button disabled={data.stock<1}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"></i></button>
                     <label id="stock"></label>
                      {data.stock<1?<label >Producto Agotado</label>:<label></label>}
     
