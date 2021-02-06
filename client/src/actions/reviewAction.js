@@ -52,11 +52,11 @@ export const addReview = (productId,body) => async (dispatch) => {
     try {
         const product = await axios.post(`http://localhost:3001/products/${productId}/review`,body);
 
-        console.log('esto es product de add review',product )
+        console.log('esto es product de add review',product.data )
 
         dispatch({
             type: ADD_REVIEW,
-            payload: product
+            payload: product.data
         });
 
     } catch (error) {
