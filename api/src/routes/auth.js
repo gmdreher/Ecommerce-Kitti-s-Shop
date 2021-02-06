@@ -51,6 +51,27 @@ server.put('/promote/:id', (req, res) => {
         })
 })
 
+server.put('/demote/:id', (req, res) => {
+    const { id } = req.params;
+    User.findByPk(id)
+        .then(user => {
+            if (user.rol === "user") {
+                res.json("Este usuario ya es usuario")
+            } else {
+                user.update({
+                    rol: "user"
+                })
+                    .then(() => {
+                        res.status(200)
+                            .json("Usuario ha sido cambiado a usuario")
+                    })
+                    .catch(err => {
+                        res.status(400)
+                            .send(`Error al cambiar a usuario ${err}`)
+                    })
+            }
+        })
+})
 
 
 server.post('/:id/forceReset/', (req, res) => {
@@ -78,6 +99,32 @@ server.post('/:id/forceReset/', (req, res) => {
         }).catch(err => {
             res.status(400)
                 .json("Este usuario no se encuentra registrado" + err)
+        })
+});
+
+
+server.put('/:id/banned', function (req, res) {
+    const { id } = req.params;
+    User.findByPk(id)
+        .then((user => {
+            if (user.banned === false) {
+                user.update(
+                    {
+                        banned: true,
+                    })
+            } else {
+                user.update(
+                    {
+                        banned: false,
+                    })
+            }
+        })
+        )
+        .then(() => {
+            res.status(200).json("Estado de usuario ha sido modificado")
+        })
+        .catch(error => {
+            res.status(400).send(`Error ${error}`);
         })
 });
 

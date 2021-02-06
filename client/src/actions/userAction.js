@@ -15,30 +15,55 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
-export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) => async (dispatch, getState) => {
 
+export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
-
         const users = getState().product.user.slice();
-        var body = { id, banned, fullname, email, password, rol }
 
         try {
-            const res = await axios.put(`http://localhost:3001/users/${id}`, body);
+            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
+
             users && users.forEach((x) => {
                 if (x.id == id && x.banned == false) {
                     x.banned = true;
                 }
             });
-            console.log(users);
+
             dispatch({
                 type: UPDATE_USER,
-                payload: users
+                payload: res.data
             });
+
         } catch (error) {
             console.log("Error: " + error)
         }
     }
 }
+
+export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
+    if (id) {
+        const users = getState().product.user.slice();
+
+        try {
+            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
+
+            users && users.forEach((x) => {
+                if (x.id == id && x.banned == true) {
+                    x.banned = false;
+                }
+            });
+
+            dispatch({
+                type: UPDATE_USER,
+                payload: res.data
+            });
+
+        } catch (error) {
+            console.log("Error: " + error)
+        }
+    }
+}
+
 
 export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
@@ -51,7 +76,6 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
                     x.rol = "admin";
                 }
             });
-            console.log("SE VA------", users);
 
             dispatch({
                 type: UPDATE_PROMOTE,
@@ -63,21 +87,37 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
     }
 }
 
-export const postResertPassword = ({ id, password }) => async (dispatch, getState) => {
+export const updateToUsers = ({ id, rol }) => async (dispatch, getState) => {
+
+    if (id) {
+        const users = getState().product.user.slice();
+        try {
+            const res = await axios.put(`http://localhost:3001/auth/demote/${id}`);
+            users && users.forEach((x) => {
+                if (x.id == id && x.rol == "admin") {
+                    x.rol = "user";
+                }
+            });
+
+            dispatch({
+                type: UPDATE_PROMOTE,
+                payload: users
+            });
+        } catch (error) {
+            console.log("Error: " + error)
+        }
+    }
+}
+
+
+export const postResertPassword = ({ id }) => async (dispatch, getState) => {
 
     const users = getState().product.user.slice();
-    console.log('LO QUE RECIBE LA ACCION', id, password);
+    console.log('LO QUE RECIBE LA ACCION', id);
     try {
 
         const res = await axios.post(`http://localhost:3001/auth/${id}/forceReset/`);
 
-        users && users.forEach((x) => {
-            if (x.id == id && x.password !== null) {
-                x.password = null;
-            }
-        });
-
-        console.log("SE VA------", users);
         dispatch({
             type: POST_RESERT_PASSWORD,
             payload: users
@@ -91,7 +131,6 @@ export const postResertPassword = ({ id, password }) => async (dispatch, getStat
 export const postUser = (data) => async (dispatch, getState) => {
 
     const response = await axios.post('http://localhost:3001/users/', data);
-    console.log('buscado el id de usuariooooooooooooooooo')
     console.log(response.data)
 
     dispatch({

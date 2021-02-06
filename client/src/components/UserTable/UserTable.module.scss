@@ -22,7 +22,7 @@ h2{
                 .admin {
                     background-color: rgb(255, 255, 255);
                     color: black;
-                    border-color: rgb(206, 206, 206);
+                    border-color: rgb(230, 138, 102);
                     padding: 8px;
                     padding-right: 20px;
                     padding-left: 20px;
@@ -30,8 +30,23 @@ h2{
                 }
                 
                 .admin:hover {
-                  background-color: rgb(206, 206, 206);
+                  background-color: rgb(255, 215, 202);
                 }
+
+
+                .Noadmin {
+                  background-color: rgb(120, 218, 164);
+                  color: black;
+                  border-color: rgb(4, 214, 99);
+                  padding: 8px;
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  border-radius: 10px;
+              }
+              
+              .Noadmin:hover {
+                background-color: rgb(81, 190, 130);
+              }
 
                 .bloqueo {
                     background-color: rgb(255, 255, 255);
@@ -44,9 +59,24 @@ h2{
                 }
                 
                 .bloqueo:hover {
-                  background-color:  rgb(230, 138, 102);
+                  background-color: rgb(255, 215, 202);
                 }
                 
+
+                .bloqueado {
+                  background-color: rgb(222, 112, 87);
+                  color: black;
+                  border-color: rgb(218, 49, 11);
+                  padding: 8px;
+                  padding-right: 20px;
+                  padding-left: 20px;
+                  border-radius: 10px;
+              }
+              
+              .bloqueado:hover {
+                background-color:  rgb(199, 85, 59);
+              }
+              
 
                 .resert {
                     background-color: rgb(255, 255, 255);

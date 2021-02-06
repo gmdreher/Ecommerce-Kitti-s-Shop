@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './UserTable.module.scss';
-import { getUsers, updateToAdmin, bloquearUsers, postResertPassword } from '../../actions/userAction.js';
+import { getUsers, updateToAdmin, bloquearUsers, desbloquearUsers, postResertPassword, updateToUsers } from '../../actions/userAction.js';
 
 
 
@@ -10,9 +10,8 @@ export default function UserTable() {
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-    // const user = usersData[usersData.length - 1];
 
-    console.log("Data de GETUSERS USERTABLE ", usersData);
+    console.log("LOS PERFILES ", usersData);
 
     useEffect(function () {
         dispatch(getUsers());
@@ -24,21 +23,43 @@ export default function UserTable() {
         if (info.id !== undefined) {
             var usuario = info.id;
             var llave = info.banned;
-            var name = info.fullname;
-            var mail = info.email;
-            var password = info.password;
-            var rol = info.rol;
 
             console.log("-------handlerBloquear DATA Seleccionado-------");
             console.log(llave, usuario);
 
-            if (window.confirm(`¿ Desea bloquear al usuario id: ${usuario} ?`)) {
-                dispatch(bloquearUsers({ id: usuario, banned: llave, fullname: name, email: mail, password: password, rol: rol }))
-            } else {
-                window.alert('No se ha bloqueado al usuario')
+            if (llave === false) {
+
+                if (window.confirm(`¿ Desea bloquear al usuario id: ${usuario} ?`)) {
+                    dispatch(bloquearUsers({ id: usuario }))
+                } else {
+                    window.alert('No se ha bloqueado al usuario')
+                }
             }
+
         }
     }
+
+    function handlerDesbloquear(info) {
+        console.log("HANDLERBLOQUEAR", info);
+        if (info.id !== undefined) {
+            var usuario = info.id;
+            var llave = info.banned;
+
+            console.log("-------handlerBloquear DATA Seleccionado-------");
+            console.log(llave, usuario);
+
+            if (llave === true) {
+
+                if (window.confirm(`¿ Desea desbloquear al usuario id: ${usuario} ?`)) {
+                    dispatch(desbloquearUsers({ id: usuario }))
+                } else {
+                    window.alert('No se ha desbloqueado al usuario')
+                }
+            }
+
+        }
+    }
+
 
     function handlerAdmin(info) {
         console.log("HANDLERADMIN", info);
@@ -50,9 +71,26 @@ export default function UserTable() {
             console.log(usuario, rol);
 
             if (window.confirm(`¿ Desea hacer administrador al usuario id: ${usuario} ?`)) {
-                dispatch(updateToAdmin({ id: usuario, rol: rol }))
+                dispatch(updateToAdmin({ id: usuario, rol: rol }));
             } else {
                 window.alert('No se ha asignado como administrador')
+            }
+        }
+    }
+
+    function handlerUsers(info) {
+        console.log("HANDLERADMIN", info);
+        if (info.id !== undefined) {
+            var usuario = info.id;
+            var rol = info.rol;
+
+            console.log("-------handlerAdmin DATA Seleccionado-------");
+            console.log(usuario, rol);
+
+            if (window.confirm(`¿ Desea hacer usuario al administrador id: ${usuario} ?`)) {
+                dispatch(updateToUsers({ id: usuario, rol: rol }))
+            } else {
+                window.alert('No se ha asignado como usuario')
             }
         }
     }
@@ -62,13 +100,12 @@ export default function UserTable() {
         console.log("HANDLERESERT", info);
         if (info.id !== undefined) {
             var usuario = info.id;
-            var password = info.password;
 
             console.log("-------handlerResert DATA Seleccionado-------");
-            console.log(usuario, password);
+            console.log(usuario);
 
             if (window.confirm(`¿ Desea resetear la contraseña del usuario id: ${usuario} ?`)) {
-                dispatch(postResertPassword({ id: usuario, password: password }))
+                dispatch(postResertPassword({ id: usuario }))
             } else {
                 window.alert('No se ha reseteado la contraseña')
             }
@@ -86,7 +123,7 @@ export default function UserTable() {
                             <th scope="col">Id de Usuario</th>
                             <th scope="col">Nombre Completo</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Administrador</th>
+                            <th scope="col">Perfil</th>
                             <th scope="col">Bloquear</th>
                             <th scope="col">Contraseña</th>
                         </tr>
@@ -99,11 +136,16 @@ export default function UserTable() {
                                         <td>{info.id}</td>
                                         <td>{info.fullname}</td>
                                         <td>{info.email}</td>
-                                        <td>
-                                            <button type="button" className={styles.admin} onClick={() => handlerAdmin(info)}>Admin.</button>
+                                        <td>{info.rol !== "admin" ? <button type="button" className={styles.admin} onClick={() => handlerAdmin(info)}>Usuario</button> :
+                                            <button type="button" className={styles.Noadmin} onClick={() => handlerUsers(info)}>Administrador</button>
+                                        }
                                         </td>
                                         <td>
-                                            <button type="button" className={styles.bloqueo} onClick={() => handlerBloquear(info)}>Bloquear</button>
+                                            {
+                                                info.banned !== true ? <button type="button" className={styles.bloqueo} onClick={() => handlerBloquear(info)}>Bloquear</button> :
+                                                    <button type="button" className={styles.bloqueado} onClick={() => handlerDesbloquear(info)} >Bloqueado</button>
+                                            }
+
                                         </td>
                                         <td>
                                             <button type="button" className={styles.resert} onClick={() => handlerResert(info)}>Resetear</button>

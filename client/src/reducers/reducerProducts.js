@@ -104,10 +104,19 @@ export default (state = initialState, action) => {
                 ...state,
                 user: action.payload
             }
-        case POST_RESERT_PASSWORD:
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: state.user.map(x => x.id === action.payload.id ? x = action.payload : x)
+            }
 
-            console.log("RESERT PASSWORD");
-            console.log(state.user);
+        case UPDATE_PROMOTE:
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case POST_RESERT_PASSWORD:
             return {
                 ...state,
                 user: action.payload
