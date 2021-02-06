@@ -14,7 +14,6 @@ server.post('/login', passport.authenticate('login', { session: true }), (req, r
         const token = jwt.sign({ id: req.user.id, fullname: req.user.fullname }, authConfig.secret)
         res.json(token)
     } catch (err) {
-      console.log(err)
         res.status(400).send(err);
     }
 

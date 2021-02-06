@@ -38,7 +38,11 @@ export default function Login(props) {
       ...user,
       [event.target.name]: event.target.value
     });
-    dispatch(loginUser(user.email, user.password))
+    
+    if (!errors) {
+  
+      dispatch(loginUser(user.email, user.password))
+    }
     setUser({email: "", password: ""});
   }
   
@@ -102,7 +106,7 @@ export default function Login(props) {
             <div className="form-text" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</div>
           </Link>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-            <button type="submit" className={"btn " + styles.btnText} disabled={errors.email || errors.password}>Iniciar sesión</button>
+            <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
           </div>
         </form>
         <Link to="/user/signup">
