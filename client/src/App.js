@@ -31,7 +31,7 @@ function App() {
           <header>
               <Navbar />
               <NavCategories />
-              <Routeexact path="/products/category/:categoryName" render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}/>
+              <Route exact path="/products/category/:categoryName" render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}/>
           </header>
           <main>
             <div className="transparencia">

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
 import Search from '../search/Search.js'
 import logo from '../../img/logo.png'
 import style from './navBar.module.scss'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import Badge from '@material-ui/core/Badge';
 import MyAccount from "../User/MyAccount";
+import {getUserOrder, updateStateOrder} from "../../actions/orderActions";
 
-export default function NavBar(props) {
+function NavBar(props) {
 
 
     return (
@@ -31,7 +32,7 @@ export default function NavBar(props) {
             </Link>
           </div>
           {
-                !localStorage.getItem('data')
+            !props.userInfo
               ? <div className="dropdown">
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                         aria-expanded="false"><i className="fas fa-user"/></button>
@@ -45,7 +46,7 @@ export default function NavBar(props) {
               </div>
               :
               <MyAccount/>
-              }
+          }
             <div className="dropdown">
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -63,7 +64,15 @@ export default function NavBar(props) {
                         </Link>
                     </ul>
                 </div>
-            }
         </header>
     )
 }
+
+function mapStateToProps(state) {
+  return {
+    userInfo: state.auth.userInfo,
+    
+  }
+}
+
+export default connect(mapStateToProps, null)(NavBar);

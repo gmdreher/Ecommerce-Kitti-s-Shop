@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
 import { useDispatch} from 'react-redux';
-import { loginUser, logoutUser } from "../../actions/userAction";
-import { useHistory, browserHistory } from "react-router-dom";
+import { loginUser } from "../../actions/userAction";
+import { useHistory } from "react-router-dom";
 
 
 const validate = (input) => {
@@ -34,6 +34,10 @@ export default function Login(props) {
   
   const handleSubmit = (event) => {
     event.preventDefault();
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    });
     dispatch(loginUser(input.email, input.password))
     setInput({email: "", password: ""});
     history.push("/");
