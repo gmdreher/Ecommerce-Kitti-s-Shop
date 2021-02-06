@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-import {POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
-import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE } from '../constants/productConstants.js';
+import {POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
 
 
 export const getUsers = () => async (dispatch) => {

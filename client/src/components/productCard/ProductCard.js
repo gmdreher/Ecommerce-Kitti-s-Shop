@@ -26,7 +26,7 @@ export default function ProductCard({ data }) {
         <div className={styles.card}  >
             <div>
                 {data.images ? (
-                    <img src={data.images[0].url} class="card-img-top" />)
+                    <img src={data.images[0].url} class="card-img-top"  alt="No se encontró la imagen"/>)
                     :
                     (<img src={noImage} />)
                 }

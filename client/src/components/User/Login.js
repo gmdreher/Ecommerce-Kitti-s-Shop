@@ -1,10 +1,9 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
 import { useDispatch} from 'react-redux';
 import { loginUser, logoutUser } from "../../actions/userAction";
-import jwt_decode from "jwt-decode"
-import axios from "axios";
+import { useHistory, browserHistory } from "react-router-dom";
 
 
 
@@ -12,17 +11,16 @@ import axios from "axios";
 const validate = (input) => {
   let errors = {};
   if (!input.email) {
-    errors.email = "Requiere un correo";
+    errors.email = "*Requiere un correo";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.email = "Ingresar un correo valido";
   }
   
   if(!input.password){
-    errors.password = '**Requiere una Contraseña';
+    errors.password = '*Requiere una Contraseña';
   } else if (!/(?=.*[0-9])/.test(input.password)){
-    errors.password = '**La contraseña debe llevar letras y números';
+    errors.password = '*La contraseña debe llevar letras y números';
   }
-  
   return errors;
 };
 
@@ -30,42 +28,40 @@ export default function Login (props) {
    
    const [ input, setInput ] = React.useState({email: "", password: ""});
    const [ errors, setErrors ] = React.useState({});
-   // const [isLoading, setIsLoading] = React.useState(false);
-   
   
-  const dispatch = useDispatch();
+  
+   const history = useHistory();
+   const dispatch = useDispatch();
+   
    
    const handleSubmit =(event) => {
      event.preventDefault();
-  
      setInput({
        ...input,
        [event.target.name]: event.target.value
      });
-  
     dispatch(loginUser(input.email, input.password))
+    setInput({email: "", password: "" });
+    // history.push("/");
    }
-  
-  const handleInputChange = function(event) {
-    
-    setErrors(validate({
-      ...input,
-      [event.target.name]: event.target.value
-    }))
-    
-    setInput({
-      ...input,
-      [event.target.name]: event.target.value
-    });
-  }
-  
  
-  
+    const handleInputChange = function(event) {
+      setErrors(validate({
+        ...input,
+        [event.target.name]: event.target.value
+      }))
+      
+      setInput({
+        ...input,
+        [event.target.name]: event.target.value
+      });
+    }
+    
 
     return (
       <div className={'container ' + styles.globalContainer}>
           <div className={styles.formContainer}>
-            <h1 className={styles.title}>Iniciar sesión</h1>
+            <h2 className={styles.title}>Iniciar sesión</h2>
             <form className={styles.form} onSubmit={handleSubmit} >
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Correo electrónico*</label>
@@ -79,10 +75,12 @@ export default function Login (props) {
                   onChange={handleInputChange}
                 />
                 {errors.email && (<p className="invalid-feedback">{errors.email}</p>)}
-                {/*<div id="emailHelp" className="form-text">algún mensaje.</div>*/}
               </div>
               <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">Contraseña*</label>
+                <label
+                  htmlFor="exampleInputPassword1"
+                  className="form-label">*Contraseña
+                </label>
                 <input
                   type="password"
                   name="password"
@@ -97,27 +95,16 @@ export default function Login (props) {
               <Link>
                 <div className="form-text" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</div>
               </Link>
-              <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-                <button type="submit" className={"btn btn-secondary " + styles.btnText} >Iniciar sesión</button>
+              <div className={"d-grid gap-2 " + styles.btnIniciarSesión}>
+                <button type="submit" className={"btn " + styles.btnText} >Iniciar sesión</button>
               </div>
             </form>
             <Link to="/user/signup">
-              <div className={"form-text " + styles.linkRegistrate} title="Regístrate">¿No tienes una cuenta? Regístrate</div>
+              <div className={"form-text " + styles.linkRegistrarte} title="Regístrate">¿No tienes una cuenta? Regístrate</div>
             </Link>
           </div>
       </div>
     )
 }
-// Login.propTypes = {
-//   login: React.PropTypes.func.isRequired
-// }
-// Login.contextTypes = {
-//   router: React.PropTypes.object.isRequired
-// }
-// function mapStateToProps(state) {
-//   console.log(state.orderStore.user)
-//   return {
-//     user: state.orderStore.user,
-//   }
-// }
+
 
