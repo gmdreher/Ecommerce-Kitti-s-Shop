@@ -6,8 +6,6 @@ var nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
 
-const { User } = require('../db.js');
-var nodemailer = require('nodemailer');
 
 
 
