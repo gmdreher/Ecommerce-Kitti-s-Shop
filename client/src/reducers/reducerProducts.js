@@ -26,9 +26,10 @@ import {
     UPDATE_USER,
     UPDATE_PROMOTE,
     POST_RESERT_PASSWORD,
-    
+    UPDATE_PASSWORD,
+    FORGOT_PASSWORD,
     GET_USER_BY_ID,
-    UPDATE_PASSWORD
+  
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -169,6 +170,11 @@ export default (state = initialState, action) => {
             return { 
                 ...state,
                 user: [...state.user, action.payload]
+            }
+            case FORGOT_PASSWORD:
+            return {
+                ...state,
+                user: action.payload
             };
 
 

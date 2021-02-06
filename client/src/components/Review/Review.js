@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './review.module.scss';
 import Moment from 'moment';
 
-export default function Rewiew({data}) {
-    // console.log(data)
+
+
+export default function Rewiew({data, data2}) {
+   console.log("esto es data 1", data) 
+    
+//    console.log("esto es data 2" + data2) 
 
 function formatDate(date) {
     let formatDate = new Moment(date);
@@ -14,7 +18,8 @@ function formatDate(date) {
         <>
           <div className= {styles.container}>
                 <div >
-                    <h4>Id del Usuario: {data.userId}</h4>
+                   
+                    <h4>Nombre: {data.fullname}</h4>
                     <label>Puntuacion: {data.rate}</label>
                 </div>
                 <div >
@@ -26,3 +31,4 @@ function formatDate(date) {
         </>
     )
 }
+
