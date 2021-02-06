@@ -41,7 +41,7 @@ function Product(props) {
     }
 
 
-    const user = props.userData[props.userData.length-1];
+    const user = props.user;
 
     function handleClick (data){
         props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
@@ -64,7 +64,8 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
-                        <h3>Promedio: {Promedio()}</h3>
+                        {/* <h3>Promedio: {Promedio()}</h3> */}
+                        <h3>{props.product.Reviews && props.product.Reviews >0? <h3>Promedio: {Promedio()}</h3>: <h6></h6>}</h3>
 
                     </div>
                     <p><strong>Precio: </strong> ${props.product.price}</p>
@@ -86,13 +87,13 @@ function Product(props) {
                 </div>
             </div>
             <section>
-                <h2>Comentarios</h2>
+                <h2>{props.product.Reviews && props.product.Reviews >0? <h2>Reseñas</h2>: <h2>Este producto aún no tiene reseñas</h2>}</h2>
                 {props.product.Reviews && props.product.Reviews.map((review)=>{
                 
                     return <Rewiew key={review.id} data={review}/>
                 })}
                 
-                <Rate/>
+                {/* <Rate/> */}
             </section>
         </div>
     )
@@ -102,7 +103,7 @@ function mapStateToProps(state) {
     // console.log('este el el state:', state)
     return {
         product: state.product.product,
-        userData:state.product.user,
+        user:state.auth.userInfo,
         prodCart :state.product.cart
     }
 }

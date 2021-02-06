@@ -11,11 +11,11 @@ export default function ViewOrder(props) {
     const dispatch = useDispatch();
 
 
-    const usersData = useSelector(store => store.product.user);
-    const user = usersData[usersData.length - 1];
-    let cartProduct = useSelector(user !== undefined ? (store => store.product.cart) : (store => store.cart.cartItems));
+    const user = useSelector(store => store.auth.userInfo);
+   
+    let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
     useEffect(function () {
-        dispatch(getProductsCart(user !== undefined ? { userId: user.id, state: "carrito" } : null));
+        dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
     }, [])
 
     let priceList = [];
@@ -99,7 +99,7 @@ export default function ViewOrder(props) {
 
         <div className="contain" >
             <div className="titulo">
-                <button onClick={usersData.length == 0 ? () => deleteLS() : () => deleteCart()}> Borrar </button>
+                <button onClick={!user ? () => deleteLS() : () => deleteCart()}> Borrar </button>
                 <h2>Pedidos de tu carrito</h2>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {

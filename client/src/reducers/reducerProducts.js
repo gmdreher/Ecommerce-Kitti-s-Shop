@@ -27,9 +27,6 @@ import {
     UPDATE_PROMOTE,
     POST_RESERT_PASSWORD,
     
-
-
-    UPDATE_COUNT_PRODUCT,
     GET_USER_BY_ID,
     UPDATE_PASSWORD
 } from '../constants/productConstants.js';
@@ -175,7 +172,7 @@ export default (state = initialState, action) => {
             };
 
 
-            
+
             case GET_PRODUCTS_STATE_COMPLETE:
                 var estadito= {
                     ...state,
