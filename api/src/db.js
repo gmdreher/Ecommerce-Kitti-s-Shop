@@ -46,6 +46,12 @@ Image.belongsTo(Product);
 Order.belongsTo(User);
 User.hasMany(Order);
 
+Product.hasMany(Review);
+Review.belongsTo(Product);
+
+User.hasMany(Review);
+Review.belongsTo(User);
+
 Product.belongsToMany(Order, { through: OrderDetails })
 Order.belongsToMany(Product, { through: OrderDetails })
 

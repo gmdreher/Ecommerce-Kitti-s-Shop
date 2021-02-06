@@ -14,6 +14,7 @@ import OrderDetails from "./components/OrderDetails/OrderDetails";
 import OrderTable from "./components/OrderTable/OrderTable";
 import UserTable from "./components/UserTable/UserTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
+import ResetPass from './components/ResetPass/ResetPass';
 import Login from './components/User/Login'
 import './Styles/App.scss'
 import {Link} from "react-router-dom";
@@ -54,7 +55,7 @@ function App() {
             <Navbar />
             <NavCategories />
             <Route
-              path="/products/category/:categoryName"
+               exact path="/products/category/:categoryName"
               render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}
             />
           </header>
@@ -72,10 +73,11 @@ function App() {
               <Route exact path='/admin/categories' component={NewCategoryForm} />
               <Route exact path="/admin/orders" component={OrderTable} />
               <Route exact path="/admin/users" component={UserTable} />
+
             <Route exact path='/user/signup' component={SignUp} />
         
             <Route exact path='/auth/login' component={Login} />
-            
+            <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />
             <Route exact path="/user/order" component={ViewOrder} />
     </div>
     

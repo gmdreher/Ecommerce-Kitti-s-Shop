@@ -87,7 +87,9 @@ function SignUp(props) {
     email: '',
     password: '',
     rol: 'User',
+    reset: false,
     banned: false,
+    
   })
   const [modal, setModal] = useState(true);
   const toggle = () => {
@@ -157,7 +159,7 @@ function SignUp(props) {
                   required
                   fullWidth
                   id="email"
-                  label="Correo Electronico"
+                  label="Correo Electrónico"
                   name="email"
                   autoComplete="email"
                   onChange={handleChange}
