@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './review.module.scss';
 import Moment from 'moment';
 
-export default function Rewiew({data}) {
+
+export default function Rewiew({data, data2}) {
+   console.log("esto es data 1", data) 
+    
 
 function formatDate(date) {
     let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY')
     }
 
-let valor= data.rate;
+let valor= data2.rate;
 
 function rate(valor){
 
@@ -78,12 +81,13 @@ function rate(valor){
         <>
           <div className= {styles.container}>
                 <div >
-                    <h4>Id del Usuario: {data.userId}</h4>
+                    <h4>Nombre: {data.fullname}</h4>
                     <label>{rate(valor)}</label>
+
                 </div>
                 <div >
-                    <p>{data.description}</p>
-                    <label>{formatDate(data.createdAt)}</label>
+                    <p>{data2.description}</p>
+                    <label>{formatDate(data2.createdAt)}</label>
                 </div>
             </div>
             
@@ -91,8 +95,3 @@ function rate(valor){
     )
 }
 
-// {data.rate == 1? <i class="fas fa-star"></i> 
-//                     : data.rate == 2? <i class="fas fa-star"></i> 
-//                     : data.rate == 3?  <i class="fas fa-star"></i>
-                    
-//                 }

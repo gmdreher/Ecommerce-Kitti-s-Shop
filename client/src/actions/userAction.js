@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import { POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
      USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
-      UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD } from '../constants/productConstants.js';
+      UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD, 
+      FORGOT_PASSWORD } from '../constants/productConstants.js';
 
 
 export const getUsers = () => async (dispatch) => {
@@ -186,6 +187,7 @@ export const loginUser = (email, password) => {
 export const getUserById = (id) => async (dispatch) => {
     try {
         const respuesta = await axios.get(`http://localhost:3001/users/${id}`);
+        // console.log("respuesta", respuesta )
         dispatch({
             type: GET_USER_BY_ID,
             payload: respuesta.data
@@ -225,6 +227,18 @@ export const updatePassword = user => async (dispatch) => {
 //     })
 //   }
 // }
+
+export const forgotPassword = email => async (dispatch) => {
+    try {
+        let answer = await axios.post(`http://localhost:3001/users/forgot`, email);
+        dispatch({
+            type: FORGOT_PASSWORD,
+            payload: answer.data
+        });
+    } catch (error) {
+        console.log("Error" + error)
+    }
+}
 
 
 

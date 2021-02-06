@@ -158,7 +158,7 @@ function Product(props) {
 
                 {props.product.Reviews && props.product.Reviews.map((review)=>{
                 
-                    return <Rewiew key={review.id} data={review}/>
+                    return <Rewiew key={review.id} data={props.user} data2={props.product.Reviews}/>
                 })}
                 
             </section>
