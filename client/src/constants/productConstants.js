@@ -31,6 +31,13 @@ export const DELETE_ITEM_LC = "DELETE_ITEM_LC";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const UPDATE_COUNT_PRODUCT = "UPDATE_COUNT_PRODUCT"
 
+export const LOGIN_USER = "LOGIN_USER"
+export const LOGOUT_USER = "LOGOUT_USER"
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS"
+export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL"
+
+
+
 
 
 
