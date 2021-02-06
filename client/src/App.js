@@ -15,6 +15,7 @@ import OrderTable from "./components/OrderTable/OrderTable";
 import UserTable from "./components/UserTable/UserTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
 import ResetPass from './components/ResetPass/ResetPass';
+import GetEmail from './components/ResetPass/GetEmail';
 import Login from './components/User/Login'
 import './Styles/App.scss'
 import {Link} from "react-router-dom";
@@ -78,6 +79,7 @@ function App() {
         
             <Route exact path='/auth/login' component={Login} />
             <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />
+            <Route exact path='/user/getEmail' component={GetEmail} />
             <Route exact path="/user/order" component={ViewOrder} />
     </div>
     

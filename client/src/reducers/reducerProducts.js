@@ -21,7 +21,8 @@ import {
     UPDATE_COUNT_PRODUCT,
     GET_USER_BY_ID,
     POST_RESERT_PASSWORD,
-    UPDATE_PASSWORD
+    UPDATE_PASSWORD,
+    FORGOT_PASSWORD,
 } from '../constants/productConstants.js';
 
 const initialState = {
@@ -158,6 +159,11 @@ export default (state = initialState, action) => {
             return { 
                 ...state,
                 user: [...state.user, action.payload]
+            }
+            case FORGOT_PASSWORD:
+            return {
+                ...state,
+                user: action.payload
             };
             
         default:
