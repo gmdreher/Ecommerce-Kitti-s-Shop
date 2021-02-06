@@ -5,7 +5,8 @@ import decode from "jwt-decode";
 const initialState = {
   userInfo: localStorage.getItem("data") ? decode(localStorage.getItem("data")) : null,
   loading: false,
-  error: ""
+  error: "",
+  loginFailed: false,
 };
 
 export default (state = initialState, action) => {
@@ -21,6 +22,7 @@ export default (state = initialState, action) => {
       }
     case USER_LOGIN_FAIL:
       return{
+        loginFailed: true,
         loading: false,
         error: action.payload
       }

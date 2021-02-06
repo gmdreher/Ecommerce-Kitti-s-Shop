@@ -13,9 +13,8 @@ server.post('/login', passport.authenticate('login', { session: true }), (req, r
     try {
         const token = jwt.sign({ id: req.user.id, fullname: req.user.fullname }, authConfig.secret)
         res.json(token)
-        // res.cookie(userId, user.id)
-        // res.redirect('/');
     } catch (err) {
+      console.log(err)
         res.status(400).send(err);
     }
 
@@ -31,9 +30,7 @@ server.post('/logout', (req, res) => {
 
 server.get('/me', (req, res) => {
     if (req.isAuthenticated()) {
-        console.log(req.user)
         return res.send(req.user);
-
     }
 
     else return res.status(401).send('Debes Iniciar Sesion');

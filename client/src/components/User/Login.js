@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styles from './login.module.scss'
 import {Link} from "react-router-dom";
-import { useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
 
@@ -24,43 +24,51 @@ const validate = (input) => {
 
 export default function Login(props) {
   
-  const [input, setInput] = React.useState({email: "", password: ""});
+  const [user, setUser] = React.useState({email: "", password: ""});
   const [errors, setErrors] = React.useState({});
-  
-  
   const history = useHistory();
   const dispatch = useDispatch();
+  const loginFailed = useSelector(store => store.auth.loginFailed)
+  const userState = useSelector(store => store.auth.userInfo)
   
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    setInput({
-      ...input,
+    setUser({
+      ...user,
       [event.target.name]: event.target.value
     });
-    dispatch(loginUser(input.email, input.password))
-    setInput({email: "", password: ""});
-    history.push("/");
+    dispatch(loginUser(user.email, user.password))
+    setUser({email: "", password: ""});
   }
   
   const handleInputChange = function (event) {
     setErrors(validate({
-      ...input,
+      ...user,
       [event.target.name]: event.target.value
     }))
     
-    setInput({
-      ...input,
+    setUser({
+      ...user,
       [event.target.name]: event.target.value
     });
-    }
+  }
   
+  useEffect(() => {
+    if(userState){
+      history.push('/')
+    }
+  }, [userState])
   
   return (
     <div className={'container ' + styles.globalContainer}>
       <div className={styles.formContainer}>
         <h2 className={styles.title}>Iniciar sesión</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
+          { loginFailed && <div className="alert alert-danger" role="alert">
+            Los datos ingresados son incorrecto. Por favor, intente de nuevo.
+          </div>
+          }
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">Correo electrónico*</label>
             <input
@@ -68,7 +76,7 @@ export default function Login(props) {
               name="email"
               className={"form-control " + styles.input + `${errors.email && ' is-invalid'}`}
               id="exampleInputEmail1" aria-describedby="emailHelp"
-              value={input.email}
+              value={user.email}
               error={errors.email}
               onChange={handleInputChange}
             />
@@ -82,7 +90,7 @@ export default function Login(props) {
             <input
               type="password"
               name="password"
-              value={input.password}
+              value={user.password}
               error={errors.password}
               className={"form-control " + styles.input + `${errors.password && ' is-invalid'}`}
               id="exampleInputPassword1"
@@ -94,7 +102,7 @@ export default function Login(props) {
             <div className="form-text" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</div>
           </Link>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-            <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
+            <button type="submit" className={"btn " + styles.btnText} disabled={errors.email || errors.password}>Iniciar sesión</button>
           </div>
         </form>
         <Link to="/user/signup">

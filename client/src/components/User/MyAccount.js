@@ -8,23 +8,9 @@ import { logoutUser } from "../../actions/userAction";
 
 class MyAccount extends React.Component {
   
-  // constructor(props) {
-  //   super(props);
-  //   this.state ={
-  //     user: {},
-  //     loading: true
-  //   }
-  // }
-  
-  // componentDidMount() {
-  //   if(localStorage.getItem("data")){
-  //     this.setState({user: this.props.userInfo})
-  //   }
-  // }
   
   logOutHandler = () => {
     this.props.logoutUser()
-    // this.setState({user: {}})
   }
   
   render(){
