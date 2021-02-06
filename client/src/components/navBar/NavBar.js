@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import Badge from '@material-ui/core/Badge';
+import MyAccount from "../User/MyAccount";
 
 export default function NavBar(props) {
-
-
-    // console.log("Navbar", props);
+  
 
     return (
         <header className={style.navBar}>
@@ -20,6 +19,7 @@ export default function NavBar(props) {
                 </Link>
             </div>
             <Search />
+            <MyAccount key={props.id} />
             <div className="dropdown">
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -28,9 +28,11 @@ export default function NavBar(props) {
                     <li> <a className="dropdown-item" href="#"></a> </li>
                 </Link>
 
-                <Link to={'/user/review'} className="dropdown-item" >Reviews
-                    <li> <a className="dropdown-item" href="#"></a> </li> 
-                </Link>
+                    {/* Copiar todo completo al momento de cabiar de lugar el link  */}
+                    <Link to={'/user/signup'} className="dropdown-item" >Registrarse
+              <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+                  <Link to={'/auth/login'} className="dropdown-item" >Iniciar sesión
+                    <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                 </ul>
             </div>
             <div>
@@ -51,11 +53,13 @@ export default function NavBar(props) {
                     <Link to={'/admin/products'} className="dropdown-item" >Productos
                 <li> <a className="dropdown-item" href="#"></a>  </li>
                     </Link>
-
                     <Link to={'/admin/categories'} className="dropdown-item" >Categorías
                 <li> <a className="dropdown-item" href="#"></a> </li>
                     </Link>
                     <Link to={'/admin/orders'} className="dropdown-item" >Órdenes de Usuario
+                <li> <a className="dropdown-item" href="#"></a> </li>
+                    </Link>
+                    <Link to={'/admin/users'} className="dropdown-item" >Usuarios
                 <li> <a className="dropdown-item" href="#"></a> </li>
                     </Link>
 

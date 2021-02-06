@@ -17,6 +17,7 @@ function Product(props) {
     useEffect(() => {
         props.getProductById(props.id);
     }, [])
+    
     let imageUrl;
     if (props.product.images) {
         imageUrl = props.product.images[0].url;
@@ -43,7 +44,7 @@ function Product(props) {
     const user = props.userData[props.userData.length-1];
 
     function handleClick (data){
-        props.addProductCart(user!== undefined ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
+        props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
     };
     function change(e){
         setQuantity({

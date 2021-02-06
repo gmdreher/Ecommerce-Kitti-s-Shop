@@ -68,7 +68,10 @@ const useStyles = makeStyles((theme) => ({
 //password
 if(!input.password){
   errors.password = '**Requiere una Contraseña';
-} else if (!/(?=.*[0-9])/.test(input.password)){
+
+} else if(input.password.length<8){
+  errors.password = '**La contraseña debe tener minimo 8 caracteres';
+}else if (!/(?=.*[0-9])/.test(input.password)){
   errors.password = '**La contraseña debe llevar letras y números';
 }
 //si no hay errores devuelve objeto vacio
@@ -105,7 +108,6 @@ function SignUp(props) {
   }
   const regUser = (e) => {
     e.preventDefault();
-
     props.singUp(input)
     history.push("/")
 
@@ -203,7 +205,7 @@ function SignUp(props) {
           </Button>}
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/auth/login" variant="body2">
                   Ya tienes una cuenta? Ingresa aquí
               </Link>
               </Grid>

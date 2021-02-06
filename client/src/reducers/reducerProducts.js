@@ -105,6 +105,11 @@ export default (state = initialState, action) => {
                 ...state,
                 user: [...state.user, action.payload]
             }
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }
         case ADD_TO_CART:
             return {
                 ...state,
@@ -127,9 +132,9 @@ export default (state = initialState, action) => {
                 cart: state.cart.filter(order => order.orderId !== action.payload)
             }
         case UPDATE_COUNT_PRODUCT:
-            return { 
+            return {
                 ...state,
-                cart: action.payload 
+                cart: action.payload
             };
             
 

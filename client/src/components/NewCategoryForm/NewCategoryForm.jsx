@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { insertCategory, getCategories, editCategory, deleteCategory } from "../../actions/productActions";
 import styles from './newCategoryForm.module.scss'
 
+
 function NewCategoryForm(props) {
   // ESTADOS
   //estado inputs
@@ -54,6 +55,19 @@ function NewCategoryForm(props) {
     }));
   }
 
+
+  const handleSubmit = function(e) {
+    props.getCategories();
+    e.preventDefault();
+  }
+   
+  //agregar categorias
+  const handleAdd = function(category) {
+    props.postCategories(category)
+    props.getCategories();
+    toggle();
+  }
+
   // info de boton EDITAR de cada categoria
   const handleEdit = function (category) {
     toggle2();
@@ -66,7 +80,8 @@ function NewCategoryForm(props) {
     props.putCategory(category);
     props.getCategories();
     toggle2()
-    category.preventDefault();
+    
+   
   }
   // info de boton BORRAR de cada categoria
   const handleDelete = function (category) {
@@ -78,7 +93,6 @@ function NewCategoryForm(props) {
     props.destroyCategory(category);
     props.getCategories();
     toggle3()
-    category.preventDefault();
   }
   // COMPONENTE
   return (
@@ -107,7 +121,11 @@ function NewCategoryForm(props) {
                 <Button className="buttonForm" color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
               </td>
             </tr>
-          )))}
+          )))} 
+          
+          
+          
+          
 
         </tbody>
       </Table>
@@ -115,7 +133,7 @@ function NewCategoryForm(props) {
       {/* -------------MODAL POST--------------- */}
       <div>
         <Modal isOpen={modal} toggle={toggle} className={props.className}>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <ModalHeader toggle={toggle}>Nueva Categoría</ModalHeader>
             <ModalBody>
 
@@ -133,9 +151,9 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> : <Button color="primary" type="submit" onClick={() => { 
-                props.postCategories({ name: input.name, description: input.description })
-                props.preventDefault()}}>Crear Categoría</Button>}
+              {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> :
+               <Button color="primary" type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+              >Crear Categoría</Button>}
 
               <Button color="secondary" onClick={toggle}>Salir</Button>
 
@@ -148,7 +166,7 @@ function NewCategoryForm(props) {
 
       <div>
         <Modal isOpen={modal2} toggle={toggle2} className={props.className}>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <ModalHeader toggle={toggle2}>Modificar Categoría</ModalHeader>
             <ModalBody>
 
@@ -178,7 +196,7 @@ function NewCategoryForm(props) {
       {/* ----------------MODAL DELETE------------------- */}
       <div>
         <Modal isOpen={modal3} toggle={toggle3} className={props.className}>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>

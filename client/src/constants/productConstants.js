@@ -11,6 +11,9 @@ export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const GET_ORDERS = "GET_ORDERS"
 export const POST_USER = "POST_USER";
+export const GET_USER = "GET_USER";
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_PROMOTE = "UPDATE_PROMOTE";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const GET_PRODUCT_CART = "GET_PRODUCT_CART";
 export const GET_SPECIFIC_ORDER = "GET_SPECIFIC_ORDER";
@@ -33,4 +36,13 @@ export const ADD_REVIEW= 'ADD_REVIEW';
 export const  EDIT_REVIEW= ' EDIT_REVIEW';
 export const  DELETE_REVIEW= ' DELETE_REVIEW';
 export const GET_ALL_REVIEW_PRODUCT= 'GET_ALL_REVIEW_PRODUCT'
+export const LOGIN_USER = "LOGIN_USER"
+export const LOGOUT_USER = "LOGOUT_USER"
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS"
+export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL"
+
+
+
+
+
 
