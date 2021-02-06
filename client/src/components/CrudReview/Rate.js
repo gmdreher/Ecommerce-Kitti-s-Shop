@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 
-export default function Rate() {
+export default function Rate({data}) {
 
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
@@ -11,7 +11,13 @@ export default function Rate() {
     });
     let numero= 3.5;
 
+const rate= ()=>{
+  if( data.review === 1){
+    
+  }
+}
 
+console.log("esto es data de rate:",data)
     const onChange = (e) => {
         setReview({
           ...review,

@@ -12,7 +12,12 @@ export default function CrudReview(props) {
   
   const productsComplete = useSelector((store) => store.product.productsComplete);
   const reviews = useSelector((store) => store.product.reviews);
+  
 
+const [star, setStar]= useState()
+
+
+  // console.log(productsComplete, reviews)
   const [input, setInput] = useState({
     description: '',
     rate: '',
@@ -25,6 +30,9 @@ export default function CrudReview(props) {
   const [productWithReview, setProductWithReview]= useState([])
   const [productWithoutReview, setProductWithoutReview]= useState([])
   
+ //estado errores
+ const [errors, setErrors] = useState({}); //---------------------------
+
   //modal agregar reseña
   const [modal, setModal] = useState(false);
   const toggleAdd = () => setModal(!modal);
@@ -43,6 +51,15 @@ export default function CrudReview(props) {
     dispatch(getProductStateComplete(props.id))
     dispatch(getAllReviewsUser(props.id))
   }, [])
+
+    //validacion inputs
+    const validate = function (input) {//---------------------------
+      let errors = {};
+      if (!input.description) {
+        errors.description = '**Requiere una descripción';
+      }
+      return errors;
+    }
   
   //para setear los input
   const handleInputChange = (e)=> {
@@ -50,7 +67,18 @@ export default function CrudReview(props) {
       ...input,
       [e.target.name]: e.target.value
     });
-    // console.log("entra al handleinput")
+    setErrors(validate({//---------------------------------------
+      ...input,
+      [e.target.name]: e.target.value
+    }));
+  
+  }
+  const resetInput= ()=>{
+    setInput({
+      description: '',
+      rate: '',
+      userId: props.id
+    })
   }
 
   // añadir un review
@@ -64,6 +92,7 @@ export default function CrudReview(props) {
     await dispatch(addReview(productId,input))
     await dispatch(getProductStateComplete(props.id))
     await dispatch(getAllReviewsUser(props.id))
+    resetInput()
     toggleAdd()
   }
 
@@ -78,6 +107,7 @@ export default function CrudReview(props) {
     dispatch(editReview(infoEdit.productId,infoEdit.reviewId,input))
     dispatch(getProductStateComplete(props.id))
     dispatch(getAllReviewsUser(props.id))
+    resetInput()
     toggleEdit()
   }
 
@@ -114,8 +144,8 @@ useEffect(()=>{
     }
     if(bandera===0 ) sinRev.push(productsComplete[i])
   }
-// console.log("con", conRev);
-// console.log("sin", sinRev);
+console.log("con", conRev);
+console.log("sin", sinRev);
 
 setProductWithReview(conRev);
 setProductWithoutReview(sinRev)
@@ -202,12 +232,13 @@ setProductWithoutReview(sinRev)
 
               <FormGroup  onSubmit={e=>e.preventDefault()}>
                 <Label for="description"> Descripcion</Label>
-                <Input type="textarea" name="description" id='description' placeholder='Deja tu comentario...'value={input.description} onChange={handleInputChange} />
+                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`}  name="description" id='description' placeholder='Deja tu comentario...'value={input.description} onChange={handleInputChange} />
+                {errors.description && (
+                  <p className={styles.danger}>{errors.description}</p>
+                )}
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
                 <Label for="rate"> Puntuacion </Label>
-                {/* <Rate name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}/> */}
-                {/* <Input type="textarea" className="form-group" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange} /> */}
                 <select class="form-select" aria-label="Default select example" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                 <option selected>Puntuá</option>
                     <option value="1">1</option>
@@ -221,11 +252,13 @@ setProductWithoutReview(sinRev)
             </ModalBody>
             <ModalFooter>
 
-              <Button className= {styles.button_} onClick={toggleAdd}>Salir</Button>
 
+             {errors.description?  <Button color="danger" onClick={toggleAdd}>Añadir reseña</Button>:
              <Button className= {styles.button_} type= 'submit' onClick={()=>{ handleAddReview(idProductAdding)}}
-                >Añadir Reseña</Button> 
+                >Añadir Reseña</Button> }
 
+
+              <Button className= {styles.button_} onClick={toggleAdd}>Salir</Button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -242,7 +275,11 @@ setProductWithoutReview(sinRev)
 
               <FormGroup  onSubmit={e=>e.preventDefault()}>
                 <Label for="description">Descripcion</Label>
-                <Input type="textarea" name="description" id='description' value={input.description} onChange={handleInputChange} />
+                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' value={input.description} onChange={handleInputChange} />
+                {errors.description && (
+                  <p className={styles.danger}>{errors.description}</p>
+                )}
+              
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
               <Label for="rate"> Puntuacion </Label>
@@ -259,8 +296,9 @@ setProductWithoutReview(sinRev)
 
             </ModalBody>
             <ModalFooter>
+              {errors.description? <Button color="danger" onClick={toggleEdit}>Modificar Reseña</Button> : <Button className={styles.button_} onClick={()=> handleSendEditReview()}>Modificar Reseña</Button>}
               <Button className={styles.button_} onClick={toggleEdit}>Salir</Button>
-              <Button className={styles.button_} onClick={()=> handleSendEditReview()}>Modificar Reseña</Button>
+
             </ModalFooter>
           </Form>
         </Modal>

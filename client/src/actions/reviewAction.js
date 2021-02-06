@@ -8,7 +8,7 @@ export const getProductStateComplete = (userId) => async (dispatch) => {
     try {
         const products = await axios.get(`http://localhost:3001/users/${userId}/orders/complete`);
 
-        
+        console.log("esto es products",products)
         let producto=[];// todos los productos con y sin review
  
         for(var i=0; i<products.data.length; i++){ //con esto accedo a las ordenes
@@ -18,7 +18,7 @@ export const getProductStateComplete = (userId) => async (dispatch) => {
             }
         }
         
-        // console.log('esto son todos los productos', producto)
+        console.log('esto son todos los productos', producto)
 
         dispatch({
             type: GET_PRODUCTS_STATE_COMPLETE,

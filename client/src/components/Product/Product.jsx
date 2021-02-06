@@ -6,9 +6,6 @@ import { getProductById} from '../../actions/productActions.js';
 import { addProductCart} from '../../actions/cartAction';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import Review from "../Review/Review"
-
-import Rate from '../CrudReview/Rate';
 import Rewiew from '../Review/Review';
 
 function Product(props) {
@@ -34,12 +31,83 @@ function Product(props) {
         }
         let promedioGral=Math.round(promedio)
 
-        // console.log("esto es la suma de las rate", promedioGral)
-
-           return promedioGral
+           return promedioGral;
         }
     }
 
+    let valor= Promedio();
+
+    function ratePromedio(valor){
+    
+    
+        if( valor == 1){
+           return(
+            <>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+
+            </>
+        
+           )
+        }else if(valor ==2){
+            return(
+            <>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            </>
+        
+            )
+        }else if(valor ==3){
+            return(
+            <>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            </>
+        
+            )
+        }else if(valor ==4 ){
+            return(
+            <>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            </>)
+        
+        }else if(valor ==5 ){
+            return(
+                <>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                </>
+        
+            )
+        }else{
+            return(
+               <>
+               <i class="far fa-star"></i>
+               <i class="far fa-star"></i>
+               <i class="far fa-star"></i>
+               <i class="far fa-star"></i>
+               <i class="far fa-star"></i>
+               </>
+            )
+        }
+    
+    }
 
     const user = props.user;
 
@@ -64,8 +132,7 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
-                        {/* <h3>Promedio: {Promedio()}</h3> */}
-                        <h3>{props.product.Reviews && props.product.Reviews >0? <h3>Promedio: {Promedio()}</h3>: <h6></h6>}</h3>
+                        <h3>{ratePromedio(valor)}</h3>
 
                     </div>
                     <p><strong>Precio: </strong> ${props.product.price}</p>
@@ -87,13 +154,13 @@ function Product(props) {
                 </div>
             </div>
             <section>
-                <h2>{props.product.Reviews && props.product.Reviews >0? <h2>Reseñas</h2>: <h2>Este producto aún no tiene reseñas</h2>}</h2>
+                <h2>{props.product.Reviews && props.product.Reviews.length >0? <h2>Reseñas</h2>: <h3>Este producto aún no tiene reseñas</h3>}</h2>
+
                 {props.product.Reviews && props.product.Reviews.map((review)=>{
                 
                     return <Rewiew key={review.id} data={review}/>
                 })}
                 
-                {/* <Rate/> */}
             </section>
         </div>
     )
