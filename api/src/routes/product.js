@@ -35,7 +35,7 @@ server.get("/search", (req, res) => {
 });
 
 //task 17
-server.delete('/:productId/category/:categoryId', (req, res) => {
+server.delete('/:productId/category/:categoryId' , protected.isAuthAdmin, (req, res) => {
   let { productId, categoryId } = req.params;
 
   let productRemoveCategory;
@@ -69,7 +69,7 @@ server.delete('/:productId/category/:categoryId', (req, res) => {
 });
 
 //task 18
-server.post('/category', (req, res) => {
+server.post('/category' , protected.isAuthAdmin, (req, res) => {
   let { name, description } = req.body;
   Category.findOrCreate({
     where: {
@@ -86,7 +86,7 @@ server.post('/category', (req, res) => {
 
 
 //task 20
-server.put('/category/:id', function (req, res) {
+server.put('/category/:id' , protected.isAuthAdmin, function (req, res) {
   const { id } = req.params;
   const { name, description } = req.body;
   Category.update(
@@ -106,7 +106,7 @@ server.put('/category/:id', function (req, res) {
 });
 
 //task 19
-server.delete('/category/:id', function (req, res) {
+server.delete('/category/:id' , protected.isAuthAdmin, function (req, res) {
   const { id } = req.params;
   Category.destroy({
     where: {
@@ -148,7 +148,7 @@ server.get('/categories', (req, res, next) => {
     .catch(next);
 });
 
-server.post('/:productId/category/:categoryId', (req, res) => {
+server.post('/:productId/category/:categoryId' , protected.isAuthAdmin, (req, res) => {
   let { productId, categoryId } = req.params;
 
   let productAddCategory;
@@ -254,7 +254,7 @@ server.post('/', protected.isAuthAdmin, function (req, res) {
 
 
 //task 26
-server.put('/:id', function (req, res) {
+server.put('/:id' , protected.isAuthAdmin, function (req, res) {
   const { id } = req.params;
   const { name, description, price, stock } = req.body;
   Product.update(
@@ -272,7 +272,7 @@ server.put('/:id', function (req, res) {
 });
 
 //task 27
-server.delete('/:id', function (req, res) {
+server.delete('/:id' , protected.isAuthAdmin, function (req, res) {
   const { id } = req.params;
   Product.destroy({
     where: {
@@ -285,7 +285,7 @@ server.delete('/:id', function (req, res) {
   })
 });
 
-server.post('/:idProducto/category/:idCategory', (req, res) => {
+server.post('/:idProducto/category/:idCategory' , protected.isAuthAdmin, (req, res) => {
   const { idProducto, idCategory } = req.params;
 
   Product.update({ categoryId: idCategory }, {

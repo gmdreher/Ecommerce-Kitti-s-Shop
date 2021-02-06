@@ -3,32 +3,32 @@ const { Order, User, OrderDetails } = require('../db.js');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
+const protected = require('../middleware/protected')
 
 //Ruta de crear usuario
 //Pau
 server.post('/', passport.authenticate('signup'),async(req,res)=>{
-  const token = jwt.sign({id:req.user.id},authConfig.secret)
-  res.json({token})  
-  /* if(req.user){
-    res.json(req.user) 
-  }else{
-    res.status(400).json(req.message)
-  } */
-          
+ /*  const token = jwt.sign({id:req.user.id},authConfig.secret)
+  res.json({token})  */ 
+    res.json({
+    message: 'SignUp success'
+    //user: req.user
+  })
 })
 
 //PUT users/:id S35 : Ruta para modificar Usuario
-server.put('/:id', function (req, res) {
+server.put('/:id' ,protected.isAuth, function (req, res) {
   const { id } = req.params;
-  const { fullName, email, password, rol } = req.body;
+  const { fullname, email, password, rol, banned } = req.body;
   User.findByPk(id)
     .then((user => {
       user.update(
         {
-          fullName: fullName,
+          fullname: fullname,
           email: email,
           password: password,
           rol: rol,
+          banned: banned,
         })
     })
     )
@@ -40,21 +40,11 @@ server.put('/:id', function (req, res) {
     })
 });
 
-// // task 36 GET /users
-// server.get('/', (req, res) => {
-//   User.findAll()
-//     .then(users => {
-//       res.json(users);
-//     })
-//     .catch(err => {
-//       res.status(400).send(`Error: ${err}`)
-//     });
-// });
 
-server.get('/', (req, res) => {
+server.get('/' , protected.isAuthAdmin, (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email"]
+    atributtes: ["id", "fullname", "email", "banned"]
   })
     .then(users => {
       res.json(users);
@@ -66,7 +56,7 @@ server.get('/', (req, res) => {
 
 
 //Traer id de usuario
-server.get("/:id", (req, res) => {
+server.get("/:id" , protected.isAuth, (req, res) => {
   const id = req.params.id;
   User.findOne({
     where: { id: id },
@@ -80,7 +70,7 @@ server.get("/:id", (req, res) => {
 });
 
 //agregar item al carrito
-server.post('/:userId/order', (req, res) => {
+server.post('/:userId/order', protected.isAuth, (req, res) => {
   let { userId } = req.params;
   let { productId, price, quantity } = req.body;
 
@@ -112,7 +102,7 @@ server.post('/:userId/order', (req, res) => {
 });
 
 //obtener todos los items del carrito
-server.get("/:userId/order/:state", (req, res) => {
+server.get("/:userId/order/:state", protected.isAuth, (req, res) => {
   let { userId, state } = req.params;
 
   Order.findOne({
@@ -139,7 +129,7 @@ server.get("/:userId/order/:state", (req, res) => {
 });
 
 //vaciar carrito
-server.delete("/:userId/order/:orderId", (req, res) => {
+server.delete("/:userId/order/:orderId" , protected.isAuth, (req, res) => {
 
   let { userId, orderId } = req.params;
 
@@ -156,7 +146,7 @@ server.delete("/:userId/order/:orderId", (req, res) => {
 })
 
 // task 45 GET /users/:id/orders.. ruta que retorne todas las ordenes de los usuarios
-server.get('/:id/orders', (req, res) => {
+server.get('/:id/orders' , protected.isAuth, (req, res) => {
   let { id } = req.params;
   Order.findAll({
     where: {

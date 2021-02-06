@@ -13,9 +13,9 @@ const router = Router();
 //\node_modules\express\lib\router\route.js
 
 router.use('/products', productRouter);
-router.use('/users', usersRouter)
+router.use('/users', usersRouter);
+router.use('/orders', ordersRouter);
 router.use('/auth', authRouter);
-router.use('/orders', ordersRouter)
 
 
 module.exports = router;

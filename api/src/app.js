@@ -7,6 +7,7 @@ const cors =require('cors');
 const passport = require('passport')
 const session = require('express-session');
 const {User} = require('./db')
+const configAuth = require('../src/config/auth')
 
 
 
@@ -23,15 +24,14 @@ server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(session({
-  cookie:{maxAge: 240 * 60 * 60 * 1000},
-  store:store,
+  secret: configAuth.secret,
+  resave:true,
   saveUninitialized:true,
-  resave:'true',
-  secret: 'ecommerce-ft08-g07'
 }))
 
 
 passport.serializeUser((user,done)=>{
+  console.log(user)
   done(null,user.id);
 })
 passport.deserializeUser(async (id,done)=>{
@@ -47,8 +47,10 @@ server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  console.log(req.cookies);
   next();
 });
+
 
 server.use('/', routes);
 
