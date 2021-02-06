@@ -87,10 +87,10 @@ function Product(props) {
                 </div>
             </div>
             <section>
-                <h2>{props.product.Reviews && props.product.Reviews >0? <h2>Reseñas</h2>: <h2>Este producto aún no tiene reseñas</h2>}</h2>
+                <h2>{props.product.Reviews && props.product.Reviews >0 ? <h2>Reseñas</h2>: <h2>Este producto aún no tiene reseñas</h2>}</h2>
                 {props.product.Reviews && props.product.Reviews.map((review)=>{
                 
-                    return <Rewiew key={review.id} data={review}/>
+                    return <Rewiew key={review.id} data={props.user} data2={props.product.Reviews}/>
                 })}
                 
                 {/* <Rate/> */}
