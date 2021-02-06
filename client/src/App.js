@@ -24,6 +24,7 @@ import {Link} from "react-router-dom";
 import './App.scss';
 import decode from 'jwt-decode';
 import {useSelector} from "react-redux";
+import CrudReview from './components/CrudReview/CrudReview';
 
 
 
@@ -81,6 +82,8 @@ function App() {
             <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />
             <Route exact path='/user/getEmail' component={GetEmail} />
             <Route exact path="/user/order" component={ViewOrder} />
+            {/* <Route exact path="/user/:1/review" component={CrudReview} /> */}
+            <Route exact path="/user/review/:id" render={({ match }) => <CrudReview key={match.params.id} id={match.params.id} />} />
     </div>
     
           </main>

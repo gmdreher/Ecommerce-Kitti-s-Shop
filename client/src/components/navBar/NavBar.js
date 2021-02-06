@@ -25,7 +25,6 @@ export default function NavBar(props) {
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-
                     {/* Copiar todo completo al momento de cabiar de lugar el link  */}
                     <Link to={'/user/signup'} className="dropdown-item" >Registrarse
                 <li> <a className="dropdown-item" href="#"></a> </li> </Link>
@@ -42,6 +41,7 @@ export default function NavBar(props) {
                         </Badge>
                     </div> */}
                 </Link >
+               
             </div>
             {
                 <div className="dropdown">

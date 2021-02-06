@@ -208,13 +208,14 @@ server.get('/category/:categoryName', (req, res, next) => {
 });
 
 
-//task 24
+//task 24   //incluir modelo review---------------------------------------------
 server.get("/:id", (req, res) => {
   const id = req.params.id;
   Product.findOne({
     where: { id: id },
     include: [
-      { model: Image }
+      { model: Image},
+      {model: Review}
     ],
   })
     .then((product) => {
@@ -409,7 +410,6 @@ server.get("/:id/review/", (req, res) => {
       res.send(err);
     });
 });
-
 
 
 
