@@ -22,6 +22,7 @@ import {Link} from "react-router-dom";
 import './App.scss';
 import decode from 'jwt-decode';
 import {useSelector} from "react-redux";
+import CrudReview from './components/CrudReview/CrudReview';
 
 
 

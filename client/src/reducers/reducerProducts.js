@@ -14,14 +14,20 @@ import {
     GET_PRODUCT_CART,
     DELETE_TOTAL_CART,
     DELETE_ITEMS_CART,
-    POST_USER,
     UPDATE_COUNT_PRODUCT,
     GET_PRODUCTS_STATE_COMPLETE,
     GET_ALL_REVIEWS_USER,
     ADD_REVIEW,
     EDIT_REVIEW,
     DELETE_REVIEW,
-    GET_ALL_REVIEW_PRODUCT
+    GET_ALL_REVIEW_PRODUCT,
+    POST_USER,
+    GET_USER,
+    UPDATE_USER,
+    UPDATE_PROMOTE,
+    POST_RESERT_PASSWORD,
+    
+
 
 } from '../constants/productConstants.js';
 
@@ -37,7 +43,8 @@ const initialState = {
     productsComplete: [],
     reviews: [],
     review: [],
-    // reviewProduct:[]
+    // reviewProduct:[],
+
 
 };
 
@@ -110,6 +117,22 @@ export default (state = initialState, action) => {
                 ...state,
                 user: action.payload
             }
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: state.user.map(x => x.id === action.payload.id ? x = action.payload : x)
+            }
+        case UPDATE_PROMOTE:
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case POST_RESERT_PASSWORD:
+            return {
+                ...state,
+                user: action.payload
+            }   
         case ADD_TO_CART:
             return {
                 ...state,
