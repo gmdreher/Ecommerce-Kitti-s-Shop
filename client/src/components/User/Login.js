@@ -94,7 +94,7 @@ export default function Login (props) {
                 />
                 {errors.password && (<p className="invalid-feedback">{errors.password}</p>)}
               </div>
-              <Link>
+              <Link to="user/resetPass/">
                 <div className="form-text" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</div>
               </Link>
               <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>

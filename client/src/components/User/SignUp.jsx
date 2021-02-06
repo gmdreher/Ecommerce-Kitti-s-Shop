@@ -159,7 +159,7 @@ function SignUp(props) {
                   required
                   fullWidth
                   id="email"
-                  label="Correo Electronico"
+                  label="Correo Electrónico"
                   name="email"
                   autoComplete="email"
                   onChange={handleChange}

@@ -2,6 +2,7 @@ const server = require('express').Router();
 const { Order, User, OrderDetails } = require('../db.js');
 const passport = require('passport')
 var nodemailer = require('nodemailer');
+const { Op } = require("sequelize");
 
 //Ruta de crear usuario
 //Pau
@@ -41,7 +42,7 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email", "banned"]
+    atributtes: ["id", "fullname", "email", "banned", "reset"]
   })
     .then(users => {
       res.json(users);
