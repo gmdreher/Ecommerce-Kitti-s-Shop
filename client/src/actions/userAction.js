@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-import {POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_PRODUCT_BY_CATEGORY} from '../constants/productConstants.js';
-import { POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE } from '../constants/productConstants.js';
+import {
+    POST_USER, ADD_TO_CART, LOGIN_USER,
+    LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS,
+    POST_USER, ADD_TO_CART, GET_USER, UPDATE_USER, UPDATE_PROMOTE
+} from '../constants/productConstants.js';
 
 
 export const getUsers = () => async (dispatch) => {
@@ -16,52 +19,89 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
-export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) => async (dispatch, getState) => {
 
+export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
-
         const users = getState().product.user.slice();
-        var body = { id, banned, fullname, email, password, rol }
 
         try {
-            const res = await axios.put(`http://localhost:3001/users/${id}`, body);
+            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
 
             users && users.forEach((x) => {
-
-                if (x.id == id) {
+                if (x.id == id && x.banned == false) {
                     x.banned = true;
                 }
             });
 
-            console.log(users);
             dispatch({
                 type: UPDATE_USER,
-                payload: users
+                payload: res.data
             });
 
         } catch (error) {
             console.log("Error: " + error)
         }
-
     }
 }
+
+export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
+    if (id) {
+        const users = getState().product.user.slice();
+
+        try {
+            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
+
+            users && users.forEach((x) => {
+                if (x.id == id && x.banned == true) {
+                    x.banned = false;
+                }
+            });
+
+            dispatch({
+                type: UPDATE_USER,
+                payload: res.data
+            });
+
+        } catch (error) {
+            console.log("Error: " + error)
+        }
+    }
+}
+
 
 export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
     if (id) {
         const users = getState().product.user.slice();
-
         try {
             const res = await axios.put(`http://localhost:3001/auth/promote/${id}`);
-
             users && users.forEach((x) => {
-
                 if (x.id == id && x.rol !== "admin") {
                     x.rol = "admin";
                 }
             });
 
-            console.log("SE VA------", users);
+            dispatch({
+                type: UPDATE_PROMOTE,
+                payload: users
+            });
+        } catch (error) {
+            console.log("Error: " + error)
+        }
+    }
+}
+
+export const updateToUsers = ({ id, rol }) => async (dispatch, getState) => {
+
+    if (id) {
+        const users = getState().product.user.slice();
+        try {
+            const res = await axios.put(`http://localhost:3001/auth/demote/${id}`);
+            users && users.forEach((x) => {
+                if (x.id == id && x.rol == "admin") {
+                    x.rol = "user";
+                }
+            });
 
             dispatch({
                 type: UPDATE_PROMOTE,
@@ -74,6 +114,23 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 }
 
 
+export const postResertPassword = ({ id }) => async (dispatch, getState) => {
+
+    const users = getState().product.user.slice();
+    console.log('LO QUE RECIBE LA ACCION', id);
+    try {
+
+        const res = await axios.post(`http://localhost:3001/auth/${id}/forceReset/`);
+
+        dispatch({
+            type: POST_RESERT_PASSWORD,
+            payload: users
+        });
+
+    } catch (error) {
+        console.log("Error: " + error)
+    }
+}
 
 export const postUser = (data) => async (dispatch, getState) => {
 
@@ -106,26 +163,26 @@ export const postUser = (data) => async (dispatch, getState) => {
 }
 
 export const loginUser = (email, password) => {
-  return function (dispatch){
-    dispatch({type: LOGIN_USER, payload: {email, password}});
-    return axios.post('http://localhost:3001/auth/login', {email, password})
-      .then(res => {
-        dispatch({type: USER_LOGIN_SUCCESS, payload: res.data})
-        localStorage.setItem('data', res.data);
-        let cartItems = localStorage.getItem('cartItems', )
-        dispatch({type: ADD_TO_CART, payload: cartItems})
-        localStorage.removeItem('cartItems');
-      })
-      .catch(error =>{
-        dispatch({
-          type: USER_LOGIN_FAIL,
-          payload:
-            error.response && error.response.data.message
-              ? error.response.data.message
-              : error.message,
-        })
-      })
-  }
+    return function (dispatch) {
+        dispatch({ type: LOGIN_USER, payload: { email, password } });
+        return axios.post('http://localhost:3001/auth/login', { email, password })
+            .then(res => {
+                dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
+                localStorage.setItem('data', res.data);
+                let cartItems = localStorage.getItem('cartItems',)
+                dispatch({ type: ADD_TO_CART, payload: cartItems })
+                localStorage.removeItem('cartItems');
+            })
+            .catch(error => {
+                dispatch({
+                    type: USER_LOGIN_FAIL,
+                    payload:
+                        error.response && error.response.data.message
+                            ? error.response.data.message
+                            : error.message,
+                })
+            })
+    }
 }
 
 
@@ -149,11 +206,11 @@ export const loginUser = (email, password) => {
 // }
 
 
-  
-    export const logoutUser = () => (dispatch) => {
-      localStorage.removeItem('data')
-      dispatch({type: LOGOUT_USER})
-    }
-  
-  
+
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem('data')
+    dispatch({ type: LOGOUT_USER })
+}
+
+
 

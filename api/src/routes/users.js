@@ -40,7 +40,10 @@ server.put('/:id', function (req, res) {
 server.get('/', (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
-    atributtes: ["id", "fullname", "email", "banned"]
+    atributtes: ["id", "fullname", "email", "banned"],
+    order: [
+      ['id', 'ASC'],
+    ],
   })
     .then(users => {
       res.json(users);
