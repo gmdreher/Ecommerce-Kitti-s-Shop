@@ -1,11 +1,12 @@
 const server = require('express').Router();
 const { Order, User, OrderDetails, Product, Image } = require('../db.js');
 const { Op } = require("sequelize");
+const protected = require('../middleware/protected')
 
 
 
 //modificar el estado de la orden
-server.put('/:id', (req, res) => {
+server.put('/:id' , protected.isAuth, (req, res) => {
   const { id } = req.params;
   const { state } = req.body;
 
@@ -31,7 +32,7 @@ server.put('/:id', (req, res) => {
     })
 });
 
-server.get("/search", (req, res) => {
+server.get("/search" , protected.isAuth, (req, res) => {
   let state = req.query.state;
   Order.findAll({
     attributes: ["id", "state", "userId"],
@@ -54,7 +55,7 @@ server.get("/search", (req, res) => {
 });
 
 //eliminar un items de la orden
-server.delete("/:orderId/:productId", (req, res) => {
+server.delete("/:orderId/:productId" , protected.isAuth, (req, res) => {
   let { orderId, productId } = req.params;
 
   OrderDetails.destroy({
@@ -73,7 +74,7 @@ server.delete("/:orderId/:productId", (req, res) => {
 
 
 // 41) modificar cantidades del carrito por id usuario
-server.put('/:idUser/cart', (req, res) => {
+server.put('/:idUser/cart' , protected.isAuth, (req, res) => {
   const { idUser } = req.params;
   const { productId, quantity, orderId } = req.body;
 
@@ -98,7 +99,7 @@ server.put('/:idUser/cart', (req, res) => {
 
 
 //Ruta que retorne todas las ordenes
-server.get('/', (req, res) => {
+server.get('/' , protected.isAuthAdmin, (req, res) => {
   Order.findAll({
     include: [
       {
@@ -117,7 +118,7 @@ server.get('/', (req, res) => {
 });
 
 // GET /orders/:id retorna una orden en particular
-server.get('/:id', (req, res) => {
+server.get('/:id' , protected.isAuth, (req, res) => {
   let { id } = req.params;
   Order.findByPk(id, {
     include: [

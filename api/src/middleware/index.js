@@ -1,8 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../db.js');
-const JWTStrategy = require('passport-jwt').Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
 const authConfig = require('../config/auth');
 
 //para guardar los datos del usuario autenticado se guarda una session para eso se debe

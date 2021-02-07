@@ -130,7 +130,7 @@ export default function UserTable() {
                     </thead>
                     <tbody >
                         {
-                            usersData.map((info) => {
+                           usersData && usersData.map((info) => {
                                 return (
                                     <tr>
                                         <td>{info.id}</td>

@@ -5,6 +5,19 @@ import {
     SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER
 } from '../constants/productConstants.js';
 
+if(localStorage.getItem('data')){
+    const accessToken = localStorage.getItem('data')
+
+    axios.interceptors.request.use(
+        config =>{
+            config.headers.authorization=`Bearer ${accessToken}`;
+            return config;
+        },
+        error =>{
+            return Promise.reject(error)
+        }
+    )
+}
 export const getProductById = (id) => async (dispatch) => {
     try {
         const res = await axios.get(`http://localhost:3001/products/${id}`);

@@ -1,7 +1,19 @@
 import axios from "axios";
 import {ADD_REVIEW,GET_ALL_REVIEW_PRODUCT, GET_ALL_REVIEWS_USER, GET_PRODUCTS_STATE_COMPLETE,  EDIT_REVIEW, DELETE_REVIEW} from "../constants/productConstants";
 
+if(localStorage.getItem('data')){
+    const accessToken = localStorage.getItem('data')
 
+    axios.interceptors.request.use(
+        config =>{
+            config.headers.authorization=`Bearer ${accessToken}`;
+            return config;
+        },
+        error =>{
+            return Promise.reject(error)
+        }
+    )
+}
 
 export const getProductStateComplete = (userId) => async (dispatch) => {
 
