@@ -6,6 +6,10 @@ import { getProductById} from '../../actions/productActions.js';
 import { addProductCart} from '../../actions/cartAction';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
+import Review from "../Review/Review"
+
+import Rate from '../CrudReview/Rate';
+import Rewiew from '../Review/Review';
 
 function Product(props) {
     const [quantity,setQuantity] =React.useState('')
@@ -18,12 +22,27 @@ function Product(props) {
     if (props.product.images) {
         imageUrl = props.product.images[0].url;
     }
-    
-  
-    const user = props.userData[props.userData.length-1];
-    console.log('este es el user registrado')
-    console.log(user)
-    console.log(props.userData)
+
+    function Promedio(){
+        if(props.product.Reviews){
+
+        let suma= 0
+        let promedio=0;
+        for(var i=0; i< props.product.Reviews.length; i++){
+            suma= (suma + parseInt(props.product.Reviews[i].rate))
+            promedio= suma / props.product.Reviews.length
+        }
+        let promedioGral=Math.round(promedio)
+
+        // console.log("esto es la suma de las rate", promedioGral)
+
+           return promedioGral
+        }
+    }
+
+
+    const user = props.user;
+
     function handleClick (data){
         props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
     };
@@ -45,11 +64,9 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
+                        {/* <h3>Promedio: {Promedio()}</h3> */}
+                        <h3>{props.product.Reviews && props.product.Reviews >0? <h3>Promedio: {Promedio()}</h3>: <h6></h6>}</h3>
 
-                        <i class="fa fa-star fa-lg" />
-                        <i class="fa fa-star fa-lg" />
-                        <i class="fa fa-star fa-lg" />
-                        <i class="fa fa-star fa-lg" />
                     </div>
                     <p><strong>Precio: </strong> ${props.product.price}</p>
                     <form>
@@ -69,27 +86,24 @@ function Product(props) {
                     <p><strong>Descripción: </strong> {props.product.description}</p>
                 </div>
             </div>
-            <div className="reviews">
-                <h3>Comentarios</h3>
-                <div className="detail">
-                    <div className="usuario">
-                        <h5>Usuario 1 </h5>
-                    </div>
-                </div>
-                <div className="review">
-                    <h5>Óptimo</h5>
-                    <p>Cumple perfectamente con su función. Me gusta porque cede fácilmente, como así también que se pueda poner el nro de teléfono donde dice muy home.</p>
-                </div>
-            </div>
+            <section>
+                <h2>{props.product.Reviews && props.product.Reviews >0 ? <h2>Reseñas</h2>: <h2>Este producto aún no tiene reseñas</h2>}</h2>
+                {props.product.Reviews && props.product.Reviews.map((review)=>{
+                
+                    return <Rewiew key={review.id} data={props.user} data2={props.product.Reviews}/>
+                })}
+                
+                {/* <Rate/> */}
+            </section>
         </div>
     )
 };
 
 function mapStateToProps(state) {
-    console.log('este el el state:', state)
+    // console.log('este el el state:', state)
     return {
         product: state.product.product,
-        userData:state.product.user,
+        user:state.auth.userInfo,
         prodCart :state.product.cart
     }
 }
