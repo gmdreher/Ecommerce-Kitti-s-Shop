@@ -125,7 +125,7 @@ export default function ViewOrder(props) {
                                         </div>
                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => restar(info)}><i class="fas fa-minus"></i></button>
+                                                <button onClick={() => restar(info)}><i className="fas fa-minus"/></button>
                                             </div>
                                         </div>
                                         <div className="dataQuanty" >
@@ -135,7 +135,7 @@ export default function ViewOrder(props) {
                                         </div>
                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => sumar(info)}><i class="fas fa-plus"></i></button>
+                                                <button onClick={() => sumar(info)}><i className="fas fa-plus"/></button>
                                             </div>
                                         </div>
                                         <div className="dataPrice" >
@@ -150,7 +150,7 @@ export default function ViewOrder(props) {
                                         </div>
                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => deleteItems(info)}><i class="far fa-trash-alt"></i></button>
+                                                <button onClick={() => deleteItems(info)}><i className="far fa-trash-alt"/></button>
                                             </div>
                                         </div>
                                     </div >

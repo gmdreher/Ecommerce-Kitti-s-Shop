@@ -113,7 +113,6 @@ function SignUp(props) {
     e.preventDefault();
     props.singUp(input)
     history.push("/")
-
   }
 
   return (//aqui puedo probar si envolviendolo en un modal puedo tenerlo todo mostrado en una modal para que se quede en la parte de atras de lo que estoy viendo, o renderizar en un oton cuando lo llamo

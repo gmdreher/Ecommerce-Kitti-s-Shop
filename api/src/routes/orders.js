@@ -2,6 +2,8 @@ const server = require('express').Router();
 const { Order, User, OrderDetails, Product, Image } = require('../db.js');
 const { Op } = require("sequelize");
 
+
+
 //modificar el estado de la orden
 server.put('/:id', (req, res) => {
   const { id } = req.params;
