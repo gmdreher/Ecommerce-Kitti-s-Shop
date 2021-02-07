@@ -16,6 +16,7 @@ import UserTable from "./components/UserTable/UserTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
 import ResetPass from './components/ResetPass/ResetPass';
 import Login from './components/User/Login'
+import UserProfile from "./components/User/UserProfile";
 import './Styles/App.scss'
 import './App.scss';
 
@@ -31,13 +32,13 @@ function App() {
           <header>
               <Navbar />
               <NavCategories />
-              <Route exact path="/products/category/:categoryName" render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}/>
           </header>
           <main>
             <div className="transparencia">
-
+              <Route exact path="/users/me" component={UserProfile} />
               <Route exact path="/" component={Main} />
               <Route exact path='/products' component={Catalogue} />
+              <Route exact path="/products/category/:categoryName" render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}/>
               <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />
               <Route exact path="/orders/:id" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
               <Route exact path='/admin/products' component={CrudProduct} />
@@ -46,7 +47,8 @@ function App() {
               <Route exact path="/admin/users" component={UserTable} />
               <Route exact path='/user/signup' component={SignUp} />
               <Route exact path='/auth/login' component={Login} />
-            <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />  <Route exact path="/user/order" component={ViewOrder} />
+              <Route exact path='/user/resetPass/:id' render={({match}) => <ResetPass key={match.params.id} id={match.params.id} />} />
+              <Route exact path="/user/order" component={ViewOrder} />
             </div>
           </main>
           <footer>
