@@ -2,11 +2,23 @@ import axios from 'axios';
 import decode from "jwt-decode";
 
 import { POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
-     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
-      UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD, 
-      FORGOT_PASSWORD } from '../constants/productConstants.js';
+    USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
+     UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD,
+     FORGOT_PASSWORD } from '../constants/productConstants.js';
 
+ if(localStorage.getItem('data')){
+    const accessToken = localStorage.getItem('data')
 
+    axios.interceptors.request.use(
+        config =>{
+            config.headers.authorization=`Bearer ${accessToken}`;
+            return config;
+        },
+        error =>{
+            return Promise.reject(error)
+        }
+    )
+}
 
 
 export const getUsers = () => async (dispatch) => {
@@ -21,31 +33,35 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
+export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) => async (dispatch, getState) => {
 
-export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
+
         const users = getState().product.user.slice();
+        var body = { id, banned, fullname, email, password, rol }
 
         try {
-            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
+            const res = await axios.put(`http://localhost:3001/users/${id}`, body);
 
             users && users.forEach((x) => {
-                if (x.id == id && x.banned == false) {
+
+                if (x.id == id) {
                     x.banned = true;
                 }
             });
 
+            console.log(users);
             dispatch({
                 type: UPDATE_USER,
-                payload: res.data
+                payload: users
             });
 
         } catch (error) {
             console.log("Error: " + error)
         }
+
     }
 }
-
 export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
         const users = getState().product.user.slice();
@@ -70,18 +86,22 @@ export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
     }
 }
 
-
 export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
     if (id) {
         const users = getState().product.user.slice();
+
         try {
             const res = await axios.put(`http://localhost:3001/auth/promote/${id}`);
+
             users && users.forEach((x) => {
+
                 if (x.id == id && x.rol !== "admin") {
                     x.rol = "admin";
                 }
             });
+
+            console.log("SE VA------", users);
 
             dispatch({
                 type: UPDATE_PROMOTE,
@@ -92,7 +112,6 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
         }
     }
 }
-
 export const updateToUsers = ({ id, rol }) => async (dispatch, getState) => {
 
     if (id) {
@@ -114,7 +133,6 @@ export const updateToUsers = ({ id, rol }) => async (dispatch, getState) => {
         }
     }
 }
-
 
 export const postResertPassword = ({ id }) => async (dispatch, getState) => {
 
@@ -226,7 +244,6 @@ export const getUserById = (id) => async (dispatch) => {
         console.log("Error: " + error)
     }
 }
-
 export const updatePassword = user => async (dispatch) => {
     try {
         let answer = await axios.put(`http://localhost:3001/users/passwordReset/${user.id}`, user);
@@ -238,7 +255,6 @@ export const updatePassword = user => async (dispatch) => {
         console.log("Error" + error)
     }
 }
-
 
 export const forgotPassword = email => async (dispatch) => {
     try {

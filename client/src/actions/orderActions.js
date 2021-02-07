@@ -1,6 +1,20 @@
 import axios from "axios";
 import {GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER} from "../constants/productConstants";
 
+if(localStorage.getItem('data')){
+  const accessToken = localStorage.getItem('data')
+
+  axios.interceptors.request.use(
+      config =>{
+          config.headers.authorization=`Bearer ${accessToken}`;
+          return config;
+      },
+      error =>{
+          return Promise.reject(error)
+      }
+  )
+}
+
 export function getAllOrders() {
   return function(dispatch) {
     return axios.get('http://localhost:3001/orders')

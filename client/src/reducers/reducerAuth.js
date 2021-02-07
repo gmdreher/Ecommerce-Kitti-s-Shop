@@ -6,7 +6,8 @@ const initialState = {
   userInfo: localStorage.getItem("data") ? decode(localStorage.getItem("data")) : null,
   loading: false,
   error: "",
-  loginFailed: false,
+  isAuthenticated: localStorage.getItem("data")?true:false,
+  loginFailed: false
 };
 
 export default (state = initialState, action) => {
@@ -14,12 +15,14 @@ export default (state = initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        loading: true
+        loading: true,
+        isAuthenticated:true
       }
     case USER_LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
+        isAuthenticated:true,
         userInfo: decode(action.payload)
       }
     case USER_LOGIN_FAIL:
@@ -27,10 +30,11 @@ export default (state = initialState, action) => {
         ...state,
         loginFailed: true,
         loading: false,
-        error: action.payload
+        error: action.payload,
+        isAuthenticated:false
       }
     case LOGOUT_USER:
-      return {}
+      return { isAuthenticated:false}
 
     default:
       return state;

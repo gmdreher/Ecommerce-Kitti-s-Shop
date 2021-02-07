@@ -111,7 +111,7 @@ export default (state = initialState, action) => {
         case POST_USER:
             return {
                 ...state,
-                user: [...state.user, action.payload]
+                user: action.payload
             }
         case GET_USER:
             return {

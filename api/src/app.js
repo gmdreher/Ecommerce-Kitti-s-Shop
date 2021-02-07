@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -9,11 +7,13 @@ const cors =require('cors');
 const passport = require('passport')
 const session = require('express-session');
 const {User} = require('./db')
+const configAuth = require('../src/config/auth')
 
 
 
 require('./db.js');
 require('./middleware/index')
+const store = new session.MemoryStore;
 const server = express();
 server.use(cors());
 
@@ -21,12 +21,12 @@ server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
-server.use(cookieParser('ecommerce-ft08-g07'));
+server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(session({
-  secret: 'ecommerce-ft08-g07',
-  resave:false,
-  saveUninitialized:false,
+  secret: configAuth.secret,
+  resave:true,
+  saveUninitialized:true,
 }))
 
 

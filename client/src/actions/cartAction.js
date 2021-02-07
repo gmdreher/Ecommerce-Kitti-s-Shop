@@ -6,6 +6,20 @@ import {
     DELETE_ITEM_LC, UPDATE_COUNT_PRODUCT
 } from '../constants/productConstants.js';
 
+if(localStorage.getItem('data')){
+    const accessToken = localStorage.getItem('data')
+
+    axios.interceptors.request.use(
+        config =>{
+            config.headers.authorization=`Bearer ${accessToken}`;
+            return config;
+        },
+        error =>{
+            return Promise.reject(error)
+        }
+    )
+}
+
 export const addProductCart = (data) => async (dispatch, getState) => {
 
     if (!data.userId) {

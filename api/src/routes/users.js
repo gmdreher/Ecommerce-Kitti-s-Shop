@@ -1,21 +1,21 @@
 const server = require('express').Router();
 const { Order, User, OrderDetails, Review, Product } = require('../db.js');
-const passport = require('passport')
+const passport = require('passport');
+const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
-const { Op } = require("sequelize");
+//const { Op } = require("sequelize");
 
 //Ruta de crear usuario
 //Pau
-server.post('/', passport.authenticate('signup'), async (req, res) => {
-
-  res.json({
-    message: 'SignUp success',
-    user: req.user
+server.post('/', passport.authenticate('signup'),async(req,res)=>{
+    res.json({
+    message: 'SignUp success'
+  
   })
 })
 
 //PUT users/:id S35 : Ruta para modificar Usuario
-server.put('/:id', function (req, res) {
+server.put('/:id' ,protected.isAuth, function (req, res) {
   const { id } = req.params;
   const { fullname, email, password, rol, banned } = req.body;
   User.findByPk(id)
@@ -39,7 +39,7 @@ server.put('/:id', function (req, res) {
 });
 
 
-server.get('/', (req, res) => {
+server.get('/' , protected.isAuthAdmin, (req, res) => {
   User.findAll({
     //en la ruta de Canela no estaban los atributos
     atributtes: ["id", "fullname", "email", "banned", "reset"],
@@ -57,7 +57,7 @@ server.get('/', (req, res) => {
 
 
 //Traer id de usuario
-server.get("/:id", (req, res) => {
+server.get("/:id" , protected.isAuth, (req, res) => {
   const id = req.params.id;
   User.findOne({
     where: { id: id },
@@ -71,7 +71,7 @@ server.get("/:id", (req, res) => {
 });
 
 //agregar item al carrito
-server.post('/:userId/order', (req, res) => {
+server.post('/:userId/order', protected.isAuth, (req, res) => {
   let { userId } = req.params;
   let { productId, price, quantity } = req.body;
 
@@ -103,7 +103,7 @@ server.post('/:userId/order', (req, res) => {
 });
 
 //obtener todos los items del carrito
-server.get("/:userId/order/:state", (req, res) => {
+server.get("/:userId/order/:state", protected.isAuth, (req, res) => {
   let { userId, state } = req.params;
 
   Order.findOne({
@@ -157,7 +157,7 @@ server.get("/:userId/order/:state", (req, res) => {
 });
 
 //vaciar carrito
-server.delete("/:userId/order/:orderId", (req, res) => {
+server.delete("/:userId/order/:orderId" , protected.isAuth, (req, res) => {
 
   let { userId, orderId } = req.params;
 
@@ -174,7 +174,7 @@ server.delete("/:userId/order/:orderId", (req, res) => {
 })
 
 // task 45 GET /users/:id/orders.. ruta que retorne todas las ordenes de los usuarios
-server.get('/:id/orders', (req, res) => {
+server.get('/:id/orders' , protected.isAuth, (req, res) => {
   let { id } = req.params;
   Order.findAll({
     where: {
