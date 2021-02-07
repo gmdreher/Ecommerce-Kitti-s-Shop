@@ -128,23 +128,28 @@ useEffect(()=>{
 
   let conRev= [];
   let sinRev=[];
+  let productCompletUno= productsComplete;
+  let reviewUno= reviews;
 
-  for(let i=0; i<productsComplete.length; i++){
+  for(let i=0; i<productCompletUno.length; i++){
 
     let bandera= 0;
 
-    for(let j=0; j<reviews.length; j++){
+    for(let j=0; j<reviewUno.length; j++){
     
-      if(productsComplete[i].OrderDetails.productId === reviews[j].productId){
+      if(productCompletUno[i].OrderDetails.productId === reviewUno[j].productId){
+
         bandera++
-        conRev.push({...productsComplete[i], reviews: reviews[j] } )
+        conRev.push({...productCompletUno[i], reviews: reviewUno[j] } )
+
+        reviewUno = reviewUno.filter((e)=> e.id != reviewUno[j].id)
         break
       }
     }
-    if(bandera===0 ) sinRev.push(productsComplete[i])
+    if(bandera===0 ) sinRev.push(productCompletUno[i])
   }
-// console.log("con", conRev);
-// console.log("sin", sinRev);
+console.log("con", conRev);
+console.log("sin", sinRev);
 
 setProductWithReview(conRev);
 setProductWithoutReview(sinRev)
