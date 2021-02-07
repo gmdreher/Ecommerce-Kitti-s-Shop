@@ -3,16 +3,15 @@ import styles from './review.module.scss';
 import Moment from 'moment';
 
 
-export default function Rewiew({data, data2}) {
-   console.log("esto es data 1", data) 
-    
+export default function Rewiew({data}) {
+    console.log("esto es data", data)
 
 function formatDate(date) {
     let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY')
     }
 
-let valor= data2.rate;
+let valor= data.rate;
 
 function rate(valor){
 
@@ -80,15 +79,16 @@ function rate(valor){
     return(
         <>
           <div className= {styles.container}>
-                <div >
-                    <h4>Nombre: {data.fullname}</h4>
+               { data&& <><div >
+                 <h4>{data.user.fullname}</h4>
+                    
                     <label>{rate(valor)}</label>
 
                 </div>
                 <div >
-                    <p>{data2.description}</p>
-                    <label>{formatDate(data2.createdAt)}</label>
-                </div>
+                    <p>{data.description}</p>
+                    <label>{formatDate(data.createdAt)}</label>
+                </div></>}
             </div>
             
         </>

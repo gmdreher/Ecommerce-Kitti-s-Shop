@@ -4,7 +4,6 @@ import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, La
 import styles from './crudReview.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
 
-import {  getUserById } from '../../actions/userAction'
 import { addReview, editReview, getAllReviewsUser, getProductStateComplete, deleteReview } from '../../actions/reviewAction';
 
 
@@ -17,11 +16,11 @@ export default function CrudReview(props) {
   const reviews = useSelector((store) => store.product.reviews);
 
 
-// console.log("este es el usuario", user)
+
   const [input, setInput] = useState({
     description: '',
     rate: '',
-    name: user.fullname
+    userId: props.id
   });
   const [idProductAdding, setIdProductAdding] = useState()
   const [infoEdit,setInfoEdit] = useState()
@@ -48,7 +47,6 @@ export default function CrudReview(props) {
   //get products y usuario
   useEffect(() => {
     // deberia obtener los productos que ya compré
-    dispatch(getUserById(props.id))
     dispatch(getProductStateComplete(props.id))
     dispatch(getAllReviewsUser(props.id))
   }, [])
@@ -232,8 +230,6 @@ setProductWithoutReview(sinRev)
             <ModalBody>
 
               <FormGroup  onSubmit={e=>e.preventDefault()}>
-                <Label>{user.fullname}</Label>
-                <br/>
                 <Label for="description"> Descripcion</Label>
                 <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`}  name="description" id='description' placeholder='Deja tu comentario...'value={input.description} onChange={handleInputChange} />
                 {errors.description && (
@@ -277,7 +273,6 @@ setProductWithoutReview(sinRev)
 
 
               <FormGroup  onSubmit={e=>e.preventDefault()}>
-              <Label><strong>{user.fullname}</strong></Label>
               <br/>
                 <Label for="description">Descripcion</Label>
                 <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' value={input.description} onChange={handleInputChange} />

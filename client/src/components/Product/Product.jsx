@@ -4,15 +4,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
  import { useDispatch, useSelector } from 'react-redux';
 import { getProductById} from '../../actions/productActions.js';
 import { addProductCart} from '../../actions/cartAction';
+import { getUsers} from '../../actions/userAction';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import Rewiew from '../Review/Review';
+import Review from '../Review/Review';
 
 function Product(props) {
     const [quantity,setQuantity] =React.useState('')
+    // const usersData = useSelector(store => store.product.user);
 
     useEffect(() => {
         props.getProductById(props.id);
+        // props.getUsers()
     }, [])
     
     let imageUrl;
@@ -158,7 +161,8 @@ function Product(props) {
 
                 {props.product.Reviews && props.product.Reviews.map((review)=>{
                 
-                    return <Rewiew key={review.id} data={props.user} data2={props.product.Reviews}/>
+                        return <Review key={review.id}  data={review}/>
+                
                 })}
                 
             </section>
@@ -175,4 +179,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getProductById,addProductCart })(Product);
+export default connect(mapStateToProps, { getProductById,addProductCart, getUsers })(Product);
