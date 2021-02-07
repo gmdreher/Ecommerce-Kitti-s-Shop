@@ -8,7 +8,7 @@ export const getProductStateComplete = (userId) => async (dispatch) => {
     try {
         const products = await axios.get(`http://localhost:3001/users/${userId}/orders/complete`);
 
-        
+        // console.log("esto es products",products)
         let producto=[];// todos los productos con y sin review
  
         for(var i=0; i<products.data.length; i++){ //con esto accedo a las ordenes
@@ -52,7 +52,7 @@ export const addReview = (productId,body) => async (dispatch) => {
     try {
         const product = await axios.post(`http://localhost:3001/products/${productId}/review`,body);
 
-        console.log('esto es product de add review',product.data )
+        // console.log('esto es product de add review',product.data )
 
         dispatch({
             type: ADD_REVIEW,
