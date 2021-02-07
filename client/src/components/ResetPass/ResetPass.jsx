@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useSelector } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Modal, ModalHeader, Row } from 'reactstrap'
-import logo from '../../img/logo.png'
+import { Modal, ModalHeader} from 'reactstrap'
 import { connect } from 'react-redux'
 import { updatePassword, getUserById } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
@@ -125,14 +121,13 @@ const handleEdit = function (password) {
     <Modal isOpen={modal} toggle={toggle}>
 
       <ModalHeader toggle={toggle}>
-        
         <h1>Nueva Contraseña</h1>
-       
-
       </ModalHeader>
+
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => handleSubmit(e)}>
+            
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

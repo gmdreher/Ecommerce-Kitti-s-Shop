@@ -257,8 +257,6 @@ export const forgotPassword = email => async (dispatch) => {
     }
 }
 
-
-
   
     export const logoutUser = () => (dispatch) => {
       localStorage.removeItem('data')

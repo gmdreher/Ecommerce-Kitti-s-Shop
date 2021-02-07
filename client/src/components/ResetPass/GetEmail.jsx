@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useSelector } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
+
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -10,10 +10,10 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Modal, ModalHeader, Row } from 'reactstrap'
+import { Modal, ModalHeader } from 'reactstrap'
 import logo from '../../img/logo.png'
 import { connect } from 'react-redux'
-import { updatePassword, getUserById } from '../../actions/userAction'
+import { forgotPassword } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
 import styles from './resetPass.module.scss'
 
@@ -33,7 +33,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    width: '100%', 
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
  function validate(input) { 
-
   let errors = {};  
   
   if (!input.email) {
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   return errors;
 };
 
- function ResetPassByMail(props) {
+ function GetEmail(props) {
   const classes = useStyles();
   const history = useHistory()
 
@@ -91,38 +90,39 @@ const useStyles = makeStyles((theme) => ({
     }));
   }
 
-
 const handleSubmit = (e) => {
   e.preventDefault();
   history.push("/")
 }
 
-// const handleEdit = function (password) {
-//   console.log(password)
-//   props.updatePassword(password);
-// }
+const handleSend = function (email) {
+  console.log(email)
+  props.forgotPassword(email);
+}
 
   return (
     <Modal isOpen={modal} toggle={toggle}>
 
       <ModalHeader toggle={toggle}>
-        <h1>Nueva Contraseña</h1>
+        <h2>Recuperar Contraseña</h2>
       </ModalHeader>
-
+ 
       <Container component="main" maxWidth="xs">
+     
         <div className={classes.paper}>
+        <h3>Ingresa tu Mail</h3>
+        <br/>
           <form onSubmit={(e) => handleSubmit(e)}>
-    
+           
               <Grid item xs={12}>
                 <TextField
                
                   variant="outlined"
                   required
                   fullWidth
-                  name="mail"
-                  label="Correo Electrónico"
-               
                   id="email"
+                  name="email"
+                  label="Correo Electrónico"
                   value={input.email}
                   onChange={handleChange}
                 />
@@ -140,7 +140,7 @@ const handleSubmit = (e) => {
               variant="contained"
               disabled
               >
-              Buscar
+              Enviar
           </Button> 
               :
             <Button El boton de registro
@@ -148,14 +148,14 @@ const handleSubmit = (e) => {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={() => handleEdit({id: props.id, newPassword: input.newPass})}
+              onClick={() => handleSend({email: input.email})}
               className={classes.submit}>
-              Buscar
+              Enviar
           </Button>}
             
           </form> 
         </div>
-        <Box mt={5}>
+        <Box mt={3}>
           <Copyright />
         </Box>
         
@@ -163,15 +163,10 @@ const handleSubmit = (e) => {
     </Modal >
   );
 }
-function mapStateToProps(state) {
-  return {
-    user: state.product.user
-  }
-}
+
 function mapDispatchToProps(dispatch) {
   return {
-    getUserById: (id) => dispatch(getUserById(id)),
-    updatePassword: (id, payload) => dispatch(updatePassword(id, payload))
+    forgotPassword: (email) => dispatch(forgotPassword(email))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassByMail)
+export default connect(null, mapDispatchToProps)(GetEmail)

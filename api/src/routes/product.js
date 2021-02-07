@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category, Image, Review } = require('../db.js');
+const { Product, Category, Image, Review, User } = require('../db.js');
 const { Op } = require("sequelize");
 const protected = require('../middleware/protected')
 
@@ -216,7 +216,10 @@ server.get("/:id", (req, res) => {
     where: { id: id },
     include: [
       { model: Image},
-      {model: Review}
+      {
+        model: Review,
+        include:[User]
+        }
     ],
   })
     .then((product) => {

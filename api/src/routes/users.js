@@ -260,32 +260,32 @@ server.put('/passwordReset/:id', function (req, res) {
 });
 
 //get todas las ordenes, con productos de un usuario
-server.get('/:id/orders/complete', (req, res)=>{
-  const {id} = req.params;
-  User.findByPk(id)
-  .then((user)=>{
-    Order.findAll({
-      where: { 
-        state: "completa",
-      userId: user.id },
-      include: [
-        {
-          model: Product,
-          as: "products",
-          attributes: ["name", "description", "stock", "price"],
-          include:[
-            {
-              model: Review,
-              where:{
-                userId: user.id
-              }
-            }
-          ]
-        },
-      ],
-    }).then((r) => res.status(200).json(r));
-  });
-})
+// server.get('/:id/orders/complete', (req, res)=>{
+//   const {id} = req.params;
+//   User.findByPk(id)
+//   .then((user)=>{
+//     Order.findAll({
+//       where: { 
+//         state: "completa",
+//       userId: user.id },
+//       include: [
+//         {
+//           model: Product,
+//           as: "products",
+//           attributes: ["name", "description", "stock", "price"],
+//           include:[
+//             {
+//               model: Review,
+//               where:{
+//                 userId: user.id
+//               }
+//             }
+//           ]
+//         },
+//       ],
+//     }).then((r) => res.status(200).json(r));
+//   });
+// })
 
 //user olvida la contraseña
 server.post('/forgot', (req, res) =>{
@@ -348,7 +348,7 @@ server.get('/:id/orders/complete', (req, res)=>{
           // ] 
         },
       ],
-    }).then((r) => res.status(200).json(r));
-  });
+    }).then((r) =>  res.status(200).json(r));
+  })
 })
 module.exports = server;
