@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from './login.module.scss'
+import styles from '../User/login.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions/userAction";
