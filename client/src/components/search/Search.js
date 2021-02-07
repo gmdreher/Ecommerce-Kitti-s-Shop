@@ -26,8 +26,8 @@ export default function Search() {
     return (
         <div className={style.searchBar} >
             <form onSubmit={handleSubmit}>
-                <input name='search' type='text' placeholder='Buscar...' onChange={handleChange}></input>
-                <button><i class="fas fa-search" ></i></button>
+                <input name='search' type='text' placeholder='Buscar...' onChange={handleChange}/>
+                <button><i className="fas fa-search" /></button>
             </form>
         </div>
     )

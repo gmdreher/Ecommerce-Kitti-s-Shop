@@ -4,7 +4,8 @@ import { POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
      UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD, 
      FORGOT_PASSWORD } from '../constants/productConstants.js';
-if(localStorage.getItem('data')){
+
+ if(localStorage.getItem('data')){
     const accessToken = localStorage.getItem('data')
 
     axios.interceptors.request.use(
@@ -182,27 +183,28 @@ export const postUser = (data) => async (dispatch, getState) => {
 }
 
 export const loginUser = (email, password) => {
-  return function (dispatch){
-    dispatch({type: LOGIN_USER, payload: {email, password}});
-    return axios.post('http://localhost:3001/auth/login', {email, password})
-      .then(res => {
-        dispatch({type: USER_LOGIN_SUCCESS, payload: res.data})
-        localStorage.setItem('data', res.data);
-        let cartItems = localStorage.getItem('cartItems', )
-        dispatch({type: ADD_TO_CART, payload: cartItems})
-        localStorage.removeItem('cartItems');
-      })
-      .catch(error =>{
-        dispatch({
-          type: USER_LOGIN_FAIL,
-          payload:
-            error.response && error.response.data.message
-              ? error.response.data.message
-              : error.message,
-        })
-      })
-  }
+    return function (dispatch) {
+        dispatch({ type: LOGIN_USER, payload: { email, password } });
+        return axios.post('http://localhost:3001/auth/login', { email, password })
+            .then(res => {
+                dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
+                localStorage.setItem('data', res.data);
+            })
+            .catch(error => {
+                dispatch({
+                    type: USER_LOGIN_FAIL,
+                    payload: error.response || error.response.data
+                    
+                })
+            })
+    }
 }
+
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem('data')
+    dispatch({ type: LOGOUT_USER })
+}
+
 export const getUserById = (id) => async (dispatch) => {
     try {
         const respuesta = await axios.get(`http://localhost:3001/users/${id}`);
@@ -227,24 +229,6 @@ export const updatePassword = user => async (dispatch) => {
     }
 }
 
-//   => async (dispatch, getState) => {
-//   dispatch({type: LOGIN_USER, payload: {email, password}});
-//
-//   try {
-//     const {data} = await axios.post('http://localhost:3001/auth/login', {email, password})
-//
-//     dispatch({type: USER_LOGIN_SUCCESS, payload: data})
-//     localStorage.setItem('data', data);
-//   } catch (error) {
-//     dispatch({
-//       type: USER_LOGIN_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     })
-//   }
-// }
 export const forgotPassword = email => async (dispatch) => {
     try {
         let answer = await axios.post(`http://localhost:3001/users/forgot`, email);
@@ -257,10 +241,6 @@ export const forgotPassword = email => async (dispatch) => {
     }
 }
 
-  
-    export const logoutUser = () => (dispatch) => {
-      localStorage.removeItem('data')
-      dispatch({type: LOGOUT_USER})
-    }
- 
+
+
 

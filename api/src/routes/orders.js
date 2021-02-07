@@ -3,8 +3,10 @@ const { Order, User, OrderDetails, Product, Image } = require('../db.js');
 const { Op } = require("sequelize");
 const protected = require('../middleware/protected')
 
+
+
 //modificar el estado de la orden
-server.put('/:id' , protected.isAuthAdmin, (req, res) => {
+server.put('/:id' , protected.isAuth, (req, res) => {
   const { id } = req.params;
   const { state } = req.body;
 
@@ -30,7 +32,7 @@ server.put('/:id' , protected.isAuthAdmin, (req, res) => {
     })
 });
 
-server.get("/search" , protected.isAuthAdmin, (req, res) => {
+server.get("/search" , protected.isAuth, (req, res) => {
   let state = req.query.state;
   Order.findAll({
     attributes: ["id", "state", "userId"],
@@ -116,7 +118,7 @@ server.get('/' , protected.isAuthAdmin, (req, res) => {
 });
 
 // GET /orders/:id retorna una orden en particular
-server.get('/:id' , protected.isAuthAdmin, (req, res) => {
+server.get('/:id' , protected.isAuth, (req, res) => {
   let { id } = req.params;
   Order.findByPk(id, {
     include: [

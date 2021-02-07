@@ -17,8 +17,14 @@ server.post('/login', passport.authenticate('login',{session:true}), (req, res) 
   res.status(400).send(err);
  }
 });
+server.post('/logout',protected.isAuth, (req, res) => {
+    if (req.isAuthenticated()) {
+        req.logout();
+        return res.sendStatus(200);
+    }
+});
 
-server.get('/me', (req, res) => {
+server.get('/me',protected.isAuth, (req, res) => {
     if (req.isAuthenticated()) return res.send(req.user);  
     else return res.status(401).send('Debes Iniciar Sesion');
 });

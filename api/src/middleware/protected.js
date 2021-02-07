@@ -5,12 +5,14 @@ const {User} = require('../db.js')
 
 exports.isAuthAdmin = async function(req,res,next){
     if(!req.headers.authorization){
+        console.log('no llega el auth de admin')
         return res.status(403).send({message:'No tienes autorizacion'})
     }
     const token =req.headers.authorization.split(" ")[1]
     const payload = jwt.decode(token,authConfig.secret)
     let user = await User.findOne({where:{id:payload.id}})
     if(user.rol !== 'admin'){
+        console.log('debes ser admin rol')
         return res.status(403).send({message:'No tienes autorizacion'})
     }   
     if (payload.exp <= moment().unix()){
@@ -22,6 +24,7 @@ exports.isAuthAdmin = async function(req,res,next){
 }
 exports.isAuth = async function(req,res,next){
      if(!req.headers.authorization){
+        console.log('no llega el auth')
          console.log('No tienes autorizacion')
          return res.status(403).send({message:'No tienes autorizacion'})
      }

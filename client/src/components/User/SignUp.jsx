@@ -3,10 +3,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
+//import styles from './login.module.scss'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -91,11 +91,11 @@ function SignUp(props) {
     banned: false,
     
   })
-  const [modal, setModal] = useState(true);
+ /*  const [modal, setModal] = useState(true);
   const toggle = () => {
     history.push("/");
     setModal(!modal);
-  }
+  } */
   //estado errores
   const [errors, setErrors] = useState({});
 
@@ -113,24 +113,15 @@ function SignUp(props) {
     e.preventDefault();
     props.singUp(input)
     history.push("/")
-
   }
 
-  return (//aqui puedo probar si envolviendolo en un modal puedo tenerlo todo mostrado en una modal para que se quede en la parte de atras de lo que estoy viendo, o renderizar en un oton cuando lo llamo
-    <Modal isOpen={modal} toggle={toggle}>
+  return (
+    <div className={'container ' + styles.globalContainer}>
+        <div className={styles.formContainer}>
 
-      <ModalHeader toggle={toggle}>
-        {/* <CssBaseline /> */}
-
-
-        {/* <Avatar alt="Kitty's Shop" src={logo} /> */}
-
-        {/* <Typography component="h1" variant="h5"> */}
-        <h1>Regístrame</h1>
-        {/* </Typography> */}
-
-      </ModalHeader>
-      <Container component="main" maxWidth="xs">
+        <h2 className={styles.title}>Regístrate</h2>
+    
+      <Container maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => regUser(e)}>
             <Grid container spacing={2}>
@@ -186,40 +177,25 @@ function SignUp(props) {
                 <p className={styles.danger}>{errors.password}</p>
               )}
             </Grid>
-
-            {errors.fullname || errors.password || errors.email ?
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                disabled
-              >
-                Registrarse
-          </Button>
-              :
-              <Button El boton de registro
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}>
-                Registrarse
-          </Button>}
+          <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
+          <button type="submit" disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
+        </div>
+        
             <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="/auth/login" variant="body2">
+              <Link to='/auth/login'>
+              <Grid item >
                   Ya tienes una cuenta? Ingresa aquí
-              </Link>
               </Grid>
+              </Link>
             </Grid>
-          </form> {/* posibe erino del modal */}
+          </form>
         </div>
         <Box mt={5}>
           <Copyright />
         </Box>
       </Container>
-    </Modal >
+      </div>
+</div>
   );
 }
 function mapStateToProps(state) {

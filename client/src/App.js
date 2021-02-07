@@ -17,12 +17,13 @@ import ViewOrder from './components/ViewOrder/ViewOrder';
 import ResetPass from './components/ResetPass/ResetPass';
 import GetEmail from './components/ResetPass/GetEmail';
 import Login from './components/User/Login'
+import UserProfile from "./components/User/UserProfile";
 import './Styles/App.scss'
-import {Link} from "react-router-dom";
 import PrivateRoute from './components/PrivateRoutes.js'
 
 
 import './App.scss';
+
 import decode from 'jwt-decode';
 import {useSelector} from "react-redux";
 import CrudReview from './components/CrudReview/CrudReview';
@@ -32,32 +33,26 @@ import CrudReview from './components/CrudReview/CrudReview';
 function App() {
   
   const user = useSelector(store => store.auth.userInfo);
-  
-  
   return (
     <BrowserRouter>
       <div className='body'>
         <div className="App">
           <header>
-            <Navbar />
-            <NavCategories />
-            <Route
-               exact path="/products/category/:categoryName"
-              render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}
-            />
+              <Navbar />
+              <NavCategories />
           </header>
           <main>
             <div className="transparencia">
-
+              <Route exact path="/users/me" component={UserProfile} />
               <Route exact path="/" component={Main} />
               <Route exact path='/products' component={Catalogue} />
+              <Route exact path="/products/category/:categoryName" render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}/>
               <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />
               <Route exact path='/user/signup' component={SignUp} />
               <Route exact path='/auth/login' component={Login} />
               <Route exact path="/user/order" component={ViewOrder} />
 
             <Route exact path='/user/getEmail' component={GetEmail} />
-            {/* <Route exact path="/user/:1/review" component={CrudReview} /> */}
            <Route exact path="/user/review/:id" render={({ match }) =>(user&&user.id==match.params.id? <CrudReview key={match.params.id} id={match.params.id} />:<Redirect to='/'/>)} />
             <Route exact path='/user/resetPass/:id' render={({match}) => (user&&user.id==match.params.id?<ResetPass key={match.params.id} id={match.params.id} />:<Redirect to='/'/>)} />
             
@@ -70,7 +65,6 @@ function App() {
     </div>
     
           </main>
-
           <footer>
             <Footer />
           </footer>
