@@ -31,6 +31,7 @@ export default function Login(props) {
   const loginFailed = useSelector(store => store.auth.loginFailed)
   const userState = useSelector(store => store.auth.userInfo)
   
+  // obj && Object.keys(obj).length === 0 && obj.constructor === Object
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,8 +40,7 @@ export default function Login(props) {
       [event.target.name]: event.target.value
     });
     
-    if (!errors) {
-  
+    if (Object.keys(errors).length === 0 ) {
       dispatch(loginUser(user.email, user.password))
     }
     setUser({email: "", password: ""});
@@ -70,7 +70,7 @@ export default function Login(props) {
         <h2 className={styles.title}>Iniciar sesión</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           { loginFailed && <div className="alert alert-danger" role="alert">
-            Los datos ingresados son incorrecto. Por favor, intente de nuevo.
+            Los datos ingresados son incorrectos. Por favor, intente de nuevo.
           </div>
           }
           <div className="mb-3">
@@ -82,6 +82,7 @@ export default function Login(props) {
               id="exampleInputEmail1" aria-describedby="emailHelp"
               value={user.email}
               error={errors.email}
+              required
               onChange={handleInputChange}
             />
             {errors.email && (<p className="invalid-feedback">{errors.email}</p>)}
@@ -96,6 +97,7 @@ export default function Login(props) {
               name="password"
               value={user.password}
               error={errors.password}
+              required
               className={"form-control " + styles.input + `${errors.password && ' is-invalid'}`}
               id="exampleInputPassword1"
               onChange={handleInputChange}
