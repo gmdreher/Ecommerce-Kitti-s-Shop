@@ -22,9 +22,9 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-     
+
         Kitty's Shop
-     
+
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -51,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function validate(input) { 
+function validate(input) {
   let errors = {};
   //no escribe nombre
-  if( !input.fullname ){
+  if (!input.fullname) {
     errors.fullname = "**Requiere Nombre"
   }
   //no escribe mail
@@ -65,16 +65,16 @@ const useStyles = makeStyles((theme) => ({
     //tira este error
     errors.email = '**Ingresar un correo válido';
   }
-//password
-if(!input.password){
-  errors.password = '**Requiere una Contraseña';
+  //password
+  if (!input.password) {
+    errors.password = '**Requiere una Contraseña';
 
-} else if(input.password.length<8){
-  errors.password = '**La contraseña debe tener minimo 8 caracteres';
-}else if (!/(?=.*[0-9])/.test(input.password)){
-  errors.password = '**La contraseña debe llevar letras y números';
-}
-//si no hay errores devuelve objeto vacio
+  } else if (input.password.length < 8) {
+    errors.password = '**La contraseña debe tener minimo 8 caracteres';
+  } else if (!/(?=.*[0-9])/.test(input.password)) {
+    errors.password = '**La contraseña debe llevar letras y números';
+  }
+  //si no hay errores devuelve objeto vacio
   return errors;
 };
 
@@ -86,15 +86,18 @@ function SignUp(props) {
     fullname: '',
     email: '',
     password: '',
-    rol: 'User'
+    rol: 'User',
+    reset: false,
+    banned: false,
+    
   })
   const [modal, setModal] = useState(true);
   const toggle = () => {
     history.push("/");
     setModal(!modal);
   }
-   //estado errores
-   const [errors, setErrors] = useState({});
+  //estado errores
+  const [errors, setErrors] = useState({});
 
   const handleChange = e => {
     setInput({
@@ -143,31 +146,31 @@ function SignUp(props) {
                   label="Nombre"
                   autoFocus
                   onChange={handleChange}
-                  
+
                 />
               </Grid>
               {errors.fullname && (
-                    <p className={styles.danger}>{errors.fullname}</p>
-                  )}
+                <p className={styles.danger}>{errors.fullname}</p>
+              )}
               <Grid item xs={12}>
                 <TextField
-                className={`${errors.email} && 'danger'`}
+                  className={`${errors.email} && 'danger'`}
                   variant="outlined"
                   required
                   fullWidth
                   id="email"
-                  label="Correo Electronico"
+                  label="Correo Electrónico"
                   name="email"
                   autoComplete="email"
                   onChange={handleChange}
                 />
               </Grid>
               {errors.email && (
-                    <p className={styles.danger}>{errors.email}</p>
-                  )}
+                <p className={styles.danger}>{errors.email}</p>
+              )}
               <Grid item xs={12}>{/*  campo de contraseña */}
                 <TextField
-                className={`${errors.password} && 'danger'`}
+                  className={`${errors.password} && 'danger'`}
                   variant="outlined"
                   required
                   fullWidth
@@ -180,28 +183,28 @@ function SignUp(props) {
                 />
               </Grid>
               {errors.password && (
-                    <p className={styles.danger}>{errors.password}</p>
-                  )}
+                <p className={styles.danger}>{errors.password}</p>
+              )}
             </Grid>
-            
-            {errors.fullname || errors.password || errors.email ?  
-            
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled
+
+            {errors.fullname || errors.password || errors.email ?
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled
               >
-              Registrarse
-          </Button> 
+                Registrarse
+          </Button>
               :
-            <Button El boton de registro
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}>
-              Registrarse
+              <Button El boton de registro
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}>
+                Registrarse
           </Button>}
             <Grid container justify="flex-end">
               <Grid item>

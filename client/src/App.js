@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/navBar/NavBar';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Catalogue from './components/catalogue/Catalogue.js';
 import Product from './components/Product/Product.jsx';
 import NavCategories from "./components/Categories/NavCategories";
@@ -14,6 +14,7 @@ import OrderDetails from "./components/OrderDetails/OrderDetails";
 import OrderTable from "./components/OrderTable/OrderTable";
 import UserTable from "./components/UserTable/UserTable";
 import ViewOrder from './components/ViewOrder/ViewOrder';
+import ResetPass from './components/ResetPass/ResetPass';
 import Login from './components/User/Login'
 import './Styles/App.scss'
 import {Link} from "react-router-dom";
@@ -23,29 +24,14 @@ import PrivateRoute from './components/PrivateRoutes.js'
 import './App.scss';
 import decode from 'jwt-decode';
 import {useSelector} from "react-redux";
+import CrudReview from './components/CrudReview/CrudReview';
 
 
 
 function App() {
   
+  const user = useSelector(store => store.auth.userInfo);
   
-  const checkAuth = () => {
-    const token = localStorage.getItem("token");
-    const refreshToken = localStorage.getItem('refreshToken')
-
-    if(!token || refreshToken){
-      return false;
-    }
-    try{
-      const exp = decode(token.token)
-      console.log(exp)
-      if(exp < new Date().getTime()){
-        return false;
-      }
-    }catch (e) {
-      return false
-    }
-  }
   
   return (
     <BrowserRouter>
@@ -55,7 +41,7 @@ function App() {
             <Navbar />
             <NavCategories />
             <Route
-              path="/products/category/:categoryName"
+               exact path="/products/category/:categoryName"
               render={({ match }) => <ProductsByCategory key={match.params.categoryName} categoryName={match.params.categoryName} />}
             />
           </header>
@@ -65,19 +51,19 @@ function App() {
               <Route exact path="/" component={Main} />
               <Route exact path='/products' component={Catalogue} />
               <Route exact path="/products/detalle/:id" render={({ match }) => <Product key={match.params.id} id={match.params.id} />} />
+              <Route exact path='/user/signup' component={SignUp} />
+              <Route exact path='/auth/login' component={Login} />
+              <Route exact path="/user/order" component={ViewOrder} />
+            {/* <Route exact path="/user/:1/review" component={CrudReview} /> */}
+           <Route exact path="/user/review/:id" render={({ match }) =>(user&&user.id==match.params.id? <CrudReview key={match.params.id} id={match.params.id} />:<Redirect to='/'/>)} />
+            <Route exact path='/user/resetPass/:id' render={({match}) => (user&&user.id==match.params.id?<ResetPass key={match.params.id} id={match.params.id} />:<Redirect to='/'/>)} />
+            
 
-              <PrivateRoute exact path="/orders/:id" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
-
-
-              <PrivateRoute exact path='/admin/products' component={CrudProduct} />
+             <PrivateRoute exact path='/admin/products' component={CrudProduct} />
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
-            <Route exact path='/user/signup' component={SignUp} />
-        
-            <Route exact path='/auth/login' component={Login} />
-            
-            <Route exact path="/user/order" component={ViewOrder} />
+              <Route exact path="/orders/:id" render={({ match }) => (user&&user.rol=='admin'?<OrderDetails key={match.params.id} id={match.params.id} />: <Redirect to='/'/>)}/>
     </div>
     
           </main>

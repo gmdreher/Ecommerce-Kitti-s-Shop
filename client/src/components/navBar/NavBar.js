@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import Search from '../search/Search.js'
 import logo from '../../img/logo.png'
 import style from './navBar.module.scss'
@@ -9,7 +10,7 @@ import Badge from '@material-ui/core/Badge';
 import MyAccount from "../User/MyAccount";
 
 export default function NavBar(props) {
-  
+
 
     return (
         <header className={style.navBar}>
@@ -24,11 +25,10 @@ export default function NavBar(props) {
                 <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i></button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-
                     {/* Copiar todo completo al momento de cabiar de lugar el link  */}
                     <Link to={'/user/signup'} className="dropdown-item" >Registrarse
-              <li> <a className="dropdown-item" href="#"></a> </li> </Link>
-                  <Link to={'/auth/login'} className="dropdown-item" >Iniciar sesión
+                <li> <a className="dropdown-item" href="#"></a> </li> </Link>
+                    <Link to={'/auth/login'} className="dropdown-item" >Iniciar sesión
                     <li> <a className="dropdown-item" href="#"></a> </li> </Link>
                 </ul>
             </div>
@@ -41,28 +41,27 @@ export default function NavBar(props) {
                         </Badge>
                     </div> */}
                 </Link >
+               
             </div>
-
-            <div className="dropdown">
-                <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <Link to={'/admin/products'} className="dropdown-item" >Productos
+            {
+                <div className="dropdown">
+                    <button className="dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></button>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <Link to={'/admin/products'} className="dropdown-item" >Productos
                 <li> <a className="dropdown-item" href="#"></a>  </li>
-                    </Link>
-                    <Link to={'/admin/categories'} className="dropdown-item" >Categorías
+                        </Link>
+                        <Link to={'/admin/categories'} className="dropdown-item" >Categorías
                 <li> <a className="dropdown-item" href="#"></a> </li>
-                    </Link>
-                    <Link to={'/admin/orders'} className="dropdown-item" >Órdenes de Usuario
+                        </Link>
+                        <Link to={'/admin/orders'} className="dropdown-item" >Órdenes de Usuario
                 <li> <a className="dropdown-item" href="#"></a> </li>
-                    </Link>
-                    <Link to={'/admin/users'} className="dropdown-item" >Usuarios
+                        </Link>
+                        <Link to={'/admin/users'} className="dropdown-item" >Perfiles
                 <li> <a className="dropdown-item" href="#"></a> </li>
-                    </Link>
-
-                    {/* Copiar todo completo al momento de cabiar de lugar el link  */}
-
-                </ul>
-            </div>
+                        </Link>
+                    </ul>
+                </div>
+            }
         </header>
     )
 }
