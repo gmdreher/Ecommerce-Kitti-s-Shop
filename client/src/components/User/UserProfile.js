@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 
-export  default class UserProfile extends React.Component {
+class UserProfile extends React.Component {
   
   
   render(){
@@ -21,7 +21,7 @@ export  default class UserProfile extends React.Component {
               </div>
               <div className="card-body">
                 <p className="blockquote mb-0">Nombre</p>
-                <p>Lor Integer posuere erat a ante.</p>
+                <p>{this.props.userInfo.fullname}</p>
                 <p className="blockquote mb-0">Email</p>
                 <p>Lor Integer posuere erat a ante.</p>
               </div>
@@ -39,26 +39,15 @@ export  default class UserProfile extends React.Component {
                 <p>Av. Santa Fe 548645 - Piso 3, Departamento A</p>
               </div>
             </div>
-            
-          </div>
-          <div className="col-6">
-            <div className={"card " + styles.cardPassword}>
-              <div className="card-header">
-                Contraseña
-              </div>
-              <div className="card-body">
-                <p className="blockquote mb-0">Contraseña</p>
-                <p>***********</p>
-              </div>
-            </div>
-  
           </div>
         </div>
         <div className={"row " + styles.row2}>
           <div className={"card " + styles.cardHistory}>
-            <div className="card-header">
-              Historial de compras
-            </div>
+            <Link to="/user/review/:id">
+              <div className="card-header">
+                Historial de compras
+              </div>
+            </Link>
           </div>
         </div>
       
@@ -72,8 +61,7 @@ export  default class UserProfile extends React.Component {
 function mapStateToProps(state) {
   return {
     userInfo: state.auth.userInfo,
-    loading: state.auth.loading
   }
 }
 
-// export default connect(mapStateToProps, {  } )(UserProfile);
+export default connect(mapStateToProps, null)(UserProfile);

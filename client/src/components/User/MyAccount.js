@@ -24,7 +24,7 @@ class MyAccount extends React.Component {
                 aria-expanded="false"><i className={"fas fa-user " + styles.icon}/>{this.props.userInfo.fullname}
         </button>
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <Link to="" className="dropdown-item">
+          <Link to="/users/me" className="dropdown-item">
             <li><a className="dropdown-item" href="#"/>Mi cuenta</li>
           </Link>
           <hr/>
