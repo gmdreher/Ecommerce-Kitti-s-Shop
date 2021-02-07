@@ -143,8 +143,8 @@ useEffect(()=>{
     }
     if(bandera===0 ) sinRev.push(productsComplete[i])
   }
-console.log("con", conRev);
-console.log("sin", sinRev);
+// console.log("con", conRev);
+// console.log("sin", sinRev);
 
 setProductWithReview(conRev);
 setProductWithoutReview(sinRev)
