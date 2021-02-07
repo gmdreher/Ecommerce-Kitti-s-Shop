@@ -12,7 +12,7 @@ export default function ViewOrder(props) {
 
 
     const user = useSelector(store => store.auth.userInfo);
-   
+
     let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
@@ -99,8 +99,10 @@ export default function ViewOrder(props) {
 
         <div className="contain" >
             <div className="titulo">
-                <button onClick={!user ? () => deleteLS() : () => deleteCart()}> Borrar </button>
                 <h2>Pedidos de tu carrito</h2>
+                <div className="soporte">
+                    <button className="borrar" onClick={!user ? () => deleteLS() : () => deleteCart()}> Vaciar carrito </button>
+                </div>
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
 
@@ -125,7 +127,7 @@ export default function ViewOrder(props) {
                                         </div>
                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => restar(info)}><i className="fas fa-minus"/></button>
+                                                <button onClick={() => restar(info)}><i className="fas fa-minus" /></button>
                                             </div>
                                         </div>
                                         <div className="dataQuanty" >
@@ -135,7 +137,7 @@ export default function ViewOrder(props) {
                                         </div>
                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => sumar(info)}><i className="fas fa-plus"/></button>
+                                                <button onClick={() => sumar(info)}><i className="fas fa-plus" /></button>
                                             </div>
                                         </div>
                                         <div className="dataPrice" >
@@ -150,7 +152,7 @@ export default function ViewOrder(props) {
                                         </div>
                                         <div className="add" >
                                             <div className="dataAdd">
-                                                <button onClick={() => deleteItems(info)}><i className="far fa-trash-alt"/></button>
+                                                <button onClick={() => deleteItems(info)}><i className="far fa-trash-alt" /></button>
                                             </div>
                                         </div>
                                     </div >

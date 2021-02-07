@@ -5,7 +5,9 @@ h2{
   .container{
     background-color: white;
     display: flex;
-    border: 2px solid gainsboro;
+    border: 1px solid rgb(233, 185, 83);
+    box-shadow: 2px 2px 3px rgb(175, 128, 56);
+    border-radius: 15px;
     width: auto;
     align-self: center;
     margin: 50px;
@@ -22,26 +24,28 @@ h2{
                 .admin {
                     background-color: rgb(255, 255, 255);
                     color: black;
-                    border-color: rgb(230, 138, 102);
-                    padding: 8px;
+                    border-color: rgb(177, 177, 177);
+                    padding: 4px;
                     padding-right: 20px;
                     padding-left: 20px;
-                    border-radius: 10px;
+                    border-radius: 25px;
                 }
                 
                 .admin:hover {
-                  background-color: rgb(255, 215, 202);
+                  background-color:  rgb(204, 204, 204);
+                  border-color: rgb(155, 155, 155);
+
                 }
 
 
                 .Noadmin {
                   background-color: rgb(120, 218, 164);
                   color: black;
-                  border-color: rgb(4, 214, 99);
-                  padding: 8px;
+                  border-color: rgb(82, 245, 122);
+                  padding: 4px;
                   padding-right: 20px;
                   padding-left: 20px;
-                  border-radius: 10px;
+                  border-radius: 25px;
               }
               
               .Noadmin:hover {
@@ -51,45 +55,47 @@ h2{
                 .bloqueo {
                     background-color: rgb(255, 255, 255);
                     color: black;
-                    border-color: rgb(230, 138, 102);
-                    padding: 8px;
+                    border-color: rgb(177, 177, 177);
+                    padding: 4px;
                     padding-right: 20px;
                     padding-left: 20px;
-                    border-radius: 10px;
+                    border-radius: 25px;
                 }
                 
                 .bloqueo:hover {
-                  background-color: rgb(255, 215, 202);
+                  background-color:  rgb(204, 204, 204);
+                  border-color: rgb(155, 155, 155);                
                 }
                 
 
                 .bloqueado {
-                  background-color: rgb(222, 112, 87);
+                  background-color: rgb(248, 121, 131);
                   color: black;
-                  border-color: rgb(218, 49, 11);
-                  padding: 8px;
+                  border-color: rgb(197, 87, 96);;
+                  padding: 4px;
                   padding-right: 20px;
                   padding-left: 20px;
-                  border-radius: 10px;
+                  border-radius: 25px;
               }
               
               .bloqueado:hover {
-                background-color:  rgb(199, 85, 59);
+                background-color:  rgb(224, 87, 98);
               }
               
 
                 .resert {
                     background-color: rgb(255, 255, 255);
                     color: black;
-                    border-color: rgb(95, 183, 241);
-                    padding: 8px;
+                    border-color: rgb(177, 177, 177);
+                    padding: 4px;
                     padding-right: 20px;
                     padding-left: 20px;
-                    border-radius: 10px;
+                    border-radius: 25px;
                 }
                 
                 .resert:hover {
-                  background-color:  rgb(95, 183, 241);
+                  background-color:  rgb(204, 204, 204);
+                  border-color: rgb(155, 155, 155);                     
                 }
                 
           }
