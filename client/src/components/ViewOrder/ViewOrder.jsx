@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './ViewOrder.scss';
-import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart, deleteTotalCart, removeFromCartLS, editQuantity, deleteItem } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
-import axios from 'axios';
 
 
 export default function ViewOrder(props) {
@@ -35,7 +33,7 @@ export default function ViewOrder(props) {
     }
 
     function deleteCart() {
-        if (cartProduct.length >= 0 && cartProduct[0].orderId !== undefined) {
+        if (cartProduct.length >= 0 && cartProduct[0] !== undefined) {
             var idOrder = cartProduct[0].orderId;
             var idUser = user.id;
             if (window.confirm(`Va a borrar la orden: ${idOrder} del usuario de id: ${idUser}. Desea continuar?`)) {

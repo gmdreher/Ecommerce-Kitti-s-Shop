@@ -31,7 +31,6 @@ export default function Login(props) {
   const loginFailed = useSelector(store => store.auth.loginFailed)
   const userState = useSelector(store => store.auth.userInfo)
   
-  // obj && Object.keys(obj).length === 0 && obj.constructor === Object
   
   const handleSubmit = (event) => {
     event.preventDefault();

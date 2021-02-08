@@ -14,17 +14,20 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER:
       return {
+        ...state,
         loading: true,
         isAuthenticated:true
       }
     case USER_LOGIN_SUCCESS:
       return {
+        ...state,
         loading: false,
         isAuthenticated:true,
         userInfo: decode(action.payload)
       }
     case USER_LOGIN_FAIL:
       return{
+        ...state,
         loginFailed: true,
         loading: false,
         error: action.payload,

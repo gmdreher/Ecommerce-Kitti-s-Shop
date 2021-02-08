@@ -8,9 +8,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: {
-          msg: "El Nombre solo puede contener letras"
-        },
         len: {
           args: [2, 255],
           msg: "El nombre debe tener minimo DOS(2) caracteres"
