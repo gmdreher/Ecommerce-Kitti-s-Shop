@@ -1,4 +1,4 @@
-import React, { useState, useSelector } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -92,11 +92,7 @@ function SignUp(props) {
     banned: false,
     
   })
- /*  const [modal, setModal] = useState(true);
-  const toggle = () => {
-    history.push("/");
-    setModal(!modal);
-  } */
+
   //estado errores
   const [errors, setErrors] = useState({});
 
@@ -110,14 +106,15 @@ function SignUp(props) {
       [e.target.name]: e.target.value
     }));
   }
+  useEffect(() => {
+    if(props.signUpFailed===false){
+      history.push('/auth/login')
+    }
+  }, [props.signUpFailed])
+  
   const regUser = (e) => {
     e.preventDefault(); 
-     props.singUp(input)
-     console.log(props.signUpFailed)
-    if(props.signUpFailed){
-        history.push("/")
-    }
-    
+     props.singUp(input)    
   }
 
   return (
@@ -187,7 +184,7 @@ function SignUp(props) {
               )}
             </Grid>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-          <button type="submit" onClick={regUser} disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
+          <button type="submit" disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
         </div>
             <Grid container justify="flex-end">
               <Link to='/auth/login'>

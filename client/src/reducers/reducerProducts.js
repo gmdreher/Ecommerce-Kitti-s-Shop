@@ -45,7 +45,7 @@ const initialState = {
     productsComplete: [],
     reviews: [],
     review: [],
-    signUpFailed:false
+    signUpFailed:''
     // reviewProduct:[],
 
 
@@ -117,9 +117,10 @@ export default (state = initialState, action) => {
                 user: action.payload
             }
             case POST_USER_FAILED:
+                console.log('estoy en el reducer y llega esto al failed ', action.payload)
                 return {
                     ...state,
-                    signUpFailed:true,
+                    signUpFailed:action.payload
                 }
         case GET_USER:
             return {
