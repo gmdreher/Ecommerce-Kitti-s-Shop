@@ -7,7 +7,13 @@ const authConfig = require('../config/auth');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
 
-
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.AUTH_MAIL,
+      pass: process.env.AUTH_PASS
+    }
+  })
 
 server.post('/login', passport.authenticate('login',{session:true}), (req, res) => {
  try{
@@ -57,13 +63,13 @@ server.post('/:id/forceReset/',protected.isAuth, (req, res) =>{
 	const {id} = req.params
 	User.findByPk(id)
 	.then(user =>{
-		var transporter = nodemailer.createTransport({
-			service: 'gmail',
-			auth: {
-			  user: process.env.AUTH_MAIL,
-			  pass: process.env.AUTH_PASS
-			}
-		  })
+		// var transporter = nodemailer.createTransport({
+		// 	service: 'gmail',
+		// 	auth: {
+		// 	  user: process.env.AUTH_MAIL,
+		// 	  pass: process.env.AUTH_PASS
+		// 	}
+		//   })
 		  transporter.sendMail({
 			  from: process.env.AUTH_MAIL,
 			  to: user.email,
@@ -89,6 +95,26 @@ server.put('/:id/banned',protected.isAuthAdmin, function (req, res) {
             user.update(
                 {
                   banned: true,
+                })
+                .then(user => {
+                    // var transporter = nodemailer.createTransport({
+                    //     service: 'gmail',
+                    //     auth: {
+                    //       user: process.env.AUTH_MAIL,
+                    //       pass: process.env.AUTH_PASS
+                    //     }
+                    //   })
+                      transporter.sendMail({
+                          from: process.env.AUTH_MAIL,
+                          to: user.email,
+                          subject: 'Usuario Bloqueado',
+                          text: `Estimado Usuario: \nSu cuenta ha sido bloqueada por violación al código de conducta de nuestra página. \nsi crees que ha sido un error, porfavor comunícate con el administrador`
+                      },(error, info)=>{
+                          if(error){(res.status(500).send("no se pudo enviar" + error)) }
+                          else {
+                            res.status(200).send("Mail enviado" + info)
+                          }
+                      })
                 }) 
           } else {
             user.update(
