@@ -35,7 +35,7 @@ export default function ViewOrder(props) {
     }
 
     function deleteCart() {
-        if (cartProduct.length >= 0 && cartProduct[0].orderId !== undefined) {
+        if (cartProduct.length >= 0 && cartProduct[0] !== undefined) {
             var idOrder = cartProduct[0].orderId;
             var idUser = user.id;
             if (window.confirm(`Va a borrar la orden: ${idOrder} del usuario de id: ${idUser}. Desea continuar?`)) {

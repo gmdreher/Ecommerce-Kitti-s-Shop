@@ -81,6 +81,7 @@ function validate(input) {
 function SignUp(props) {
   const classes = useStyles();
   const history = useHistory()
+  
 
   const [input, setInput] = useState({
     fullname: '',
@@ -110,9 +111,13 @@ function SignUp(props) {
     }));
   }
   const regUser = (e) => {
-    e.preventDefault();
-    props.singUp(input)
-    history.push("/")
+    e.preventDefault(); 
+     props.singUp(input)
+     console.log(props.signUpFailed)
+    if(props.signUpFailed){
+        history.push("/")
+    }
+    
   }
 
   return (
@@ -124,6 +129,10 @@ function SignUp(props) {
       <Container maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => regUser(e)}>
+          { props.signUpFailed && <div className="alert alert-danger" role="alert">
+            <p>El Email Ya Esta Registrado, Intente nuevamente con uno diferente.</p>
+          </div>
+          }
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -178,7 +187,7 @@ function SignUp(props) {
               )}
             </Grid>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-          <button type="submit" disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
+          <button type="submit" disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText} onClick={regUser}>Registrarse</button>
         </div>
         
             <Grid container justify="flex-end">
@@ -200,7 +209,8 @@ function SignUp(props) {
 }
 function mapStateToProps(state) {
   return {
-    user: state.product.user
+    user: state.product.user,
+    signUpFailed:state.product.signUpFailed
   }
 }
 function mapDispatchToProps(dispatch) {

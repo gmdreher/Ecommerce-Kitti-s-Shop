@@ -12,10 +12,10 @@ passport.use('signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const exist = await User.findOne({ where: { email: email } })
+    /* const exist = await User.findOne({ where: { email: email } })
     if (exist) {
         return done(null, false, { message: 'Email Already Exist' })
-    } else {
+    } else { */
         try {
             const user = await User.create({
                 email,
@@ -29,7 +29,7 @@ passport.use('signup', new LocalStrategy({
         } catch (e) {
             done(e)
         }
-    }
+  //  }
 
 
 }))

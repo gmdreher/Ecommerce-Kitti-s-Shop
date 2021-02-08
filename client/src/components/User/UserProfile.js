@@ -43,7 +43,7 @@ class UserProfile extends React.Component {
         </div>
         <div className={"row " + styles.row2}>
           <div className={"card " + styles.cardHistory}>
-            <Link to="/user/review/:id">
+            <Link to={`/user/review/${this.props.userInfo.id}`}>
               <div className="card-header">
                 Historial de compras
               </div>
