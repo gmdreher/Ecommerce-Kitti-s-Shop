@@ -4,7 +4,7 @@ import Moment from 'moment';
 
 
 export default function Rewiew({data}) {
-    console.log("esto es data", data)
+    // console.log("esto es data", data)
 
 function formatDate(date) {
     let formatDate = new Moment(date);
@@ -79,16 +79,19 @@ function rate(valor){
     return(
         <>
           <div className= {styles.container}>
-               { data&& <><div >
-                 <h4>{data.user.fullname}</h4>
-                    
-                    <label>{rate(valor)}</label>
+               { data&& 
+               <>
+                <div className={styles.nameStar}>
+                    <h4>{data.user.fullname}</h4>
+                        
+                    <h4 className={styles.estrella}>{rate(valor)}</h4>
 
                 </div>
                 <div >
                     <p>{data.description}</p>
-                    <label>{formatDate(data.createdAt)}</label>
-                </div></>}
+                    <label className={styles.labelDate}>{formatDate(data.createdAt)}</label>
+                </div>
+            </>}
             </div>
             
         </>

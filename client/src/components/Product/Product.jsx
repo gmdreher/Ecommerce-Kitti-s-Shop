@@ -135,7 +135,7 @@ function Product(props) {
                 <div className="data">
                     <h2>{props.product.name}</h2>
                     <div className="start">
-                        <h3>{ratePromedio(valor)}</h3>
+                        <h3 className="estrellitas">{ratePromedio(valor)}</h3>
 
                     </div>
                     <p><strong>Precio: </strong> ${props.product.price}</p>
@@ -156,14 +156,16 @@ function Product(props) {
                     <p><strong>Descripción: </strong> {props.product.description}</p>
                 </div>
             </div>
-            <section>
+            <section className= "sectionPrincipal">
                 <h2>{props.product.Reviews && props.product.Reviews.length >0? <h2>Reseñas</h2>: <h3>Este producto aún no tiene reseñas</h3>}</h2>
+                    <div className="divReview">
 
                 {props.product.Reviews && props.product.Reviews.map((review)=>{
                 
                         return <Review key={review.id}  data={review}/>
                 
                 })}
+                    </div>
                 
             </section>
         </div>
