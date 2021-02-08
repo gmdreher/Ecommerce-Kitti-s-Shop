@@ -3,9 +3,11 @@ h2{
   margin-top: 10px;
 }
 .container{
+  border: 1px solid rgb(233, 185, 83);
+  box-shadow: 2px 2px 3px rgb(175, 128, 56);
+  border-radius: 15px;
   background-color: white;
   display: flex;
-  border: 2px solid gainsboro;
   width: auto;
   align-self: center;
   margin: 50px;
@@ -18,5 +20,22 @@ h2{
                     text-align: center;
                     width: 20px;
               }
+              button {
+                background-color: rgb(255, 255, 255);
+                color: black;
+                border-color: rgb(177, 177, 177);
+                padding: 8px;
+                padding-right: 20px;
+                padding-left: 20px;
+                border-radius: 25px;
+                
+            }
+            
+            button:hover {
+              background-color:  rgb(204, 204, 204);
+              border-color: rgb(155, 155, 155);
+              color: black;
+
+            }
         }
 }

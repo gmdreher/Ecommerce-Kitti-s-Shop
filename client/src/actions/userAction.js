@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
+import {
+    POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
      UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD, 
      FORGOT_PASSWORD,POST_USER_FAILED } from '../constants/productConstants.js';
@@ -30,8 +31,7 @@ export const getUsers = () => async (dispatch,getState) => {
     }
 }
 
-export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) => async (dispatch, getState) => {
-
+export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
         if(getState().auth.userInfo!==null){
             const accessToken = localStorage.getItem('data')
@@ -48,30 +48,28 @@ export const bloquearUsers = ({ id, banned, fullname, email, password, rol }) =>
           }
 
         const users = getState().product.user.slice();
-        var body = { id, banned, fullname, email, password, rol }
 
         try {
-            const res = await axios.put(`http://localhost:3001/users/${id}`, body);
+            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
 
             users && users.forEach((x) => {
-
-                if (x.id == id) {
+                if (x.id == id && x.banned == false) {
                     x.banned = true;
                 }
             });
 
-            console.log(users);
             dispatch({
                 type: UPDATE_USER,
-                payload: users
+                payload: res.data
             });
 
         } catch (error) {
             console.log("Error: " + error)
         }
-
     }
 }
+
+
 export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
         if(getState().auth.userInfo!==null){
@@ -108,6 +106,7 @@ export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
         }
     }
 }
+
 
 export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
@@ -267,7 +266,7 @@ export const loginUser = (email, password) => {
                 dispatch({
                     type: USER_LOGIN_FAIL,
                     payload: error.response || error.response.data
-                    
+
                 })
             })
     }

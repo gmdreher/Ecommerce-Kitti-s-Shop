@@ -120,8 +120,8 @@ export default function UserTable() {
                 <table className="table table-sm" >
                     <thead>
                         <tr>
-                            <th scope="col">Id de Usuario</th>
-                            <th scope="col">Nombre Completo</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
                             <th scope="col">Perfil</th>
                             <th scope="col">Bloquear</th>
@@ -130,14 +130,14 @@ export default function UserTable() {
                     </thead>
                     <tbody >
                         {
-                           usersData && usersData.map((info) => {
+                            usersData && usersData.map((info) => {
                                 return (
                                     <tr>
                                         <td>{info.id}</td>
                                         <td>{info.fullname}</td>
                                         <td>{info.email}</td>
                                         <td>{info.rol !== "admin" ? <button type="button" className={styles.admin} onClick={() => handlerAdmin(info)}>Usuario</button> :
-                                            <button type="button" className={styles.Noadmin} onClick={() => handlerUsers(info)}>Administrador</button>
+                                            <button type="button" className={styles.Noadmin} onClick={() => handlerUsers(info)}>Admin.</button>
                                         }
                                         </td>
                                         <td>

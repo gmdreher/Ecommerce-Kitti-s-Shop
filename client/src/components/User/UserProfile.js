@@ -57,7 +57,6 @@ class UserProfile extends React.Component {
   }
 }
 
-
 function mapStateToProps(state) {
   return {
     userInfo: state.auth.userInfo,
