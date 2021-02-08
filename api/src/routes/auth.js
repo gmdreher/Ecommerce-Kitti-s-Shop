@@ -102,13 +102,13 @@ server.put('/:id/banned',protected.isAuthAdmin, function (req, res) {
               banned: true,
             })
             .then(user => {
-              var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                  user: process.env.AUTH_MAIL,
-                  pass: process.env.AUTH_PASS
-                }
-              })
+              // var transporter = nodemailer.createTransport({
+              //   service: 'gmail',
+              //   auth: {
+              //     user: process.env.AUTH_MAIL,
+              //     pass: process.env.AUTH_PASS
+              //   }
+              // })
               transporter.sendMail({
                 from: process.env.AUTH_MAIL,
                 to: user.email,
