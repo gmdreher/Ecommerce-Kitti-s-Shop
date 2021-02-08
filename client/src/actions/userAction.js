@@ -234,6 +234,7 @@ export const postResertPassword = ({ id }) => async (dispatch, getState) => {
                 type: ADD_TO_CART,
                 payload: order
             });
+           localStorage.removeItem('cartItems')
         }
     }
 }

@@ -11,7 +11,12 @@ var nodemailer = require('nodemailer');
 
 server.post('/login', passport.authenticate('login',{session:true}), (req, res) => {
  try{
-	 const token = jwt.sign({id:req.user.id, fullname:req.user.fullname, rol:req.user.rol}, authConfig.secret)
+	 const token = jwt.sign({
+     id:req.user.id,
+     fullname:req.user.fullname,
+     rol:req.user.rol,
+     email:req.user.email
+   }, authConfig.secret)
 	 res.json(token)
  }catch(err){
   res.status(400).send(err);
@@ -82,29 +87,49 @@ server.post('/:id/forceReset/',protected.isAuth, (req, res) =>{
 });
 
 server.put('/:id/banned',protected.isAuthAdmin, function (req, res) {
-    const { id } = req.params;
-    User.findByPk(id)
-      .then((user => {
-          if (user.banned === false){
-            user.update(
-                {
-                  banned: true,
-                }) 
-          } else {
-            user.update(
-                {
-                  banned: false,
-                })
-          }
+  const { id } = req.params;
+  User.findByPk(id)
+    .then((user => {
+        if (user.banned === false){
+          user.update(
+            {
+              banned: true,
+            })
+            .then(user => {
+              var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.AUTH_MAIL,
+                  pass: process.env.AUTH_PASS
+                }
+              })
+              transporter.sendMail({
+                from: process.env.AUTH_MAIL,
+                to: user.email,
+                subject: 'Usuario Bloqueado',
+                text: `Estimado Usuario: \nSu cuenta ha sido bloqueada por violación al código de conducta de nuestra página. \nsi crees que ha sido un error, porfavor comunícate con el administrador`
+              },(error, info)=>{
+                if(error){(res.status(500).send("no se pudo enviar" + error)) }
+                else {
+                  res.status(200).send("Mail enviado" + info)
+                }
+              })
+            })
+        } else {
+          user.update(
+            {
+              banned: false,
+            })
+        }
       })
-      )
-      .then(() => {
-        res.status(200).json("Estado de usuario ha sido modificado")
-      })
-      .catch(error => {
-        res.status(400).send(`Error ${error}`);
-      })
-  });
+    )
+    .then(() => {
+      res.status(200).json("Estado de usuario ha sido modificado")
+    })
+    .catch(error => {
+      res.status(400).send(`Error ${error}`);
+    })
+});
 
  server.put('/demote/:id',protected.isAuthAdmin, (req, res) => {
     const { id } = req.params;

@@ -2,6 +2,7 @@ import React from "react";
 import styles from './userProfile.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
+import UserOrders from "./UserOrders";
 
 
 
@@ -21,8 +22,8 @@ class UserProfile extends React.Component {
               <div className="card-body">
                 <p className="blockquote mb-0">Nombre</p>
                 <p>{this.props.userInfo.fullname}</p>
-                <p className="blockquote mb-0">Email</p>
-                <p>Lor Integer posuere erat a ante.</p>
+                <p className="blockquote mb-0">Correo electrónico</p>
+                <p>{this.props.userInfo.email}</p>
               </div>
             </div>
           </div>
@@ -47,6 +48,14 @@ class UserProfile extends React.Component {
                 Mis reseñas
               </div>
             </Link>
+          </div>
+          <div className={"card " + styles.cardHistory}>
+            <div>
+              <div className="card-header dropdown-item" >
+                Mis Ordenes
+                <UserOrders />
+              </div>
+            </div>
           </div>
         </div>
       </div>

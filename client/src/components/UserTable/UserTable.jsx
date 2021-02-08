@@ -115,7 +115,7 @@ export default function UserTable() {
     return (
         <Fragment>
             <br />
-            <h2>Perfiles</h2>
+            <h2 className={styles.title}>Perfiles</h2>
             <div className={"table-responsive " + styles.container}>
                 <table className="table table-sm" >
                     <thead>

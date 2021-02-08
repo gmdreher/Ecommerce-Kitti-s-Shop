@@ -21,7 +21,7 @@ class OrderTable extends React.Component {
     return (
       <Fragment>
         <br />
-        <h2>Ordenes de Usuario:</h2>
+        <h2 className={styles.title}>Ordenes de Usuario:</h2>
         <div className={"table-responsive " + styles.container}>
           <table className="table table-sm" >
             <thead>

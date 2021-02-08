@@ -223,9 +223,6 @@ export default (state = initialState, action) => {
             //         ...state,
             //         reviewsProduct:  [...state.reviewsProduct, action.payload]
             //     }
-
-     
-            
         default:
             return state;
 
