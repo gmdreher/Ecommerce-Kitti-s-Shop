@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from '../User/login.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';

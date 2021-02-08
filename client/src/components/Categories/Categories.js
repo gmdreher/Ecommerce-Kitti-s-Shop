@@ -13,20 +13,18 @@ function Categories(props) {
     props.getCategories()
   }, [])
 
-
-
   return (
     <div className={styles.dropCategory}>
       <div className="dropdown">
         <button className={styles.botonsito} type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          Categorías<i class="fas fa-caret-down"></i>
+          Categorías<i className="fas fa-caret-down"/>
         </button>
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {props.categories.map((e) => {
             return <div key={e.id} >
-              <NavLink exact to={`/products/category/${e.name}`} activeStyle={{ fontWeight: "bold" }} >
-                <span className={styles.dropList}>{e.name}</span>
-              </NavLink>
+              <Link exact to={`/products/category/${e.name}`}  className="dropdown-item">
+                <span className={"dropdown-item " + styles.dropList}>{e.name} </span>
+              </Link>
             </div>
           })}
         </ul>
