@@ -47,6 +47,9 @@ passport.use('login', new LocalStrategy({
         if (!validate) {
             return done(null, false, { message: 'Wrong password' })
         }
+        if(user.banned){
+            return done(null, false, { message: 'Este usuario ha sido bloqueado' })
+        }
         return done(null, user, { message: 'Login successfull' })
     } catch (e) {
         return done(e)
