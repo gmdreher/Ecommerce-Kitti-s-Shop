@@ -6,23 +6,12 @@ import {
     DELETE_ITEM_LC, UPDATE_COUNT_PRODUCT
 } from '../constants/productConstants.js';
 
-if(localStorage.getItem('data')){
-    const accessToken = localStorage.getItem('data')
 
-    axios.interceptors.request.use(
-        config =>{
-            config.headers.authorization=`Bearer ${accessToken}`;
-            return config;
-        },
-        error =>{
-            return Promise.reject(error)
-        }
-    )
-}
 
 export const addProductCart = (data) => async (dispatch, getState) => {
 
     if (!data.userId) {
+
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
         let alreadyExists = false;
@@ -39,7 +28,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
         if (!alreadyExists) {
             let existe = {
                 id: data.productId,
-                quantity: 1,
+                quantity: data.quantity,
                 description: res.data.description,
                 name: res.data.name,
                 price: res.data.price,
@@ -59,6 +48,22 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 
     } else {
         try {
+
+            if(getState().auth.userInfo!==null){
+                const accessToken = localStorage.getItem('data')
+              
+                axios.interceptors.request.use(
+                    config =>{
+                        config.headers.authorization=`Bearer ${accessToken}`;
+                        return config;
+                    },
+                    error =>{
+                        return Promise.reject(error)
+                    }
+                )
+              }
+
+
             const cart = getState().product.cart.slice();
             let alreadyExists = false;
     
@@ -90,9 +95,22 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 };
 
 
-export const getProductsCart = (data) => async (dispatch) => {
+export const getProductsCart = (data) => async (dispatch,getState) => {
 
     if (data) {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
 
         try {
             let orderProd = [];
@@ -126,8 +144,22 @@ export const getProductsCart = (data) => async (dispatch) => {
 
 }
 
-export const deleteTotalCart = (data) => async dispatch => {
+export const deleteTotalCart = (data) => async (dispatch,getState) => {
 
+
+    if(getState().auth.userInfo!==null){
+        const accessToken = localStorage.getItem('data')
+      
+        axios.interceptors.request.use(
+            config =>{
+                config.headers.authorization=`Bearer ${accessToken}`;
+                return config;
+            },
+            error =>{
+                return Promise.reject(error)
+            }
+        )
+      }
     const Details = await axios.get(`http://localhost:3001/users/${data.userId}/order/${"carrito"}`);
     Details.data && Details.data.map((det) => {
         axios.delete(`http://localhost:3001/orders/${data.orderId}/${det.productId}`)
@@ -151,6 +183,19 @@ export const removeFromCartLS = (product) => dispatch => {
 };
 export const deleteItem = (data) => async (dispatch, getState) => {
     if (data.orderId) {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const prod = await axios.delete(`http://localhost:3001/orders/${data.orderId}/${data.id}`)
         dispatch({
             type: DELETE_ITEMS_CART,
@@ -168,7 +213,19 @@ export const editQuantity = ({ idUser, productId, quantity, orderId }) => async 
     var orderBody = { productId, quantity, orderId }
     const cart = getState().product.cart.slice();
     try {
-
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const res = await axios.put(`http://localhost:3001/orders/${idUser}/cart`, orderBody);
 
         cart && cart.forEach((x) => {

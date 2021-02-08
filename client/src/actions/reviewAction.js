@@ -1,23 +1,23 @@
 import axios from "axios";
 import {ADD_REVIEW,GET_ALL_REVIEW_PRODUCT, GET_ALL_REVIEWS_USER, GET_PRODUCTS_STATE_COMPLETE,  EDIT_REVIEW, DELETE_REVIEW} from "../constants/productConstants";
 
-if(localStorage.getItem('data')){
-    const accessToken = localStorage.getItem('data')
 
-    axios.interceptors.request.use(
-        config =>{
-            config.headers.authorization=`Bearer ${accessToken}`;
-            return config;
-        },
-        error =>{
-            return Promise.reject(error)
-        }
-    )
-}
-
-export const getProductStateComplete = (userId) => async (dispatch) => {
+export const getProductStateComplete = (userId) => async (dispatch, getState) => {
 
     try {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const products = await axios.get(`http://localhost:3001/users/${userId}/orders/complete`);
 
         // console.log("esto es products",products)
@@ -43,8 +43,21 @@ export const getProductStateComplete = (userId) => async (dispatch) => {
 }
 
 
-export const getAllReviewsUser = (userId) => async (dispatch) => {
+export const getAllReviewsUser = (userId) => async (dispatch,getState) => {
     try {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const products = await axios.get(`http://localhost:3001/users/${userId}/review`);
 
         // console.log('esto es productos con review:', products)
@@ -60,8 +73,21 @@ export const getAllReviewsUser = (userId) => async (dispatch) => {
 }
 
 
-export const addReview = (productId,body) => async (dispatch) => {
+export const addReview = (productId,body) => async (dispatch,getState) => {
     try {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const product = await axios.post(`http://localhost:3001/products/${productId}/review`,body);
 
         // console.log('esto es product de add review',product.data )
@@ -77,8 +103,21 @@ export const addReview = (productId,body) => async (dispatch) => {
 }
 
 
-export const editReview = (productId, reviewId, data) => async (dispatch) => {
+export const editReview = (productId, reviewId, data) => async (dispatch,getState) => {
     try {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const editar = await axios.put(`http://localhost:3001/products/${productId}/review/${reviewId}`,data);
 
         // console.log('esto es product de put review', editar)
@@ -94,8 +133,21 @@ export const editReview = (productId, reviewId, data) => async (dispatch) => {
 }
 
 
-export const deleteReview = (productId, reviewId) => async (dispatch) => {
+export const deleteReview = (productId, reviewId) => async (dispatch,getState) => {
     try {
+        if(getState().auth.userInfo!==null){
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
         const eliminar = await axios.delete(`http://localhost:3001/products/${productId}/review/${reviewId}`);
 
         // console.log('este es delete', eliminar)

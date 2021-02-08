@@ -31,11 +31,9 @@ server.use(session({
 
 
 passport.serializeUser((user,done)=>{
-  console.log(user)
   done(null,user.id);
 })
 passport.deserializeUser(async (id,done)=>{
-
   const user= await User.findByPk(id);
   done(null, user)
 })

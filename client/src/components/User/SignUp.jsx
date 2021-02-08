@@ -1,4 +1,4 @@
-import React, { useState, useSelector } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -81,6 +81,7 @@ function validate(input) {
 function SignUp(props) {
   const classes = useStyles();
   const history = useHistory()
+  
 
   const [input, setInput] = useState({
     fullname: '',
@@ -91,11 +92,7 @@ function SignUp(props) {
     banned: false,
     
   })
- /*  const [modal, setModal] = useState(true);
-  const toggle = () => {
-    history.push("/");
-    setModal(!modal);
-  } */
+
   //estado errores
   const [errors, setErrors] = useState({});
 
@@ -109,10 +106,15 @@ function SignUp(props) {
       [e.target.name]: e.target.value
     }));
   }
+  useEffect(() => {
+    if(props.signUpFailed===false){
+      history.push('/auth/login')
+    }
+  }, [props.signUpFailed])
+  
   const regUser = (e) => {
-    e.preventDefault();
-    props.singUp(input)
-    history.push("/")
+    e.preventDefault(); 
+     props.singUp(input)    
   }
 
   return (
@@ -124,6 +126,10 @@ function SignUp(props) {
       <Container maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => regUser(e)}>
+          { props.signUpFailed && <div className="alert alert-danger" role="alert">
+            <p>El Email Ya Esta Registrado, Intente nuevamente con uno diferente.</p>
+          </div>
+          }
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -178,7 +184,7 @@ function SignUp(props) {
               )}
             </Grid>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-          <button type="submit" onClick={regUser} disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
+          <button type="submit" disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
         </div>
             <Grid container justify="flex-end">
               <Link to='/auth/login'>
@@ -199,7 +205,8 @@ function SignUp(props) {
 }
 function mapStateToProps(state) {
   return {
-    user: state.product.user
+    user: state.product.user,
+    signUpFailed:state.product.signUpFailed
   }
 }
 function mapDispatchToProps(dispatch) {
