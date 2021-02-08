@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import {connect} from "react-redux";
 import styles from "../OrderTable/orderTable.module.scss";
@@ -7,7 +7,10 @@ import { getUserOrder } from "../../actions/orderActions";
 
 
 function UserOrders (props) {
+  // /users/:id/orders
+  useEffect(() =>{
   
+  })
   return (
     <Fragment>
       <div className={"table-responsive " + styles.container}>

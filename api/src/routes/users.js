@@ -9,6 +9,7 @@ var nodemailer = require('nodemailer');
 //Pau
 server.post('/', passport.authenticate('signup'),async(req,res)=>{
     res.json({
+      user:{id:req.user.id},
     message: 'SignUp success'
   
   })
@@ -71,7 +72,7 @@ server.get("/:id" , protected.isAuth, (req, res) => {
 });
 
 //agregar item al carrito
-server.post('/:userId/order', protected.isAuth, (req, res) => {
+server.post('/:userId/order', (req, res) => {
   let { userId } = req.params;
   let { productId, price, quantity } = req.body;
 

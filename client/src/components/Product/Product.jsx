@@ -115,7 +115,7 @@ function Product(props) {
     const user = props.user;
 
     function handleClick (data){
-        props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, uantity:quantity.quantity});
+        props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, quantity:quantity.quantity});
     };
     function change(e){
         setQuantity({
