@@ -178,9 +178,8 @@ function SignUp(props) {
               )}
             </Grid>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-          <button type="submit" disabled={errors.fullname || errors.password || errors.email} className={"btn " + styles.btnText} onClick={regUser}>Registrarse</button>
+          <button type="submit" onClick={regUser} disabled={errors.fullname || errors.password || errors.email}className={"btn " + styles.btnText}>Registrarse</button>
         </div>
-        
             <Grid container justify="flex-end">
               <Link to='/auth/login'>
               <Grid item >
