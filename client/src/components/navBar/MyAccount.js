@@ -24,16 +24,16 @@ function MyAccount (props) {
           data-bs-toggle="dropdown"
           aria-expanded="false">
           <i className={"fas fa-user " + styles.icon}/>
-        {props.userInfo.fullname}
+        {props.userInfo.fullname.split(" ")[0]}
         </button>
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <Link to="/users/me" className="dropdown-item">
             <li><a className="dropdown-item" href="#"/>Mi cuenta</li>
           </Link>
           <Link className="dropdown-item">
-              <span onClick={logOutHandler}>
+              <div onClick={logOutHandler} className="dropdown-item">
                 Cerrar sesión
-              </span>
+              </div>
             <li><div className="dropdown-item" /></li>
           </Link>
         </ul>

@@ -29,6 +29,7 @@ import {
     UPDATE_PASSWORD,
     FORGOT_PASSWORD,
     GET_USER_BY_ID,
+    POST_USER_FAILED
   
 } from '../constants/productConstants.js';
 
@@ -44,9 +45,7 @@ const initialState = {
     productsComplete: [],
     reviews: [],
     review: [],
-    // reviewProduct:[],
-
-
+    signUpFailed:''
 };
 
 export default (state = initialState, action) => {
@@ -111,8 +110,15 @@ export default (state = initialState, action) => {
         case POST_USER:
             return {
                 ...state,
+                signUpFailed:false,
                 user: action.payload
             }
+            case POST_USER_FAILED:
+                console.log('estoy en el reducer y llega esto al failed ', action.payload)
+                return {
+                    ...state,
+                    signUpFailed:action.payload
+                }
         case GET_USER:
             return {
                 ...state,
@@ -217,9 +223,6 @@ export default (state = initialState, action) => {
             //         ...state,
             //         reviewsProduct:  [...state.reviewsProduct, action.payload]
             //     }
-
-     
-            
         default:
             return state;
 

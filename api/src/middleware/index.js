@@ -12,10 +12,10 @@ passport.use('signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const exist = await User.findOne({ where: { email: email } })
+    /* const exist = await User.findOne({ where: { email: email } })
     if (exist) {
         return done(null, false, { message: 'Email Already Exist' })
-    } else {
+    } else { */
         try {
             const user = await User.create({
                 email,
@@ -29,7 +29,7 @@ passport.use('signup', new LocalStrategy({
         } catch (e) {
             done(e)
         }
-    }
+  //  }
 
 
 }))
@@ -46,6 +46,9 @@ passport.use('login', new LocalStrategy({
         const validate = await user.validPassword(password)
         if (!validate) {
             return done(null, false, { message: 'Wrong password' })
+        }
+        if(user.banned){
+            return done(null, false, { message: 'Este usuario ha sido bloqueado' })
         }
         return done(null, user, { message: 'Login successfull' })
     } catch (e) {

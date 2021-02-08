@@ -42,9 +42,9 @@ function ViewAdmin (props) {
             <li><a className="dropdown-item" href="#"/></li>
           </Link>
             <Link className="dropdown-item">
-              <span onClick={logOutHandler}>
+              <div onClick={logOutHandler} className="dropdown-item">
                 Cerrar sesión
-              </span>
+              </div>
             <li><div className="dropdown-item" /></li>
             </Link>
         </ul>

@@ -22,7 +22,7 @@ const validate = (input) => {
   return errors;
 };
 
-export default function Login(props) {
+export default function Login() {
   
   const [user, setUser] = React.useState({email: "", password: ""});
   const [errors, setErrors] = React.useState({});
