@@ -44,10 +44,12 @@ function ViewAdmin (props) {
             Perfiles
             <li><a className="dropdown-item" href="#"/></li>
           </Link>
-          <div  className="dropdown-item" onClick={logOutHandler}>
-            Cerrar sesión
-            <li><a className="dropdown-item" href="#"/></li>
-          </div>
+            <Link className="dropdown-item">
+              <span onClick={logOutHandler}>
+                Cerrar sesión
+              </span>
+            <li><div className="dropdown-item" /></li>
+            </Link>
         </ul>
       </div>
     </div>

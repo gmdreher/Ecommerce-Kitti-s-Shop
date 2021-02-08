@@ -30,9 +30,12 @@ function MyAccount (props) {
           <Link to="/users/me" className="dropdown-item">
             <li><a className="dropdown-item" href="#"/>Mi cuenta</li>
           </Link>
-          <div className={"dropdown-item " + styles.cerrar} onClick={logOutHandler}>
-            <li><a className="dropdown-item" href="#"/>Cerrar sesión</li>
-          </div>
+          <Link className="dropdown-item">
+              <span onClick={logOutHandler}>
+                Cerrar sesión
+              </span>
+            <li><div className="dropdown-item" /></li>
+          </Link>
         </ul>
       </div>
       )

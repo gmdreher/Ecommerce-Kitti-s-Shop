@@ -1,20 +1,20 @@
 import React from 'react'
-import style from './navBar.module.scss'
+import styles from './viewUser_Guest.module.scss'
 import { Link } from 'react-router-dom'
 
 
 export default function ViewGuest () {
   
   return (
-    <div className=''>
-      <div>
+    <div className='viewUser_Guest'>
+      <div className={styles.cart}>
         <Link to={`/user/order`}>
           <button className='carrito'>
             <i className="fas fa-shopping-cart"/>
           </button>
         </Link>
       </div>
-      <div className="dropdown">
+      <div className={"dropdown " + styles.myAccount}>
         <button
           className="dropdown-toggle"
           type="button" id="dropdownMenuButton"

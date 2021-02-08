@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './navBar.module.scss'
+import styles from './viewUser_Guest.module.scss'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import MyAccount from "./MyAccount";
@@ -8,13 +8,13 @@ import MyAccount from "./MyAccount";
 function ViewUser (props) {
 
   return (
-    <header className={styles.myAccount}>
+    <header className={styles.viewUser_Guest}>
       <div>
         <Link to={`/user/order`}>
-          <button className='carrito'><i className="fas fa-shopping-cart"/></button>
+          <button className={styles.cart}><i className="fas fa-shopping-cart"/></button>
         </Link>
       </div>
-      <div className=''>
+      <div className={styles.myAccount}>
           <MyAccount/>
       </div>
     </header>
