@@ -41,5 +41,17 @@
 
       
     }
-  
+}
+.sectionPrincipal{
+
+  div{
+    display: flex;
+  }
+  .divReview{
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+.estrellitas{
+  color: gold
 }
