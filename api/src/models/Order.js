@@ -6,6 +6,5 @@ module.exports = (sequelize) => {
     state: {
       type: DataTypes.ENUM(["carrito", "creada", "procesando", "cancelada", "completa"])
     },
-
   });
 };
