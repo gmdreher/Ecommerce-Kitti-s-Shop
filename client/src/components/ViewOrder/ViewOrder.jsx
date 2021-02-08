@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './ViewOrder.scss';
-import OrderCard from '../OrderCart/OrderCard.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart, deleteTotalCart, removeFromCartLS, editQuantity, deleteItem } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
-import axios from 'axios';
 
 
 export default function ViewOrder(props) {

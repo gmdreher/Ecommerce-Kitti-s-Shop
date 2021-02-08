@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 
 class UserProfile extends React.Component {
   
-  
   render(){
     
     return (
@@ -43,14 +42,13 @@ class UserProfile extends React.Component {
         </div>
         <div className={"row " + styles.row2}>
           <div className={"card " + styles.cardHistory}>
-            <Link to={`/user/review/${this.props.userInfo.id}`}>
-              <div className="card-header">
-                Historial de compras
+            <Link to={`/user/review/${this.props.userInfo.id}` }>
+              <div className="card-header dropdown-item" >
+                Mis reseñas
               </div>
             </Link>
           </div>
         </div>
-      
       </div>
     )
     

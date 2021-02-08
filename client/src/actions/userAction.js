@@ -1,4 +1,5 @@
 import axios from 'axios';
+import decode from "jwt-decode";
 
 import {
     POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
@@ -212,8 +213,30 @@ export const postResertPassword = ({ id }) => async (dispatch, getState) => {
         console.log("Error: " + error)
     }
 }
-
-
+ async function productsMove (cartItems, idUser, getState, dispatch){
+    
+    let products= JSON.parse(localStorage.getItem("cartItems"));
+    if (products && products.length > 0) {
+        const cartItems = products;
+        
+        for (let i = 0; i < cartItems.length; i++) {
+            
+            const prod = await axios.get(`http://localhost:3001/products/${cartItems[i].id}`);
+            const res = await axios.post(`http://localhost:3001/users/${idUser}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
+         
+            let order = {
+                description: prod.data.description, id: prod.data.id,
+                images: prod.data.images, name: prod.data.name,
+                price: prod.data.price, quantity: res.quantity, userId: res.userId,
+                orderId: res.id
+            }
+            dispatch({
+                type: ADD_TO_CART,
+                payload: order
+            });
+        }
+    }
+}
 export const postUser = (data) => async (dispatch, getState) => {
     try{
       const response = await axios.post('http://localhost:3001/users/', data);
@@ -254,26 +277,30 @@ export const postUser = (data) => async (dispatch, getState) => {
     
 }
 
-export const loginUser = (email, password) => {
+export const loginUser = (email, password, getState) => {
     return function (dispatch) {
         dispatch({ type: LOGIN_USER, payload: { email, password } });
         return axios.post('http://localhost:3001/auth/login', { email, password })
             .then(res => {
                 dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
                 localStorage.setItem('data', res.data);
+                let productsStorage = localStorage.getItem('cartItems')
+                let idUser = decode(localStorage.getItem('data')).id
+                productsMove(productsStorage, idUser, getState, dispatch);
             })
             .catch(error => {
                 dispatch({
                     type: USER_LOGIN_FAIL,
-                    payload: error.response || error.response.data
-
+                    payload: error.response && error.response.data.message
+                      ? error.response.data.message
+                      : error.message,
                 })
             })
     }
 }
 
 export const logoutUser = () => (dispatch) => {
-    localStorage.removeItem('data')
+    localStorage.clear();
     dispatch({ type: LOGOUT_USER })
 }
 
