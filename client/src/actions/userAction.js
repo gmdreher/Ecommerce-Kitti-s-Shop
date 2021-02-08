@@ -4,24 +4,25 @@ import decode from "jwt-decode";
 import {
     POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
-     UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD, 
-     FORGOT_PASSWORD,POST_USER_FAILED } from '../constants/productConstants.js';
- 
-export const getUsers = () => async (dispatch,getState) => {
+    UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD,
+    FORGOT_PASSWORD, POST_USER_FAILED
+} from '../constants/productConstants.js';
+
+export const getUsers = () => async (dispatch, getState) => {
     try {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         const respuesta = await axios.get('http://localhost:3001/users/');
         dispatch({
             type: GET_USER,
@@ -34,19 +35,19 @@ export const getUsers = () => async (dispatch,getState) => {
 
 export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
 
         const users = getState().product.user.slice();
 
@@ -73,19 +74,19 @@ export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
 
 export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
     if (id) {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         const users = getState().product.user.slice();
 
         try {
@@ -112,19 +113,19 @@ export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
 export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 
     if (id) {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         const users = getState().product.user.slice();
 
         try {
@@ -151,25 +152,25 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
 export const updateToUsers = ({ id, rol }) => async (dispatch, getState) => {
 
     if (id) {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         const users = getState().product.user.slice();
         try {
             const res = await axios.put(`http://localhost:3001/auth/demote/${id}`);
             users && users.forEach((x) => {
                 if (x.id == id && x.rol == "admin") {
-                    x.rol = "user";
+                    x.rol = "User";
                 }
             });
 
@@ -188,19 +189,19 @@ export const postResertPassword = ({ id }) => async (dispatch, getState) => {
     const users = getState().product.user.slice();
     console.log('LO QUE RECIBE LA ACCION', id);
     try {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
 
         const res = await axios.post(`http://localhost:3001/auth/${id}/forceReset/`);
 
@@ -213,17 +214,17 @@ export const postResertPassword = ({ id }) => async (dispatch, getState) => {
         console.log("Error: " + error)
     }
 }
- async function productsMove (cartItems, idUser, getState, dispatch){
-    
-    let products= JSON.parse(localStorage.getItem("cartItems"));
+async function productsMove(cartItems, idUser, getState, dispatch) {
+
+    let products = JSON.parse(localStorage.getItem("cartItems"));
     if (products && products.length > 0) {
         const cartItems = products;
-        
+
         for (let i = 0; i < cartItems.length; i++) {
-            
+
             const prod = await axios.get(`http://localhost:3001/products/${cartItems[i].id}`);
             const res = await axios.post(`http://localhost:3001/users/${idUser}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
-         
+
             let order = {
                 description: prod.data.description, id: prod.data.id,
                 images: prod.data.images, name: prod.data.name,
@@ -234,48 +235,48 @@ export const postResertPassword = ({ id }) => async (dispatch, getState) => {
                 type: ADD_TO_CART,
                 payload: order
             });
-           localStorage.removeItem('cartItems')
+            localStorage.removeItem('cartItems')
         }
     }
 }
 export const postUser = (data) => async (dispatch, getState) => {
-    try{
-      const response = await axios.post('http://localhost:3001/users/', data);
+    try {
+        const response = await axios.post('http://localhost:3001/users/', data);
 
-    
-    dispatch({
-        type: POST_USER,
-        payload: response.data
-    })
-    if (getState().cart.cartItems.length > 0) {
-        const cartItems = getState().cart.cartItems;
 
-        for (var i = 0; i < cartItems.length; i++) {
+        dispatch({
+            type: POST_USER,
+            payload: response.data
+        })
+        if (getState().cart.cartItems.length > 0) {
+            const cartItems = getState().cart.cartItems;
 
-            const prod = await axios.get(`http://localhost:3001/products/${cartItems[i].id}`)
-            const res = await axios.post(`http://localhost:3001/users/${response.data.user.id}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
-            //este me trae el id de laorden id user y catidad, lo demas lo tengo del localstorage
-            let order = {
-                description: prod.data.description, id: prod.data.id,
-                images: prod.data.images, name: prod.data.name,
-                price: prod.data.price, quantity: res.quantity, userId: res.userId,
-                orderId: res.id
+            for (var i = 0; i < cartItems.length; i++) {
+
+                const prod = await axios.get(`http://localhost:3001/products/${cartItems[i].id}`)
+                const res = await axios.post(`http://localhost:3001/users/${response.data.user.id}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
+                //este me trae el id de laorden id user y catidad, lo demas lo tengo del localstorage
+                let order = {
+                    description: prod.data.description, id: prod.data.id,
+                    images: prod.data.images, name: prod.data.name,
+                    price: prod.data.price, quantity: res.quantity, userId: res.userId,
+                    orderId: res.id
+                }
+                dispatch({
+                    type: ADD_TO_CART,
+                    payload: order
+                });
+                localStorage.removeItem('cartItems')
             }
-            dispatch({
-                type: ADD_TO_CART,
-                payload: order
-            });
-             localStorage.removeItem('cartItems')
         }
-    }  
-    }catch(error){
-       dispatch({
-           type: POST_USER_FAILED,
-           payload:error.response || error.response.data
-       })
+    } catch (error) {
+        dispatch({
+            type: POST_USER_FAILED,
+            payload: error.response || error.response.data
+        })
 
     }
-    
+
 }
 
 export const loginUser = (email, password, getState) => {
@@ -293,8 +294,8 @@ export const loginUser = (email, password, getState) => {
                 dispatch({
                     type: USER_LOGIN_FAIL,
                     payload: error.response && error.response.data.message
-                      ? error.response.data.message
-                      : error.message,
+                        ? error.response.data.message
+                        : error.message,
                 })
             })
     }
@@ -305,21 +306,21 @@ export const logoutUser = () => (dispatch) => {
     dispatch({ type: LOGOUT_USER })
 }
 
-export const getUserById = (id) => async (dispatch,getState) => {
+export const getUserById = (id) => async (dispatch, getState) => {
     try {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         const respuesta = await axios.get(`http://localhost:3001/users/${id}`);
         // console.log("respuesta", respuesta )
         dispatch({
@@ -330,21 +331,21 @@ export const getUserById = (id) => async (dispatch,getState) => {
         console.log("Error: " + error)
     }
 }
-export const updatePassword = user => async (dispatch,getState) => {
+export const updatePassword = user => async (dispatch, getState) => {
     try {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         let answer = await axios.put(`http://localhost:3001/users/passwordReset/${user.id}`, user);
         dispatch({
             type: UPDATE_PASSWORD,
@@ -355,21 +356,21 @@ export const updatePassword = user => async (dispatch,getState) => {
     }
 }
 
-export const forgotPassword = email => async (dispatch,getState) => {
+export const forgotPassword = email => async (dispatch, getState) => {
     try {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         let answer = await axios.post(`http://localhost:3001/users/forgot`, email);
         dispatch({
             type: FORGOT_PASSWORD,

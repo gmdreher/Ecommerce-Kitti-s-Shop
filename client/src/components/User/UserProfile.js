@@ -8,9 +8,9 @@ import UserOrders from "./UserOrders";
 
 
 class UserProfile extends React.Component {
-  
-  render(){
-    
+
+  render() {
+
     return (
       <div className='container'>
         <div className="row">
@@ -43,24 +43,24 @@ class UserProfile extends React.Component {
         </div>
         <div className={"row " + styles.row2}>
           <div className={"card " + styles.cardHistory}>
-            <Link to={`/user/review/${this.props.userInfo.id}` }>
+            <Link to={`/user/review/${this.props.userInfo.id}`}>
               <div className="card-header dropdown-item" >
                 Mis reseñas
               </div>
             </Link>
           </div>
-          <div className={"card " + styles.cardHistory}>
+          {/* <div className={"card " + styles.cardHistory}>
             <div>
               <div className="card-header dropdown-item" >
                 Mis Ordenes
-                <UserOrders />
-              </div>
-            </div>
-          </div>
+                <UserOrders /> 
+              </div> 
         </div>
-      </div>
+      </div>*/}
+        </div >
+      </div >
     )
-    
+
   }
 }
 

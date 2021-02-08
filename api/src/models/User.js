@@ -39,6 +39,7 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: true
     }
+
   })
   const setSaltAndPassword = async function (user) {
     if (user.changed('password')) {
