@@ -46,9 +46,6 @@ const initialState = {
     reviews: [],
     review: [],
     signUpFailed:''
-    // reviewProduct:[],
-
-
 };
 
 export default (state = initialState, action) => {
