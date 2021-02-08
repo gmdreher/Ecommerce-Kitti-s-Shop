@@ -1,13 +1,11 @@
 import React from 'react'
-import style from './navBar.module.scss'
 import {Link, useHistory} from 'react-router-dom'
 import {connect} from "react-redux";
 import {logoutUser} from "../../actions/userAction";
-import styles from "../User/login.module.scss";
+
 
 
 function ViewAdmin (props) {
-  
   
   const history = useHistory();
   const logOutHandler = () => {
@@ -22,8 +20,7 @@ function ViewAdmin (props) {
           type="button" id="dropdownMenuButton"
           data-bs-toggle="dropdown"
           aria-expanded="false">
-          <i className={"fas fa-user " + styles.icon}/>
-          {props.userInfo.fullname}
+          <i className="fas fa-bars"/>
         </button>
         <ul
           className="dropdown-menu"
@@ -56,10 +53,5 @@ function ViewAdmin (props) {
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    userInfo: state.auth.userInfo,
-  }
-}
 
-export default connect(mapStateToProps, { logoutUser })(ViewAdmin);
+export default connect(null, { logoutUser })(ViewAdmin);
