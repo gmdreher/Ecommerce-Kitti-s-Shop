@@ -3,6 +3,7 @@ const { Order, User, OrderDetails, Review, Product } = require('../db.js');
 const passport = require('passport');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
+
 //const { Op } = require("sequelize");
 
 //Ruta de crear usuario
@@ -18,7 +19,7 @@ server.post('/', passport.authenticate('signup'),async(req,res)=>{
 //PUT users/:id S35 : Ruta para modificar Usuario
 server.put('/:id' ,protected.isAuth, function (req, res) {
   const { id } = req.params;
-  const { fullname, email, password, rol, banned } = req.body;
+  const { fullname, email, password, rol } = req.body;
   User.findByPk(id)
     .then((user => {
       user.update(
@@ -27,7 +28,7 @@ server.put('/:id' ,protected.isAuth, function (req, res) {
           email: email,
           password: password,
           rol: rol,
-          banned: banned,
+         
         })
     })
     )
@@ -159,7 +160,6 @@ server.get("/:userId/order/:state", (req, res) => {
 
 //vaciar carrito
 server.delete("/:userId/order/:orderId" , protected.isAuth, (req, res) => {
-
   let { userId, orderId } = req.params;
 
   Order.destroy({
@@ -236,15 +236,20 @@ server.put('/promote/:id', (req, res)=>{
 
 //S70 : Crear Ruta para password reset
 //PUT /users/:id/passwordReset
-server.put('/passwordReset/:id', function (req, res) {
+server.put('/passwordReset/:reset', function (req, res) {
+  const {reset} = req.params;
   const {newPassword } = req.body;
-
+console.log(reset)
     if(!newPassword){
     return res.status(400)
     .json("Debe ingresar su nueva contraseña")
     }
-
-  User.findByPk(req.params.id)
+    User.findOne(
+      {
+        where: {
+          reset: reset,
+        }
+      })
     .then(user => {
         user.update(
           {
@@ -296,8 +301,16 @@ server.post('/forgot', (req, res) =>{
 			where: {
 				email: email,
 			}
-		}
-	).then(user =>{
+		})
+  .then(user =>{
+    console.log(user)
+    if(!user.reset){
+      var id = uuid.v4();
+      user.setDataValue("reset", id);
+      user.save();
+      
+      return user;
+    }
 		var transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
@@ -307,9 +320,9 @@ server.post('/forgot', (req, res) =>{
 		  })
 		  transporter.sendMail({
 			  from: process.env.AUTH_MAIL,
-			  to: email,
+			  to: user.email,
 			  subject: 'Cambiar tu contraseña',
-			  text: `Parece que has olvidado tu contraseña! Porfavor has click en el siguiente link: http://localhost:3000/user/resetPass/${user.id} `
+			  text: `Parece que has olvidado tu contraseña! \nPorfavor has click en el siguiente link: http://localhost:3000/user/resetPass/${user.dataValues.reset}`
 		  },(error, info)=>{
 			  if(error){(res.status(500).send("no se pudo enviar" + error)) }
 			  else {
@@ -318,7 +331,7 @@ server.post('/forgot', (req, res) =>{
 		  })
 	}).catch(err => {
 		res.status(400)
-		.json("Este usuario no se encuentra registrado" + err)
+		.json("Este usuario no se encuentra registrado" + console.log(err))
 	})
 });
 

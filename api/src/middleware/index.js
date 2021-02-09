@@ -22,7 +22,7 @@ passport.use('signup', new LocalStrategy({
                 password,
                 fullname: req.body.fullname,
                 rol:req.body.rol,
-                reset: false,
+                reset: null,
                 banned: false
             })
             return done(null, user)

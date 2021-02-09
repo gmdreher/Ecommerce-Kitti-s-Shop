@@ -33,7 +33,8 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     reset: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
+      defaultValue: null
     },
     banned: {
       type: DataTypes.BOOLEAN,

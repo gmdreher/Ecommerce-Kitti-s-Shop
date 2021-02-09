@@ -109,7 +109,7 @@ useEffect(() => {
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  history.push("/")
+  history.push("/auth/login")
 }
 
 const handleEdit = function (password) {

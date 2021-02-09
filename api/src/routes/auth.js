@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { User } = require('../db.js');
 const server = require('express').Router();
+const uuid = require('uuid');
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
@@ -67,19 +68,19 @@ server.put('/promote/:id', protected.isAuthAdmin, (req, res) => {
 server.post('/:id/forceReset/',protected.isAuth, (req, res) =>{
 	const {id} = req.params
 	User.findByPk(id)
+  .then(user => {
+    var id = uuid.v4();
+    user.setDataValue('reset', id);
+    user.save();
+    
+    return user;
+  })
 	.then(user =>{
-		// var transporter = nodemailer.createTransport({
-		// 	service: 'gmail',
-		// 	auth: {
-		// 	  user: process.env.AUTH_MAIL,
-		// 	  pass: process.env.AUTH_PASS
-		// 	}
-		//   })
 		  transporter.sendMail({
 			  from: process.env.AUTH_MAIL,
 			  to: user.email,
 			  subject: 'Cambiar tu contraseña',
-			  text: `Por motivos de seguridad has click en el siguiente link para cambiar tu contraseña: http://localhost:3000/user/resetPass/${user.id}`
+			  text: `Por motivos de seguridad has click en el siguiente link para cambiar tu contraseña: \nhttp://localhost:3000/user/resetPass/${user.dataValues.reset}`
 		  },(error, info)=>{
 			  if(error){(res.status(500).send("no se pudo enviar" + error)) }
 			  else {
