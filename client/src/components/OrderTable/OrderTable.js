@@ -22,16 +22,16 @@ class OrderTable extends React.Component {
       <Fragment>
         <br />
         <h2 className={styles.title}>Ordenes de Usuario:</h2>
-        <div className={"table-responsive " + styles.container}>
-          <table className="table table-sm" >
+        <div className={styles.container}>
+        <div className={"table-responsive"}>
+          <table className={"table table-sm " + styles.table} >
             <thead>
               <tr>
-                <th scope="col">Número de Compra</th>
-                <th scope="col">Id del Usuario</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Monto</th>
-                <th scope="col">Fecha y hora</th>
-                <th scope="col">  </th>
+                <th className={styles.th} scope="col">Número de Compra</th>
+                <th className={styles.th} scope="col">Id del Usuario</th>
+                <th className={styles.th} scope="col">Estado</th>
+                <th className={styles.th} scope="col">Monto</th>
+                <th className={styles.th} scope="col">Fecha y hora</th>
               </tr>
             </thead>
             <tbody >
@@ -52,15 +52,14 @@ class OrderTable extends React.Component {
                       </td>
                       <td>${total.toFixed(2)}</td>
                       <td>{this.formatDate(order.createdAt)}</td>
-                      <td>
-                        <button type="button" className="btn btn-secondary btn-sm">Editar</button>
-                      </td>
                     </tr>
                   )
                 })
               }
             </tbody>
           </table>
+        </div>
+        
         </div>
       </Fragment>
     )

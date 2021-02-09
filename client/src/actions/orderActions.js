@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER} from "../constants/productConstants";
+import {ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, } from "../constants/productConstants";
 
 
 
@@ -70,3 +70,11 @@ export function updateStateOrder(orderId, state) {
   };
 };
 
+export function getOrdersUser (id) {
+  return function(dispatch) {
+    return axios.get(`http://localhost:3001/users/${id}/orders`)
+      .then(orders => {
+        dispatch({ type: ALL_ORDERS_USER, payload: orders.data });
+      });
+  };
+}

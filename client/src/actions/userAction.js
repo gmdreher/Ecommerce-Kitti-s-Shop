@@ -5,7 +5,7 @@ import {
     POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
     UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD,
-    FORGOT_PASSWORD, POST_USER_FAILED, GET_ORDERS
+    FORGOT_PASSWORD, POST_USER_FAILED,
 } from '../constants/productConstants.js';
  
 export const getUsers = () => async (dispatch,getState) => {
@@ -380,6 +380,9 @@ export const forgotPassword = email => async (dispatch, getState) => {
         console.log("Error" + error)
     }
 }
+
+
+
 
 
 

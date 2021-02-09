@@ -2,19 +2,28 @@ import React, {Fragment, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import {connect} from "react-redux";
 import styles from "../OrderTable/orderTable.module.scss";
-import { getUserOrder } from "../../actions/orderActions";
+import { getOrdersUser } from "../../actions/orderActions";
+import Moment from "moment";
 
 
 
-function UserOrders (props) {
+function OrdersUser (props) {
   // /users/:id/orders
-  useEffect(() =>{
   
-  })
+  useEffect(() =>{
+    props.getOrdersUser(props.id)
+  }, [])
+  
+  function formatDate(date) {
+    let formatDate = new Moment(date);
+    return formatDate.format('DD/MM/YY - HH:mm:ss')
+  }
+  
   return (
     <Fragment>
+      <div className={styles.hhh2}>Mis Ordenes</div>
       <div className={"table-responsive " + styles.container}>
-        <table className="table table-sm" >
+        <table className={"table table-sm " + styles.table} >
           <thead>
           <tr>
             <th scope="col">Número de Compra</th>
@@ -22,24 +31,28 @@ function UserOrders (props) {
             <th scope="col">Estado</th>
             <th scope="col">Monto</th>
             <th scope="col">Fecha y hora</th>
-            <th scope="col">  </th>
           </tr>
           </thead>
           <tbody >
-                <tr >
-                  <Link exact to={""} >
-                    <th scope="row" >sdfsdf</th>
+          {
+            props.ordersUser && props.ordersUser.map(order => {
+              let total = 0;
+              order.products.map(product => {
+                total = total + product.price * product.OrderDetails.quantity;
+              })
+              return (
+                <tr key={order.id}>
+                  <Link exact to={`/orders/${order.id}`} >
+                    <th scope="row" >{order.id}</th>
                   </Link>
-                  <td>sdfsdf</td>
-                  <td>dfsdf
+                  <td>{order.userId}</td>
+                  <td>{order.state}
                   </td>
-                  <td>hola</td>
-                  <td>holz</td>
-                  <td>
-                    <button type="button" className="btn btn-secondary btn-sm">Editar</button>
-                  </td>
+                  <td>${total.toFixed(2)}</td>
+                  <td>{formatDate(order.createdAt)}</td>
                 </tr>
               )
+            })
           }
           </tbody>
         </table>
@@ -50,10 +63,10 @@ function UserOrders (props) {
 
 
 function mapStateToProps(state) {
+  console.log("estte", state)
   return {
-    order: state.orderStore.order,
-    
+    ordersUser: state.orderStore.ordersUser,
   }
 }
 
-export default connect(mapStateToProps, { getUserOrder })(UserOrders);
+export default connect(mapStateToProps, { getOrdersUser } )(OrdersUser);

@@ -30,7 +30,7 @@ exports.isAuth = async function(req,res,next){
      }
      const token =req.headers.authorization.split(" ")[1]
      const payload = jwt.decode(token,authConfig.secret)
- 
+      console.log("pay", payload)
      if (payload.exp <= moment().unix()){
          return res.status(401).send({message:'El Token ha expirado'})        
      }
