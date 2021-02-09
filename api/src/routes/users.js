@@ -3,6 +3,7 @@ const { Order, User, OrderDetails, Review, Product } = require('../db.js');
 const passport = require('passport');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
+const uuid = require('uuid');
 
 //const { Op } = require("sequelize");
 
@@ -303,13 +304,10 @@ server.post('/forgot', (req, res) =>{
 			}
 		})
   .then(user =>{
-    console.log(user)
     if(!user.reset){
       var id = uuid.v4();
       user.setDataValue("reset", id);
       user.save();
-      
-      return user;
     }
 		var transporter = nodemailer.createTransport({
 			service: 'gmail',

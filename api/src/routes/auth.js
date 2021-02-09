@@ -68,14 +68,13 @@ server.put('/promote/:id', protected.isAuthAdmin, (req, res) => {
 server.post('/:id/forceReset/',protected.isAuth, (req, res) =>{
 	const {id} = req.params
 	User.findByPk(id)
-  .then(user => {
-    var id = uuid.v4();
-    user.setDataValue('reset', id);
-    user.save();
-    
-    return user;
-  })
+  
 	.then(user =>{
+    if(!user.reset){
+      var id = uuid.v4();
+      user.setDataValue('reset', id);
+      user.save();
+    }
 		  transporter.sendMail({
 			  from: process.env.AUTH_MAIL,
 			  to: user.email,
