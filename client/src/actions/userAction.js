@@ -5,7 +5,7 @@ import {
     POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
      UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD, 
-     FORGOT_PASSWORD,POST_USER_FAILED } from '../constants/productConstants.js';
+     FORGOT_PASSWORD,POST_USER_FAILED, LOGIN_FACEBOOK } from '../constants/productConstants.js';
  
 export const getUsers = () => async (dispatch,getState) => {
     try {
@@ -375,6 +375,20 @@ export const forgotPassword = email => async (dispatch,getState) => {
             type: FORGOT_PASSWORD,
             payload: answer.data
         });
+    } catch (error) {
+        console.log("Error" + error)
+    }
+}
+
+export const loginFacebook = () => async (dispatch) => {
+    try {
+        let answer = await axios.get(`http://localhost:3001/auth/facebook`);
+        console.log(answer)
+         dispatch({
+            type: LOGIN_FACEBOOK,
+            payload: answer.data
+        });
+        
     } catch (error) {
         console.log("Error" + error)
     }

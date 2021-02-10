@@ -4,6 +4,9 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
+import LoginFacebookButton from './LoginFacebookButton';
+import LoginGoogleButton from './LoginGoogleButton';
+
 
 
 const validate = (input) => {
@@ -110,11 +113,15 @@ export default function Login() {
             <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
           </div>
         </form>
+        <LoginFacebookButton/>
+        <LoginGoogleButton/>
+
         <Link to="/user/signup">
           <div className={"form-text " + styles.linkRegistrarte} title="Regístrate">¿No tienes una cuenta? Regístrate
           </div>
         </Link>
       </div>
+    
     </div>
   )
 }

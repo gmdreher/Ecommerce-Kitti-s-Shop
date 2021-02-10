@@ -1,4 +1,4 @@
-import {LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS} from '../constants/productConstants.js';
+import {LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, LOGIN_FACEBOOK} from '../constants/productConstants.js';
 import decode from "jwt-decode";
 
 
@@ -36,6 +36,11 @@ export default (state = initialState, action) => {
       }
     case LOGOUT_USER:
       return { isAuthenticated:false}
+    
+    case LOGIN_FACEBOOK:
+      return{
+        isAuthenticated: true
+      }
 
     default:
       return state;
