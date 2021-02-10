@@ -23,7 +23,7 @@ function Categories(props) {
           {props.categories.map((e) => {
             return <div key={e.id} >
               <Link exact to={`/products/category/${e.name}`}  className="dropdown-item">
-                <span className={"dropdown-item " + styles.dropList}>{e.name} </span>
+                <span className={styles.dropList}>{e.name} </span>
               </Link>
             </div>
           })}

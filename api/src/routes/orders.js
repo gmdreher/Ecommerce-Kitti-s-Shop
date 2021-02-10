@@ -134,6 +134,17 @@ server.get('/:id' , protected.isAuth, (req, res) => {
     })
 });
 
+server.get('/states' , protected.isAuth, (req, res, next) => {
+  Order.findAll()
+    
+    .then(ordenes => {
+      console.log(ordenes)
+      res.status(200).json(ordenes)
+    })
+    .catch(next)
+});
+
+
 
 
 module.exports = server;

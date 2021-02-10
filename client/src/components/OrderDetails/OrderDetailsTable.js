@@ -110,7 +110,6 @@ class OrderDetailsTable extends React.Component {
                           <input className={styles.btnExtraSmall + " btn btn-info btn-sm"} type="submit" value="Aceptar"/>
                         </div>
                       </div>
-                
                     </form>
                   ) : <div className="btn-sm "><i title="Editar" className={"fas fa-edit " + styles.icon}/></div>
                   }

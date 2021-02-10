@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, } from "../constants/productConstants";
+import {ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS } from "../constants/productConstants";
 
 
 
@@ -62,6 +62,16 @@ export function getOrdersUser (id) {
     return axios.get(`http://localhost:3001/users/${id}/orders`)
       .then(orders => {
         dispatch({ type: ALL_ORDERS_USER, payload: orders.data });
+      });
+  };
+}
+
+export function getStatesOrder() {
+  return function(dispatch) {
+    return axios.get(`http://localhost:3001/orders/states`)
+      .then(states => {
+        console.log("estados", states)
+        dispatch({ type: STATES_ORDERS, payload: states.data });
       });
   };
 }

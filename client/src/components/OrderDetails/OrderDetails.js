@@ -12,7 +12,7 @@ export default class OrderDetails extends React.Component {
         <Link to={"/admin/orders"}>
           <button className={"btn-light " + styles.volver}>Volver</button>
         </Link>
-        <h2 className="main-Footer">Detalle de compra</h2>
+        <h2 className={"main-Footer " + styles.title}>Detalle de compra</h2>
         <OrderDetailsTable id={this.props.id} />
       </div>
   

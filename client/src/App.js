@@ -27,6 +27,7 @@ import './App.scss';
 import decode from 'jwt-decode';
 import { useSelector } from "react-redux";
 import CrudReview from './components/CrudReview/CrudReview';
+import SelectStates from "./components/OrderDetails/SelectStates";
 
 
 
@@ -53,17 +54,20 @@ function App() {
               <Route exact path="/user/order" component={ViewOrder} />
 
               <Route exact path='/user/getEmail' component={GetEmail} />
-              {!user ? <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/' />}
-              <Route exact path="/user/review/:id" render={({ match }) => (user && user.id == match.params.id ? <CrudReview key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} />
+              
+              <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} />
+              <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
 
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
               <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
-              <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
+              <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} /> }/>
+  
+  
+              <Route exact path='/selectStates' component={SelectStates} />
             </div>
-
           </main>
           <footer>
             <Footer />

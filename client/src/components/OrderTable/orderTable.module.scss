@@ -1,5 +1,5 @@
 .title{
-  margin-left: 50px;
+  margin-left: 5%;
   margin-top: 10px;
 }
 
@@ -9,7 +9,7 @@
   border-radius: 15px;
   background-color: white;
   display: flex;
-  margin: 2% 5% ;
+  margin: 1% 5% ;
   justify-content: center;
   align-items: center;
   padding: 0 1%;
@@ -24,5 +24,17 @@
 .th{
   text-align: center;
   width: 2%;
+}
+
+.dropDown{
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 5.5%;
+}
+
+.filterState{
+  background-color: #f5b453;
+  color: black;
+  border: none;
 }
 
