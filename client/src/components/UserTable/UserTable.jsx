@@ -15,7 +15,7 @@ export default function UserTable() {
 
     useEffect(function () {
         dispatch(getUsers());
-    }, [])
+    }, [usersData])
 
 
     function handlerBloquear(info) {

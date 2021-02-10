@@ -1,0 +1,44 @@
+.contenedorGrande{
+    display: flex;
+    align-items:flex-start;
+    justify-content: center;
+    
+    section{
+    
+        display: flex;
+        flex-direction: column;
+        text-align-last: auto;
+        margin: 2rem;
+        border: 1px solid #bdbdbd;
+        box-shadow: 3px 3px 5px rgb(177, 177, 177);
+        background-color: white;
+        padding: 1em;
+        width: 40em;
+
+        .contenedor {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 15px;
+            padding-right: 15px;
+
+            .nombre{
+                color:rgb(117, 117, 117)
+            }
+        }
+      
+
+        button{
+            border-color: transparent;
+            background-color: #3483fa;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            border-radius: 6px;
+            height: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 48px;
+            padding: 0 24px;
+        }
+    }
+}

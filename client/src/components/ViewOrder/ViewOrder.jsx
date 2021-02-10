@@ -163,7 +163,7 @@ export default function ViewOrder(props) {
             </div>
             <div className="parte-dos">
 
-                <PayCart dato={totalHandler().toFixed(2)} />
+                <PayCart dato={totalHandler().toFixed(2)} dato2={cartProduct} />
             </div>
         </div>
     )

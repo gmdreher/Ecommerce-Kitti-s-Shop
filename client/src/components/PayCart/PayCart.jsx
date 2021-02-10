@@ -1,11 +1,17 @@
 import React from 'react';
 import '../PayCart/PayCart.scss';
+import { Link } from 'react-router-dom'
+
 
 
 export default function PayCart(props) {
 
-    // console.log("Paycart");
-    // console.log(props);
+    console.log("Paycart");
+    console.log(props.dato2);
+
+    function updateStateOrder() {
+
+    }
 
     return (
         <div className="contenedor">
@@ -19,9 +25,11 @@ export default function PayCart(props) {
                     <h6> ${props.dato}</h6>
                 </div>
             </div>
-            <div className="pagar">
-                <button>Finalizar Pago</button>
-            </div>
+            <Link to={"/user/order/checkOut/"} >
+                <div className="pagar">
+                    <button onClick={() => updateStateOrder()}>Finalizar Pago</button>
+                </div>
+            </Link>
         </div>
 
     )
