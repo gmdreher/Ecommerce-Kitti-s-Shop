@@ -5,7 +5,6 @@ const { User } = require('../db.js');
 const authConfig = require('../config/auth');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-
 //para guardar los datos del usuario autenticado se guarda una session para eso se debe
 // que serializar y deserializar los datos del usuario que esta logueado
 passport.serializeUser((user,done)=>{

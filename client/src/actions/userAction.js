@@ -379,7 +379,6 @@ export const forgotPassword = email => async (dispatch,getState) => {
         console.log("Error" + error)
     }
 }
-
 export const loginFacebook = () => async (dispatch) => {
     try {
         let answer = await axios.get(`http://localhost:3001/auth/facebook`);

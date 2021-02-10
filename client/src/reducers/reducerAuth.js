@@ -37,6 +37,7 @@ export default (state = initialState, action) => {
     case LOGOUT_USER:
       return { isAuthenticated:false}
     
+      
     case LOGIN_FACEBOOK:
       return{
         isAuthenticated: true

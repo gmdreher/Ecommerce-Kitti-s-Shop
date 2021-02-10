@@ -113,6 +113,7 @@ export default function Login() {
             <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
           </div>
         </form>
+        
         <LoginFacebookButton/>
         <LoginGoogleButton/>
 

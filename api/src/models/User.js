@@ -43,6 +43,7 @@ module.exports = (sequelize) => {
     providerId: {
       type: DataTypes.STRING,
     },
+    
     provider: {
       type: DataTypes.STRING,
     }
