@@ -49,6 +49,7 @@ export function getUserOrder(id) {
 };
 
 export function updateStateOrder(orderId, state) {
+
   return function(dispatch,getState) {
     if(getState().auth.userInfo!==null){
       const accessToken = localStorage.getItem('data')
@@ -63,9 +64,13 @@ export function updateStateOrder(orderId, state) {
           }
       )
     }
+    // console.log("este",orderId)
     return axios.put(`http://localhost:3001/orders/${orderId}`, {"state": state})
-      .then(order =>{
-        dispatch({type: UPDATE_STATE_ORDER, payload: order.data})
-      });
-  };
+    
+    .then(order =>{
+      dispatch({type: UPDATE_STATE_ORDER, payload: order.data})
+    }).catch((err)=>{
+      console.log("este es el bendito error", err)
+    })
+  }
 };

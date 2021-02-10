@@ -111,7 +111,7 @@ server.get("/:userId/order/:state", protected.isAuth, (req, res) => {
     where: {
       userId: userId,
       state: state
-    }
+    },
   }).then((order) => {
     OrderDetails.findAll({
       where: {
