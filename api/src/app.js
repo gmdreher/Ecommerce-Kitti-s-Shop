@@ -15,7 +15,7 @@ require('./db.js');
 require('./middleware/index')
 const store = new session.MemoryStore;
 const server = express();
-server.use(cors());
+
 
 server.name = 'API';
 
@@ -23,6 +23,7 @@ server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
+server.use(cors());
 server.use(session({
   secret: configAuth.secret,
   resave:true,
@@ -30,13 +31,7 @@ server.use(session({
 }))
 
 
-passport.serializeUser((user,done)=>{
-  done(null,user.id);
-})
-passport.deserializeUser(async (id,done)=>{
-  const user= await User.findByPk(id);
-  done(null, user)
-})
+
 
 
 server.use(passport.initialize())

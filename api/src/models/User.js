@@ -39,6 +39,12 @@ module.exports = (sequelize) => {
     banned: {
       type: DataTypes.BOOLEAN,
       allowNull: true
+    },
+    providerId: {
+      type: DataTypes.STRING,
+    },
+    provider: {
+      type: DataTypes.STRING,
     }
   })
   const setSaltAndPassword = async function (user) {

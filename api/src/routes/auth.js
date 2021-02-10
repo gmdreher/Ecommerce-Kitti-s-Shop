@@ -7,6 +7,10 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
+const cors =require('cors');
+const FacebookStrategy = require('passport-facebook')
+
+server.use(cors());
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -159,5 +163,17 @@ server.put('/:id/banned',protected.isAuthAdmin, function (req, res) {
         })
 })
 
+server.get("/facebook" , passport.authenticate("facebook", {
+  scope: ['email']
+}));
+
+server.get("/facebook/callback",
+      passport.authenticate(("facebook"),
+      async (req,res) =>{
+        res.redirect('http://localhost:3000/')
+       console.log("coonectada!")
+       
+      }))
+    
 
 module.exports = server
