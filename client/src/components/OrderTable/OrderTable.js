@@ -1,41 +1,48 @@
-import React, { Fragment, } from "react";
-import { getAllOrders, getStatesOrder} from '../../actions/orderActions';
+import React, {Fragment, useEffect, useState,} from "react";
+import { getAllOrders } from '../../actions/orderActions';
 import { connect } from 'react-redux';
 import styles from './orderTable.module.scss'
 import { Link } from "react-router-dom";
 import Moment from 'moment';
 
 
-class OrderTable extends React.Component {
 
-  componentDidMount() {
-    this.props.getAllOrders()
-    this.props.getStatesOrder()
-  }
+function OrderTable (props) {
+  
+  const [orderStates, setOrderStates] = useState('')
 
-  formatDate(date) {
+  
+  useEffect(() => {
+    props.getAllOrders()
+  }, [])
+
+  const formatDate = (date) => {
     let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
-
-
-  render() {
+  
+  const filteredOrders = (event) => {
+    props.getAllOrders(event.target.value)
+    setOrderStates(event.target.value)
+  }
+  
+   
     return (
       <Fragment>
         <br />
         <h2 className={styles.title}>Ordenes de Usuario:</h2>
-        <div className={styles.dropDown}>
-          <button className={"btn btn-secondary btn-sm dropdown-toggle " + styles.filterState} type="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-            Filtrar por estados
-          </button>
-          <ul className="dropdown-menu">
-            <li value="carrito" className="dropdown-item">carrito</li>
-            <li className="dropdown-item">creada</li>
-            <li className="dropdown-item">procesando</li>
-            <li className="dropdown-item">cancelada</li>
-            <li className="dropdown-item">completa</li>
-          </ul>
+        <div className={styles.select}>
+          <div>
+            <label>Filtrar por estado </label> &nbsp;
+            <select  name="state" id="state" value={orderStates} onChange={filteredOrders}>
+              <option value="">Todas</option>
+              <option value="carrito">En carrito</option>
+              <option value="creada">Creadas</option>
+              <option value="procesando">Procesando</option>
+              <option value="cancelada">Canceladas</option>
+              <option value="completa">Completas</option>
+            </select>
+          </div>
         </div>
         <div className={styles.cont}>
         <div className={"table-responsive"}>
@@ -53,7 +60,7 @@ class OrderTable extends React.Component {
             </thead>
             <tbody >
               {
-                this.props.allOrders.map(order => {
+               props.allOrders.map(order => {
                   let total = 0;
                   order.products.map(product => {
                     total = total + product.price * product.OrderDetails.quantity;
@@ -69,19 +76,22 @@ class OrderTable extends React.Component {
                       <td>{order.state}
                       </td>
                       <td>${total.toFixed(2)}</td>
-                      <td>{this.formatDate(order.createdAt)}</td>
+                      <td>{formatDate(order.createdAt)}</td>
                     </tr>
                   )
                 })
               }
             </tbody>
           </table>
+          {
+            props.allOrders.length === 0 ? <div>
+              No se encontraron ordenes en estado {orderStates}
+            </div>: ""
+          }
         </div>
-        
         </div>
       </Fragment>
     )
-  }
 
 }
 
@@ -91,4 +101,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getAllOrders, getStatesOrder })(OrderTable);
+export default connect(mapStateToProps, { getAllOrders })(OrderTable);

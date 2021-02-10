@@ -52,7 +52,7 @@ class UserProfile extends React.Component {
         <div className={"row " + styles.row2}>
            <div className={styles.myOrders}>
              <UserOrdersTable id={this.props.userInfo.id}/>
-      </div>
+           </div>
         </div>
       </div >
     )
