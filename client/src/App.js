@@ -17,7 +17,7 @@ import ViewOrder from './components/ViewOrder/ViewOrder';
 import ResetPass from './components/ResetPass/ResetPass';
 import GetEmail from './components/ResetPass/GetEmail';
 import Login from './components/User/Login'
-import UserProfile from "./components/User/UserProfile";
+import UserProfile from "./components/UserProfile/UserProfile";
 import './Styles/App.scss'
 import PrivateRoute from './components/PrivateRoutes.js'
 
@@ -60,7 +60,8 @@ function App() {
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
-              <Route exact path="/orders/:id" render={({ match }) => (user && user.rol == 'admin' ? <OrderDetails key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} />
+              <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
+              <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} />} />
             </div>
 
           </main>

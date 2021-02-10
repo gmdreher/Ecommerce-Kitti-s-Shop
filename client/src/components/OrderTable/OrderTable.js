@@ -22,7 +22,7 @@ class OrderTable extends React.Component {
       <Fragment>
         <br />
         <h2 className={styles.title}>Ordenes de Usuario:</h2>
-        <div className={styles.container}>
+        <div className={styles.cont}>
         <div className={"table-responsive"}>
           <table className={"table table-sm " + styles.table} >
             <thead>
@@ -35,7 +35,6 @@ class OrderTable extends React.Component {
               </tr>
             </thead>
             <tbody >
-
               {
                 this.props.allOrders.map(order => {
                   let total = 0;
@@ -44,9 +43,12 @@ class OrderTable extends React.Component {
                   })
                   return (
                     <tr key={order.id}>
-                      <Link exact to={`/orders/${order.id}`} >
-                        <th scope="row" >{order.id}</th>
-                      </Link>
+                      <td scope="row" >
+                        <Link exact to={`/orders/${order.id}`} >
+                          {order.id}
+                        </Link>
+                      </td>
+                      
                       <td>{order.userId}</td>
                       <td>{order.state}
                       </td>

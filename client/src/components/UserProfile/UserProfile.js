@@ -2,7 +2,7 @@ import React from "react";
 import styles from './userProfile.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import UserOrders from "./UserOrders";
+import UserOrdersTable from "./UserOrdersTable";
 
 
 
@@ -51,9 +51,9 @@ class UserProfile extends React.Component {
         </div>
         <div className={"row " + styles.row2}>
            <div className={styles.myOrders}>
-                <UserOrders id={this.props.userInfo.id}/>
+             <UserOrdersTable id={this.props.userInfo.id}/>
       </div>
-        </div >
+        </div>
       </div >
     )
 

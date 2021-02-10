@@ -27,20 +27,7 @@ export function getAllOrders() {
 
 
 export function getUserOrder(id) {
-  return function(dispatch,getState) {
-    if(getState().auth.userInfo!==null){
-      const accessToken = localStorage.getItem('data')
-    
-      axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
-      )
-    }
+  return function(dispatch) {
     return axios.get(`http://localhost:3001/orders/${id}`)
       .then(userOrders => {
         dispatch({ type: GET_SPECIFIC_ORDER, payload: userOrders.data });
@@ -78,3 +65,4 @@ export function getOrdersUser (id) {
       });
   };
 }
+

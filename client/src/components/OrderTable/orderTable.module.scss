@@ -2,13 +2,17 @@
   margin-left: 50px;
   margin-top: 10px;
 }
-.container{
+
+.cont{
   border: 1px solid rgb(233, 185, 83);
   box-shadow: 2px 2px 3px rgb(175, 128, 56);
   border-radius: 15px;
   background-color: white;
   display: flex;
-  margin: 2% 10% ;
+  margin: 2% 5% ;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1%;
 }
 
 .table {
@@ -19,15 +23,6 @@
 
 .th{
   text-align: center;
-  width: 20px;
+  width: 2%;
 }
 
-.hhh2{
-  background-color: #f5b453;
-  padding: 1% 0;
-  border-radius: 25%;
-  margin: 0 2%;
-  border: 2px solid black;
-  width: 90%;
-
-}
