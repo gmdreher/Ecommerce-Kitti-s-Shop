@@ -132,8 +132,6 @@ export const getProductsCart = (data) => async (dispatch, getState) => {
                 orderProd.push(order)
             }
 
-
-
             dispatch({
                 type: GET_PRODUCT_CART,
                 payload: orderProd,

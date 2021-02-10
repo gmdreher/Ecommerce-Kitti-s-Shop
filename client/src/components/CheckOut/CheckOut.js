@@ -1,24 +1,33 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductsCart } from "../../actions/cartAction";
+import { updateStateOrder } from "../../actions/orderActions";
 import style from "./checkOut.module.scss";
 import pago from '../../img/mp.jpeg';
+
 
 export default function CheckOut() {
 
     const dispatch = useDispatch();
-
-
     const user = useSelector(store => store.auth.userInfo);
+
+    const order = useSelector((store) => store.orderStore.order)
+    console.log("esto es order en checkput", order);
 
     let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
 
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
-
     }, [])
-    console.log("esto es en checkout", cartProduct)
 
+    function cambio() {
+
+        if (order && order !== undefined) {
+            let state = "procesando";
+            let num = order.id;
+            dispatch(updateStateOrder(num, state))
+        }
+    }
 
     function sumaTotal() {
         if (cartProduct) {
@@ -145,7 +154,7 @@ export default function CheckOut() {
                                 <br />
                             </div>
                             <div>
-                                <button>FINALIZAR PAGO</button>
+                                <button onClick={() => cambio()}>FINALIZAR PAGO</button>
                             </div>
                             <div class="img-responsive">
                                 <img src={pago} alt="Cargando imagen..." />

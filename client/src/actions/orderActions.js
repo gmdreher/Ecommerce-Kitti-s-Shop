@@ -1,21 +1,21 @@
 import axios from "axios";
-import {GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER} from "../constants/productConstants";
+import { GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER } from "../constants/productConstants";
 
 
 
 export function getAllOrders() {
-  return function(dispatch,getState) {
-    if(getState().auth.userInfo!==null){
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
       )
     }
     return axios.get('http://localhost:3001/orders')
@@ -27,18 +27,18 @@ export function getAllOrders() {
 
 
 export function getUserOrder(id) {
-  return function(dispatch,getState) {
-    if(getState().auth.userInfo!==null){
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
       )
     }
     return axios.get(`http://localhost:3001/orders/${id}`)
@@ -49,23 +49,30 @@ export function getUserOrder(id) {
 };
 
 export function updateStateOrder(orderId, state) {
-  return function(dispatch,getState) {
-    if(getState().auth.userInfo!==null){
+
+  console.log("RECIBE LA ACCION!", orderId, state);
+
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
       )
     }
-    return axios.put(`http://localhost:3001/orders/${orderId}`, {"state": state})
-      .then(order =>{
-        dispatch({type: UPDATE_STATE_ORDER, payload: order.data})
+    return axios.put(`http://localhost:3001/orders/${orderId}`, { "state": state })
+      .then(order => {
+        console.log("SE LLEVA EL DISPATCH", order);
+        dispatch({ type: UPDATE_STATE_ORDER, payload: order.data })
       });
   };
 };
+
+
+
