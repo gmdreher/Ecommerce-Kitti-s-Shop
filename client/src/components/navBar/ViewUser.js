@@ -8,7 +8,7 @@ import MyAccount from "./MyAccount";
 function ViewUser (props) {
 
   return (
-    <header className={styles.viewUser_Guest}>
+    <div className={styles.viewUser_Guest}>
       <div>
         <Link to={`/user/order`}>
           <button className={styles.cart}><i className="fas fa-shopping-cart"/></button>
@@ -17,7 +17,7 @@ function ViewUser (props) {
       <div className={styles.myAccount}>
           <MyAccount/>
       </div>
-    </header>
+    </div>
   )
 }
 

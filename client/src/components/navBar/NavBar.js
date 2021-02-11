@@ -11,7 +11,7 @@ import ViewAdmin from "./ViewAdmin";
 function NavBar(props) {
 
     return (
-        <header className={styles.navBar}>
+        <div className={styles.navBar}>
           <div className={styles.logo}>
             <Link to={`/`}>
               <img src={logo} />
@@ -30,7 +30,7 @@ function NavBar(props) {
             props.userInfo && props.userInfo.rol === 'admin' ?
               <ViewAdmin /> : ''
           }
-        </header>
+        </div>
     )
 };
 

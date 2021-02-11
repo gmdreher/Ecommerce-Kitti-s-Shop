@@ -32,10 +32,8 @@ function App() {
     <BrowserRouter>
       <div className='body'>
         <div className="App">
-          <header>
             <Navbar />
             <NavCategories />
-          </header>
           <main>
             <div className="transparencia">
               <Route exact path="/users/me" component={UserProfile} />
