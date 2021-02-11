@@ -1,9 +1,9 @@
 import axios from "axios";
-import { GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, MELI_CART } from "../constants/productConstants";
+import { ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS } from "../constants/productConstants";
 
 
 
-export function getAllOrders() {
+export function getAllOrders(state) {
   return function (dispatch, getState) {
     if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
@@ -18,7 +18,11 @@ export function getAllOrders() {
         }
       )
     }
-    return axios.get('http://localhost:3001/orders')
+    var url = "http://localhost:3001/orders";
+    if (state) {
+      url += `?state=${state}`
+    }
+    return axios.get(url)
       .then(orders => {
         dispatch({ type: GET_ORDERS, payload: orders.data });
       });
@@ -74,11 +78,8 @@ export function updateStateOrder(orderId, state) {
   };
 };
 
-//-----------------------------MELI-----------------------------------//
-
-
-export const meliPost = (data) => async (dispatch, getState) => {
-  try {
+export function getOrdersUser(id) {
+  return function (dispatch, getState) {
     if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
 
@@ -92,20 +93,12 @@ export const meliPost = (data) => async (dispatch, getState) => {
         }
       )
     }
-    console.log(data)
-    const algo = await axios.post(`http://localhost:3001/mercadopago/`, { carrito: data })
+    return axios.get(`http://localhost:3001/users/${id}/orders`)
+      .then(orders => {
+        dispatch({ type: ALL_ORDERS_USER, payload: orders.data });
+      });
+  };
+}
 
-    console.log("esto es la data de la ction", algo)
 
-    window.location = algo.data.redirect
-
-    dispatch({
-      type: MELI_CART,
-      payload: algo.data
-    })
-  } catch (err) {
-    console.log("este es el bendito error", err)
-  }
-
-};
 

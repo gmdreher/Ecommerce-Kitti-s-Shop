@@ -1,19 +1,9 @@
 
-
-//.container{
-//  display: flex;
-//  width: 80%;
-//  border: 1px solid black;
-//  margin-top: 5%;
-//  margin-left: 10%;
-
   .list{
-    border: 2px solid black;
     margin: 5%;
   }
 
   .infoUser{
-    border: 2px solid black;
     margin: 5%;
   }
 
@@ -27,7 +17,9 @@
     align-items: center;
   }
 
-  .cardPassword{
+  .myOrders{
     margin-top: 3%;
+    text-align: center;
+    background-color: transparent;
   }
-//}
+
