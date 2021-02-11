@@ -28,6 +28,8 @@ import decode from 'jwt-decode';
 import { useSelector } from "react-redux";
 import CrudReview from './components/CrudReview/CrudReview';
 import CheckOut from './components/CheckOut/CheckOut';
+import Success from './components/CheckOut/Success';
+import Failed from './components/CheckOut/Failed';
 
 
 
@@ -54,8 +56,8 @@ function App() {
               <Route exact path="/user/order" component={ViewOrder} />
 
               <Route exact path='/user/getEmail' component={GetEmail} />
-              {/* {!user ? <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/' />}
-              <Route exact path="/user/review/:id" render={({ match }) => (user && user.id == match.params.id ? <CrudReview key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} /> */}
+              {!user ? <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/' />}
+              <Route exact path="/user/review/:id" render={({ match }) => (user && user.id == match.params.id ? <CrudReview key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} />
 
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
@@ -63,6 +65,8 @@ function App() {
               <PrivateRoute exact path="/admin/users" component={UserTable} />
               <Route exact path="/orders/:id" render={({ match }) => (user && user.rol == 'admin' ? <OrderDetails key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} />
               <Route exact path= "/checkOut" component= {CheckOut} ></Route>
+              <Route exact path= "/mercadopago/success" component= {Success} ></Route>
+              <Route exact path= "/mercadopago/failed" component= {Failed} ></Route>
             </div>
 
           </main>

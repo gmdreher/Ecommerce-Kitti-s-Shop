@@ -49,3 +49,6 @@ export const  EDIT_REVIEW= ' EDIT_REVIEW';
 export const  DELETE_REVIEW= ' DELETE_REVIEW';
 export const GET_ALL_REVIEW_PRODUCT= 'GET_ALL_REVIEW_PRODUCT';
 export const POST_USER_FAILED='POST_USER_FAILED';
+
+
+export const MELI_CART = "MELI_CART"
