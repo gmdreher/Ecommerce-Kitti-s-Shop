@@ -6,7 +6,7 @@ const routes = require('./routes/index.js');
 const cors =require('cors');
 const passport = require('passport')
 const session = require('express-session');
-const {User} = require('./db')
+const { User } = require('./db')
 const configAuth = require('../src/config/auth')
 
 

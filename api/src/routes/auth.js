@@ -9,7 +9,7 @@ var nodemailer = require('nodemailer');
 
 
 
-server.post('/login', passport.authenticate('login', { session: true }), (req, res) => {
+server.post('/login', passport.authenticate('login', { session: false }), (req, res) => {
   try {
     const token = jwt.sign({
       id: req.user.id,
@@ -153,5 +153,13 @@ server.put('/demote/:id', protected.isAuthAdmin, (req, res) => {
     })
 })
 
+server.get('/google',
+  passport.authenticate('google', { scope: ['profile'] }));
 
+server.get('/google/redirect',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 module.exports = server
