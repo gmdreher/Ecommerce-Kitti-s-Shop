@@ -119,10 +119,7 @@ export const deleteProduct = (id) => async dispatch => {
     }
 }
 export const insertProduct = (datos) => async dispatch => {
-    //console.log('esta es la imagen')
-    //console.log(datos.product.Image)
     const response = await axios.post('http://localhost:3001/products/', datos.product);
-    //console.log(response.data)
     datos.cate.map((categoria) => {
         axios.post(`http://localhost:3001/products/${response.data.id}/category/${categoria}`)
             .then((responseProdCat) => {
