@@ -3,8 +3,8 @@
     align-items:flex-start;
     justify-content: center;
     
-    section{
-    
+    .grupo {
+        text-align: center;
         display: flex;
         flex-direction: column;
         text-align-last: auto;
@@ -13,7 +13,8 @@
         box-shadow: 3px 3px 5px rgb(177, 177, 177);
         background-color: white;
         padding: 1em;
-        width: 40em;
+        width: 30em;
+        border-radius: 20px;
 
         .contenedor {
             display: flex;
@@ -25,9 +26,60 @@
                 color:rgb(117, 117, 117)
             }
         }
-      
 
-        button{
+    .botones{
+        display: flex;
+        justify-content: center;
+
+        .next {
+            border-color: transparent;
+            background-color: #ffffff;
+            color: rgb(255, 172, 62);
+            border: 1px solid rgb(255, 172, 62);
+            box-shadow: 3px 3px 5px rgb(177, 177, 177);
+            width: 100%;
+            text-align: center;
+            border-radius: 20px;
+            height: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 48px;
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+
+        .next:hover {
+            background-color:  rgb(255, 172, 62);
+            border-color:rgb(219, 131, 16); 
+            color: rgb(255, 255, 255);
+        }
+
+
+        .volver {
+            border-color: transparent;
+            background-color: #ffffff;
+            color: rgb(255, 172, 62);
+            border: 1px solid rgb(255, 172, 62);
+            box-shadow: 3px 3px 5px rgb(177, 177, 177);
+            width: 40%;
+            text-align: center;
+            border-radius: 20px;
+            height: 48px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 48px;
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+
+        .volver:hover {
+            background-color:  rgb(255, 172, 62);
+            border-color:rgb(219, 131, 16); 
+            color: rgb(255, 255, 255);
+        }
+    }
+
+        .botonML{
             border-color: transparent;
             background-color: #3483fa;
             color: #fff;
@@ -39,6 +91,30 @@
             font-weight: 600;
             line-height: 48px;
             padding: 0 24px;
+        }
+        img {
+            width: 100%;
+        }
+
+        .total {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .productTotal {
+            display: flex;
+            justify-content: space-between;
+            
+            .nombreCantidad{
+                justify-content: flex-start;
+            }
+            .precio {
+                justify-content: flex-end;
+            }
+        }
+        .sumatotal {
+            display: flex;
+            justify-content: space-between;
         }
     }
 }

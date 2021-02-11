@@ -52,8 +52,7 @@ function App() {
               <Route exact path='/user/signup' component={SignUp} />
               <Route exact path='/auth/login' component={Login} />
               <Route exact path="/user/order" component={ViewOrder} />
-              <Route exact path="/user/order/checkOut" component={CheckOut} ></Route>
-
+              <Route exact path="/checkOut" component={CheckOut} />
               <Route exact path='/user/getEmail' component={GetEmail} />
               {/* {!user ? <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/' />} */}
               {/* <Route exact path="/user/review/:id" render={({ match }) => (user && user.id == match.params.id ? <CrudReview key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} /> */}

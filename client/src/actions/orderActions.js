@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER } from "../constants/productConstants";
+import { GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, MELI_CART } from "../constants/productConstants";
 
 
 
@@ -74,5 +74,38 @@ export function updateStateOrder(orderId, state) {
   };
 };
 
+//-----------------------------MELI-----------------------------------//
 
+
+export const meliPost = (data) => async (dispatch, getState) => {
+  try {
+    if (getState().auth.userInfo !== null) {
+      const accessToken = localStorage.getItem('data')
+
+      axios.interceptors.request.use(
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
+      )
+    }
+    console.log(data)
+    const algo = await axios.post(`http://localhost:3001/mercadopago/`, { carrito: data })
+
+    console.log("esto es la data de la ction", algo)
+
+    window.location = algo.data.redirect
+
+    dispatch({
+      type: MELI_CART,
+      payload: algo.data
+    })
+  } catch (err) {
+    console.log("este es el bendito error", err)
+  }
+
+};
 

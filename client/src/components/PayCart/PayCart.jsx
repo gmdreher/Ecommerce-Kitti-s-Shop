@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { updateStateOrder } from '../../actions/orderActions';
 import '../PayCart/PayCart.scss';
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
-import { updateStateOrder } from "../../actions/orderActions";
-
 
 
 export default function PayCart(props) {
+
     // console.log("Paycartrttttttttttt", props.dato2);
     const dispatch = useDispatch()
 
@@ -22,7 +22,6 @@ export default function PayCart(props) {
         }
     }
 
-
     return (
         <div className="contenedor">
             <h5>Total a pagar </h5>
@@ -35,12 +34,12 @@ export default function PayCart(props) {
                     <h6> ${props.dato}</h6>
                 </div>
             </div>
-            <Link to={"/user/order/checkOut/"} >
-                <div className="pagar">
-                    <button onClick={() => cambio()}>Finalizar Pago</button>
-                </div>
-            </Link>
+            <div className="pagar">
+                <Link to={`/checkOut/`} >
+                    <button onClick={cambio}>Finalizar Pago</button>
+                </Link>
+            </div>
         </div>
 
     )
-}
+};
