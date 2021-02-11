@@ -1,3 +1,5 @@
+
+
 .inlineLabel {
   margin-right: 0.25em;
 }
@@ -11,6 +13,13 @@
   align-content: center;
   margin-left: auto;
 
+  .title{
+    margin-left: 10%;
+    margin-top: 2%;
+    background-color: white;
+    padding: 1%;
+  }
+
   .volver{
     display: grid;
     background: white;
@@ -23,10 +32,10 @@
   }
 
   .container {
-    padding: 40px;
     margin: 20px;
-    width: 50%;
+    width: 40%;
     align-self: center;
+    background-color: white;
 
     .letterhead{
       display: flex;
@@ -38,14 +47,6 @@
 
     .editar{
       text-align: left;
-      //border-radius: 5px;
-      //padding: 0;
-      //margin-left: 5px;
-      //box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-
-      //label{
-      //  margin-right: 4px;
-      //}
 
       &:hover{
         cursor: pointer;
@@ -155,11 +156,9 @@
     display: inline-flex;
     border-radius: 10px;
     padding: 1rem;
-    max-width: 300px;
     border-top: 1px solid rgb(202, 202, 202);
     border-left: 1px solid rgb(202, 202, 202);
     box-shadow: 3px 4px 4px rgb(202, 202, 202);
-    margin-right: 0;
 
 
   }

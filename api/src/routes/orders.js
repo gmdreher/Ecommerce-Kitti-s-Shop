@@ -100,6 +100,28 @@ server.put('/:idUser/cart' , protected.isAuth, (req, res) => {
 
 //Ruta que retorne todas las ordenes
 server.get('/' , protected.isAuthAdmin, (req, res) => {
+  let state = req.query.state;
+  if(state){
+    Order.findAll({
+      where: {
+        state: state
+      },
+      include: [
+        {
+          model: Product, include: { model: Image }
+        },
+      ],
+      order: [
+        ['id', 'ASC']]
+    }).then(orders => {
+      res.status(200).json(orders)
+    })
+      .catch(err => {
+        res.status(400).send('' + err)
+      })
+    return;
+  }
+  
   Order.findAll({
     include: [
       {
