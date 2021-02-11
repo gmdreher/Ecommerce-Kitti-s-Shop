@@ -27,6 +27,9 @@ import './App.scss';
 import decode from 'jwt-decode';
 import { useSelector } from "react-redux";
 import CrudReview from './components/CrudReview/CrudReview';
+import CheckOut from './components/CheckOut/CheckOut';
+import Success from './components/CheckOut/Success';
+import Failed from './components/CheckOut/Failed';
 import SelectStates from "./components/OrderDetails/SelectStates";
 
 
@@ -62,6 +65,10 @@ function App() {
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
+              {/* <Route exact path="/orders/:id" render={({ match }) => (user && user.rol == 'admin' ? <OrderDetails key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} /> */}
+              <Route exact path= "/checkOut" component= {CheckOut} ></Route>
+              <Route exact path= "/mercadopago/success" component= {Success} ></Route>
+              <Route exact path= "/mercadopago/failed" component= {Failed} ></Route>
               <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
               <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} /> }/>
   
