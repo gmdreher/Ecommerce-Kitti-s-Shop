@@ -40,13 +40,13 @@ export default function ProductCard({ data }) {
             </ul>
             <div class="card-body">
               
-                    <button disabled={data.stock<1}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"></i></button>
-                    <label id="stock"></label>
-                     {data.stock<1?<label >Producto Agotado</label>:<label></label>}
+                    <button disabled={data.stock<1}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"/></button>
+                    <label id="stock"/>
+                     {data.stock<1?<label >Producto Agotado</label>:<label/>}
     
                 {/* <a href="#" class="card-link " onClick={() => alert('Carrito')}>Añadir al Carrito</a> */}
                 <Link to={`/products/detalle/${data.id}`}>
-                    <button ><i class="fas fa-plus"></i></button>
+                    <button ><i class="fas fa-plus"/></button>
                 </Link>
             </div>
         </div>

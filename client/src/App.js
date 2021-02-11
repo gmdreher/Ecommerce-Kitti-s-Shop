@@ -18,17 +18,11 @@ import ResetPass from './components/ResetPass/ResetPass';
 import GetEmail from './components/ResetPass/GetEmail';
 import Login from './components/User/Login'
 import UserProfile from "./components/UserProfile/UserProfile";
-import './Styles/App.scss'
 import PrivateRoute from './components/PrivateRoutes.js'
-
-
-import './App.scss';
-
-import decode from 'jwt-decode';
 import { useSelector } from "react-redux";
 import CrudReview from './components/CrudReview/CrudReview';
 import SelectStates from "./components/OrderDetails/SelectStates";
-
+import './App.scss'
 
 
 function App() {

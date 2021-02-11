@@ -2,18 +2,17 @@
     background-color: white;
     width: 18rem;
     padding-bottom: 10px;
-    margin: 30px;
+    margin: 2%;
     border: 1px solid rgb(233, 185, 83);
-    box-shadow: 0px 2px 2px 0px rgb(175, 128, 56);
-    border-radius: 15px;
+    box-shadow: 0 2px 2px 0 rgb(175, 128, 56);
+    border-radius: 5%;
     overflow: hidden;
     transition: all 0.25s;
 
     &:hover{
         transform : translateY(-15px);
         border: 1px solid rgb(233, 185, 83);
-        border-color: rgb(248, 219, 157);
-        box-shadow: 0px 2px 2px 0px  rgb(248, 219, 157);
+        box-shadow: 0 2px 2px 0  rgb(248, 219, 157);
 
     }
     div{
@@ -33,6 +32,7 @@
             text-align: center;
         }
     }
+
     ul{
         li{
             border: none;
@@ -52,7 +52,6 @@
                 background: white;
                 box-shadow: 3px 3px 5px rgb(177, 177, 177);
                 padding: .5em 2em;
-                border-radius: 5px;
                 border: 1px solid #bdbdbd;
                 margin-top: 1em;
                 border-radius: 25px;
