@@ -61,7 +61,7 @@ export default function Login() {
     if(userState){
       history.push('/')
     }
-  }, [userState])
+  }, [history, userState])
   
   return (
     <div className={'container ' + styles.globalContainer}>

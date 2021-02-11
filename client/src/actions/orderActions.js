@@ -1,9 +1,9 @@
 import axios from "axios";
-import {GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER} from "../constants/productConstants";
+import {ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS } from "../constants/productConstants";
 
 
 
-export function getAllOrders() {
+export function getAllOrders(state) {
   return function(dispatch,getState) {
     if(getState().auth.userInfo!==null){
       const accessToken = localStorage.getItem('data')
@@ -18,7 +18,11 @@ export function getAllOrders() {
           }
       )
     }
-    return axios.get('http://localhost:3001/orders')
+    var url = "http://localhost:3001/orders";
+    if(state){
+      url += `?state=${state}`
+    }
+    return axios.get(url)
       .then(orders => {
         dispatch({ type: GET_ORDERS, payload: orders.data });
       });
@@ -27,18 +31,18 @@ export function getAllOrders() {
 
 
 export function getUserOrder(id) {
-  return function(dispatch,getState) {
+  return function(dispatch, getState) {
     if(getState().auth.userInfo!==null){
       const accessToken = localStorage.getItem('data')
     
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config =>{
+          config.headers.authorization=`Bearer ${accessToken}`;
+          return config;
+        },
+        error =>{
+          return Promise.reject(error)
+        }
       )
     }
     return axios.get(`http://localhost:3001/orders/${id}`)
@@ -69,3 +73,28 @@ export function updateStateOrder(orderId, state) {
       });
   };
 };
+
+export function getOrdersUser (id) {
+  return function(dispatch, getState) {
+    if(getState().auth.userInfo!==null){
+      const accessToken = localStorage.getItem('data')
+    
+      axios.interceptors.request.use(
+        config =>{
+          config.headers.authorization=`Bearer ${accessToken}`;
+          return config;
+        },
+        error =>{
+          return Promise.reject(error)
+        }
+      )
+    }
+    return axios.get(`http://localhost:3001/users/${id}/orders`)
+      .then(orders => {
+        dispatch({ type: ALL_ORDERS_USER, payload: orders.data });
+      });
+  };
+}
+
+
+

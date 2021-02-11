@@ -135,11 +135,11 @@ server.put('/demote/:id', protected.isAuthAdmin, (req, res) => {
   const { id } = req.params;
   User.findByPk(id)
     .then(user => {
-      if (user.rol === "user") {
+      if (user.rol === "User") {
         res.json("Este usuario ya es usuario")
       } else {
         user.update({
-          rol: "user"
+          rol: "User"
         })
           .then(() => {
             res.status(200)
@@ -163,3 +163,4 @@ server.get('/google/redirect',
     res.redirect('/');
   });
 module.exports = server
+

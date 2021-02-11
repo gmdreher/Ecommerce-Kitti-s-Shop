@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Order, User, OrderDetails, Review, Product } = require('../db.js');
+const { Order, User, OrderDetails, Review, Product, Image } = require('../db.js');
 const passport = require('passport');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
@@ -180,7 +180,16 @@ server.get('/:id/orders' , protected.isAuth, (req, res) => {
   Order.findAll({
     where: {
       userId: id
-    }
+    },
+    include: [
+      {
+        model: Product,
+        include:
+          { model: Image }
+      },
+    ],
+    order: [
+      ['id', 'ASC']]
   })
     .then(orders => {
       res.status(200).json(orders)

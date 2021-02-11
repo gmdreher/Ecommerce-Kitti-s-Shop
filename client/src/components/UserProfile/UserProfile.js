@@ -2,15 +2,16 @@ import React from "react";
 import styles from './userProfile.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import UserOrders from "./UserOrders";
-
+import UserOrdersTable from "./UserOrdersTable";
 
 
 
 class UserProfile extends React.Component {
+  
 
+  
   render() {
-
+    
     return (
       <div className='container'>
         <div className="row">
@@ -25,6 +26,13 @@ class UserProfile extends React.Component {
                 <p className="blockquote mb-0">Correo electrónico</p>
                 <p>{this.props.userInfo.email}</p>
               </div>
+            </div>
+            <div className={"card " + styles.cardHistory}>
+              <Link to={`/user/review/${this.props.userInfo.id}`}>
+                <div className="card-header dropdown-item" >
+                  Mis reseñas
+                </div>
+              </Link>
             </div>
           </div>
           <div className="col-6">
@@ -42,22 +50,10 @@ class UserProfile extends React.Component {
           </div>
         </div>
         <div className={"row " + styles.row2}>
-          <div className={"card " + styles.cardHistory}>
-            <Link to={`/user/review/${this.props.userInfo.id}`}>
-              <div className="card-header dropdown-item" >
-                Mis reseñas
-              </div>
-            </Link>
-          </div>
-          {/* <div className={"card " + styles.cardHistory}>
-            <div>
-              <div className="card-header dropdown-item" >
-                Mis Ordenes
-                <UserOrders /> 
-              </div> 
+           <div className={styles.myOrders}>
+             <UserOrdersTable id={this.props.userInfo.id}/>
+           </div>
         </div>
-      </div>*/}
-        </div >
       </div >
     )
 
