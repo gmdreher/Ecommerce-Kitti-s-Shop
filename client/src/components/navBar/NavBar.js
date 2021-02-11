@@ -12,24 +12,27 @@ function NavBar(props) {
 
     return (
         <div className={styles.navBar}>
-          <div className={styles.logo}>
+          
+          <div className={styles.containerLogo}>
             <Link to={`/`}>
-              <img src={logo} />
+              <img className={styles.logo} src={logo} />
             </Link>
           </div>
           <Search />
-          {
-            !props.userInfo ?
-              <ViewGuest /> : ''
-          }
-          {
-            props.userInfo && props.userInfo.rol === 'User' ?
-              <ViewUser /> : ''
-          }
-          {
-            props.userInfo && props.userInfo.rol === 'admin' ?
-              <ViewAdmin /> : ''
-          }
+          <div>
+            {
+              !props.userInfo ?
+                <ViewGuest /> : ''
+            }
+            {
+              props.userInfo && props.userInfo.rol === 'User' ?
+                <ViewUser /> : ''
+            }
+            {
+              props.userInfo && props.userInfo.rol === 'admin' ?
+                <ViewAdmin /> : ''
+            }
+          </div>
         </div>
     )
 };
