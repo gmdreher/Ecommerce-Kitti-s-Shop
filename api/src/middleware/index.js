@@ -67,15 +67,27 @@ passport.use(
     (accessToken, refreshToken, profile, done)=>{
         User.findOne({
             where: {
-                email: profile.emails[0].value
-            }
+                email: profile.emails[0].value,
+            },
         })
           .then((user => {
-                done(null, user)
-            }).catch(err => {
-              return done(err)
+              if(user){
+                return done(null, user)
+              }else{
+                  User.create({
+                      email: profile.emails[0].value,
+                      password: '',
+                      fullname: profile.displayName,
+                      rol: "User",
+                      reset: false,
+                      banned: false
+                  }).then(newUser => {
+                      done(null, newUser)
+                  })
+              }
             })
           )
         
     })
 )
+
