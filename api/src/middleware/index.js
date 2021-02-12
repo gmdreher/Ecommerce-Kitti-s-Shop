@@ -25,7 +25,7 @@ passport.use('signup', new LocalStrategy({
                 password,
                 fullname: req.body.fullname,
                 rol:req.body.rol,
-                reset: false,
+                reset: null,
                 banned: false
             })
             return done(null, user)
@@ -80,7 +80,7 @@ passport.use(
                       password: '',
                       fullname: profile.displayName,
                       rol: "User",
-                      reset: false,
+                      reset: null,
                       banned: false
                   }).then(newUser => {
                       done(null, newUser)
@@ -113,7 +113,7 @@ passport.use(
                     fullname: profile.name.givenName,
                     password: '',
                     rol: "User",
-                    reset: false,
+                    reset: null,
                     banned: false
                 }
                     }).then(newUser => {

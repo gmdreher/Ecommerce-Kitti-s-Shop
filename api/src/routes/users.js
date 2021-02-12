@@ -3,6 +3,7 @@ const { Order, User, OrderDetails, Review, Product, Image } = require('../db.js'
 const passport = require('passport');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
+const uuid = require('uuid');
 //const { Op } = require("sequelize");
 
 //Ruta de crear usuario
@@ -269,33 +270,6 @@ server.put('/passwordReset/:id', function (req, res) {
    ) 
 });
 
-//get todas las ordenes, con productos de un usuario
-// server.get('/:id/orders/complete', (req, res)=>{
-//   const {id} = req.params;
-//   User.findByPk(id)
-//   .then((user)=>{
-//     Order.findAll({
-//       where: { 
-//         state: "completa",
-//       userId: user.id },
-//       include: [
-//         {
-//           model: Product,
-//           as: "products",
-//           attributes: ["name", "description", "stock", "price"],
-//           include:[
-//             {
-//               model: Review,
-//               where:{
-//                 userId: user.id
-//               }
-//             }
-//           ]
-//         },
-//       ],
-//     }).then((r) => res.status(200).json(r));
-//   });
-// })
 
 //user olvida la contraseña
 server.post('/forgot', (req, res) =>{
@@ -305,8 +279,13 @@ server.post('/forgot', (req, res) =>{
 			where: {
 				email: email,
 			}
-		}
-	).then(user =>{
+		})
+  .then(user =>{
+    if(!user.reset){
+      var id = uuid.v4();
+      user.setDataValue("reset", id);
+      user.save();
+    }
 		var transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
@@ -316,9 +295,9 @@ server.post('/forgot', (req, res) =>{
 		  })
 		  transporter.sendMail({
 			  from: process.env.AUTH_MAIL,
-			  to: email,
+			  to: user.email,
 			  subject: 'Cambiar tu contraseña',
-			  text: `Parece que has olvidado tu contraseña! Porfavor has click en el siguiente link: http://localhost:3000/user/resetPass/${user.id} `
+			  text: `Parece que has olvidado tu contraseña! \nPorfavor has click en el siguiente link: http://localhost:3000/user/resetPass/${user.dataValues.reset}`
 		  },(error, info)=>{
 			  if(error){(res.status(500).send("no se pudo enviar" + error)) }
 			  else {
@@ -327,7 +306,7 @@ server.post('/forgot', (req, res) =>{
 		  })
 	}).catch(err => {
 		res.status(400)
-		.json("Este usuario no se encuentra registrado" + err)
+		.json("Este usuario no se encuentra registrado" + console.log(err))
 	})
 });
 

@@ -32,7 +32,6 @@ server.use(session({
 
 passport.serializeUser((user, done)=>{
   
-  console.log("usuario", user[0])
   done(null, user);
 })
 passport.deserializeUser(async (user ,done)=>{
