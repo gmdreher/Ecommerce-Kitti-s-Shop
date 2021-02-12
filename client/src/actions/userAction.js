@@ -302,7 +302,7 @@ export const loginUser = (email, password, getState) => {
 }
 export const loginUserGoogle = (data, getState) => {
     return function (dispatch) {
-        return axios.get(`http://localhost:3001/auth/google/redirect${data}`)
+        return axios.post(`http://localhost:3001/auth/google/redirect${data}`)
           .then(res => {
               dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
               localStorage.setItem('data', res.data);

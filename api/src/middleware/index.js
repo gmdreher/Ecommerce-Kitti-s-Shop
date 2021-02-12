@@ -74,7 +74,7 @@ passport.use(
               if(user){
                 return done(null, user)
               }else{
-                  User.create({
+                  User.create({ //creo que no deberíamos crear cuenta
                       email: profile.emails[0].value,
                       password: '',
                       fullname: profile.displayName,
@@ -83,10 +83,14 @@ passport.use(
                       banned: false
                   }).then(newUser => {
                       done(null, newUser)
+                  }).catch(err =>{
+                      return done(err)
                   })
               }
             })
-          )
+          ).catch(err =>{
+            return done(err)
+        })
         
     })
 )

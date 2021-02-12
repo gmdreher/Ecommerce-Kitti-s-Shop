@@ -1,22 +1,22 @@
-import React from "react";
+import React, {Fragment} from "react";
 import styles from './orderDetails.module.scss';
-import { Link } from "react-router-dom";
 import OrderDetailsTable from "./OrderDetailsTable";
+import { useHistory } from "react-router-dom";
 
-export default class OrderDetails extends React.Component {
-
-  render() {
-    
+export default function OrderDetails (props) {
+  
+      const history = useHistory();
+      
     return (
-      <div className={styles.primerDiv}>
-        <Link to={"/admin/orders"}>
-          <button className={"btn-light " + styles.volver}>Volver</button>
-        </Link>
+      <Fragment>
+        <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>Volver</div>
+        <div className={styles.primerDiv}>
         <h2 className={"main-Footer " + styles.title}>Detalle de compra</h2>
-        <OrderDetailsTable id={this.props.id} />
-      </div>
+        <OrderDetailsTable id={props.id} />
+        </div>
+      </Fragment>
     )
-  }}
+}
 
 
 

@@ -159,7 +159,8 @@ server.put('/demote/:id', protected.isAuthAdmin, (req, res) => {
 server.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-server.get('/google/redirect',
+
+server.post('/google/redirect',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     try {
