@@ -24,7 +24,6 @@ function ViewUser (props) {
 function mapStateToProps(state) {
   return {
     userInfo: state.auth.userInfo,
-
   }
 }
 

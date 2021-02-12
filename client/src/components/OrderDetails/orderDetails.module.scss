@@ -1,5 +1,4 @@
 
-
 .inlineLabel {
   margin-right: 0.25em;
 }
@@ -7,6 +6,17 @@
 .btnExtraSmall {
   line-height: 1;
 }
+
+.volver{
+  display: inline-block !important;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  padding: .5em 2em;
+  border-radius: 5px;
+  margin-top: 1em;
+  margin-left: 50px;
+}
+
 .primerDiv{
   display: flex;
   flex-direction: column;
@@ -20,16 +30,7 @@
     padding: 1%;
   }
 
-  .volver{
-    display: grid;
-    background: white;
-    box-shadow: 0 0 5px rgba(0,0,0,.3);
-    padding: .5em 2em;
-    border-radius: 5px;
-    border: none;
-    margin-top: 1em;
-    margin-left: 50px;
-  }
+
 
   .container {
     margin: 20px;
