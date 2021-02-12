@@ -2,6 +2,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../db.js');
 const authConfig = require('../config/auth');
+const GoogleStrategy = require('passport-google-oauth20')
+
 
 //para guardar los datos del usuario autenticado se guarda una session para eso se debe
 // que serializar y deserializar los datos del usuario que esta logueado
@@ -54,4 +56,42 @@ passport.use('login', new LocalStrategy({
     } catch (e) {
         return done(e)
     }
-})) 
+}))
+
+passport.use(
+  new GoogleStrategy({
+        callbackURL: 'http://localhost:3000/auth/google/redirect',
+        clientID: process.env.CLIENT_ID ,
+        clientSecret: process.env.CLIENT_SECRET
+    },
+    (accessToken, refreshToken, profile, done)=>{
+        User.findOne({
+            where: {
+                email: profile.emails[0].value,
+            },
+        })
+          .then((user => {
+              if(user){
+                return done(null, user)
+              }else{
+                  User.create({ //creo que no deberíamos crear cuenta
+                      email: profile.emails[0].value,
+                      password: '',
+                      fullname: profile.displayName,
+                      rol: "User",
+                      reset: false,
+                      banned: false
+                  }).then(newUser => {
+                      done(null, newUser)
+                  }).catch(err =>{
+                      return done(err)
+                  })
+              }
+            })
+          ).catch(err =>{
+            return done(err)
+        })
+        
+    })
+)
+

@@ -54,3 +54,4 @@ export const POST_USER_FAILED = 'POST_USER_FAILED';
 
 
 export const MELI_CART = "MELI_CART"
+export const ADDRESS_ORDER = "ADDRESS_ORDER"

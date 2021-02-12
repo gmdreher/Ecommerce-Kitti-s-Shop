@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "lodash.isempty": "^4.4.0",
+    "passport-google-oauth20": "^2.0.0",
     "redux-devtools": "^3.7.0"
   }
 }

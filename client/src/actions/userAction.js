@@ -300,6 +300,27 @@ export const loginUser = (email, password, getState) => {
             })
     }
 }
+export const loginUserGoogle = (data, getState) => {
+    return function (dispatch) {
+        return axios.post(`http://localhost:3001/auth/google/redirect${data}`)
+          .then(res => {
+              dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
+              localStorage.setItem('data', res.data);
+              let productsStorage = localStorage.getItem('cartItems')
+              let idUser = decode(localStorage.getItem('data')).id
+              productsMove(productsStorage, idUser, getState, dispatch);
+          })
+          .catch(error => {
+              dispatch({
+                  type: USER_LOGIN_FAIL,
+                  payload: error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+              })
+          })
+    }
+}
+
 
 export const logoutUser = () => (dispatch) => {
     localStorage.clear();

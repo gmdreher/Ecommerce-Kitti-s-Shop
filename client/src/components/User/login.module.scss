@@ -28,6 +28,10 @@
           color: black;
 
         }
+
+        .btnGoogle{
+          border: .15rem solid #4885ed;
+        }
       }
     }
 
@@ -58,4 +62,8 @@
 .title{
   text-align: center;
   margin-top: 0.5em;
+}
+
+.googleIcon{
+  color: #4885ed;
 }

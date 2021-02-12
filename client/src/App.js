@@ -18,19 +18,18 @@ import ResetPass from './components/ResetPass/ResetPass';
 import GetEmail from './components/ResetPass/GetEmail';
 import Login from './components/User/Login'
 import UserProfile from "./components/UserProfile/UserProfile";
-import './Styles/App.scss'
 import PrivateRoute from './components/PrivateRoutes.js'
-
-
-import './App.scss';
-
-import decode from 'jwt-decode';
 import { useSelector } from "react-redux";
 import CrudReview from './components/CrudReview/CrudReview';
 import CheckOut from './components/CheckOut/CheckOut';
 import Success from './components/CheckOut/Success';
 import Failed from './components/CheckOut/Failed';
 import SelectStates from "./components/OrderDetails/SelectStates";
+import GoogleLogin from "./components/User/GoogleLogin";
+import './Styles/App.scss'
+import './App.scss';
+
+
 
 
 
@@ -73,6 +72,9 @@ function App() {
 
 
               <Route exact path='/selectStates' component={SelectStates} />
+  
+              <Route path='/auth/google/redirect'><GoogleLogin/></Route>
+
             </div>
           </main>
           <footer>

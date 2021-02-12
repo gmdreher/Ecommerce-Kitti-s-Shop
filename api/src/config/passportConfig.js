@@ -1,6 +1,9 @@
 const { User } = require('../db.js');
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require('passport-google-oauth20')
+require('dotenv').config();
+
 
 module.exports = function (passport)  {
   passport.use(
@@ -11,9 +14,11 @@ module.exports = function (passport)  {
         if (!user) {
           return done(null, false)
         }
-        if (bcrypt.compare(password, user.password)) {
-          return done(null, false);
-        }
+        
+          if (bcrypt.compare(password, user.password)) {
+            return done(null, false);
+          }
+        
         return done(null, user);
       }).catch(err => {
         return done(err);
@@ -33,5 +38,7 @@ module.exports = function (passport)  {
         return done(err);
       })
   })
+  
+  
 }
-    
+

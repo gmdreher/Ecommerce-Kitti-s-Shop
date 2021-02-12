@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductsCart } from "../../actions/cartAction"
 import style from "./checkOut.module.scss"
 import ML from "../../img/ML.jpeg"
-import { meliPost, updateStateOrder } from '../../actions/orderActions';
+import { meliPost, updateStateOrder, addressOrder } from '../../actions/orderActions';
 import { useHistory } from 'react-router';
 
 export default function CheckOut() {
@@ -18,31 +18,25 @@ export default function CheckOut() {
 
     const datos = order.products;
 
+    // console.log("este es user", user)
     const [inputContact, setInputContact] = useState({
-        nombreCompleto: "",
-        email: "",
         telefono: "",
-        dni: "",
-
     })
 
     const [inputEnvio, setInputEnvio] = useState({
         provincia: "",
         ciudad: "",
         direccion: "",
-        piso: ""
+        piso: "",
+        comentarios: ""
     })
+
+
 
     function ValidateInputContact(inputContact) {
         let errorContact = {};
-        if (!inputContact.nombreCompleto) {
-            errorContact.nombreCompleto = '**Requiere un nombre';
-        } else if (!inputContact.email) {
-            errorContact.email = '**Requiere un email válido';
-        } else if (!inputContact.telefono) {
+        if (!inputContact.telefono) {
             errorContact.telefono = '**Requiere un telefono valido';
-        } else if (!inputContact.dni) {
-            errorContact.dni = '**Requiere un dni valido';
         }
         return errorContact;
     }
@@ -121,7 +115,6 @@ export default function CheckOut() {
 
         }
     }
-
     const [habitado, setHabilitado] = useState(false)
 
     function habilitar() {
@@ -132,7 +125,6 @@ export default function CheckOut() {
     function habilitarPago() {
         setHabilitado(true)
     }
-
     function cambio() {
 
         if (orderId && orderId !== undefined) {
@@ -144,12 +136,19 @@ export default function CheckOut() {
 
         }
     }
+    //añadir la direccion
+    let domicilio = `Provincia: ${inputEnvio.provincia}, Ciudad/Localidad: ${inputEnvio.ciudad}, Dirección de la calle: ${inputEnvio.direccion}, Piso/N°: ${inputEnvio.piso}, Comentarios: ${inputEnvio.comentarios}, Teléfono: ${inputContact.telefono}`
 
+    function añadirDireccion() {
+        dispatch(addressOrder(orderId, domicilio))
+    }
 
     function handleCosa() {
         cambio()
         Meli()
+        añadirDireccion()
     }
+
     return (
         <div >
             <form class="row g-3 needs-validation" onSubmit={(e) => e.preventDefault()}>
@@ -160,38 +159,26 @@ export default function CheckOut() {
                                 <h3>Información Personal</h3>
                                 <br />
                                 <div >
-                                    <h6 class="form-label">Nombre Completo</h6>
-                                    <input name="nombreCompleto" value={inputContact.nombreCompleto} type="text" class="form-control" required onChange={handleInputChange} />
-
-                                    {/* {errorContact.nombreCompleto && ( <p>{errorContact.nombreCompleto}</p> )} */}
+                                    <h6 class="form-label"> Usuario: {user.fullname} </h6>
                                 </div>
 
                                 <div >
-                                    <h6 class="form-label">Email</h6>
-                                    <input name="email" value={inputContact.email} type="text" class="form-control" required onChange={handleInputChange} />
-
-                                    {/* {errorContact.email && ( <p>{errorContact.email}</p> )} */}
-
+                                    <h6 class="form-label">Email: {user.email} </h6>
                                 </div>
                                 <div >
                                     <h6 class="form-label">Telefono</h6>
-                                    <input name="telefono" value={inputContact.telefono} type="text" class="form-control" required onChange={handleInputChange} />
+                                    <input name="telefono" value={inputContact.telefono} type="number" class="form-control" required onChange={handleInputChange} />
 
-                                    {/* {errorContact.telefono && ( <p>{errorContact.telefono}</p> )} */}
+                                    {errorContact.telefono && (<p>{errorContact.telefono}</p>)}
                                 </div>
 
-                                <div >
-                                    <h6 class="form-label">Dni</h6>
-                                    <input name="dni" value={inputContact.dni} type="text" class="form-control" required onChange={handleInputChange} />
-
-                                    {/* {errorContact.dni && ( <p>{errorContact.dni}</p> )} */}
-                                </div>
                                 <br />
                                 <div className={style.botones}>
                                     <button className={style.next} onClick={() => history.push("/user/order")}>Volver</button>
                                     {
-                                        errorContact.nombreCompleto || errorContact.email || errorContact.telefono || errorContact.dni
-                                            ? <button className={style.next} >Continuar</button> : <button className={style.next} onClick={handlePasos}>Continuar</button>
+                                        errorContact.telefono || inputContact.telefono == '' ? <button className={style.next} >Continuar</button>
+                                            :
+                                            <button className={style.next} onClick={handlePasos}>Continuar</button>
                                     }
                                 </div>
                             </div>
@@ -218,8 +205,13 @@ export default function CheckOut() {
 
                                 </div>
                                 <div >
-                                    <h6 class="form-label">Piso y Depto</h6>
-                                    <input name="piso" value={inputEnvio.piso} type="text" class="form-control" required placeholder="N° de planta y N° de depto" onChange={handleInputChange} />
+                                    <h6 class="form-label">Piso / N°</h6>
+                                    <input name="piso" value={inputEnvio.piso} type="text" class="form-control" required placeholder="N° de planta o N°" onChange={handleInputChange} />
+
+                                </div>
+                                <div >
+                                    <h6 class="form-label">Comentarios</h6>
+                                    <input name="comentarios" value={inputEnvio.comentarios} type="text" class="form-control" placeholder="Informacion extra sobre envio" onChange={handleInputChange} />
 
                                 </div>
                                 <br />
@@ -240,14 +232,15 @@ export default function CheckOut() {
                                 <div >
                                     <h3>Detalles de pago</h3>
                                     <br />
-                                    <h6 class="form-label"><strong>Nombre: </strong>{inputContact.nombreCompleto}</h6>
-                                    <h6 class="form-label"><strong>Email: </strong>{inputContact.email}</h6>
+                                    <h6 class="form-label"><strong>Nombre: </strong>{user.fullname}</h6>
+                                    <h6 class="form-label"><strong>Email: </strong>{user.email}</h6>
                                     <h6 class="form-label"><strong>Telefono: </strong>{inputContact.telefono}</h6>
-                                    <h6 class="form-label"><strong>DNI: </strong>{inputContact.dni}</h6>
+
                                     <h6 class="form-label"><strong>Provincia: </strong>{inputEnvio.provincia}</h6>
-                                    <h6 class="form-label"><strong>Ciudad: </strong>{inputEnvio.ciudad}</h6>
+                                    <h6 class="form-label"><strong>Ciudad / Localidad: </strong>{inputEnvio.ciudad}</h6>
                                     <h6 class="form-label"><strong>Direccion: </strong>{inputEnvio.direccion}</h6>
-                                    <h6 class="form-label"><strong>Piso: </strong>{inputEnvio.piso}</h6>
+                                    <h6 class="form-label"><strong>Piso / N°: </strong>{inputEnvio.piso}</h6>
+                                    <h6 class="form-label"><strong>Comentarios: </strong>{inputEnvio.comentarios}</h6>
                                 </div>
                                 <br />
                                 <div className={style.botones}>

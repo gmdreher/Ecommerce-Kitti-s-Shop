@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS, MELI_CART } from "../constants/productConstants";
+import { ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS, MELI_CART, ADDRESS_ORDER } from "../constants/productConstants";
 
 
 
@@ -119,7 +119,7 @@ export const meliPost = (data, orderId) => async (dispatch, getState) => {
     console.log(data)
     const algo = await axios.post(`http://localhost:3001/mercadopago/`, { carrito: data, orderId: orderId })
 
-    console.log("esto es la data de la ction", algo)
+    // console.log("esto es la data de la ction",algo)
 
     window.location = algo.data.redirect
 
@@ -131,6 +131,34 @@ export const meliPost = (data, orderId) => async (dispatch, getState) => {
     console.log("este es el bendito error", err)
   }
 
-}
+  //***********action adress */
 
+  export const addressOrder = (orderId, direccion) => async (dispatch, getState) => {
+    try {
+      if (getState().auth.userInfo !== null) {
+        const accessToken = localStorage.getItem('data')
 
+        axios.interceptors.request.use(
+          config => {
+            config.headers.authorization = `Bearer ${accessToken}`;
+            return config;
+          },
+          error => {
+            return Promise.reject(error)
+          }
+        )
+      }
+      // console.log("action", direccion, orderId)
+      const algo = await axios.put(`http://localhost:3001/orders/${orderId}/address/`, { address: direccion })
+
+      //  console.log("esto es la data de la ction",algo)
+
+      dispatch({
+        type: ADDRESS_ORDER,
+        payload: algo
+      })
+    } catch (err) {
+      console.log("este es el bendito error", err)
+    }
+
+  }

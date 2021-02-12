@@ -33,6 +33,7 @@ export default function Login() {
   
   
   const handleSubmit = (event) => {
+    
     event.preventDefault();
     setUser({
       ...user,
@@ -108,6 +109,7 @@ export default function Login() {
           </Link>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
             <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
+            <a href="http://localhost:3001/auth/google" type="submit" className={"btn " + styles.btnGoogle}>Iniciar sesión con Google&nbsp;&nbsp;<i className={"fab fa-google " + styles.googleIcon}/></a>
           </div>
         </form>
         <Link to="/user/signup">
