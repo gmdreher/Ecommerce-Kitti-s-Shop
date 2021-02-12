@@ -12,5 +12,6 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
+
   });
 };

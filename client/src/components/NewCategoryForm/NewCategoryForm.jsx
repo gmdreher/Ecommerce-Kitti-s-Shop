@@ -56,13 +56,13 @@ function NewCategoryForm(props) {
   }
 
 
-  const handleSubmit = function(e) {
+  const handleSubmit = function (e) {
     props.getCategories();
     e.preventDefault();
   }
-   
+
   //agregar categorias
-  const handleAdd = function(category) {
+  const handleAdd = function (category) {
     props.postCategories(category)
     props.getCategories();
     toggle();
@@ -80,8 +80,8 @@ function NewCategoryForm(props) {
     props.putCategory(category);
     props.getCategories();
     toggle2()
-    
-   
+
+
   }
   // info de boton BORRAR de cada categoria
   const handleDelete = function (category) {
@@ -121,11 +121,11 @@ function NewCategoryForm(props) {
                 <Button className="buttonForm" color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
               </td>
             </tr>
-          )))} 
-          
-          
-          
-          
+          )))}
+
+
+
+
 
         </tbody>
       </Table>
@@ -152,8 +152,8 @@ function NewCategoryForm(props) {
             </ModalBody>
             <ModalFooter>
               {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> :
-               <Button color="primary" type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
-              >Crear Categoría</Button>}
+                <Button color="primary" type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+                >Crear Categoría</Button>}
 
               <Button color="secondary" onClick={toggle}>Salir</Button>
 
@@ -185,7 +185,7 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-            {errors.name ? <Button color="danger" onClick={toggle2}>Modificar Categoría</Button> :<Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>}
+              {errors.name ? <Button color="danger" onClick={toggle2}>Modificar Categoría</Button> : <Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>}
               <Button className="buttonForm" color="secondary" onClick={toggle2}>Salir</Button>
             </ModalFooter>
           </Form>
