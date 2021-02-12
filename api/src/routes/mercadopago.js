@@ -87,13 +87,15 @@ server.get("/response", async (req, res)=>{
         }]   
     })
     .then((order) => {
-        // console.log("esto es order", order.user.dataValues.email)
+        // console.log("esto es order", order)
 
         if(payment_status == "approved"){
 
             order.payment_status= payment_status //aprobado
-            order.state = "confirmado"
+            order.state = "confirmada"
             let emailUser = order.user.dataValues.email
+            let address= order.dataValues.address
+            console.log("esto es adress ", address)
             order.save()
             .then((_) => {
     
@@ -108,7 +110,11 @@ server.get("/response", async (req, res)=>{
                     from: process.env.AUTH_MAIL,
                     to: emailUser,
                     subject: 'Su compra fue exitosa',
-                    text: `Estimado Usuario: \n Su compra fue registrada, pronto le enviaremos sus productos. \n Gracias por la Compra!.`
+                    text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
+                    \n Datos de envio: 
+                    \n ${address}
+                    \n Ante cualquien consulta comunicarse a: ecommerce.kittishop@gmail.com
+                    \n Gracias por la Compra!.`
                 },(error, info)=>{
                     if(error){(res.status(500).send("no se pudo enviar" + error)) }
                     else {
