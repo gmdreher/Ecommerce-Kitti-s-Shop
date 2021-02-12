@@ -246,15 +246,20 @@ server.put('/promote/:id', (req, res)=>{
 
 //S70 : Crear Ruta para password reset
 //PUT /users/:id/passwordReset
-server.put('/passwordReset/:id', function (req, res) {
+server.put('/passwordReset/:reset', function (req, res) {
+  const {reset} = req.params;
   const {newPassword } = req.body;
-
+console.log(reset)
     if(!newPassword){
     return res.status(400)
     .json("Debe ingresar su nueva contraseña")
     }
-
-  User.findByPk(req.params.id)
+    User.findOne(
+      {
+        where: {
+          reset: reset,
+        }
+      })
     .then(user => {
         user.update(
           {
