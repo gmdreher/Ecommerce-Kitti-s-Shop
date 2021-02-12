@@ -130,35 +130,36 @@ export const meliPost = (data, orderId) => async (dispatch, getState) => {
   } catch (err) {
     console.log("este es el bendito error", err)
   }
+}
 
-  //***********action adress */
+//***********action adress */
 
-  export const addressOrder = (orderId, direccion) => async (dispatch, getState) => {
-    try {
-      if (getState().auth.userInfo !== null) {
-        const accessToken = localStorage.getItem('data')
+export const addressOrder = (orderId, direccion) => async (dispatch, getState) => {
+  try {
+    if (getState().auth.userInfo !== null) {
+      const accessToken = localStorage.getItem('data')
 
-        axios.interceptors.request.use(
-          config => {
-            config.headers.authorization = `Bearer ${accessToken}`;
-            return config;
-          },
-          error => {
-            return Promise.reject(error)
-          }
-        )
-      }
-      // console.log("action", direccion, orderId)
-      const algo = await axios.put(`http://localhost:3001/orders/${orderId}/address/`, { address: direccion })
-
-      //  console.log("esto es la data de la ction",algo)
-
-      dispatch({
-        type: ADDRESS_ORDER,
-        payload: algo
-      })
-    } catch (err) {
-      console.log("este es el bendito error", err)
+      axios.interceptors.request.use(
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
+      )
     }
+    // console.log("action", direccion, orderId)
+    const algo = await axios.put(`http://localhost:3001/orders/${orderId}/address/`, { address: direccion })
 
+    //  console.log("esto es la data de la ction",algo)
+
+    dispatch({
+      type: ADDRESS_ORDER,
+      payload: algo
+    })
+  } catch (err) {
+    console.log("este es el bendito error", err)
   }
+
+}
