@@ -102,7 +102,9 @@ class OrderDetailsTable extends React.Component {
                             <option value="carrito">carrito</option>
                             <option value="creada">creada</option>
                             <option value="procesando">procesando</option>
-                            <option value="cancelada">cancelada</option>
+                            <option value="confirmado">confirmado</option>
+                            <option value="cancelado">cancelado</option>
+                            <option value="enviado">enviado</option>
                             <option value="completa">completa</option>
                           </select>
                         </div>
