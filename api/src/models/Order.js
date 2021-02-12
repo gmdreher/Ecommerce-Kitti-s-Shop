@@ -4,7 +4,11 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   const Order = sequelize.define('order', {
     state: {
-      type: DataTypes.ENUM(["carrito", "creada", "procesando", "confirmado", "cancelada", "enviando", "completa"])
+      type: DataTypes.ENUM(["carrito", "creada", "procesando", "confirmado", "enviado", "cancelada", "completa"])
+    },
+    payment_status: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   });
 };

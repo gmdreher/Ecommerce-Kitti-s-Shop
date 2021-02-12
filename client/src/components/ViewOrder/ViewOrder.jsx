@@ -12,6 +12,7 @@ export default function ViewOrder(props) {
     const user = useSelector(store => store.auth.userInfo);
 
     let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
+    
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
     }, [])

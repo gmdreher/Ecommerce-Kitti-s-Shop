@@ -19,10 +19,13 @@ mercadopago.configure({
 
 // //Ruta que genera la URL de MercadoPago
 server.post("/", (req, res) => {
-    const { carrito } = req.body
-    console.log("este es carrito ", carrito)
+    const { carrito, orderId } = req.body
 
-    const id_orden = 1;
+    // console.log("este es carrito ", carrito)
+
+    // console.log("este es orderId ", orderId)
+
+    const order_id = orderId;
 
     const items_ml = carrito && carrito.map(i => ({
         title: i.name,
@@ -30,10 +33,12 @@ server.post("/", (req, res) => {
         quantity: i.quantity,
     }))
 
+
+
     // Crea un objeto de preferencia
     let preference = {
         items: items_ml,
-
+        external_reference: order_id.toString(),
         payment_methods: {
             excluded_payment_types: [
                 {
@@ -53,6 +58,7 @@ server.post("/", (req, res) => {
     mercadopago.preferences.create(preference)
         .then(function (response) {
 
+            // console.log(response)
             res.json({ redirect: response.body.init_point })
 
         }).catch(function (error) {
@@ -61,4 +67,54 @@ server.post("/", (req, res) => {
 })
 
 
+
+//Ruta que recibe la información del pago
+server.get("/response", async (req, res) => {
+
+    const { body } = await mercadopago.payment.get(req.query.collection_id)
+    console.log("EN body ", body)
+
+    const payment_status = body.status
+    const external_reference = body.external_reference
+
+    console.log("EXTERNAL REFERENCE ", external_reference)
+
+    //Aquí edito el status de mi orden
+    Order.findByPk(external_reference)
+        .then((order) => {
+
+            if (payment_status == "approved") {
+
+                order.payment_status = payment_status //aprobado
+                order.state = "confirmado"
+                order.save()
+                    .then((_) => {
+                        console.info('redirect success')
+
+                        return res.redirect("http://localhost:3000/mercadopago/success")
+                    })
+
+            } else {
+
+                order.payment_status = payment_status //rechazado
+                order.state = "cancelada"
+                order.save()
+                    .then((err) => {
+                        console.error('error al salvar', err)
+                        return res.redirect(`http://localhost:3000/mercadopago/failed`)
+                    })
+            }
+
+        })
+        .catch(err => {
+            console.error('error al buscar', err)
+            return res.redirect(`http://localhost:3000/`)
+        })
+
+    //proceso los datos del pago 
+    //redirijo de nuevo a react con mensaje de exito, falla o pendiente
+})
+
+
 module.exports = server;
+
