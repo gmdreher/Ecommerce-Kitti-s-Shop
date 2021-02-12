@@ -99,13 +99,13 @@ class OrderDetailsTable extends React.Component {
                         <div className="col-9">
                           <label className={styles.inlineLabel}>Elige un estado</label>
                           <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
-                            <option value="carrito">carrito</option>
-                            <option value="creada">creada</option>
-                            <option value="procesando">procesando</option>
-                            <option value="confirmado">confirmado</option>
-                            <option value="cancelado">cancelado</option>
-                            <option value="enviado">enviado</option>
-                            <option value="completa">completa</option>
+                            <option value="carrito">En carrito</option>
+                            <option value="creada">Creada</option>
+                            <option value="procesando">Procesando</option>
+                            <option value="confirmada">Confirmada</option>
+                            <option value="cancelada">Cancelada</option>
+                            <option value="enviada">Enviada</option>
+                            <option value="completa">Completa</option>
                           </select>
                         </div>
                         <div className="col-3">
@@ -156,6 +156,7 @@ class OrderDetailsTable extends React.Component {
               </div>
             })
           }
+        </div>
         <div className={styles.ctnTotal}>
           <div className={styles.totalTable}>
             <h5 className="grupo">Total a pagar: </h5>
@@ -164,13 +165,13 @@ class OrderDetailsTable extends React.Component {
             </div>
           </div>
         </div>
-        </div>
       </div>
       
     )
   }
 }
 function mapStateToProps(state) {
+  console.log("estado re", state)
   return {
     order: state.orderStore.order,
     userInfo: state.auth.userInfo

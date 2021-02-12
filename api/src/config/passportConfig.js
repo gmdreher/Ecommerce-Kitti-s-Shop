@@ -1,7 +1,6 @@
 const { User } = require('../db.js');
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
-const GoogleStrategy = require('passport-google-oauth20')
 require('dotenv').config();
 
 

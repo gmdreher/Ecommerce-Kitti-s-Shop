@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import Review from '../Review/Review';
 
 function Product(props) {
-    const [quantity,setQuantity] =React.useState('')
+    const [quantity,setQuantity] =React.useState(1)
     // const usersData = useSelector(store => store.product.user);
 
     useEffect(() => {
@@ -115,13 +115,22 @@ function Product(props) {
     const user = props.user;
 
     function handleClick (data){
-        props.addProductCart(user ?{ userId:user.id, productId: data.id, price: data.price, quantity:quantity.quantity}:{productId: data.id, price: data.price, quantity:quantity.quantity});
-    };
+        props.addProductCart(
+          user ? {
+            userId:user.id,
+            productId: data.id,
+            price: data.price,
+            quantity: quantity
+          }
+            : {
+            productId: data.id,
+            price: data.price,
+            quantity:quantity
+        }
+        )};
+    
     function change(e){
-        setQuantity({
-            ...quantity,
-            [e.target.name]: e.target.value
-        })
+        setQuantity(e.target.value)
     }
     return (
         <div className="container" >
@@ -173,7 +182,6 @@ function Product(props) {
 };
 
 function mapStateToProps(state) {
-    // console.log('este el el state:', state)
     return {
         product: state.product.product,
         user:state.auth.userInfo,
