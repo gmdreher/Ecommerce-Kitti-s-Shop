@@ -175,4 +175,26 @@ server.post('/google/redirect',
       res.status(400).send(err);
     }
   });
+
+  server.get('/facebook',
+  passport.authenticate('facebook', { scope: ['email'] }));
+
+
+server.post('/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log(req.user)
+    try {
+      const token = jwt.sign({
+        id: req.user[0].id,
+        fullname: req.user[0].fullname,
+        rol: req.user[0].rol,
+        email: req.user[0].email
+      }, authConfig.secret)
+      res.json(token)
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  });
+  
 module.exports = server

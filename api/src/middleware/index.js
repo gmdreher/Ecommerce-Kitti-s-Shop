@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../db.js');
 const authConfig = require('../config/auth');
 const GoogleStrategy = require('passport-google-oauth20')
+const FacebookStrategy = require('passport-facebook').Strategy
 
 
 //para guardar los datos del usuario autenticado se guarda una session para eso se debe
@@ -61,8 +62,8 @@ passport.use('login', new LocalStrategy({
 passport.use(
   new GoogleStrategy({
         callbackURL: 'http://localhost:3000/auth/google/redirect',
-        clientID: process.env.CLIENT_ID ,
-        clientSecret: process.env.CLIENT_SECRET
+        clientID: process.env.GOOGLE_APP_ID,
+        clientSecret: process.env.GOOGLE_APP_SECRET,
     },
     (accessToken, refreshToken, profile, done)=>{
         User.findOne({
@@ -93,5 +94,32 @@ passport.use(
         })
         
     })
-)
+);
+
+passport.use(
+    new FacebookStrategy({
+          callbackURL: 'http://localhost:3000/auth/facebook/callback',
+          clientID: process.env.FACEBOOK_APP_ID,
+          clientSecret: process.env.FACEBOOK_APP_SECRET,
+          profileFields: ['id', 'emails', 'name']
+      },
+      (accessToken, refreshToken, profile, done)=>{
+          User.findOrCreate({
+              where: {
+                  email: profile.emails[0].value,
+                    },
+                defaults: {
+                    email: profile.emails[0].value,
+                    fullname: profile.name.givenName,
+                    password: '',
+                    rol: "User",
+                    reset: false,
+                    banned: false
+                }
+                    }).then(newUser => {
+                        done(null, newUser)
+                    }).catch(err =>{
+                        return done(err)
+                    })
+                }))
 
