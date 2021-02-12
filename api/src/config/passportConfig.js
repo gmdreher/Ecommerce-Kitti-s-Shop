@@ -37,17 +37,6 @@ module.exports = function (passport)  {
       })
   })
   
-  passport.use(
-    new GoogleStrategy({
-        callbackURL: '/auth/google/redirect',
-        clientID: process.env.CLIENT_ID ,
-        clientSecret: process.env.CLIENT_SECRET
-      },
-      (accessToken, refreshToken, profile, done)=>{
-        
-        
-        done(null, user);
-        
-      })
-  )
+  
 }
+
