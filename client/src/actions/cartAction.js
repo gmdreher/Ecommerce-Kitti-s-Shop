@@ -116,6 +116,8 @@ export const getProductsCart = (data) => async (dispatch,getState) => {
             let orderProd = [];
             let order;
             const res = await axios.get(`http://localhost:3001/users/${data.userId}/order/${data.state}`);
+
+            // console.log("esto es un acrtaction, res", res)
             const valor = res.data;
             for (var i = 0; i < valor.length; i++) {
                 let dato1 = valor[i].quantity;
