@@ -88,7 +88,7 @@ function SignUp(props) {
     email: '',
     password: '',
     rol: 'User',
-    reset: false,
+    reset: null,
     banned: false,
     
   })
