@@ -156,7 +156,6 @@ class OrderDetailsTable extends React.Component {
               </div>
             })
           }
-        </div>
         <div className={styles.ctnTotal}>
           <div className={styles.totalTable}>
             <h5 className="grupo">Total a pagar: </h5>
@@ -164,6 +163,7 @@ class OrderDetailsTable extends React.Component {
               <h4 className='ml-3'>${getPriceOrder()}</h4>
             </div>
           </div>
+        </div>
         </div>
       </div>
       
