@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
 
-
 const validate = (input) => {
   let errors = {};
   if (!input.email) {
@@ -111,7 +110,10 @@ export default function Login() {
             <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
             <a href="http://localhost:3001/auth/google" type="submit" className={"btn " + styles.btnGoogle}>Iniciar sesión con Google&nbsp;&nbsp;<i className={"fab fa-google " + styles.googleIcon}/></a>
           </div>
+          <a href={`http://localhost:3001/auth/facebook`} type='submit '>Iniciar sesion con facebook </a>
+        
         </form>
+        
         <Link to="/user/signup">
           <div className={"form-text " + styles.linkRegistrarte} title="Regístrate">¿No tienes una cuenta? Regístrate
           </div>

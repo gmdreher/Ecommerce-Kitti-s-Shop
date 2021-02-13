@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
 import { insertCategory, getCategories, editCategory, deleteCategory } from "../../actions/productActions";
@@ -33,7 +32,7 @@ function NewCategoryForm(props) {
   //get categorias
   useEffect(() => {
     props.getCategories()
-  }, [])
+  }, [input])
   //validacion inputs
   const validate = function (input) {
     let errors = {};
@@ -99,13 +98,16 @@ function NewCategoryForm(props) {
 
     <Container className={styles.container}>
       <h1>Administrar Categorías</h1>
-      <Button className="buttonForm" color='primary' onClick={toggle}> + Agregar Categoría</Button>
+      <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
+      <br/>
       <Table>
         <thead>
           <tr>
             <th>#</th>
             <th>Nombre</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
+            <th>Editar</th>
+            <th>Borrar</th>
           </tr>
         </thead>
         <tbody>
@@ -116,10 +118,11 @@ function NewCategoryForm(props) {
               <td>{category.description}</td>
 
               <td>
-
-                <Button className="buttonForm" color='primary' onClick={() => handleEdit(category)} >Editar</Button>
-                <Button className="buttonForm" color='danger' onClick={() => handleDelete(category)}>Borrar</Button>
-              </td>
+                <button className={styles.buttonForm} onClick={() => handleEdit(category)} >Editar</button>
+                </td>
+                <td>
+                <button className={styles.buttonForm} onClick={() => handleDelete(category)}>Borrar</button>
+                </td>
             </tr>
           )))} 
           
@@ -151,11 +154,11 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <Button color="danger" onClick={toggle}>Crear Categoría</Button> :
-               <Button color="primary" type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
-              >Crear Categoría</Button>}
+              {errors.name ? <button className={styles.buttonForm} onClick={toggle}>Crear Categoría</button> :
+               <button className={styles.buttonForm}  type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+              >Crear Categoría</button>}
 
-              <Button color="secondary" onClick={toggle}>Salir</Button>
+              <button className={styles.buttonForm} onClick={toggle}>Salir</button>
 
             </ModalFooter>
           </Form>
@@ -185,8 +188,8 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-            {errors.name ? <Button color="danger" onClick={toggle2}>Modificar Categoría</Button> :<Button className="buttonForm" color="primary" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</Button>}
-              <Button className="buttonForm" color="secondary" onClick={toggle2}>Salir</Button>
+            {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> :<button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
+              <button className={styles.buttonForm} onClick={toggle2}>Salir</button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -200,8 +203,8 @@ function NewCategoryForm(props) {
             <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>
-              <Button className="buttonForm" color="primary" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</Button>
-              <Button className="buttonForm" color="secondary" onClick={toggle3}>No</Button>
+              <button className={styles.buttonForm}  type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
+              <button className={styles.buttonForm} onClick={toggle3}>No</button>
             </ModalFooter>
           </Form>
         </Modal>
