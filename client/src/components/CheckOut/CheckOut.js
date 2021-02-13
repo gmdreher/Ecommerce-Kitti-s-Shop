@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {getProductsCart }from "../../actions/cartAction"
 import style from "./checkOut.module.scss"
 import ML from "../../img/ML.jpeg"
-import { meliPost, updateStateOrder } from '../../actions/orderActions';
+import { meliPost, updateStateOrder, addressOrder } from '../../actions/orderActions';
 import { useHistory } from 'react-router';
 
 export default function CheckOut() {
@@ -18,18 +18,47 @@ export default function CheckOut() {
 
     const datos = order.products;
 
+    // console.log("este es user", user)
+    const[inputContact, setInputContact]= useState({   
+       telefono: "",
+    })
 
-    
-    const[input, setInput]= useState({
-        nombreCompleto: "",
-        email:"",
-        telefono: "",
-        dni:"",
+    const [inputEnvio, setInputEnvio]= useState({
         provincia: "",
         ciudad:"",
         direccion: "",
-        piso:""
+        piso:"",
+        comentarios:""
     })
+
+
+
+function ValidateInputContact(inputContact) {
+    let errorContact = {};
+     if(!inputContact.telefono){
+        errorContact.telefono = '**Requiere un telefono valido';
+     }
+    return errorContact;
+  }
+
+  function ValidateInputEnvio(inputEnvio) {
+
+    let errorEnvio = {};
+
+    if (!inputEnvio.provincia) {
+        errorEnvio.provincia = '**Requiere una provincia';
+    }else if(!inputEnvio.ciudad){
+        errorEnvio.ciudad = '**Requiere una ciudad';
+    }else if(!inputEnvio.direccion){
+        errorEnvio.direccion = '**Requiere una direccion';
+    }else if(!inputEnvio.piso){
+        errorEnvio.piso = '**Requiere un piso valido';
+        }
+    return errorEnvio;
+  }
+
+  const [errorContact, setErrorContact] = useState({});
+  const [errorEnvio, setErrorEnvio] = useState({});
 
     const [pasos, setPasos] = useState(1)
     const handlePasos = () => {
@@ -40,21 +69,29 @@ export default function CheckOut() {
         setPasos(pasos - 1)
     }
 
-
     const handleInputChange = (e)=> {
-        setInput({
-          ...input,
+        setInputContact({
+          ...inputContact,
           [e.target.name]: e.target.value
-        })
-      }
-
-
+        });
+        setInputEnvio({
+            ...inputEnvio,
+            [e.target.name]: e.target.value
+          });
+        setErrorContact(ValidateInputContact ({
+            ...inputContact,
+          [e.target.name]: e.target.value
+        }));
+        setErrorEnvio(ValidateInputEnvio ({
+            ...inputContact,
+          [e.target.name]: e.target.value
+        }));
+    }
 
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
         
     }, [])
-
 
 
 let carrito = datos && datos.map(product => {
@@ -78,7 +115,16 @@ function Meli() {
 
      }
  }
- 
+ const [habitado, setHabilitado]= useState(false)
+
+ function habilitar() {
+    setHabilitado(true)
+    handlePasos()
+}
+
+function habilitarPago() {
+    setHabilitado(true)
+}
  function cambio() {
 
     if (orderId && orderId !== undefined) {
@@ -90,15 +136,22 @@ function Meli() {
        
     }
 }
+//añadir la direccion
+let domicilio= `Provincia: ${inputEnvio.provincia}, Ciudad/Localidad: ${inputEnvio.ciudad}, Dirección de la calle: ${inputEnvio.direccion}, Piso/N°: ${inputEnvio.piso}, Comentarios: ${inputEnvio.comentarios}, Teléfono: ${inputContact.telefono}`
 
+function añadirDireccion() {
+    dispatch(addressOrder(orderId, domicilio))
+}
 
 function handleCosa() {
     cambio()
-    Meli()
+     Meli()
+    añadirDireccion()
 }
+
 return (
     <div >
-        <form class="row g-3 needs-validation" >
+        <form class="row g-3 needs-validation" onSubmit={(e)=> e.preventDefault()}>
             <div className={style.contenedorGrande}>
                 <>
                     {pasos == 1 && (
@@ -106,42 +159,27 @@ return (
                             <h3>Información Personal</h3>
                             <br />
                             <div >
-                                <label for="validationCustom01" class="form-label">Nombre Completo</label>
-                                <input name="nombreCompleto" value={input.nombreCompleto} type="text" class="form-control" id="validationCustom01" required onChange={handleInputChange} />
-                                <div class="valid-feedback">
-                                    Bien !
-                            </div>
+                                <h6  class="form-label"> Usuario: {user.fullname} </h6>                              
                             </div>
 
                             <div >
-                                <label for="validationCustomUsername" class="form-label">Email</label>
-                                <div class="input-group has-validation">
-
-                                    <input name="email" value={input.email} type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required onChange={handleInputChange} />
-                                    <div class="invalid-feedback">
-
-                                    </div>
-                                </div>
+                                <h6  class="form-label">Email: {user.email} </h6>
                             </div>
                             <div >
-                                <label for="validationCustom01" class="form-label">Telefono</label>
-                                <input name="telefono" value={input.telefono} type="text" class="form-control" id="validationCustom01" required onChange={handleInputChange} />
-                                <div class="valid-feedback">
-                                    Bien !
-                            </div>
+                                <h6 class="form-label">Telefono</h6>
+                                <input name="telefono"  value={inputContact.telefono} type="number"  class="form-control" required onChange={handleInputChange} />
+                                
+                            {errorContact.telefono && ( <p>{errorContact.telefono}</p> )}
                             </div>
 
-                            <div >
-                                <label for="validationCustom01" class="form-label">Dni</label>
-                                <input name="dni" value={input.dni} type="text" class="form-control" id="validationCustom01" required onChange={handleInputChange} />
-                                <div class="valid-feedback">
-                                    Bien !
-                            </div>
-                            </div>
                             <br />
                             <div className={style.botones}>
                                 <button className={style.next} onClick={() => history.push("/user/order")}>Volver</button>
+                               {
+                               errorContact.telefono || inputContact.telefono==''? <button className={style.next} >Continuar</button>
+                               :
                                 <button className={style.next} onClick={handlePasos}>Continuar</button>
+                               } 
                             </div>
                         </div>
                     )}
@@ -152,40 +190,68 @@ return (
                             <h3>Datos de Envio</h3>
                             <br />
                             <div >
-                                <label for="validationCustom03" class="form-label">Provincia</label>
-                                <input name="provincia" value={input.provincia} type="text" class="form-control" id="validationCustom03" required onChange={handleInputChange} />
-                                <div class="invalid-feedback">
-                                    Provincia Válida
-                        </div>
+                                <h6  class="form-label">Provincia</h6>
+                                <input name="provincia" value={inputEnvio.provincia} type="text" class="form-control"  required onChange={handleInputChange} />
+                                
                             </div>
                             <div >
-                                <label for="validationCustom05" class="form-label">Ciudad / Localidad</label>
-                                <input name="ciudad" value={input.ciudad} type="text" class="form-control" id="validationCustom05" required placeholder="Calle y número de la casa" onChange={handleInputChange} />
-                                <div class="invalid-feedback">
-                                    Ciudad Válida !
-                        </div>
+                                <h6 class="form-label">Ciudad / Localidad</h6>
+                                <input name="ciudad" value={inputEnvio.ciudad} type="text" class="form-control"  required placeholder="Calle y número de la casa" onChange={handleInputChange} />
+                                
                             </div>
                             <div >
-                                <label for="validationCustom05" class="form-label">Direccion de la Calle</label>
-                                <input name="direccion" value={input.direccion} type="text" class="form-control" id="validationCustom05" required placeholder="Calle y número de la casa" onChange={handleInputChange} />
-                                <div class="invalid-feedback">
-                                    Direccion válida !
-                        </div>
+                                <h6 class="form-label">Direccion de la Calle</h6>
+                                <input name="direccion" value={inputEnvio.direccion} type="text" class="form-control"  required placeholder="Calle y número de la casa" onChange={handleInputChange} />
+                               
                             </div>
                             <div >
-                                <label for="validationCustom05" class="form-label">Piso y Depto</label>
-                                <input name="piso" value={input.piso} type="text" class="form-control" id="validationCustom05" required placeholder="N° de planta y N° de depto" onChange={handleInputChange} />
-                                <div class="invalid-feedback">
-                                    Bien!
-                        </div>
+                                <h6 class="form-label">Piso / N°</h6>
+                                <input name="piso" value={inputEnvio.piso} type="text" class="form-control"  required placeholder="N° de planta o N°" onChange={handleInputChange} />
+                                
+                            </div>
+                            <div >
+                                <h6 class="form-label">Comentarios</h6>
+                                <input name="comentarios" value={inputEnvio.comentarios} type="text" class="form-control"  placeholder="Informacion extra sobre envio" onChange={handleInputChange} />
+                                
                             </div>
                             <br />
                             <div className={style.botones}>
                                 <button className={style.volver} onClick={handlePasosVolver}>Volver</button>
+                                {
+                                    errorEnvio.provincia || errorEnvio.ciudad || errorEnvio.direccion || errorEnvio.piso
+                                        ? <button className={style.next} >Continuar</button> : <button className={style.next} onClick={handlePasos}>Continuar</button>
+                                    // ? <button className={style.next} >Continuar</button> : <button className={style.next} onClick={habilitar}>Pagar</button>
+                                }
                             </div>
                         </div>
                     )}
                 </>
+                <>
+                        {pasos == 3 && (
+                            <div className={style.grupo} download="compra">
+                                <div >
+                                    <h3>Detalles de pago</h3>
+                                    <br />
+                                    <h6 class="form-label"><strong>Nombre: </strong>{user.fullname}</h6>
+                                    <h6 class="form-label"><strong>Email: </strong>{user.email}</h6>
+                                    <h6 class="form-label"><strong>Telefono: </strong>{inputContact.telefono}</h6>
+                                  
+                                    <h6 class="form-label"><strong>Provincia: </strong>{inputEnvio.provincia}</h6>
+                                    <h6 class="form-label"><strong>Ciudad / Localidad: </strong>{inputEnvio.ciudad}</h6>
+                                    <h6 class="form-label"><strong>Direccion: </strong>{inputEnvio.direccion}</h6>
+                                    <h6 class="form-label"><strong>Piso / N°: </strong>{inputEnvio.piso}</h6>
+                                    <h6 class="form-label"><strong>Comentarios: </strong>{inputEnvio.comentarios}</h6>
+                                </div>
+                                <br />
+                                <div className={style.botones}>
+                                    <button className={style.volver} onClick={handlePasosVolver}>Volver</button>
+                                    <button className={style.next} onClick={habilitarPago}>Pagar</button>
+
+                                </div>
+                            </div>
+                        )}
+
+                    </>
                 <div>
                     <div className={style.grupo}>
                         <h3> Detalle de Compra</h3>
@@ -210,7 +276,9 @@ return (
                             <br />
                         </div>
                         <div >
-                            <button className={style.botonML} onClick={handleCosa}>Comprar ahora</button>
+                            {habitado == true ? <button className={style.botonML} onClick={handleCosa}>Comprar ahora</button> :
+                                <button className={style.botonllenar}>Completar Formulario</button>}
+
                         </div>
                         <br />
                         <div>

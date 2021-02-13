@@ -148,7 +148,7 @@ export default function UserTable() {
 
                                         </td>
                                         <td>
-                                            <button type="button" className={styles.resert} onClick={() => handlerResert(info)}>Resetear</button>
+                                            <button type="button" className={styles.reset} onClick={() => handlerResert(info)}>Resetear</button>
                                         </td>
                                     </tr>
                                 )

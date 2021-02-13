@@ -26,6 +26,7 @@ import Success from './components/CheckOut/Success';
 import Failed from './components/CheckOut/Failed';
 import SelectStates from "./components/OrderDetails/SelectStates";
 import GoogleLogin from "./components/User/GoogleLogin";
+import FacebookLogin from "./components/User/FacebookLogin";
 import './Styles/App.scss'
 import './App.scss';
 
@@ -57,7 +58,7 @@ function App() {
 
               <Route exact path='/user/getEmail' component={GetEmail} />
               
-              <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} />
+              {!user ? <Route exact path='/user/resetPass/:id' render={({match}) =><ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/'/>}
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
 
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
@@ -75,6 +76,7 @@ function App() {
               <Route exact path='/selectStates' component={SelectStates} />
   
               <Route path='/auth/google/redirect'><GoogleLogin/></Route>
+              <Route path='/auth/facebook/callback'><FacebookLogin/></Route>
 
             </div>
           </main>
