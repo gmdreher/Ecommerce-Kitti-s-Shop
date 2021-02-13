@@ -6,14 +6,13 @@ import '../PayCart/PayCart.scss';
 
 
 export default function PayCart(props) {
-
-    // console.log("Paycartrttttttttttt", props.dato2);
+  
   const dispatch= useDispatch()
 
 
   function cambio() {
 
-    if (props.dato2 && props.dato2 !== undefined) {
+    if (props.dato2) {
 
         let state = "creada";
         let num = props.dato2[0].orderId;

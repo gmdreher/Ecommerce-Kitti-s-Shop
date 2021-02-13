@@ -1,4 +1,6 @@
 import axios from 'axios';
+import  Swal  from  'sweetalert2';
+import  withReactContent  from  'sweetalert2-react-content';
 import {
     ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE,
     GET_PRODUCT_CART, DELETE_TOTAL_CART,
@@ -15,13 +17,23 @@ export const addProductCart = (data) => async (dispatch, getState) => {
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
         let alreadyExists = false;
+        const  MySwal  =  withReactContent (Swal);
 
         cartItems && cartItems.forEach((x) => {
 
             if (x.id == data.productId) {
                 alreadyExists = true;
-                alert('El Producto ya se encuentra en el carrito!!')
-              //  x.quantity++;
+                MySwal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    width: "24rem",
+                    title: 'El producto ya se encuentra en el carrito',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass:{
+                        title: "alertTitle"
+                    }
+                }).then(r =>{} )
             }
         });
 
@@ -36,6 +48,17 @@ export const addProductCart = (data) => async (dispatch, getState) => {
             }
             if (existe !== undefined) {
                 cartItems.push(existe);
+                MySwal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    width: "24rem",
+                    title: `El producto ${existe.name} fue agregado al carrito`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass:{
+                        title: "alertTitle"
+                    }
+                }).then(r =>{} )
             }
         }
 
@@ -66,13 +89,22 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 
             const cart = getState().product.cart.slice();
             let alreadyExists = false;
+            const  MySwal  =  withReactContent (Swal);
     
             cart && cart.forEach((x) => {
 
                 if (x.id == data.productId) {
-                   // alreadyExists = true;
-                    alert('El Producto ya se encuentra en el carrito!!')
-                  //  x.quantity++;
+                    MySwal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        width: "24rem",
+                        title: 'El producto ya se encuentra en el carrito',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        customClass:{
+                            title: "alertTitle"
+                        }
+                    }).then(r =>{} )
                 }
             });
             const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
@@ -84,6 +116,17 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 price: prod.data.price, quantity: res.quantity, userId: res.userId,
                 orderId: res.id
             }
+            MySwal.fire({
+                position: 'top-end',
+                icon: 'success',
+                width: "24rem",
+                title: `El producto ${order.name} fue agregado al carrito`,
+                showConfirmButton: false,
+                timer: 1500,
+                customClass:{
+                    title: "alertTitle"
+                }
+            }).then(r =>{} )
             dispatch({
                 type: ADD_TO_CART,
                 payload: order

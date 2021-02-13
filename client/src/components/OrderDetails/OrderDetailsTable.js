@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './orderDetails.module.scss';
+import styles from "./orderDetails.module.scss"
 import { connect } from 'react-redux';
 import { getUserOrder, updateStateOrder, getOrdersUser } from "../../actions/orderActions";
 import Moment from "moment";
@@ -171,7 +171,6 @@ class OrderDetailsTable extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  console.log("estado re", state)
   return {
     order: state.orderStore.order,
     userInfo: state.auth.userInfo

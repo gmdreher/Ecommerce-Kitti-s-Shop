@@ -113,6 +113,10 @@ function Product(props) {
     }
 
     const user = props.user;
+    
+    function addedToCart(){
+    
+    }
 
     function handleClick (data){
         props.addProductCart(
@@ -126,8 +130,11 @@ function Product(props) {
             productId: data.id,
             price: data.price,
             quantity:quantity
-        }
-        )};
+          }
+        )
+        
+        
+    };
     
     function change(e){
         setQuantity(e.target.value)
