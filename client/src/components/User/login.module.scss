@@ -30,7 +30,15 @@
         }
 
         .btnGoogle{
-          border: .15rem solid #4885ed;
+          background-color: #4285F4;
+          color: white;
+
+        }
+        .btnFacebook{
+          background-color: #3b5998;
+          color: white;
+
+
         }
       }
     }
@@ -38,7 +46,6 @@
     .input{
       border: 2px solid black;
       box-shadow: none;
-
     }
 
     .linkRegistrarte{
@@ -64,6 +71,18 @@
   margin-top: 0.5em;
 }
 
-.googleIcon{
-  color: #4885ed;
+
+.imgGoogle{
+  width: 1.5rem;
+  background-color: white;
+  margin-left: 0;
+  border-radius: 5px;
+
+}
+
+.imgFacebook{
+  width: 1.5rem;
+  margin-left: 3%;
+  border-radius: 5px;
+
 }
