@@ -21,22 +21,18 @@ export default function Catalogue() {
 
         if (history.location.search.length === 0) dispatch(getProducts())
         if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
-        // console.log("ENTRA")
     }, [history.location.search.length > 0])
 
     useEffect(() => {
-        // console.log(products.slice(pagina*3-3, pagina*3))
         setProductosPaginados(products.slice(pagina * 8 - 8, pagina * 8))
 
     }, [pagina, products])
 
     return (
         <div className={styles.catalogue}>
-            <h2>Nuestro Catálogo</h2>
-            {/* <button onClick={()=>setPagina(pagina+1)}>x</button>
-            <button onClick={()=>setPagina(pagina-1)}>-</button> */}
+            <h2 className={styles.titleH2}>Nuestro Catálogo</h2>
 
-            <div className={styles.contentcards}>
+            <div className={styles.contentCards}>
                 {productosPaginados && productosPaginados.map((infoProducto) => {
                     return <ProductCard key={infoProducto.id} data={infoProducto} />
                 })}

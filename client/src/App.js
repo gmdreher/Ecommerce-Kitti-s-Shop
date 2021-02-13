@@ -40,10 +40,8 @@ function App() {
     <BrowserRouter>
       <div className='body'>
         <div className="App">
-          <header>
             <Navbar />
             <NavCategories />
-          </header>
           <main>
             <div className="transparencia">
               <Route exact path="/users/me" component={UserProfile} />
@@ -57,7 +55,7 @@ function App() {
 
               <Route exact path='/user/getEmail' component={GetEmail} />
               
-              {!user ? <Route exact path='/user/resetPass/:id' render={({match}) =><ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/'/>}
+              <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} />
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
 
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />

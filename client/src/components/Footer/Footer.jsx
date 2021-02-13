@@ -11,7 +11,7 @@ export default function Footer(props) {
                 <div className="content">
                     <div className="categorias-footer">
                         <h4 className="titulos-footer">CONTACTANOS</h4>
-                        <i className="fas fa-envelope desplegable"></i>
+                        <i className="fas fa-envelope desplegable"/>
 
                     </div>
                     <ul>
@@ -26,7 +26,7 @@ export default function Footer(props) {
                 <div className="content">
                     <div className="categorias-footer">
                         <h4>SOBRE NOSOTROS</h4>
-                        <i className="fas fa-shopping-bag desplegable"></i>
+                        <i className="fas fa-shopping-bag desplegable"/>
 
                     </div>
                     <p>Grupo 7 del E-Commerce. Kitty's Shop. Tienda con artículos para gato</p>
@@ -35,7 +35,7 @@ export default function Footer(props) {
                 <div className="content">
                     <div className="categorias-footer ayuda">
                         <h4>AYUDA</h4>
-                        <i className="fas fa-hands-helping desplegable"></i>
+                        <i className="fas fa-hands-helping desplegable"/>
 
                     </div>
                     <ul>
@@ -47,11 +47,10 @@ export default function Footer(props) {
 
             </div>
             <div className="contenedor-redes">
-                {/* <h4>REDES</h4> */}
                 <div className="contenedor-iconos">
-                    <i className="fab fa-instagram"></i>
-                    <i className="fab fa-twitter"></i>
-                    <i className="fab fa-whatsapp"></i>
+                    <i className="fab fa-instagram"/>
+                    <i className="fab fa-twitter"/>
+                    <i className="fab fa-whatsapp"/>
                 </div>
                 <p>2021 KITTY'S SHOP Argentina. Todos los derechos reservados</p>
             </div>

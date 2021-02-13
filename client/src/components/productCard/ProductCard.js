@@ -11,9 +11,9 @@ export default function ProductCard({ data }) {
 
     const dispatch = useDispatch();
     const user = useSelector(store => store.auth.userInfo)
-    const prodCart = useSelector(store => store.product.cart)
+    const prodCart = useSelector(store => store.product.cart) 
+
   
-    
 
     function handleClick (data){
         let index = prodCart.indexOf(data.id)

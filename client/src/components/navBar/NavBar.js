@@ -11,26 +11,29 @@ import ViewAdmin from "./ViewAdmin";
 function NavBar(props) {
 
     return (
-        <header className={styles.navBar}>
-          <div className={styles.logo}>
+        <div className={styles.navBar}>
+          
+          <div className={styles.containerLogo}>
             <Link to={`/`}>
-              <img src={logo} />
+              <img className={styles.logo} src={logo} />
             </Link>
           </div>
           <Search />
-          {
-            !props.userInfo ?
-              <ViewGuest /> : ''
-          }
-          {
-            props.userInfo && props.userInfo.rol === 'User' ?
-              <ViewUser /> : ''
-          }
-          {
-            props.userInfo && props.userInfo.rol === 'admin' ?
-              <ViewAdmin /> : ''
-          }
-        </header>
+          <div>
+            {
+              !props.userInfo ?
+                <ViewGuest /> : ''
+            }
+            {
+              props.userInfo && props.userInfo.rol === 'User' ?
+                <ViewUser /> : ''
+            }
+            {
+              props.userInfo && props.userInfo.rol === 'admin' ?
+                <ViewAdmin /> : ''
+            }
+          </div>
+        </div>
     )
 };
 

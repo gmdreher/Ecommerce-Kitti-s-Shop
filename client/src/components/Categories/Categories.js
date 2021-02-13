@@ -16,10 +16,10 @@ function Categories(props) {
   return (
     <div className={styles.dropCategory}>
       <div className="dropdown">
-        <button className={styles.botonsito} type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          Categorías<i className="fas fa-caret-down"/>
+        <button className={styles.botoncito} type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          Categorías &nbsp;<i className="fas fa-caret-down"/>
         </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul className={"dropdown-menu " + styles.ctnDropList} aria-labelledby="dropdownMenuButton">
           {props.categories.map((e) => {
             return <div key={e.id} >
               <Link exact to={`/products/category/${e.name}`}  className="dropdown-item">
