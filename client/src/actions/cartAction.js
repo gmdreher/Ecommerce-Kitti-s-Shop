@@ -11,7 +11,7 @@ import {
 
 
 export const addProductCart = (data) => async (dispatch, getState) => {
-
+    const  MySwal  =  withReactContent (Swal);
     if (!data.userId) {
 
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
@@ -89,22 +89,11 @@ export const addProductCart = (data) => async (dispatch, getState) => {
 
             const cart = getState().product.cart.slice();
             let alreadyExists = false;
-            const  MySwal  =  withReactContent (Swal);
     
             cart && cart.forEach((x) => {
 
                 if (x.id == data.productId) {
-                    MySwal.fire({
-                        position: 'top-end',
-                        icon: 'info',
-                        width: "24rem",
-                        title: 'El producto ya se encuentra en el carrito',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        customClass:{
-                            title: "alertTitle"
-                        }
-                    }).then(r =>{} )
+                
                 }
             });
             const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
@@ -132,6 +121,18 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 payload: order
             });
         } catch (error) {
+            const  MySwal  =  withReactContent (Swal);
+            MySwal.fire({
+                position: 'top-end',
+                icon: 'info',
+                width: "24rem",
+                title: 'El producto ya se encuentra en el carrito',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass:{
+                    title: "alertTitle"
+                }
+            }).then(r =>{} )
             console.log("Error: " + error);
         }
     }

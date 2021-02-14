@@ -29,6 +29,7 @@ import GoogleLogin from "./components/User/GoogleLogin";
 import FacebookLogin from "./components/User/FacebookLogin";
 import './Styles/App.scss'
 import './App.scss';
+import UserOrdersTable from "./components/UserProfile/UserOrdersTable";
 
 
 
@@ -57,7 +58,7 @@ function App() {
               
               <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} />
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
-
+    
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
@@ -72,6 +73,7 @@ function App() {
   
               <Route path='/auth/google/redirect'><GoogleLogin/></Route>
               <Route path='/auth/facebook/callback'><FacebookLogin/></Route>
+              <Route path='/users/ordersTable'><UserOrdersTable/></Route>
 
             </div>
           </main>

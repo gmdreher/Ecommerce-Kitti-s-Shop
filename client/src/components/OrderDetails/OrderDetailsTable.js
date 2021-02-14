@@ -68,7 +68,7 @@ class OrderDetailsTable extends React.Component {
       }
     }
   
-    let { id, state, createdAt, userId, products } = this.props.order;
+    let { id, state, createdAt, userId, products, address } = this.props.order;
     
     return (
       <div className={styles.container}>
@@ -120,8 +120,12 @@ class OrderDetailsTable extends React.Component {
               </td>
             </tr>
             <tr>
-              <th scope="row" >Numero de orden</th>
+              <th scope="row" >Numero de orden:</th>
               <td className={styles.letterhead}>{id}</td>
+            </tr>
+            <tr>
+              <th scope="row" >Dirección de envío:</th>
+              <td className={styles.letterhead}>{address}</td>
             </tr>
             <tr>
               <th>Productos:</th>

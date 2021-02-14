@@ -2,7 +2,7 @@ import React from "react";
 import styles from './userProfile.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import UserOrdersTable from "./UserOrdersTable";
+
 
 
 
@@ -27,32 +27,41 @@ class UserProfile extends React.Component {
                 <p>{this.props.userInfo.email}</p>
               </div>
             </div>
-            <div className={"card " + styles.cardHistory}>
-              <Link to={`/user/review/${this.props.userInfo.id}`}>
-                <div className="card-header dropdown-item" >
-                  Mis reseñas
-                </div>
-              </Link>
-            </div>
           </div>
           <div className="col-6">
-            <div className="card">
+            <div className={"card " + styles.cardGestion}>
               <div className="card-header">
-                Direcciones
+                Gestiones de usuario
               </div>
               <div className="card-body">
-                <p className="blockquote mb-0">Oficina</p>
-                <p>Av. Santa Fe 548645 - Piso 3, Departamento A</p>
-                <p className="blockquote mb-0">Domicilio</p>
-                <p>Av. Santa Fe 548645 - Piso 3, Departamento A</p>
+            <div className="row">
+              <div className="col-6">
+                <div className="blockquote mb-0">
+                  <button className={styles.buttonPassword}>
+                    <p className="blockquote mb-0">Cambiar contraseña</p>
+                  </button>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="blockquote mb-0">
+                  <Link to={`/user/review/${this.props.userInfo.id}`}>
+                    <div className="" >
+                      Mis reseñas
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+              <div className="blockquote mb-0">
+                <Link to={'/users/ordersTable'}>
+                  <div className="" >
+                    Historial de Compras
+                  </div>
+                </Link>
+              </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className={"row " + styles.row2}>
-           <div className={styles.myOrders}>
-             <UserOrdersTable id={this.props.userInfo.id}/>
-           </div>
         </div>
       </div >
     )

@@ -12,15 +12,15 @@ export default function Footer(props) {
                     <div className="categorias-footer">
                         <h4 className="titulos-footer">CONTACTANOS</h4>
                         <i className="fas fa-envelope desplegable"/>
-
+                
                     </div>
                     <ul>
-
+                
                         <li>Link de contacto 1</li>
                         <li> Envíanos un mail</li>
                         <li>Libro de sugerencias</li>
                     </ul>
-
+                
                 </div>
 
                 <div className="content">
@@ -36,7 +36,7 @@ export default function Footer(props) {
                     <div className="categorias-footer ayuda">
                         <h4>AYUDA</h4>
                         <i className="fas fa-hands-helping desplegable"/>
-
+                
                     </div>
                     <ul>
                         <li>Preguntas frecuentes</li>

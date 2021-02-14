@@ -2,6 +2,7 @@ import React from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import {connect} from "react-redux";
 import {logoutUser} from "../../actions/userAction";
+import styles from "./viewUser_Guest.module.scss";
 
 
 
@@ -14,10 +15,11 @@ function ViewAdmin (props) {
     history.push('/')
   }
   return (
-    <div className="dropdown">
+    <div className={"dropdown " + styles.myAccount}>
       <button
-        className="dropdown-toggle"
-        type="button" id="dropdownMenuButton"
+        className={"dropdown-toggle " + styles.dropMyAccount}
+        type="button"
+        id="dropdownMenuButton"
         data-bs-toggle="dropdown"
         aria-expanded="false">
         <i className="fas fa-bars"/>
