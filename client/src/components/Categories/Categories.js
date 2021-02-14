@@ -6,8 +6,7 @@ import styles from './categories.module.scss';
 
 
 function Categories(props) {
-
-  // let dispatch= useDispatch()
+  
 
   useEffect(() => {
     props.getCategories()
