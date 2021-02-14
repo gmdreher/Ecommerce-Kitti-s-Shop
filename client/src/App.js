@@ -41,8 +41,10 @@ function App() {
     <BrowserRouter>
       <div className='body'>
         <div className="App">
+          <header>
             <Navbar />
             <NavCategories />
+          </header>
           <main>
             <div className="transparencia">
               <Route exact path="/users/me" component={UserProfile} />
@@ -53,9 +55,8 @@ function App() {
               <Route exact path='/user/signup' component={SignUp} />
               <Route exact path='/auth/login' component={Login} />
               <Route exact path="/user/order" component={ViewOrder} />
-
               <Route exact path='/user/getEmail' component={GetEmail} />
-              
+
               <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} />
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
     
@@ -64,26 +65,24 @@ function App() {
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
               <Route exact path= "/checkOut" component= {CheckOut} />
-              <Route exact path= "/mercadopago/success" component= {Success} />
-              <Route exact path= "/mercadopago/failed" component= {Failed} />
+              <Route exact path="/mercadopago/success" component={Success} />
+              <Route exact path="/mercadopago/failed" component={Failed} />
               <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
               <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} /> }/>
   
               <Route exact path='/selectStates' component={SelectStates} />
-  
-              <Route path='/auth/google/redirect'><GoogleLogin/></Route>
-              <Route path='/auth/facebook/callback'><FacebookLogin/></Route>
-              <Route path='/users/ordersTable'><UserOrdersTable/></Route>
 
+              <Route path='/auth/google/redirect'><GoogleLogin /></Route>
+              <Route path='/auth/facebook/callback'><FacebookLogin /></Route>
+              <Route path='/users/ordersTable'><UserOrdersTable/></Route>
             </div>
           </main>
-         
         </div>
       </div>
       <footer>
         <Footer />
       </footer>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 

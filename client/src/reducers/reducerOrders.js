@@ -13,8 +13,8 @@ const initialState = {
   user: [],
   ordersUser: [],
   states: []
-  
-  
+
+
 };
 
 export default (state = initialState, action) => {
@@ -46,11 +46,11 @@ export default (state = initialState, action) => {
         ...state,
         states: action.payload
       }
-      //********address****** */
+    //********address****** */
     case ADDRESS_ORDER:
-      return{
+      return {
         ...state,
-        order : action.payload
+        order: action.payload
       }
 
     default:

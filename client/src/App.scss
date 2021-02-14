@@ -6,3 +6,10 @@ main {
 .alertTitle{
     font-size: 20px;
 }
+
+@media screen and (max-device-width : 360px){
+
+    main {
+       width: 100%;
+    }
+}

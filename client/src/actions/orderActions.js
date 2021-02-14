@@ -1,25 +1,25 @@
 import axios from "axios";
-import {ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS, MELI_CART, ADDRESS_ORDER} from "../constants/productConstants";
+import { ALL_ORDERS_USER, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER, STATES_ORDERS, MELI_CART, ADDRESS_ORDER } from "../constants/productConstants";
 
 
 
 export function getAllOrders(state) {
-  return function(dispatch,getState) {
-    if(getState().auth.userInfo!==null){
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
       )
     }
     var url = "http://localhost:3001/orders";
-    if(state){
+    if (state) {
       url += `?state=${state}`
     }
     return axios.get(url)
@@ -31,16 +31,16 @@ export function getAllOrders(state) {
 
 
 export function getUserOrder(id) {
-  return function(dispatch, getState) {
-    if(getState().auth.userInfo!==null){
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-        config =>{
-          config.headers.authorization=`Bearer ${accessToken}`;
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
           return config;
         },
-        error =>{
+        error => {
           return Promise.reject(error)
         }
       )
@@ -54,39 +54,39 @@ export function getUserOrder(id) {
 
 export function updateStateOrder(orderId, state) {
 
-  return function(dispatch,getState) {
-    if(getState().auth.userInfo!==null){
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
       )
     }
     // console.log("este",orderId)
-    return axios.put(`http://localhost:3001/orders/${orderId}`, {"state": state})
-      .then(order =>{
-        dispatch({type: UPDATE_STATE_ORDER, payload: order.data})
+    return axios.put(`http://localhost:3001/orders/${orderId}`, { "state": state })
+      .then(order => {
+        dispatch({ type: UPDATE_STATE_ORDER, payload: order.data })
       });
   };
 };
 
-export function getOrdersUser (id) {
-  return function(dispatch, getState) {
-    if(getState().auth.userInfo!==null){
+export function getOrdersUser(id) {
+  return function (dispatch, getState) {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-        config =>{
-          config.headers.authorization=`Bearer ${accessToken}`;
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
           return config;
         },
-        error =>{
+        error => {
           return Promise.reject(error)
         }
       )
@@ -101,66 +101,65 @@ export function getOrdersUser (id) {
 //-----------------------------MELI-----------------------------------//
 
 
-export const meliPost= (data, orderId) => async(dispatch, getState)=>{
-  try{
-    if(getState().auth.userInfo!==null){
+export const meliPost = (data, orderId) => async (dispatch, getState) => {
+  try {
+    if (getState().auth.userInfo !== null) {
       const accessToken = localStorage.getItem('data')
-    
+
       axios.interceptors.request.use(
-          config =>{
-              config.headers.authorization=`Bearer ${accessToken}`;
-              return config;
-          },
-          error =>{
-              return Promise.reject(error)
-          }
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
       )
     }
-  console.log(data)
-    const algo= await axios.post(`http://localhost:3001/mercadopago/`, {carrito: data, orderId: orderId})
-  
+    console.log(data)
+    const algo = await axios.post(`http://localhost:3001/mercadopago/`, { carrito: data, orderId: orderId })
+
     // console.log("esto es la data de la ction",algo)
-  
-    window.location= algo.data.redirect
-    
+
+    window.location = algo.data.redirect
+
     dispatch({
       type: MELI_CART,
       payload: algo.data
     })
-  } catch(err){
-        console.log("este es el bendito error", err)
-      }
-    
+  } catch (err) {
+    console.log("este es el bendito error", err)
+  }
+}
+
+//***********action adress */
+
+export const addressOrder = (orderId, direccion) => async (dispatch, getState) => {
+  try {
+    if (getState().auth.userInfo !== null) {
+      const accessToken = localStorage.getItem('data')
+
+      axios.interceptors.request.use(
+        config => {
+          config.headers.authorization = `Bearer ${accessToken}`;
+          return config;
+        },
+        error => {
+          return Promise.reject(error)
+        }
+      )
+    }
+    // console.log("action", direccion, orderId)
+    const algo = await axios.put(`http://localhost:3001/orders/${orderId}/address/`, { address: direccion })
+
+    //  console.log("esto es la data de la ction",algo)
+
+    dispatch({
+      type: ADDRESS_ORDER,
+      payload: algo
+    })
+  } catch (err) {
+    console.log("este es el bendito error", err)
   }
 
-  //***********action adress */
-
-  export const addressOrder= ( orderId, direccion) => async(dispatch, getState)=>{
-    try{
-      if(getState().auth.userInfo!==null){
-        const accessToken = localStorage.getItem('data')
-      
-        axios.interceptors.request.use(
-            config =>{
-                config.headers.authorization=`Bearer ${accessToken}`;
-                return config;
-            },
-            error =>{
-                return Promise.reject(error)
-            }
-        )
-      }
-    // console.log("action", direccion, orderId)
-      const algo= await axios.put(`http://localhost:3001/orders/${orderId}/address/`, {address: direccion})
-    
-      //  console.log("esto es la data de la ction",algo)
-   
-      dispatch({
-        type: ADDRESS_ORDER,
-        payload: algo
-      })
-    } catch(err){
-          console.log("este es el bendito error", err)
-        }
-      
-    }
+}
