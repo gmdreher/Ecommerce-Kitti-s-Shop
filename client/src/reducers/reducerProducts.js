@@ -28,8 +28,11 @@ import {
     POST_RESERT_PASSWORD,
     UPDATE_PASSWORD,
     FORGOT_PASSWORD,
+    FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_SUCCESS,
     GET_USER_BY_ID,
-    POST_USER_FAILED
+    POST_USER_FAILED,
+    GET_EMAILS
   
 } from '../constants/productConstants.js';
 
@@ -43,7 +46,10 @@ const initialState = {
     productsComplete: [],
     reviews: [],
     review: [],
-    signUpFailed:''
+    signUpFailed:'',
+    forgotPassError :'',
+    loading:''
+    
 };
 
 export default (state = initialState, action) => {
@@ -178,10 +184,22 @@ export default (state = initialState, action) => {
             case FORGOT_PASSWORD:
             return {
                 ...state,
+                loading:true,
+                forgotPassError:false,
                 user: action.payload
-            };
-
-
+            }
+            case FORGOT_PASSWORD_FAIL:
+            return {
+                ...state, 
+                loading:false,
+                forgotPassError:true
+            }
+            case FORGOT_PASSWORD_SUCCESS:
+            return {
+                ...state, 
+                loading:false,
+                forgotPassError:false
+            }
 
             case GET_PRODUCTS_STATE_COMPLETE:
                 var estadito= {

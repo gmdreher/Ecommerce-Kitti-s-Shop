@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    color: 'black',
+    backgroundColor: '#f5b453',
+    fontWeight: 'bold'
   },
 }));
 
@@ -113,7 +116,6 @@ const handleSubmit = (e) => {
 }
 
 const handleEdit = function (password) {
-  console.log(password)
   props.updatePassword(password);
 }
 
@@ -177,7 +179,7 @@ const handleEdit = function (password) {
               Cambiar Contraseña
           </Button> 
               :
-            <Button El boton de registro
+            <Button 
               type="submit"
               fullWidth
               variant="contained"
@@ -197,6 +199,7 @@ const handleEdit = function (password) {
     </Modal >
   );
 }
+
 function mapStateToProps(state) {
   return {
     user: state.product.user
