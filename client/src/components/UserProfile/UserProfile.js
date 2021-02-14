@@ -17,7 +17,7 @@ class UserProfile extends React.Component {
         <div className="row">
           <div className="col-6">
             <div className="card">
-              <div className="card-header">
+              <div className={"card-header " + styles.cardGestion}>
                 Datos Personales
               </div>
               <div className="card-body">
@@ -33,32 +33,28 @@ class UserProfile extends React.Component {
               <div className="card-header">
                 Gestiones de usuario
               </div>
-              <div className="card-body">
+              <div className={"card-body " + styles.cardBody}>
             <div className="row">
-              <div className="col-6">
-                <div className="blockquote mb-0">
-                  <button className={styles.buttonPassword}>
-                    <p className="blockquote mb-0">Cambiar contraseña</p>
-                  </button>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="blockquote mb-0">
+                <div className={"blockquote mb-0 " + styles.linksGestiones}>
                   <Link to={`/user/review/${this.props.userInfo.id}`}>
-                    <div className="" >
-                      Mis reseñas
-                    </div>
+                    <button className={styles.buttonGestion} >
+                     Mis reseñas
+                    </button>
                   </Link>
                 </div>
+              <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                    <Link to={'/users/ordersTable'}>
+                  <button className={styles.buttonGestion}>
+                       Historial de Compras
+                  </button>
+                    </Link>
+              </div>
+                <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                  <button className={styles.buttonGestion}>
+                    Cambiar contraseña
+                  </button>
               </div>
             </div>
-              <div className="blockquote mb-0">
-                <Link to={'/users/ordersTable'}>
-                  <div className="" >
-                    Historial de Compras
-                  </div>
-                </Link>
-              </div>
               </div>
             </div>
           </div>

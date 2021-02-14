@@ -10,8 +10,7 @@ export default function UserTable() {
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-
-    console.log("LOS PERFILES ", usersData);
+    
 
     useEffect(function () {
         dispatch(getUsers());
@@ -19,13 +18,10 @@ export default function UserTable() {
 
 
     function handlerBloquear(info) {
-        console.log("HANDLERBLOQUEAR", info);
         if (info.id !== undefined) {
             var usuario = info.id;
             var llave = info.banned;
-
-            console.log("-------handlerBloquear DATA Seleccionado-------");
-            console.log(llave, usuario);
+            
 
             if (llave === false) {
 
@@ -40,13 +36,10 @@ export default function UserTable() {
     }
 
     function handlerDesbloquear(info) {
-        console.log("HANDLERBLOQUEAR", info);
         if (info.id !== undefined) {
             var usuario = info.id;
             var llave = info.banned;
-
-            console.log("-------handlerBloquear DATA Seleccionado-------");
-            console.log(llave, usuario);
+            
 
             if (llave === true) {
 
@@ -62,13 +55,10 @@ export default function UserTable() {
 
 
     function handlerAdmin(info) {
-        console.log("HANDLERADMIN", info);
         if (info.id !== undefined) {
             var usuario = info.id;
             var rol = info.rol;
-
-            console.log("-------handlerAdmin DATA Seleccionado-------");
-            console.log(usuario, rol);
+            
 
             if (window.confirm(`¿ Desea hacer administrador al usuario id: ${usuario} ?`)) {
                 dispatch(updateToAdmin({ id: usuario, rol: rol }));
@@ -79,13 +69,10 @@ export default function UserTable() {
     }
 
     function handlerUsers(info) {
-        console.log("HANDLERADMIN", info);
         if (info.id !== undefined) {
             var usuario = info.id;
             var rol = info.rol;
-
-            console.log("-------handlerAdmin DATA Seleccionado-------");
-            console.log(usuario, rol);
+            
 
             if (window.confirm(`¿ Desea hacer usuario al administrador id: ${usuario} ?`)) {
                 dispatch(updateToUsers({ id: usuario, rol: rol }))
@@ -97,12 +84,9 @@ export default function UserTable() {
 
 
     function handlerResert(info) {
-        console.log("HANDLERESERT", info);
         if (info.id !== undefined) {
             var usuario = info.id;
-
-            console.log("-------handlerResert DATA Seleccionado-------");
-            console.log(usuario);
+            
 
             if (window.confirm(`¿ Desea resetear la contraseña del usuario id: ${usuario} ?`)) {
                 dispatch(postResertPassword({ id: usuario }))

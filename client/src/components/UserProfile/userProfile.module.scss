@@ -1,35 +1,21 @@
-
-  .list{
-    margin: 5%;
-  }
-
-  .infoUser{
-    margin: 5%;
-  }
-
-  .cardHistory{
-    margin-top: 3%;
-    text-align: center;
-  }
-  .row2{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .myOrders{
-    margin-top: 3%;
-    text-align: center;
-    background-color: transparent;
-  }
-  .contenCard{
-    width: 40%;
-  }
-  .buttonPassword{
-    border: none;
-  }
-
   .cardGestion{
-    padding-bottom: 80px;
     text-align: center;
+  }
+  .cardBody{
+    display: flex;
+    align-content: space-between;
+  }
+
+  .linksGestiones{
+   padding: 0.4rem;
+  }
+
+  .buttonGestion{
+    border-radius: 10px;
+    border-color: #f5b453;
+    background-color: white;
+
+    &:hover {
+      background-color: #f5b453;
+    }
   }
