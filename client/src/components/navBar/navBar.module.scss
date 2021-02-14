@@ -1,5 +1,6 @@
 .navBar{
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -8,32 +9,44 @@
         align-items: center;
         margin-left: 10%;
 
-        .logo{
-            height: 120px;
-            margin-left: 5%;
-        }
+
 
     }
 
-
 }
-.carritoCont{
+//Cart
+.ctnCart {
+    background-color: #ffffff;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-left:0;
-    margin-top:0;
-    margin-right: 0;
-    background-color:rgb(247, 244, 244);
-    margin: 2rem;
-
+    border-radius: 9999px;
+    height: 3rem;
+    padding: 0 1em;
+    width: fit-content;
+    border: 1px solid #bdbdbd;
 }
 
-.navBar button :hover {
-    color: orange;
-
+.cart{
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: white;
 }
-@media screen and (max-width: 728px) {
+
+
+
+.logo{
+    height: 7.5rem;
+    margin-left: 5%;
+}
+.navbarSearch {
+    width: 100% !important;
+}
+.smallCart {
+    display: none;
+}
+
+@media screen and (max-width: 1024px) {
     .navBar{
         display: flex;
         align-items: center;
@@ -42,15 +55,63 @@
         .containerLogo{
             display: flex;
             margin: 0;
+            padding: 0;
 
             .logo{
                 height: 100px;
                 margin-left: 5%;
+
             }
 
         }
 
 
     }
+}
+
+@media screen and (max-width: 728px) {
+    .bigCart {
+        display: none;
+    }
+    .smallCart {
+        display: flex;
+    }
+    .navbarSearch {
+        width: 50% !important;
+    }
+    .navBar{
+       display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .containerLogo{
+            display: flex;
+            margin: 0;
+            padding: 0;
+
+            .logo{
+                height: 100px;
+                margin-left: 5%;
+
+            }
+
+        }
+
+
+    }
+    .logo{
+        height: 4rem;
+        margin-left: 5%;
+    }
+}
+
+
+
+.navItem {
+    margin-left: auto;
+}
+
+.navButtons {
+    width: auto;
 }
 

@@ -7,8 +7,8 @@
        border-color: black;
        display: flex;
        flex-direction: row;
-       max-width: 1024px;
-       margin: 0 auto;
+        width: 100%;
+      margin: 0 auto;
        margin-top: 2rem;
        .content{
          display:flex;
@@ -25,7 +25,7 @@
          .categorias-footer{
            display: grid;
            grid-template-columns: repeat(2, auto);
-           grid-template-rows: 60px auto;
+           //grid-template-rows: 60px auto;
            align-items: baseline;
            text-align: center;
            h4{

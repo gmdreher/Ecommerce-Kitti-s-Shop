@@ -1,42 +1,60 @@
-.searchBar{
+@media screen and (min-width: 728px) {
+    .searchBar {
+        display: flex;
+        justify-items: center;
+        //margin-left: 50%;
+    }
+
+    .dropstart {
+
+    }
+}
+
+    .searchBar{
     display: flex;
     justify-items: center;
-
+    //width: 1000%;
 
     .formSearch{
-        border-radius: 9999px;
-        border: 1px solid #bdbdbd;
-        padding: 0 1em;
+        //border-radius: 9999px;
+        //border: 1px solid #bdbdbd;
+        //padding: 0 1em;
         display: flex;
         background-color: #ffffff;
         align-items: center;
-        margin-left: 40%;
+        //margin-left: 40%;
+
         .inputSearch{
-            border: none;
-            height: 30px;
-            width: 300px;
-            outline:none !important;
-            outline-width: 0 !important;
-            box-shadow: none;
-            -moz-box-shadow: none;
-            -webkit-box-shadow: none;
+            //border: none;
+            //height: 30px;
+            //width: 300px;
+            //outline:none !important;
+            //outline-width: 0 !important;
+            //box-shadow: none;
+            //-moz-box-shadow: none;
+            //-webkit-box-shadow: none;
             background-color: #ffffff;
         }
         .btnSearch{
             display: flex;
             align-items: center;
-            border: none;
-            border-radius: 9999px;
-            height: 46px;
+            //border: none;
+            //border-radius: 9999px;
+            //height: 46px;
             width: fit-content;
             background-color:#ffffff;
             margin: 0;
 
+
+
             .iconSearch{
                 font-size: 25px;
-                color: #9e9e9e;
+                //color: #9e9e9e;
                 margin: 0;
                 border: none;
+                .iconSearch:hover {
+                    color: orange;
+                }
              }
             .carrito{
                         font-size: 25px;
@@ -44,55 +62,5 @@
                     }
         }
         
-    }
-}
-
-@media screen and (max-width: 728px) {
-    .searchBar{
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-
-        .formSearch{
-            border-radius: 9999px;
-            border: 1px solid #bdbdbd;
-            padding: 0 1em;
-            display: flex;
-            background-color: #ffffff;
-            align-items: center;
-            .inputSearch{
-                border: none;
-                height: 15px;
-                width: 250px;
-                outline:none !important;
-                outline-width: 0 !important;
-                box-shadow: none;
-                -moz-box-shadow: none;
-                -webkit-box-shadow: none;
-                background-color: #ffffff;
-            }
-        //    .btnSearch{
-        //        display: flex;
-        //        align-items: center;
-        //        border: none;
-        //        border-radius: 9999px;
-        //        height: 46px;
-        //        width: fit-content;
-        //        background-color:#ffffff;
-        //        margin: 0;
-        //
-        //        .iconSearch{
-        //            font-size: 25px;
-        //            color: #9e9e9e;
-        //            margin: 0;
-        //            border: none;
-        //        }
-        //        .carrito{
-        //            font-size: 25px;
-        //            margin: 10px;
-        //        }
-        //    }
-        //
-        }
     }
 }

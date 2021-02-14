@@ -2,14 +2,65 @@
   display: flex;
   align-items: flex-end;
 }
+
+.ctnCart {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  height: 46px;
+  padding: 0 1em;
+  width: fit-content;
+  border: 1px solid #bdbdbd;
+}
 .cart{
   display: flex;
-  //align-items: center;
+  align-items: center;
+  border: none;
+  background-color: white;
 }
-
+.dropMyAccount{
+  border: none;
+  background-color: white;
+}
 .myAccount{
   display: flex;
-  //align-items: center;
-  margin-left: 10%;
+  //margin-left: 15%;
+
+  background-color: #ffffff;
+  align-items: center;
+  border-radius: 9999px;
+  height: 3rem;
+  padding: 0 1em;
+  width: fit-content;
+  border: 1px solid #bdbdbd
 }
 
+.icon{
+  margin-right: 5%;
+}
+.carritoCont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:0;
+  margin-top:0;
+  margin-right: 0;
+  background-color:rgb(247, 244, 244);
+
+}
+
+
+
+.navItem {
+  margin-left: auto;
+}
+
+.hideWhenMobile {
+  display: inline;
+}
+@media screen and (max-width: 728px) {
+  .hideWhenMobile {
+    display: none;
+  }
+}

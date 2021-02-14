@@ -75,11 +75,12 @@ function App() {
 
             </div>
           </main>
-          <footer>
-            <Footer />
-          </footer>
+         
         </div>
       </div>
+      <footer>
+        <Footer />
+      </footer>
     </BrowserRouter>
   );
 }
