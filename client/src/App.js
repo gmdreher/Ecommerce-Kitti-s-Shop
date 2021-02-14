@@ -29,6 +29,8 @@ import GoogleLogin from "./components/User/GoogleLogin";
 import FacebookLogin from "./components/User/FacebookLogin";
 import './Styles/App.scss'
 import './App.scss';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import DescuentoGeneral from './components/Descuentos/DescuentoGeneral';
 
 
 
@@ -39,6 +41,7 @@ function App() {
   const user = useSelector(store => store.auth.userInfo);
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <div className='body'>
         <div className="App">
           <header>
@@ -57,8 +60,10 @@ function App() {
               <Route exact path="/user/order" component={ViewOrder} />
 
               <Route exact path='/user/getEmail' component={GetEmail} />
+              <Route exact path= "/mercadopago/success" component= {Success} ></Route>
+              <Route exact path= "/mercadopago/failed" component= {Failed} ></Route>
               
-              {!user ? <Route exact path='/user/resetPass/:id' render={({match}) =><ResetPass key={match.params.id} id={match.params.id} />} /> : <Redirect to='/'/>}
+              <Route exact path='/user/resetPass/:id' render={({match}) =><ResetPass key={match.params.id} id={match.params.id} /> }/>
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
 
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
@@ -67,16 +72,15 @@ function App() {
               <PrivateRoute exact path="/admin/users" component={UserTable} />
               {/* <Route exact path="/orders/:id" render={({ match }) => (user && user.rol == 'admin' ? <OrderDetails key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} /> */}
               <Route exact path= "/checkOut" component= {CheckOut} ></Route>
-              <Route exact path= "/mercadopago/success" component= {Success} ></Route>
-              <Route exact path= "/mercadopago/failed" component= {Failed} ></Route>
               <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
               <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} /> }/>
-  
   
               <Route exact path='/selectStates' component={SelectStates} />
   
               <Route path='/auth/google/redirect'><GoogleLogin/></Route>
               <Route path='/auth/facebook/callback'><FacebookLogin/></Route>
+              
+              <Route exact path='/descuento'><DescuentoGeneral/></Route>
 
             </div>
           </main>

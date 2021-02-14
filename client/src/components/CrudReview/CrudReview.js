@@ -5,12 +5,79 @@ import styles from './crudReview.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addReview, editReview, getAllReviewsUser, getProductStateComplete, deleteReview } from '../../actions/reviewAction';
+import Rate from './Rate';
+import { useHistory } from 'react-router-dom';
 
+
+
+export function rate(valor){
+
+
+  if( valor == 1){
+     return(
+      <>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+
+      </>
+  
+     )
+  }else if(valor ==2){
+      return(
+      <>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i>
+      </>
+  
+      )
+  }else if(valor ==3){
+      return(
+      <>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      <i class="far fa-star"></i> 
+       </>
+  
+      )
+  }else if(valor ==4 ){
+      return(
+      <>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="far fa-star"></i>
+      </>)
+  
+  }else{
+      return(
+          <>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          </>
+  
+      )
+  }
+
+}
 
 
 export default function CrudReview(props) {
  
   const dispatch= useDispatch()
+
+  const history = useHistory()
   
   const productsComplete = useSelector((store) => store.product.productsComplete);
   const reviews = useSelector((store) => store.product.reviews);
@@ -19,7 +86,7 @@ export default function CrudReview(props) {
 
   const [input, setInput] = useState({
     description: '',
-    rate: '',
+    rate: '1',
     userId: props.id
   });
   const [idProductAdding, setIdProductAdding] = useState()
@@ -30,7 +97,7 @@ export default function CrudReview(props) {
   const [productWithoutReview, setProductWithoutReview]= useState([])
   
  //estado errores
- const [errors, setErrors] = useState({}); //---------------------------
+ const [errors, setErrors] = useState({description:"true"}); //---------------------------
 
   //modal agregar reseña
   const [modal, setModal] = useState(false);
@@ -75,7 +142,7 @@ export default function CrudReview(props) {
   const resetInput= ()=>{
     setInput({
       description: '',
-      rate: '',
+      rate: '1',
       userId: props.id
     })
   }
@@ -98,16 +165,18 @@ export default function CrudReview(props) {
   //editar un review
   const handleEditReview= (productId, reviewId, data)=>{
 //  console.log("entra al handke")
+    setErrors({})
     setInfoEdit({productId, reviewId})
     setInput({...input,...data})
     toggleEdit() 
   }
-  const handleSendEditReview = ()=>{
-    dispatch(editReview(infoEdit.productId,infoEdit.reviewId,input))
-    dispatch(getProductStateComplete(props.id))
-    dispatch(getAllReviewsUser(props.id))
+  const handleSendEditReview = async ()=>{
+    await dispatch(editReview(infoEdit.productId,infoEdit.reviewId,input))
+    await dispatch(getProductStateComplete(props.id))
+    await dispatch(getAllReviewsUser(props.id))
     resetInput()
     toggleEdit()
+    setErrors({description:"true"})
   }
 
   //eliminar un review
@@ -160,6 +229,7 @@ setProductWithoutReview(sinRev)
 
     <Container className={styles.container}>
         {/* productos sin reseña, solo boton añadir */}
+        <button className={styles.button_} onClick={()=>history.push("/users/me")} >Volver</button>
 <h1>Productos sin Reseña</h1>
 {productWithoutReview.length > 0 && <h3>{productWithoutReview.length}</h3>}
       <Table>
@@ -212,8 +282,7 @@ setProductWithoutReview(sinRev)
               <tr key={index}>
                 <td>{review.name}</td>
                 <td>{review.reviews.description}</td>
-                <td>{review.reviews.rate}</td>
-                
+                <td className= {styles.estrellitas}>{rate(review.reviews.rate)}</td>
               <td>
 
                 <Button className= {styles.button_} onClick={()=> handleEditReview(review.reviews.productId ,review.reviews.id,{description:review.reviews.description, rate:review.reviews.rate})} >Editar</Button>
@@ -238,26 +307,26 @@ setProductWithoutReview(sinRev)
                 <Label for="description"> Descripcion</Label>
                 <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`}  name="description" id='description' placeholder='Deja tu comentario...'value={input.description} onChange={handleInputChange} />
                 {errors.description && (
-                  <p className={styles.danger}>{errors.description}</p>
+                  <p className={"danger"}>{errors.description ==="true"?"":errors.description}</p>
                 )}
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
                 <Label for="rate"> Puntuacion </Label>
-                <select class="form-select" aria-label="Default select example" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
-                <option selected>Puntuá</option>
+               {/*  <select class="form-select" aria-label="Default select example" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
-                </select>
+                </select> */}
+                <Rate handleInputChange={handleInputChange} data={input}/>
               </FormGroup>
 
             </ModalBody>
             <ModalFooter>
 
 
-             {errors.description?  <Button color="danger" onClick={toggleAdd}>Añadir reseña</Button>:
+             {errors.description || errors.rate?  <Button className={styles.button_} color="danger" >Revisa los campos</Button>:
              <Button className= {styles.button_} type= 'submit' onClick={()=>{ handleAddReview(idProductAdding)}}
                 >Añadir Reseña</Button> }
 
@@ -282,26 +351,26 @@ setProductWithoutReview(sinRev)
                 <Label for="description">Descripcion</Label>
                 <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' value={input.description} onChange={handleInputChange} />
                 {errors.description && (
-                  <p className={styles.danger}>{errors.description}</p>
+                  <p className={styles.danger}>{errors.description==="true"?"":errors.description}</p>
                 )}
               
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
               <Label for="rate"> Puntuacion </Label>
-              {/* <Input type="textarea" className="form-group" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange} /> */}
-              <select class="form-select" aria-label="Default select example"  name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
-              <option selected>Puntuá</option>
+              {/* <select  class="form-select" aria-label="Default select example"  name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
-                </select>
+                </select> */}
+                <Rate handleInputChange={handleInputChange} data={input}/>
+
               </FormGroup>
 
             </ModalBody>
             <ModalFooter>
-              {errors.description? <Button color="danger" onClick={toggleEdit}>Modificar Reseña</Button> : <Button className={styles.button_} onClick={()=> handleSendEditReview()}>Modificar Reseña</Button>}
+              {errors.description? <Button color="danger" className={styles.button_}>Revisa los campos</Button> : <Button className={styles.button_} onClick={()=> handleSendEditReview()}>Modificar Reseña</Button>}
               <Button className={styles.button_} onClick={toggleEdit}>Salir</Button>
 
             </ModalFooter>

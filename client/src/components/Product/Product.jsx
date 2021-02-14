@@ -123,7 +123,7 @@ function Product(props) {
             [e.target.name]: e.target.value
         })
     }
-    return (
+    return (console.log(props.product.Reviews),
         <div className="container" >
             <Link to={`/`}>
                 <button className="arrow">Volver</button>

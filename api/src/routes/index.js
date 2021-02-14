@@ -6,6 +6,7 @@ const ordersRouter = require('./orders.js');
 const authRouter = require('./auth.js');
 const protected = require('../middleware/protected');
 const mercadopago = require('./mercadopago.js');
+const descuentos = require('./descuentos.js');
 
 const router = Router();
 
@@ -18,6 +19,7 @@ router.use('/users', usersRouter);
 router.use('/orders', ordersRouter);
 router.use('/mercadopago', mercadopago);
 router.use('/auth', authRouter);
+router.use('/descuentos', descuentos);
 
 
 
