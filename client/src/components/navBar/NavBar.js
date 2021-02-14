@@ -20,11 +20,7 @@ function NavBar(props) {
                 <img className={styles.logo} src={logo}  alt=''/>
               </Link>
             </div>
-            <div className={styles.smallCart + ' ' + styles.ctnCart}>
-              <Link to={`/user/order`}>
-                <button className={styles.cart} ><i className="fas fa-shopping-cart"/></button>
-              </Link>
-            </div>
+            
             <div className='d-flex d-sm-none'>
               {
                 !props.userInfo ?
@@ -41,11 +37,7 @@ function NavBar(props) {
             </div>
             <div className={"collapse navbar-collapse " + styles.navButtons} id="navbarSupportedContent">
               <ul className={"navbar-nav ml-auto mb-2 mb-lg-0 "}>
-                <div className={styles.bigCart + ' ' + styles.ctnCart}>
-                  <Link to={`/user/order`} >
-                    <button className={styles.cart} ><i className="fas fa-shopping-cart"/></button>
-                  </Link>
-                </div>
+                
                 <li className={"nav-item " + styles.navItem}>
                   <div>
                     {

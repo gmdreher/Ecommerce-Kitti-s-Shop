@@ -26,6 +26,11 @@ function Categories(props) {
               </Link>
             </div>
           })}
+          <div>
+            <Link exact to="/products"  className="dropdown-item">
+              <span className={styles.dropList}>Ver todo</span>
+            </Link>
+          </div>
         </ul>
       </div>
     </div>

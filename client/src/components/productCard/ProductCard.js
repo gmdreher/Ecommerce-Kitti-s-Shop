@@ -32,7 +32,7 @@ export default function ProductCard({ data }) {
                 }
             </div>
             <div class={styles.cardbody}>
-              <h3><strong>{data.name}</strong></h3>
+              <p className={styles.nameProduct}><strong>{data.name}</strong></p>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item"><strong>Precio:</strong> {'$ ' + data.price}</li>

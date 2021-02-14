@@ -8,6 +8,11 @@ export default function ViewGuest () {
   return (
     <div className='viewUser_Guest'>
       <div className="d-flex d-sm-none">
+        <div className={styles.ctnCart}>
+          <Link to={`/user/order`}>
+            <button className={styles.cart} ><i className="fas fa-shopping-cart"/></button>
+          </Link>
+        </div>
         <div className={"dropdown dropstart " + styles.myAccount}>
           <button
             className={"dropdown-toggle " + styles.dropMyAccount}
@@ -30,6 +35,11 @@ export default function ViewGuest () {
       </div>
   
       <div className="d-none d-sm-flex">
+        <div className={styles.ctnCart}>
+          <Link to={`/user/order`}>
+            <button className={styles.cart} ><i className="fas fa-shopping-cart"/></button>
+          </Link>
+        </div>
         <div className={"dropdown " + styles.myAccount}>
           <button
             className={"dropdown-toggle " + styles.dropMyAccount}

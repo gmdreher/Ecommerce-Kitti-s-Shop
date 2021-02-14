@@ -31,9 +31,8 @@ export default function Search() {
                          name='search'
                          type='text'
                          placeholder="Buscar..."
-                         aria-label="Search"
                   />
-                  <button className={style.btnSearch} type="submit">
+                  <button className={style.btnSearch}>
                       <i className={"fas fa-search " + style.iconSearch}/>
                   </button>
               </form>
@@ -42,3 +41,31 @@ export default function Search() {
     )
 
 }
+
+// export default function Search() {
+//
+//     const [input, setInput] = useState({ search: '' })
+//     const dispatch = useDispatch();
+//     const history = useHistory();
+//
+//
+//     function handleChange(e) {
+//         setInput({ ...input, [e.target.name]: e.target.value })
+//     }
+//
+//     function handleSubmit(e) {
+//         e.preventDefault();
+//         history.push("/products?search=" + input.search)
+//         dispatch(searchProduct(input.search))
+//     }
+//
+//     return (
+//       <div className={style.searchBar} >
+//           <form onSubmit={handleSubmit}>
+//               <input name='search' type='text' placeholder='Buscar...' onChange={handleChange}/>
+//               <button><i className="fas fa-search" /></button>
+//           </form>
+//       </div>
+//     )
+//
+// }
