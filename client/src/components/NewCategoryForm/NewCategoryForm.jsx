@@ -55,13 +55,13 @@ function NewCategoryForm(props) {
   }
 
 
-  const handleSubmit = function(e) {
+  const handleSubmit = function (e) {
     props.getCategories();
     e.preventDefault();
   }
-   
+
   //agregar categorias
-  const handleAdd = function(category) {
+  const handleAdd = function (category) {
     props.postCategories(category)
     props.getCategories();
     toggle();
@@ -79,8 +79,8 @@ function NewCategoryForm(props) {
     props.putCategory(category);
     props.getCategories();
     toggle2()
-    
-   
+
+
   }
   // info de boton BORRAR de cada categoria
   const handleDelete = function (category) {
@@ -99,7 +99,7 @@ function NewCategoryForm(props) {
     <Container className={styles.container}>
       <h1>Administrar Categorías</h1>
       <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
-      <br/>
+      <br />
       <Table>
         <thead>
           <tr>
@@ -119,16 +119,16 @@ function NewCategoryForm(props) {
 
               <td>
                 <button className={styles.buttonForm} onClick={() => handleEdit(category)} >Editar</button>
-                </td>
-                <td>
+              </td>
+              <td>
                 <button className={styles.buttonForm} onClick={() => handleDelete(category)}>Borrar</button>
-                </td>
+              </td>
             </tr>
-          )))} 
-          
-          
-          
-          
+          )))}
+
+
+
+
 
         </tbody>
       </Table>
@@ -155,8 +155,8 @@ function NewCategoryForm(props) {
             </ModalBody>
             <ModalFooter>
               {errors.name ? <button className={styles.buttonForm} onClick={toggle}>Crear Categoría</button> :
-               <button className={styles.buttonForm}  type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
-              >Crear Categoría</button>}
+                <button className={styles.buttonForm} type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+                >Crear Categoría</button>}
 
               <button className={styles.buttonForm} onClick={toggle}>Salir</button>
 
@@ -188,7 +188,7 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-            {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> :<button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
+              {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> : <button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
               <button className={styles.buttonForm} onClick={toggle2}>Salir</button>
             </ModalFooter>
           </Form>
@@ -203,13 +203,13 @@ function NewCategoryForm(props) {
             <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>
-              <button className={styles.buttonForm}  type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
+              <button className={styles.buttonForm} type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
               <button className={styles.buttonForm} onClick={toggle3}>No</button>
             </ModalFooter>
           </Form>
         </Modal>
       </div>
-    </Container>
+    </Container >
   );
 
   // ---------------REDUX-----------------
