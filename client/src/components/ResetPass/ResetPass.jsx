@@ -1,13 +1,13 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
+import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Modal, ModalHeader} from 'reactstrap'
+import { Modal, ModalHeader } from 'reactstrap'
 import { connect } from 'react-redux'
 import { updatePassword, getUserById } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
@@ -15,12 +15,14 @@ import styles from './resetPass.module.scss'
 
 function Copyright() {
 
+
+
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-     
+
         Kitty's Shop
-        {' '}
+      {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -50,30 +52,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function validate(input) { 
+function validate(input) {
 
-  let errors = {};  
-//password
-if(!input.newPass){
-  errors.password = '**Requiere una Contraseña';
+  let errors = {};
+  //password
+  if (!input.newPass) {
+    errors.password = '**Requiere una Contraseña';
 
-} else if(input.newPass.length<8){
-  errors.newPass = '**La contraseña debe tener minimo 8 caracteres';
-}else if (!/(?=.*[0-9])/.test(input.newPass)){
-  errors.newPass = '**La contraseña debe llevar letras y números';
-}
-//no escribe verificacion
-if(!input.verifyPass ){
+  } else if (input.newPass.length < 8) {
+    errors.newPass = '**La contraseña debe tener minimo 8 caracteres';
+  } else if (!/(?=.*[0-9])/.test(input.newPass)) {
+    errors.newPass = '**La contraseña debe llevar letras y números';
+  }
+  //no escribe verificacion
+  if (!input.verifyPass) {
     errors.verifyPass = "**Escribe nuevamente la contraseña"
   }
-if(input.newPass !== input.verifyPass){
+  if (input.newPass !== input.verifyPass) {
     errors.verifyPass = "**Los campos no coinciden, favor escribir nuevamente"
-}
-//si no hay errores devuelve objeto vacio
+  }
+  //si no hay errores devuelve objeto vacio
   return errors;
 };
 
- function ResetPass(props) {
+function ResetPass(props) {
+
+  const usersData = useSelector(store => store);
+  console.log("AQUI MIERDA!", usersData);
+
+
   const classes = useStyles();
   const history = useHistory()
 
@@ -86,8 +93,8 @@ if(input.newPass !== input.verifyPass){
     history.push("/");
     setModal(!modal);
   }
-   //estado errores
-   const [errors, setErrors] = useState({});
+  //estado errores
+  const [errors, setErrors] = useState({});
 
   const handleChange = e => {
     setInput({
@@ -100,20 +107,20 @@ if(input.newPass !== input.verifyPass){
     }));
   }
 
-//   const regUser = (e) => {
-//     e.preventDefault();
-//     props.singUp(input)
-//     history.push("/")
-//   }
-//get user
-useEffect(() => {
-  props.getUserById(props.id)
-}, [])
+  //   const regUser = (e) => {
+  //     e.preventDefault();
+  //     props.singUp(input)
+  //     history.push("/")
+  //   }
+  //get user
+  useEffect(() => {
+    props.getUserById(props.id)
+  }, [])
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  history.push("/")
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    history.push("/")
+  }
 
 const handleEdit = function (password) {
   props.updatePassword(password);
@@ -129,11 +136,11 @@ const handleEdit = function (password) {
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => handleSubmit(e)}>
-            
+
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-               
+
                   variant="outlined"
                   required
                   fullWidth
@@ -146,12 +153,12 @@ const handleEdit = function (password) {
                 />
               </Grid>
               {errors.newPass && (
-                    <p className={styles.danger}>{errors.newPass}</p>
-                  )}
-    
+                <p className={styles.danger}>{errors.newPass}</p>
+              )}
+
               <Grid item xs={12}>
                 <TextField
-               
+
                   variant="outlined"
                   required
                   fullWidth
@@ -164,20 +171,20 @@ const handleEdit = function (password) {
                 />
               </Grid>
               {errors.verifyPass && (
-                    <p className={styles.danger}>{errors.verifyPass}</p>
-                  )}
+                <p className={styles.danger}>{errors.verifyPass}</p>
+              )}
             </Grid>
-            
-            {errors.newPass || errors.verifyPass  ?  
-            
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled
+
+            {errors.newPass || errors.verifyPass ?
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled
               >
-              Cambiar Contraseña
-          </Button> 
+                Cambiar Contraseña
+          </Button>
               :
             <Button 
               type="submit"
@@ -188,13 +195,13 @@ const handleEdit = function (password) {
               className={classes.submit}>
               Cambiar Contraseña
           </Button>}
-            
-          </form> 
+
+          </form>
         </div>
         <Box mt={5}>
           <Copyright />
         </Box>
-        
+
       </Container>
     </Modal >
   );

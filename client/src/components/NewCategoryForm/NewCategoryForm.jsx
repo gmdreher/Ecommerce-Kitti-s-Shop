@@ -62,9 +62,9 @@ function NewCategoryForm(props) {
     props.getCategories();
     e.preventDefault();
   }
-   
+
   //agregar categorias
-  const handleAdd = function(category) {
+  const handleAdd = function (category) {
     props.postCategories(category)
     toggle();
   }
@@ -100,7 +100,7 @@ function NewCategoryForm(props) {
     <Container className={styles.container}>
       <h1>Administrar Categorías</h1>
       <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
-      <br/>
+      <br />
       <Table>
         <thead>
           <tr>
@@ -123,7 +123,7 @@ function NewCategoryForm(props) {
                 </td>
                 <td>
                 <button className={styles.buttonForm} onClick={() => handleDelete(category)}>Borrar</button>
-                </td>
+              </td>
             </tr>
           )))} 
         </tbody>
@@ -184,7 +184,7 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-            {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> :<button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
+              {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> : <button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
               <button className={styles.buttonForm} onClick={toggle2}>Salir</button>
             </ModalFooter>
           </Form>
@@ -199,13 +199,13 @@ function NewCategoryForm(props) {
             <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>
-              <button className={styles.buttonForm}  type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
+              <button className={styles.buttonForm} type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
               <button className={styles.buttonForm} onClick={toggle3}>No</button>
             </ModalFooter>
           </Form>
         </Modal>
       </div>
-    </Container>
+    </Container >
   );
 
   // ---------------REDUX-----------------

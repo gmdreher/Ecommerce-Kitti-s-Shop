@@ -8,19 +8,19 @@ import '../PayCart/PayCart.scss';
 export default function PayCart(props) {
 
     // console.log("Paycartrttttttttttt", props.dato2);
-  const dispatch= useDispatch()
+    const dispatch = useDispatch()
 
 
-  function cambio() {
+    function cambio() {
 
-    if (props.dato2 && props.dato2 !== undefined) {
+        if (props.dato2 && props.dato2 !== undefined) {
 
-        let state = "creada";
-        let num = props.dato2[0].orderId;
-          
-        dispatch(updateStateOrder( num, state ))
+            let state = "creada";
+            let num = props.dato2[0].orderId;
+
+            dispatch(updateStateOrder(num, state))
+        }
     }
-}
 
     return (
         <div className="contenedor">
@@ -35,8 +35,8 @@ export default function PayCart(props) {
                 </div>
             </div>
             <div className="pagar">
-            <Link to={`/checkOut/`} >
-                <button onClick={cambio}>Finalizar Pago</button>
+                <Link to={`/checkOut/`} >
+                    <button onClick={cambio}>Finalizar Pago</button>
                 </Link>
             </div>
         </div>

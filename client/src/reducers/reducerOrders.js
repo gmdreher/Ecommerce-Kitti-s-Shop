@@ -3,6 +3,7 @@ import {
   GET_SPECIFIC_ORDER,
   UPDATE_STATE_ORDER,
   ALL_ORDERS_USER, STATES_ORDERS,
+  ADDRESS_ORDER
 } from '../constants/productConstants.js';
 
 
@@ -12,8 +13,8 @@ const initialState = {
   user: [],
   ordersUser: [],
   states: []
-  
-  
+
+
 };
 
 export default (state = initialState, action) => {
@@ -45,7 +46,12 @@ export default (state = initialState, action) => {
         ...state,
         states: action.payload
       }
-    
+    //********address****** */
+    case ADDRESS_ORDER:
+      return {
+        ...state,
+        order: action.payload
+      }
 
     default:
       return state;

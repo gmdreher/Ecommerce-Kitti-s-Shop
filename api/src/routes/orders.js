@@ -2,6 +2,32 @@ const server = require('express').Router();
 const { Order, User, OrderDetails, Product, Image } = require('../db.js');
 const { Op } = require("sequelize");
 const protected = require('../middleware/protected')
+var nodemailer = require('nodemailer');
+
+//ruta para agregar direccion a la orden para el envio
+server.put('/:id/address/',protected.isAuth, (req, res) => {
+  const { id } = req.params;
+  const { address } = req.body;
+
+  Order.findByPk(id, {
+    include: [
+      { model: Product}
+    ]
+  })
+    .then((order) => {
+      return order.update(
+        {
+          address: address
+        })  
+       
+      })
+      .then(() => res.status(200).json("agregada dirección de envío"))
+      .catch(error => {
+        console.log(error)
+        res.status(400)
+          .send("Error al tratar de cambiar el estado" + error)
+      })   
+    })
 
 
 
@@ -13,16 +39,45 @@ server.put('/:id' , protected.isAuth, (req, res) => {
   Order.findByPk(id, {
     include: [
       { model: Product, include: { model: Image } },
+      {model: User, attributes: ["id", "email"] }
     ]
   })
     .then((order) => {
+
       return order.update(
         {
           state: state
         })
+       
     })
     .then((order) => {
+      console.log("ordeasd", order)
 
+      let direccion= order.dataValues.address
+      if(order.state === "enviado"){
+        const transporter = nodemailer.createTransport({
+               service: 'gmail',
+               auth: {
+                 user: process.env.AUTH_MAIL,
+                 pass: process.env.AUTH_PASS
+               }
+             })
+                       transporter.sendMail({
+                         from: process.env.AUTH_MAIL,
+                         to: order.user.email,
+                          subject: 'Su compra ha sido enviada',
+                         text: `Estimado Usuario: \n\nSu compra ya esta en camino!
+                         \n Datos de envio: 
+                         \n ${direccion}
+                         \n Ante cualquien consulta comunicarse a: ecommerce.kittishop@gmail.com
+                         \nMuchas gracias por preferirnos!.`
+                       },(error, info)=>{
+                          if(error){(res.status(500).send("no se pudo enviar" + error)) }
+                         else {
+                           res.status(200).send("Mail enviado" + info)
+                          }
+                     })
+      }
       res.status(200).json(order)
     })
     .catch(error => {
