@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// import './Product.scss';
 import style from './product.module.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from 'react-redux';
@@ -158,7 +157,7 @@ function Product(props) {
                 </div>
             </div>
             <section className={style.sectionPrincipal}>
-                <h2>{props.product.Reviews && props.product.Reviews.length > 0 ? <h2>Reseñas</h2> : <h3 className={style.reseñas}>Este producto aún no tiene reseñas</h3>}</h2>
+                <h2>{props.product.Reviews && props.product.Reviews.length > 0 ? <h2 className={style.reseñas}>Reseñas</h2> : <h3 className={style.reseñas}>Este producto aún no tiene reseñas</h3>}</h2>
                 <div className={style.divReview}>
 
                     {props.product.Reviews && props.product.Reviews.map((review) => {
