@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 
 class UserProfile extends React.Component {
   
-
   
   render() {
     
