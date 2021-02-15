@@ -54,7 +54,7 @@ export default function Footer(props) {
                     <div className="a">
                         <a href="https://www.linkedin.com/feed/">
                             <img src="https://ca.slack-edge.com/TPRS7H4PN-U01C9D79S9Z-b09dc6d64b32-512"></img>
-                            <h4>Paula Benitez</h4>
+                            <h4>Paula Donoso</h4>
                         </a>
                     </div>
                     <div className="b">

@@ -1,12 +1,29 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { useSelector } from "react-redux";
 import styles from './viewUser_Guest.module.scss'
 import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles';
+import Badge from '@material-ui/core/Badge';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 export default function ViewGuest () {
+  const cartProduct = useSelector(store => store.cart.cartItems) 
+ 
+ useEffect(() => {
   
+}, [cartProduct])
   return (
+
+    
     <div className='viewUser_Guest'>
+      <Badge badgeContent={cartProduct.length} overlap="circle" color="primary">
       <div className={styles.cart}>
         <Link to={`/user/order`}>
           <button className='carrito'>
@@ -14,6 +31,7 @@ export default function ViewGuest () {
           </button>
         </Link>
       </div>
+      </Badge>
       <div className={"dropdown " + styles.myAccount}>
         <button
           className="dropdown-toggle"

@@ -159,7 +159,7 @@ const handleSend = async function (email) {
               >
               Enviar
           </Button> 
-              : props.forgotPassError === true ?
+              : props.error === true ?
               <Container  className={props.className}>
         
         <div className={classes.paper}><strong>Este usuario no se encuentra registrado!</strong></div>
@@ -174,16 +174,25 @@ const handleSend = async function (email) {
                 <div className={styles.link}> <strong>Regístrate</strong></div></Link>
                 </div>
               </div>
+             
           </Container>
-           : props.forgotPassError === false ?
+           : props.error === false ?
            <Container className={props.className}>
         
            <div className={classes.paper}><strong>Correo enviado! Sigue las instrucciones para cambiar tu contraseña</strong></div>
   
             <div className={classes.paper}>
              <Link to="/" > 
-             <div className={styles.link}> <strong>Inicio </strong></div></Link>
+             <div className={styles.link}> <strong>Inicio</strong></div></Link>
              </div>
+             <br/>
+             <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled>
+              Enviar
+          </Button> 
          
        </Container>
              :
@@ -214,7 +223,7 @@ const handleSend = async function (email) {
 
 function mapStateToProps(state) {
   return {
-    forgotPassError: state.product.forgotPassError,
+    error: state.product.error,
     loading: state.product.loading
   }
 }

@@ -97,18 +97,21 @@ function NewCategoryForm(props) {
 
   // COMPONENTE
   return (
-    <Container className={styles.container}>
-      <h1>Administrar Categorías</h1>
+    <Container>
+       <br/>
+      <h2 className={styles.title}>Administrar Categorías</h2>
+      <br/>
       <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
-      <br />
-      <Table>
+      <br/>
+      <div className={"table-responsive " + styles.container}>
+      <table className="table table-sm">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Editar</th>
-            <th>Borrar</th>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
           </tr>
         </thead>
         <tbody>
@@ -127,7 +130,8 @@ function NewCategoryForm(props) {
             </tr>
           )))} 
         </tbody>
-      </Table>
+      </table>
+      </div>
 
       {/* -------------MODAL POST--------------- */}
       <div>
