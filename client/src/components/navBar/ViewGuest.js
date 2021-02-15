@@ -2,33 +2,28 @@ import React, {useEffect} from 'react'
 import { useSelector } from "react-redux";
 import styles from './viewUser_Guest.module.scss'
 import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
 
 export default function ViewGuest () {
+  
   const cartProduct = useSelector(store => store.cart.cartItems) 
  
  useEffect(() => {
-  
+  console.log(cartProduct.length)
 }, [cartProduct])
-  return (
+  
 
-    
+return (
     <div className='viewUser_Guest'>
       <div className="d-flex d-sm-none">
+    <Badge badgeContent={cartProduct.length} overlap="circle" color="primary">
         <div className={styles.ctnCart + ' mr-1'}>
           <Link to={`/user/order`}>
             <button className={styles.cart} ><i className="fas fa-shopping-cart"/></button>
           </Link>
         </div>
+    </Badge>
         <div className={"dropdown dropstart " + styles.myAccount}>
           <button
             className={"dropdown-toggle " + styles.dropMyAccount}
@@ -51,11 +46,13 @@ export default function ViewGuest () {
       </div>
   
       <div className="d-none d-sm-flex">
+      <Badge badgeContent={cartProduct.length} overlap="square" color="primary">
         <div className={styles.ctnCart + ' mr-3'}>
           <Link to={`/user/order`}>
             <button className={styles.cart} ><i className="fas fa-shopping-cart"/></button>
           </Link>
         </div>
+        </Badge>
         <div className={"dropdown " + styles.myAccount}>
           <button
             className={"dropdown-toggle " + styles.dropMyAccount}
