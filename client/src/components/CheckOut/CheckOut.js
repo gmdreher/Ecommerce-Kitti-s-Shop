@@ -166,7 +166,7 @@ const [errorContact, setErrorContact] = useState({});
     
     useEffect(()=>{
         console.log(descuentos);
-        if(descuentos.length < 1) return 
+        if(descuentos === undefined || descuentos.length == 0) return 
         let sum = sumaTotal()
         let filtro =descuentos.filter((e)=>e.mount <= sum)
         console.log("entra?", filtro,sum)

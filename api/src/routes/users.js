@@ -95,10 +95,10 @@ server.post('/:userId/order', (req, res) => {
       .then((order_detalle) => {
         res.status(201).json(order_detalle)
       })
+      .catch(err => {
+        res.status(400).send("Error al agregar item a la orden:" + err)
+      })
   })
-    .catch(err => {
-      res.status(400).send("Error al agregar item a la orden:" + err)
-    })
     .catch(err => {
       res.status(400).send("Error al agregar item a la orden:" + err)
     })

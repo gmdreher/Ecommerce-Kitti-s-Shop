@@ -11,7 +11,6 @@ export default function PayCart(props) {
   const dispatch= useDispatch()
 const history = useHistory()
 
-
 const cambio= async ()=>{
     
     if(props.dato3 == null) {

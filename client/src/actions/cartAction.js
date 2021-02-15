@@ -1,4 +1,6 @@
 import axios from 'axios';
+import  Swal  from  'sweetalert2';
+import  withReactContent  from  'sweetalert2-react-content';
 import {
     ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE,
     GET_PRODUCT_CART, DELETE_TOTAL_CART,
@@ -9,19 +11,29 @@ import {
 
 
 export const addProductCart = (data) => async (dispatch, getState) => {
-
+    const  MySwal  =  withReactContent (Swal);
     if (!data.userId) {
 
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
         let alreadyExists = false;
+        
 
         cartItems && cartItems.forEach((x) => {
 
             if (x.id == data.productId) {
                 alreadyExists = true;
-                alert('El Producto ya se encuentra en el carrito!!')
-              //  x.quantity++;
+                MySwal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    width: "24rem",
+                    title: 'El producto ya se encuentra en el carrito',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass:{
+                        title: "alertTitle"
+                    }
+                }).then(r =>{} )
             }
         });
 
@@ -36,6 +48,17 @@ export const addProductCart = (data) => async (dispatch, getState) => {
             }
             if (existe !== undefined) {
                 cartItems.push(existe);
+                MySwal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    width: "24rem",
+                    title: `El producto ${existe.name} fue agregado al carrito`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass:{
+                        title: "alertTitle"
+                    }
+                }).then(r =>{} )
             }
         }
 
@@ -49,30 +72,28 @@ export const addProductCart = (data) => async (dispatch, getState) => {
     } else {
         try {
 
-            if(getState().auth.userInfo!==null){
+            if (getState().auth.userInfo !== null) {
                 const accessToken = localStorage.getItem('data')
-              
+
                 axios.interceptors.request.use(
-                    config =>{
-                        config.headers.authorization=`Bearer ${accessToken}`;
+                    config => {
+                        config.headers.authorization = `Bearer ${accessToken}`;
                         return config;
                     },
-                    error =>{
+                    error => {
                         return Promise.reject(error)
                     }
                 )
-              }
+            }
 
 
             const cart = getState().product.cart.slice();
             let alreadyExists = false;
-    
+
             cart && cart.forEach((x) => {
 
                 if (x.id == data.productId) {
-                   // alreadyExists = true;
-                    alert('El Producto ya se encuentra en el carrito!!')
-                  //  x.quantity++;
+                
                 }
             });
             const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
@@ -84,33 +105,55 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 price: prod.data.price, quantity: res.quantity, userId: res.userId,
                 orderId: res.id
             }
+            MySwal.fire({
+                position: 'top-end',
+                icon: 'success',
+                width: "24rem",
+                title: `El producto ${order.name} fue agregado al carrito`,
+                showConfirmButton: false,
+                timer: 1500,
+                customClass:{
+                    title: "alertTitle"
+                }
+            }).then(r =>{} )
             dispatch({
                 type: ADD_TO_CART,
                 payload: order
             });
         } catch (error) {
+            MySwal.fire({
+                position: 'top-end',
+                icon: 'info',
+                width: "24rem",
+                title: 'El producto ya se encuentra en el carrito',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass:{
+                    title: "alertTitle"
+                }
+            }).then(r =>{} )
             console.log("Error: " + error);
         }
     }
 };
 
 
-export const getProductsCart = (data) => async (dispatch,getState) => {
+export const getProductsCart = (data) => async (dispatch, getState) => {
 
     if (data) {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
 
         try {
             let orderProd = [];
@@ -133,8 +176,6 @@ export const getProductsCart = (data) => async (dispatch,getState) => {
                 orderProd.push(order)
             }
 
-
-
             dispatch({
                 type: GET_PRODUCT_CART,
                 payload: orderProd,
@@ -146,22 +187,22 @@ export const getProductsCart = (data) => async (dispatch,getState) => {
 
 }
 
-export const deleteTotalCart = (data) => async (dispatch,getState) => {
+export const deleteTotalCart = (data) => async (dispatch, getState) => {
 
 
-    if(getState().auth.userInfo!==null){
+    if (getState().auth.userInfo !== null) {
         const accessToken = localStorage.getItem('data')
-      
+
         axios.interceptors.request.use(
-            config =>{
-                config.headers.authorization=`Bearer ${accessToken}`;
+            config => {
+                config.headers.authorization = `Bearer ${accessToken}`;
                 return config;
             },
-            error =>{
+            error => {
                 return Promise.reject(error)
             }
         )
-      }
+    }
     const Details = await axios.get(`http://localhost:3001/users/${data.userId}/order/${"carrito"}`);
     Details.data && Details.data.map((det) => {
         axios.delete(`http://localhost:3001/orders/${data.orderId}/${det.productId}`)
@@ -185,19 +226,19 @@ export const removeFromCartLS = (product) => dispatch => {
 };
 export const deleteItem = (data) => async (dispatch, getState) => {
     if (data.orderId) {
-        if(getState().auth.userInfo!==null){
+        if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
-          
+
             axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
+                config => {
+                    config.headers.authorization = `Bearer ${accessToken}`;
                     return config;
                 },
-                error =>{
+                error => {
                     return Promise.reject(error)
                 }
             )
-          }
+        }
         const prod = await axios.delete(`http://localhost:3001/orders/${data.orderId}/${data.id}`)
         dispatch({
             type: DELETE_ITEMS_CART,
@@ -210,53 +251,53 @@ export const deleteItem = (data) => async (dispatch, getState) => {
     }
 
 }
-export const editQuantity = ({ idUser, productId, quantity, orderId }) => async (dispatch,getState) => {
-    if(orderId&&idUser){
-    var orderBody = { productId, quantity, orderId }
-    const cart = getState().product.cart.slice();
-    try {
-        if(getState().auth.userInfo!==null){
-            const accessToken = localStorage.getItem('data')
-          
-            axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
-                    return config;
-                },
-                error =>{
-                    return Promise.reject(error)
-                }
-            )
-          }
-        const res = await axios.put(`http://localhost:3001/orders/${idUser}/cart`, orderBody);
+export const editQuantity = ({ idUser, productId, quantity, orderId }) => async (dispatch, getState) => {
+    if (orderId && idUser) {
+        var orderBody = { productId, quantity, orderId }
+        const cart = getState().product.cart.slice();
+        try {
+            if (getState().auth.userInfo !== null) {
+                const accessToken = localStorage.getItem('data')
 
-        cart && cart.forEach((x) => {
-        
+                axios.interceptors.request.use(
+                    config => {
+                        config.headers.authorization = `Bearer ${accessToken}`;
+                        return config;
+                    },
+                    error => {
+                        return Promise.reject(error)
+                    }
+                )
+            }
+            const res = await axios.put(`http://localhost:3001/orders/${idUser}/cart`, orderBody);
+
+            cart && cart.forEach((x) => {
+
+                if (x.id == productId) {
+                    // alreadyExists = true;
+                    x.quantity = quantity;
+                }
+            });
+            dispatch({
+                type: UPDATE_COUNT_PRODUCT,
+                payload: cart
+            });
+        } catch (error) {
+            console.log("Error: " + error);
+        }
+    } else {
+        const cartItems = getState().cart.cartItems.slice();
+        cartItems && cartItems.forEach((x) => {
+
             if (x.id == productId) {
-               // alreadyExists = true;
-                x.quantity=quantity;
+                // alreadyExists = true;
+                x.quantity = quantity;
             }
         });
         dispatch({
-            type: UPDATE_COUNT_PRODUCT,
-            payload: cart
-        });
-    } catch (error) {
-        console.log("Error: " + error);
-    } 
- }else{
-    const cartItems = getState().cart.cartItems.slice();
-    cartItems && cartItems.forEach((x) => {
-    
-        if (x.id == productId) {
-           // alreadyExists = true;
-            x.quantity=quantity;
-        }
-    });
-    dispatch({
-        type: ADD_TO_CART_LOCALSTORAGE,
-        payload: { cartItems }
-    })
- }
+            type: ADD_TO_CART_LOCALSTORAGE,
+            payload: { cartItems }
+        })
+    }
 
 }

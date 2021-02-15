@@ -3,6 +3,9 @@
     align-items:flex-start;
     justify-content: center;
     
+    @media screen and (max-width: 360px) {
+        display: block;
+    }
     
     .grupo {
         text-align: center;
@@ -16,6 +19,13 @@
         padding: 1em;
         width: 30em;
         border-radius: 20px;
+
+        @media screen and (max-width: 360px) {
+            width: 80%;
+            margin: auto;
+            margin-top: 10%;
+            margin-bottom: 10%;
+        }
 
 
         .contenedor {

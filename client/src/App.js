@@ -32,6 +32,7 @@ import './App.scss';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import GlobalDiscount from './components/Discount/GlobalDiscount';
 
+import UserOrdersTable from "./components/UserProfile/UserOrdersTable";
 
 
 
@@ -58,41 +59,38 @@ function App() {
               <Route exact path='/user/signup' component={SignUp} />
               <Route exact path='/auth/login' component={Login} />
               <Route exact path="/user/order" component={ViewOrder} />
-
               <Route exact path='/user/getEmail' component={GetEmail} />
-              <Route exact path= "/mercadopago/success" component= {Success} ></Route>
-              <Route exact path= "/mercadopago/failed" component= {Failed} ></Route>
               
               <Route exact path='/user/resetPass/:id' render={({match}) =><ResetPass key={match.params.id} id={match.params.id} /> }/>
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
               
               <PrivateRoute exact path='/admin/discount' component={GlobalDiscount}/>
-
+    
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
+
+              <Route exact path= "/checkOut" component= {CheckOut} />
+              <Route exact path="/mercadopago/success" component={Success} />
+              <Route exact path="/mercadopago/failed" component={Failed} />
               
-              
-              {/* <Route exact path="/orders/:id" render={({ match }) => (user && user.rol == 'admin' ? <OrderDetails key={match.params.id} id={match.params.id} /> : <Redirect to='/' />)} /> */}
-              <Route exact path= "/checkOut" component= {CheckOut} ></Route>
               <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
               <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} /> }/>
   
               <Route exact path='/selectStates' component={SelectStates} />
-  
-              <Route path='/auth/google/redirect'><GoogleLogin/></Route>
-              <Route path='/auth/facebook/callback'><FacebookLogin/></Route>
-              
 
+              <Route path='/auth/google/redirect'><GoogleLogin /></Route>
+              <Route path='/auth/facebook/callback'><FacebookLogin /></Route>
+              <Route path='/users/ordersTable'><UserOrdersTable/></Route>
             </div>
           </main>
-          <footer>
-            <Footer />
-          </footer>
         </div>
       </div>
-    </BrowserRouter>
+      <footer>
+        <Footer />
+      </footer>
+    </BrowserRouter >
   );
 }
 

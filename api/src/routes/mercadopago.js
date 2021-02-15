@@ -2,13 +2,13 @@ const server = require('express').Router();
 const { Order, OrderDetails, Product, User } = require('../db.js');
 const { ACCESS_TOKEN } = process.env;
 const protected = require('../middleware/protected')
-const bodyParser = require ('body-parser')
+const bodyParser = require('body-parser')
 var nodemailer = require('nodemailer');
 
 // SDK de Mercado Pago
 const mercadopago = require('mercadopago');
 
-server.use(bodyParser.urlencoded({ extended: false}));
+server.use(bodyParser.urlencoded({ extended: false }));
 
 // Agrega credenciales
 mercadopago.configure({
@@ -19,7 +19,7 @@ mercadopago.configure({
 
 
 // //Ruta que genera la URL de MercadoPago
-server.post("/" , (req, res)=>{
+server.post("/", (req, res) => {
     const { carrito, orderId } = req.body
 
     // console.log("este es el descuneto", carrito[0].porcentaje)
@@ -65,38 +65,37 @@ server.post("/" , (req, res)=>{
             pending: 'http://localhost:3001/mercadopago/response',
         },
     };
-       
 
      return mercadopago.preferences.create(preference)
     })
     .then(function(response){
+            // console.log(response)
+            res.json({ redirect: response.body.init_point })
 
-        // console.log(response)
- res.json({redirect : response.body.init_point})
-
-    }).catch(function(error){
-      console.log("este es el error", error);
-    });
+        }).catch(function (error) {
+            console.log("este es el error", error);
+        });
 })
 
 
 
 //Ruta que recibe la información del pago
-server.get("/response", async (req, res)=>{
-    
+server.get("/response", async (req, res) => {
+
     const { body } = await mercadopago.payment.get(req.query.collection_id)
     // console.log("EN body ",body)
 
-    const payment_status= body.status
+    const payment_status = body.status
     const external_reference = body.external_reference
 
     // console.log("EXTERNAL REFERENCE ", external_reference)
-  
+
     //Aquí edito el status de mi orden
     Order.findByPk(external_reference, {
         include: [
-            { model: User, attributes: ["id", "email"]
-        }]   
+            {
+                model: User, attributes: ["id", "email"]
+            }]
     })
     .then((order) => {
         // console.log("esto es order", order)
@@ -143,26 +142,26 @@ server.get("/response", async (req, res)=>{
                 res.status(400).send(`Error ${error}`);
                 })
 
-              
 
-        }else{
 
-            order.payment_status= payment_status //rechazado
-            order.state = "cancelada"
-            order.save()
-            .then((err) => {
-                console.error('error al salvar', err)
-                return res.redirect(`http://localhost:3000/mercadopago/failed`)
-              })
-        }
+            } else {
 
-    })
-    .catch(err =>{
-      console.error('error al buscar', err)
-      return res.redirect(`http://localhost:3000/`)
-    })
+                order.payment_status = payment_status //rechazado
+                order.state = "cancelada"
+                order.save()
+                    .then((err) => {
+                        console.error('error al salvar', err)
+                        return res.redirect(`http://localhost:3000/mercadopago/failed`)
+                    })
+            }
+
+        })
+        .catch(err => {
+            console.error('error al buscar', err)
+            return res.redirect(`http://localhost:3000/`)
+        })
 })
-  
+
 
 module.exports = server;
 

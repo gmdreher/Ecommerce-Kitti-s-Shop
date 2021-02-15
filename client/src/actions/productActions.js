@@ -21,7 +21,7 @@ if(localStorage.getItem('data')){
 export const getProductById = (id) => async (dispatch) => {
     try {
         const res = await axios.get(`http://localhost:3001/products/${id}`);
-        // console.log('este es la respuesta de la action', res)
+        console.log('este es la respuesta de la action', res)
         dispatch({
             type: GET_PRODUCT_BY_ID,
             payload: res.data

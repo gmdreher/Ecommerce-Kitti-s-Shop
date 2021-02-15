@@ -2,13 +2,12 @@ import React from "react";
 import styles from './userProfile.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import UserOrdersTable from "./UserOrdersTable";
+
 
 
 
 class UserProfile extends React.Component {
   
-
   
   render() {
     
@@ -17,7 +16,7 @@ class UserProfile extends React.Component {
         <div className="row">
           <div className="col-6">
             <div className="card">
-              <div className="card-header">
+              <div className={"card-header " + styles.cardGestion}>
                 Datos Personales
               </div>
               <div className="card-body">
@@ -27,32 +26,37 @@ class UserProfile extends React.Component {
                 <p>{this.props.userInfo.email}</p>
               </div>
             </div>
-            <div className={"card " + styles.cardHistory}>
-              <Link to={`/user/review/${this.props.userInfo.id}`}>
-                <div className="card-header dropdown-item" >
-                  Mis reseñas
-                </div>
-              </Link>
-            </div>
           </div>
           <div className="col-6">
-            <div className="card">
+            <div className={"card " + styles.cardGestion}>
               <div className="card-header">
-                Direcciones
+                Gestiones de usuario
               </div>
-              <div className="card-body">
-                <p className="blockquote mb-0">Oficina</p>
-                <p>Av. Santa Fe 548645 - Piso 3, Departamento A</p>
-                <p className="blockquote mb-0">Domicilio</p>
-                <p>Av. Santa Fe 548645 - Piso 3, Departamento A</p>
+              <div className={"card-body " + styles.cardBody}>
+            <div className="row">
+                <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                  <Link to={`/user/review/${this.props.userInfo.id}`}>
+                    <button className={styles.buttonGestion} >
+                     Mis reseñas
+                    </button>
+                  </Link>
+                </div>
+              <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                    <Link to={'/users/ordersTable'}>
+                  <button className={styles.buttonGestion}>
+                       Historial de Compras
+                  </button>
+                    </Link>
+              </div>
+                <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                  <button className={styles.buttonGestion}>
+                    Cambiar contraseña
+                  </button>
+              </div>
+            </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className={"row " + styles.row2}>
-           <div className={styles.myOrders}>
-             <UserOrdersTable id={this.props.userInfo.id}/>
-           </div>
         </div>
       </div >
     )

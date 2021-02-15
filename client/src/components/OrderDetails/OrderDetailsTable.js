@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './orderDetails.module.scss';
+import styles from "./orderDetails.module.scss"
 import { connect } from 'react-redux';
 import { getUserOrder, updateStateOrder, getOrdersUser } from "../../actions/orderActions";
 import Moment from "moment";
@@ -68,7 +68,7 @@ class OrderDetailsTable extends React.Component {
       }
     }
   
-    let { id, state, createdAt, userId, products } = this.props.order;
+    let { id, state, createdAt, userId, products, address } = this.props.order;
     
     return (
       <div className={styles.container}>
@@ -99,13 +99,13 @@ class OrderDetailsTable extends React.Component {
                         <div className="col-9">
                           <label className={styles.inlineLabel}>Elige un estado</label>
                           <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
-                            <option value="carrito">carrito</option>
-                            <option value="creada">creada</option>
-                            <option value="procesando">procesando</option>
-                            <option value="confirmado">confirmado</option>
-                            <option value="cancelado">cancelado</option>
-                            <option value="enviado">enviado</option>
-                            <option value="completa">completa</option>
+                            <option value="carrito">En carrito</option>
+                            <option value="creada">Creada</option>
+                            <option value="procesando">Procesando</option>
+                            <option value="confirmada">Confirmada</option>
+                            <option value="cancelada">Cancelada</option>
+                            <option value="enviada">Enviada</option>
+                            <option value="completa">Completa</option>
                           </select>
                         </div>
                         <div className="col-3">
@@ -120,8 +120,12 @@ class OrderDetailsTable extends React.Component {
               </td>
             </tr>
             <tr>
-              <th scope="row" >Numero de orden</th>
+              <th scope="row" >Numero de orden:</th>
               <td className={styles.letterhead}>{id}</td>
+            </tr>
+            <tr>
+              <th scope="row" >Dirección de envío:</th>
+              <td className={styles.letterhead}>{address}</td>
             </tr>
             <tr>
               <th>Productos:</th>

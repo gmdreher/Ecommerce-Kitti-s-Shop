@@ -2,38 +2,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    h1{
-        margin: 1em;
-        // font-family: Arial, Helvetica, sans-serif;
+    .titleH2{
+        margin-top: 2%;
         font-family: 'Lato', sans-serif;
+        background-color: white;
 
     }
-    .contentcards{
-       
+    .contentCards{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         width: 90%;
-        margin: 10px;
+        margin: 2%;
     }
 
-    
-    .selectContainer{
+
+}
+
+@media screen and (min-width: 600px) {
+    .catalogue{
         display: flex;
-        align-self: flex-end;
-        margin-right: 5rem;    border: 1px solid #80808099;
-        padding: 1rem;
-        border-radius: 2rem;
-        background: white;
-        label{
-            margin: 0;
+        flex-direction: column;
+        align-items: center;
+        .titleH2{
+            margin: 1em;
+            font-family: 'Lato', sans-serif;
+            background-color: white;
 
         }
-        select{
-            border: none;
-            margin-left: .5rem;
-            outline: none;
-            color: orange;
+        .contentCards{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 90%;
+            margin: 2%;
         }
+
+
     }
 }

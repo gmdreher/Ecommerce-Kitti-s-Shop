@@ -50,17 +50,17 @@ class CrudProductForm extends React.Component {
     ocultarModalInsertar = () => {
         console.log('oculmodalinsertar')
         this.setState({ modalInsertar: false })
-       // this.props.getAllProducts()
+        // this.props.getAllProducts()
     }
     ocultarModalEditar = (product) => {
         this.setState({ modalEditar: false });
-        if(product){
-            if(this.state.form.categories){
-              this.props.putProduct(product)
-          }else{
-              alert('El Producto debe tener 1 categoria asignada')
-          }
-           
+        if (product) {
+            if (this.state.form.categories) {
+                this.props.putProduct(product)
+            } else {
+                alert('El Producto debe tener 1 categoria asignada')
+            }
+
         }
 
 
@@ -69,71 +69,71 @@ class CrudProductForm extends React.Component {
         console.log('submit')
         event.preventDefault();
         this.props.chargeProducts(this.state.form.search);
-      }
-      handleDelete(id){       
-          this.props.destroyProduct(id);
+    }
+    handleDelete(id) {
+        this.props.destroyProduct(id);
 
-      }
-      handleEdit(product){
-                this.mostrarModalEditar(product)
+    }
+    handleEdit(product) {
+        this.mostrarModalEditar(product)
 
-      }
-      componentDidMount(){
-          this.props.getAllProducts();
-      }
-      handlepost(inputs){
-       
-          if(this.state.checkBoxes.length >0){
-                this.ocultarModalInsertar();
-                this.props.postProducts({product:inputs,cate:this.state.checkBoxes,img:this.state.file})
-                
-             
-          }else{
-               alert('Debe Seleccionar la Categoria a asignar')
-          }
-      }
-      cambio(id){
-          const index = this.state.checkBoxes.indexOf(id);               
-          if(index > -1){
-            
-               this.state.checkBoxes.splice(index,1)
-              
-           } else {
-                this.state.checkBoxes.push(id)
-              
-           }
-      }
-      handleChangeImage = e =>{
-           this.setState({
-              file:e.target.files[0]
-              //filename:e.target.files[0].name
-            });
-           
-      }
-      checkEdit(catego){
-        const categorias =this.state.form.categories;
-        if(categorias){
-           for(var i=0;i<categorias.length;i++){
-            if(categorias[i].id==catego.id){
-            
-                return true
+    }
+    componentDidMount() {
+        this.props.getAllProducts();
+    }
+    handlepost(inputs) {
+
+        if (this.state.checkBoxes.length > 0) {
+            this.ocultarModalInsertar();
+            this.props.postProducts({ product: inputs, cate: this.state.checkBoxes, img: this.state.file })
+
+
+        } else {
+            alert('Debe Seleccionar la Categoria a asignar')
+        }
+    }
+    cambio(id) {
+        const index = this.state.checkBoxes.indexOf(id);
+        if (index > -1) {
+
+            this.state.checkBoxes.splice(index, 1)
+
+        } else {
+            this.state.checkBoxes.push(id)
+
+        }
+    }
+    handleChangeImage = e => {
+        this.setState({
+            file: e.target.files[0]
+            //filename:e.target.files[0].name
+        });
+
+    }
+    checkEdit(catego) {
+        const categorias = this.state.form.categories;
+        if (categorias) {
+            for (var i = 0; i < categorias.length; i++) {
+                if (categorias[i].id == catego.id) {
+
+                    return true
+                }
             }
+
+
+
         }
 
 
-
     }
-    
-          
-      }
-      checkEditClick(cate){
+    checkEditClick(cate) {
         console.log('checkEditClick')
-        const categorias =this.state.form.categories;
-        for(var i= 0;i<categorias.length;i++){
-            if(categorias[i].id==cate.id){
-              
-                this.state.form.categories.splice(i,1);
-              
+        const categorias = this.state.form.categories;
+        for (var i = 0; i < categorias.length; i++) {
+            if (categorias[i].id == cate.id) {
+
+                this.state.form.categories.splice(i, 1);
+
                 return
             }
         }
@@ -145,26 +145,30 @@ class CrudProductForm extends React.Component {
     render() {
         return (
             <>
-                <Container className={styles.container}>
+                <Container>
                     <div>
-                        <h1>Administrar Productos</h1>
-                        <Button color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </Button>
+                    <br/>
+                        <h2 className={styles.title}>Administrar Productos</h2>
+                        <button className={styles.buttonFormAdd} color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </button>
                     </div>
-                    <br />
                     <FormGroup>
-                        <div>
-                            <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
-                            <Input name='search' type="text" className="col-md-3 mb-3" placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
+                    <br/>
+                        <div className={styles.formInline}>
+                            <button className={styles.buttonFormAdd} color='primary' onClick={e => this.handleSubmit(e)}>Buscar</button>
+                            <Input name='search' type="text" className={styles.input} placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
                         </div>
                     </FormGroup>
-
-                    <Table>
+                   
+                    <div className={"table-responsive " + styles.container}>
+                    <table className="table table-sm">
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Borrar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -178,16 +182,18 @@ class CrudProductForm extends React.Component {
                                     <td>{product.stock}</td>
 
                                     <td>
-                                        <Button color='primary' onClick={() => this.handleEdit(product)}>Editar</Button>
-                                        <Button color='danger' onClick={(e) => this.handleDelete(product.id)}>Borrar</Button>
+                                        <button className={styles.buttonForm} color='primary' onClick={() => this.handleEdit(product)}>Editar</button>
+                                    </td>
+                                    <td>
+                                        <button className={styles.buttonForm} onClick={(e) => this.handleDelete(product.id)}>Borrar</button>
                                     </td>
                                 </tr>
                             )))}
 
                         </tbody>
-                    </Table>
-
-
+                    </table>
+                    </div>
+                    
                 </Container>
                 <Modal isOpen={this.state.modalEditar}>
                     <ModalHeader>
@@ -243,8 +249,8 @@ class CrudProductForm extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</Button>
-                        <Button color='primary' onClick={() => this.ocultarModalEditar()}>Cancelar</Button>
+                        <button className={styles.buttonForm} onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</button>
+                        <button className={styles.buttonForm} onClick={() => this.ocultarModalEditar()}>Cancelar</button>
                     </ModalFooter>
                 </Modal>
 
@@ -260,25 +266,25 @@ class CrudProductForm extends React.Component {
                         <FormGroup>
                             <Label sm={3}>Nombre</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='name' type='text' onChange={this.handleChange} />
+                                <Input name='name' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Descripcion</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='description' type="textarea" onChange={this.handleChange} />
+                                <Input  name='description' type="textarea" onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Precio</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='price' type='text' onChange={this.handleChange} />
+                                <Input  name='price' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Stock</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='stock' type='text' onChange={this.handleChange} />
+                                <Input  name='stock' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <h4>Categorias</h4>
@@ -314,8 +320,8 @@ class CrudProductForm extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</Button>
-                        <Button color='primary' onClick={() => this.ocultarModalInsertar()}>Cancelar</Button>
+                        <button className={styles.buttonForm} onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</button>
+                        <button className={styles.buttonForm} onClick={() => this.ocultarModalInsertar()}>Cancelar</button>
                     </ModalFooter>
                 </Modal>
 

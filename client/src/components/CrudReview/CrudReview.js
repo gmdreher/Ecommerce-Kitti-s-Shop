@@ -90,8 +90,8 @@ export default function CrudReview(props) {
     userId: props.id
   });
   const [idProductAdding, setIdProductAdding] = useState()
-  const [infoEdit,setInfoEdit] = useState()
-  const [deleteRev,setDeleteRev] = useState()
+  const [infoEdit, setInfoEdit] = useState()
+  const [deleteRev, setDeleteRev] = useState()
 
   const [productWithReview, setProductWithReview]= useState([])
   const [productWithoutReview, setProductWithoutReview]= useState([])
@@ -102,15 +102,15 @@ export default function CrudReview(props) {
   //modal agregar reseña
   const [modal, setModal] = useState(false);
   const toggleAdd = () => setModal(!modal);
-  
+
   //modal2 editar reseña
   const [modal2, setModal2] = useState(false);
   const toggleEdit = () => setModal2(!modal2);
-  
+
   //modal3 borrar reseña
   const [modal3, setModal3] = useState(false);
   const toggleDelete = () => setModal3(!modal3);
-  
+
   //get products y usuario
   useEffect(() => {
     // deberia obtener los productos que ya compré
@@ -118,17 +118,17 @@ export default function CrudReview(props) {
     dispatch(getAllReviewsUser(props.id))
   }, [])
 
-    //validacion inputs
-    const validate = function (input) {//---------------------------
-      let errors = {};
-      if (!input.description) {
-        errors.description = '**Requiere una descripción';
-      }
-      return errors;
+  //validacion inputs
+  const validate = function (input) {//---------------------------
+    let errors = {};
+    if (!input.description) {
+      errors.description = '**Requiere una descripción';
     }
-  
+    return errors;
+  }
+
   //para setear los input
-  const handleInputChange = (e)=> {
+  const handleInputChange = (e) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value
@@ -137,9 +137,9 @@ export default function CrudReview(props) {
       ...input,
       [e.target.name]: e.target.value
     }));
-  
+
   }
-  const resetInput= ()=>{
+  const resetInput = () => {
     setInput({
       description: '',
       rate: '1',
@@ -148,14 +148,14 @@ export default function CrudReview(props) {
   }
 
   // añadir un review
-  const handleOpenModal = (productId)=>{
+  const handleOpenModal = (productId) => {
     // console.log(productId)
     setIdProductAdding(productId)
     toggleAdd()
   }
-  const handleAddReview= async (productId)=>{
+  const handleAddReview = async (productId) => {
     // console.log(productId,input)
-    await dispatch(addReview(productId,input))
+    await dispatch(addReview(productId, input))
     await dispatch(getProductStateComplete(props.id))
     await dispatch(getAllReviewsUser(props.id))
     resetInput()
@@ -180,50 +180,50 @@ export default function CrudReview(props) {
   }
 
   //eliminar un review
-  const handleDelete= (productId, reviewId)=>{
-   setDeleteRev({productId, reviewId})
-   toggleDelete()
+  const handleDelete = (productId, reviewId) => {
+    setDeleteRev({ productId, reviewId })
+    toggleDelete()
   }
 
-  const handleDeleteReview= async ()=>{
+  const handleDeleteReview = async () => {
     await dispatch(deleteReview(deleteRev.productId, deleteRev.reviewId))
-    toggleDelete() 
+    toggleDelete()
     await dispatch(getProductStateComplete(props.id))
     await dispatch(getAllReviewsUser(props.id))
   }
 
 
-useEffect(()=>{
+  useEffect(() => {
 
-  let conRev= [];
-  let sinRev=[];
-  let productCompletUno= productsComplete;
-  let reviewUno= reviews;
+    let conRev = [];
+    let sinRev = [];
+    let productCompletUno = productsComplete;
+    let reviewUno = reviews;
 
-  for(let i=0; i<productCompletUno.length; i++){
+    for (let i = 0; i < productCompletUno.length; i++) {
 
-    let bandera= 0;
+      let bandera = 0;
 
-    for(let j=0; j<reviewUno.length; j++){
-    
-      if(productCompletUno[i].OrderDetails.productId === reviewUno[j].productId){
+      for (let j = 0; j < reviewUno.length; j++) {
 
-        bandera++
-        conRev.push({...productCompletUno[i], reviews: reviewUno[j] } )
+        if (productCompletUno[i].OrderDetails.productId === reviewUno[j].productId) {
 
-        reviewUno = reviewUno.filter((e)=> e.id != reviewUno[j].id)
-        break
+          bandera++
+          conRev.push({ ...productCompletUno[i], reviews: reviewUno[j] })
+
+          reviewUno = reviewUno.filter((e) => e.id != reviewUno[j].id)
+          break
+        }
       }
+      if (bandera === 0) sinRev.push(productCompletUno[i])
     }
-    if(bandera===0 ) sinRev.push(productCompletUno[i])
-  }
-console.log("con", conRev);
-console.log("sin", sinRev);
+    console.log("con", conRev);
+    console.log("sin", sinRev);
 
-setProductWithReview(conRev);
-setProductWithoutReview(sinRev)
+    setProductWithReview(conRev);
+    setProductWithoutReview(sinRev)
 
-}, [productsComplete, reviews])
+  }, [productsComplete, reviews])
 
   return (
 
@@ -239,12 +239,12 @@ setProductWithoutReview(sinRev)
             <th>Descripcion</th>
 
             <th>Opciones</th>
-         
+
           </tr>
         </thead>
         <tbody>
-         
-          {productWithoutReview.length>0 && productWithoutReview.map(((product, index)=>(
+
+          {productWithoutReview.length > 0 && productWithoutReview.map(((product, index) => (
 
             <tr key={index}>
               <td>{product.name}</td>
@@ -252,20 +252,20 @@ setProductWithoutReview(sinRev)
 
               <td>
 
-                <Button className= {styles.button_} onClick={()=> handleOpenModal(product.OrderDetails.productId)} >Añadir</Button>
+                <Button className={styles.button_} onClick={() => handleOpenModal(product.OrderDetails.productId)} >Añadir</Button>
               </td>
             </tr>
 
-            
+
           )))}
-        
+
 
         </tbody>
       </Table>
-{/* productos que ya tienen reseña, y quiero editar o borrar */}
+      {/* productos que ya tienen reseña, y quiero editar o borrar */}
 
       <h1>Mis Reseñas</h1>
-      {productWithReview.length > 0 && <h3>{productWithReview.length}</h3>}
+      {/* {productWithReview.length > 0 && <h3>{productWithReview.length}</h3>} */}
       <Table>
         <thead>
           <tr>
@@ -273,7 +273,7 @@ setProductWithoutReview(sinRev)
             <th>Reseña</th>
             <th>Puntuacion</th>
             <th>Opciones</th>
-         
+
           </tr>
         </thead>
         <tbody>
@@ -285,32 +285,32 @@ setProductWithoutReview(sinRev)
                 <td className= {styles.estrellitas}>{rate(review.reviews.rate)}</td>
               <td>
 
-                <Button className= {styles.button_} onClick={()=> handleEditReview(review.reviews.productId ,review.reviews.id,{description:review.reviews.description, rate:review.reviews.rate})} >Editar</Button>
-                <Button className= {styles.button_} onClick={()=> handleDelete(review.reviews.productId ,review.reviews.id)}>Borrar</Button>
+                <Button className={styles.button_} onClick={() => handleEditReview(review.reviews.productId, review.reviews.id, { description: review.reviews.description, rate: review.reviews.rate })} >Editar</Button>
+                <Button className={styles.button_} onClick={() => handleDelete(review.reviews.productId, review.reviews.id)}>Borrar</Button>
               </td>
             </tr>
           ))}
-        
+
 
         </tbody>
       </Table>
-      
+
 
       {/* -------------MODAL POST--------------- */}
       <div>
         <Modal isOpen={modal} toggle={toggleAdd} className={props.className}>
-          <Form  onSubmit={e=>e.preventDefault()}>
+          <Form onSubmit={e => e.preventDefault()}>
             <ModalHeader toggle={toggleAdd}>Añadir Reseña</ModalHeader>
             <ModalBody>
 
-              <FormGroup  onSubmit={e=>e.preventDefault()}>
+              <FormGroup onSubmit={e => e.preventDefault()}>
                 <Label for="description"> Descripcion</Label>
-                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`}  name="description" id='description' placeholder='Deja tu comentario...'value={input.description} onChange={handleInputChange} />
+                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' placeholder='Deja tu comentario...' value={input.description} onChange={handleInputChange} />
                 {errors.description && (
                   <p className={"danger"}>{errors.description ==="true"?"":errors.description}</p>
                 )}
               </FormGroup>
-              <FormGroup  onSubmit={e=>e.preventDefault()}>
+              <FormGroup onSubmit={e => e.preventDefault()}>
                 <Label for="rate"> Puntuacion </Label>
                {/*  <select class="form-select" aria-label="Default select example" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                     <option value="1">1</option>
@@ -331,7 +331,7 @@ setProductWithoutReview(sinRev)
                 >Añadir Reseña</Button> }
 
 
-              <Button className= {styles.button_} onClick={toggleAdd}>Salir</Button>
+              <Button className={styles.button_} onClick={toggleAdd}>Salir</Button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -341,19 +341,19 @@ setProductWithoutReview(sinRev)
 
       <div>
         <Modal isOpen={modal2} toggle={toggleEdit} className={props.className}>
-          <Form  onSubmit={e=>e.preventDefault()}>
+          <Form onSubmit={e => e.preventDefault()}>
             <ModalHeader toggle={toggleEdit}>Modificar Reseña</ModalHeader>
             <ModalBody>
 
 
-              <FormGroup  onSubmit={e=>e.preventDefault()}>
-              <br/>
+              <FormGroup onSubmit={e => e.preventDefault()}>
+                <br />
                 <Label for="description">Descripcion</Label>
                 <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' value={input.description} onChange={handleInputChange} />
                 {errors.description && (
                   <p className={styles.danger}>{errors.description==="true"?"":errors.description}</p>
                 )}
-              
+
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
               <Label for="rate"> Puntuacion </Label>
@@ -382,12 +382,12 @@ setProductWithoutReview(sinRev)
       {/* ----------------MODAL DELETE------------------- */}
       <div>
         <Modal isOpen={modal3} toggle={toggleDelete} className={props.className}>
-          <Form onSubmit={e=>e.preventDefault()}>
+          <Form onSubmit={e => e.preventDefault()}>
             <ModalHeader toggle={toggleDelete}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>
-              <Button className= {styles.button_} type="submit" onClick={() => handleDeleteReview()}>Si</Button>
-              <Button className= {styles.button_} onClick={toggleDelete}>No</Button>
+              <Button className={styles.button_} type="submit" onClick={() => handleDeleteReview()}>Si</Button>
+              <Button className={styles.button_} onClick={toggleDelete}>No</Button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -395,4 +395,4 @@ setProductWithoutReview(sinRev)
     </Container>
   );
 
- }
+}

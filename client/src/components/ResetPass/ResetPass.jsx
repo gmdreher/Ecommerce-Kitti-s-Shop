@@ -1,26 +1,29 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
+import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Modal, ModalHeader} from 'reactstrap'
+import { Modal, ModalHeader } from 'reactstrap'
 import { connect } from 'react-redux'
-import { updatePassword, getUserById } from '../../actions/userAction'
+import { updatePassword} from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
 import styles from './resetPass.module.scss'
+import {Link} from "react-router-dom";
 
 function Copyright() {
+
+
 
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-     
+
         Kitty's Shop
-        {' '}
+      {' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -44,33 +47,40 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    color: 'black',
+    backgroundColor: '#f5b453',
+    fontWeight: 'bold'
   },
 }));
 
- function validate(input) { 
+function validate(input) {
 
-  let errors = {};  
-//password
-if(!input.newPass){
-  errors.password = '**Requiere una Contraseña';
+  let errors = {};
+  //password
+  if (!input.newPass) {
+    errors.password = '**Requiere una Contraseña';
 
-} else if(input.newPass.length<8){
-  errors.newPass = '**La contraseña debe tener minimo 8 caracteres';
-}else if (!/(?=.*[0-9])/.test(input.newPass)){
-  errors.newPass = '**La contraseña debe llevar letras y números';
-}
-//no escribe verificacion
-if(!input.verifyPass ){
+  } else if (input.newPass.length < 8) {
+    errors.newPass = '**La contraseña debe tener minimo 8 caracteres';
+  } else if (!/(?=.*[0-9])/.test(input.newPass)) {
+    errors.newPass = '**La contraseña debe llevar letras y números';
+  }
+  //no escribe verificacion
+  if (!input.verifyPass) {
     errors.verifyPass = "**Escribe nuevamente la contraseña"
   }
-if(input.newPass !== input.verifyPass){
+  if (input.newPass !== input.verifyPass) {
     errors.verifyPass = "**Los campos no coinciden, favor escribir nuevamente"
-}
-//si no hay errores devuelve objeto vacio
+  }
+  //si no hay errores devuelve objeto vacio
   return errors;
 };
 
- function ResetPass(props) {
+function ResetPass(props) {
+
+  const usersData = useSelector(store => store);
+  
+
   const classes = useStyles();
   const history = useHistory()
 
@@ -83,8 +93,8 @@ if(input.newPass !== input.verifyPass){
     history.push("/");
     setModal(!modal);
   }
-   //estado errores
-   const [errors, setErrors] = useState({});
+  //estado errores
+  const [errors, setErrors] = useState({});
 
   const handleChange = e => {
     setInput({
@@ -97,23 +107,11 @@ if(input.newPass !== input.verifyPass){
     }));
   }
 
-//   const regUser = (e) => {
-//     e.preventDefault();
-//     props.singUp(input)
-//     history.push("/")
-//   }
-//get user
-useEffect(() => {
-  props.getUserById(props.id)
-}, [])
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-  history.push("/")
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
 
 const handleEdit = function (password) {
-  console.log(password)
   props.updatePassword(password);
 }
 
@@ -127,11 +125,11 @@ const handleEdit = function (password) {
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => handleSubmit(e)}>
-            
+
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-               
+
                   variant="outlined"
                   required
                   fullWidth
@@ -144,12 +142,12 @@ const handleEdit = function (password) {
                 />
               </Grid>
               {errors.newPass && (
-                    <p className={styles.danger}>{errors.newPass}</p>
-                  )}
-    
+                <p className={styles.danger}>{errors.newPass}</p>
+              )}
+
               <Grid item xs={12}>
                 <TextField
-               
+
                   variant="outlined"
                   required
                   fullWidth
@@ -162,49 +160,94 @@ const handleEdit = function (password) {
                 />
               </Grid>
               {errors.verifyPass && (
-                    <p className={styles.danger}>{errors.verifyPass}</p>
-                  )}
+                <p className={styles.danger}>{errors.verifyPass}</p>
+              )}
             </Grid>
-            
-            {errors.newPass || errors.verifyPass  ?  
-            
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled
+
+            {errors.newPass || errors.verifyPass ?
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled
               >
-              Cambiar Contraseña
-          </Button> 
-              :
-            <Button El boton de registro
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={() => handleEdit({id: props.id, newPassword: input.newPass})}
-              className={classes.submit}>
-              Cambiar Contraseña
-          </Button>}
-            
-          </form> 
+                Cambiar Contraseña
+          </Button>
+              : props.errors === true ?
+
+              <Container  className={props.className}>
+        
+        <div className={classes.paper}><strong>Hubo un error al intentar cambiar tu contraseña, porfavor comunícate con administración</strong></div>
+     
+              <div>
+                <div className={classes.row}>
+                <Link to="/"> 
+                <div className={styles.link}><strong>Volver a Inicio</strong></div></Link>
+                </div>
+              </div>
+              <br/>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled
+              >
+                Cambiar Contraseña
+          </Button>
+          </Container> 
+        : props.error === false ? 
+        <Container className={props.className}>
+        
+        <div className={classes.paper}><strong>Tu contraseña se ha cambiado!</strong></div>
+
+         <div className={classes.paper}>
+          <Link to="/" > 
+          <div className={styles.link}> <strong>Volver a Inicio </strong></div></Link>
+          </div>
+          <br/>
+          <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled
+              >
+                Cambiar Contraseña
+          </Button>
+      
+    </Container>
+    :
+    <Button 
+    type="submit"
+    fullWidth
+    variant="contained"
+    color="primary"
+    onClick={() => handleEdit({id: props.id, newPassword: input.newPass})}
+    className={classes.submit}>
+    Cambiar Contraseña
+</Button>
+     }
+
+          </form>
         </div>
         <Box mt={5}>
           <Copyright />
         </Box>
-        
+
       </Container>
     </Modal >
   );
 }
+
 function mapStateToProps(state) {
   return {
-    user: state.product.user
+    user: state.product.user,
+    error: state.product.error,
+    loading: state.product.loading
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    getUserById: (id) => dispatch(getUserById(id)),
     updatePassword: (id, payload) => dispatch(updatePassword(id, payload))
   }
 }

@@ -11,7 +11,7 @@ export default function OrderDetails (props) {
       <Fragment>
         <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>Volver</div>
         <div className={styles.primerDiv}>
-        <h2 className={"main-Footer " + styles.title}>Detalle de compra</h2>
+        <h2 className={styles.title}>Detalle de compra</h2>
         <OrderDetailsTable id={props.id} />
         </div>
       </Fragment>

@@ -30,7 +30,6 @@ export default function Catalogue() {
 
         if (history.location.search.length === 0) dispatch(getProducts())
         if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
-        // console.log("ENTRA")
     }, [history.location.search.length > 0])
 
     useEffect(() => {
@@ -52,7 +51,7 @@ export default function Catalogue() {
 
     return (
         <div className={styles.catalogue}>
-            <h1>Nuestro Catálogo</h1>
+            <h2 className={styles.titleH2}>Nuestro Catálogo</h2>
             <div className={styles.selectContainer}>
             <label for="prueba">Productos por Página</label>
                 <select  id="prueba" onChange={handleProductsPerPage}>
@@ -65,7 +64,7 @@ export default function Catalogue() {
                 </select>
 
             </div>
-            <div className={styles.contentcards}>
+            <div className={styles.contentCards}>
                 {productosPaginados && productosPaginados.map((infoProducto) => {
                     return <ProductCard key={infoProducto.id} data={infoProducto} />
                 })}

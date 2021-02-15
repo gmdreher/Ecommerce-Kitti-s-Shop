@@ -27,9 +27,14 @@ import {
     UPDATE_PROMOTE,
     POST_RESERT_PASSWORD,
     UPDATE_PASSWORD,
+    UPDATE_PASSWORD_SUCCESS,
+    UPDATE_PASSWORD_FAIL,
     FORGOT_PASSWORD,
+    FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_SUCCESS,
     GET_USER_BY_ID,
-    POST_USER_FAILED
+    POST_USER_FAILED,
+    
   
 } from '../constants/productConstants.js';
 
@@ -43,7 +48,10 @@ const initialState = {
     productsComplete: [],
     reviews: [],
     review: [],
-    signUpFailed:''
+    signUpFailed:'',
+    error :'',
+    loading:''
+    
 };
 
 export default (state = initialState, action) => {
@@ -173,15 +181,42 @@ export default (state = initialState, action) => {
             case UPDATE_PASSWORD:
             return { 
                 ...state,
+                loading: true,
+                error: false,
                 user: [...state.user, action.payload]
+            }
+            case UPDATE_PASSWORD_SUCCESS:
+            return { 
+                ...state,
+                loading:false,
+                error:false
+                
+            }
+            case UPDATE_PASSWORD_FAIL:
+            return { 
+                ...state,
+                loading:false,
+                error:true
             }
             case FORGOT_PASSWORD:
             return {
                 ...state,
+                loading:true,
+                error:false,
                 user: action.payload
-            };
-
-
+            }
+            case FORGOT_PASSWORD_FAIL:
+            return {
+                ...state, 
+                loading:false,
+                error:true
+            }
+            case FORGOT_PASSWORD_SUCCESS:
+            return {
+                ...state, 
+                loading:false,
+                error:false
+            }
 
             case GET_PRODUCTS_STATE_COMPLETE:
                 var estadito= {

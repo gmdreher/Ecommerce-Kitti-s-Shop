@@ -1,25 +1,21 @@
-
-  .list{
-    margin: 5%;
-  }
-
-  .infoUser{
-    margin: 5%;
-  }
-
-  .cardHistory{
-    margin-top: 3%;
+  .cardGestion{
     text-align: center;
   }
-  .row2{
+  .cardBody{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-content: space-between;
   }
 
-  .myOrders{
-    margin-top: 3%;
-    text-align: center;
-    background-color: transparent;
+  .linksGestiones{
+   padding: 1%;
   }
 
+  .buttonGestion{
+    border-radius: 10px;
+    border-color: #f5b453;
+    background-color: white;
+
+    &:hover {
+      background-color: #f5b453;
+    }
+  }

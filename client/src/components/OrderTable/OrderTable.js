@@ -37,10 +37,12 @@ function OrderTable (props) {
             <select  name="state" id="state" value={orderStates} onChange={filteredOrders}>
               <option value="">Todas</option>
               <option value="carrito">En carrito</option>
-              <option value="creada">Creadas</option>
+              <option value="creada">Creada</option>
               <option value="procesando">Procesando</option>
-              <option value="cancelada">Canceladas</option>
-              <option value="completa">Completas</option>
+              <option value="confirmada">Confirmada</option>
+              <option value="cancelada">Cancelada</option>
+              <option value="enviada">Enviada</option>
+              <option value="completa">Completa</option>
             </select>
           </div>
         </div>

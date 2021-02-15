@@ -8,51 +8,74 @@ export default function Footer(props) {
     return (
         <div className="main-Footer">
             <div className="contenedor-secciones">
-                <div className="content">
-                    <div className="categorias-footer">
-                        <h4 className="titulos-footer">CONTACTANOS</h4>
-                        <i className="fas fa-envelope desplegable"></i>
+                <div className="intro">
+                    <h4><strong>Sobre nosotras</strong></h4>
+                </div>
+            </div>
+            <div className="categorias-footer">
 
+                <div className="chicas">
+                    <div className="a">
+                        <a href="https://www.linkedin.com/feed/">
+                            <img src="https://ca.slack-edge.com/TPRS7H4PN-U01C2HV4TBQ-deaf1c922155-512"></img>
+                            <h4>Mara Bayurk</h4>
+                        </a>
                     </div>
-                    <ul>
-
-                        <li>Link de contacto 1</li>
-                        <li> Envíanos un mail</li>
-                        <li>Libro de sugerencias</li>
-                    </ul>
-
+                    <div className="b">
+                        <a href="https://www.linkedin.com/feed/"><i class="fab fa-linkedin"></i></a>
+                    </div>
                 </div>
 
-                <div className="content">
-                    <div className="categorias-footer">
-                        <h4>SOBRE NOSOTROS</h4>
-                        <i className="fas fa-shopping-bag desplegable"></i>
-
+                <div className="chicas">
+                    <div className="a">
+                        <a href="https://www.linkedin.com/feed/">
+                            <img src="https://ca.slack-edge.com/TPRS7H4PN-U013E9ADYR4-34b6d1dd8adb-512"></img>
+                            <h4>Gabriela Canela</h4>
+                        </a>
                     </div>
-                    <p>Grupo 7 del E-Commerce. Kitty's Shop. Tienda con artículos para gato</p>
+                    <div className="b">
+                        <a href="https://www.linkedin.com/feed/"><i class="fab fa-linkedin"></i></a>
+                    </div>
                 </div>
 
-                <div className="content">
-                    <div className="categorias-footer ayuda">
-                        <h4>AYUDA</h4>
-                        <i className="fas fa-hands-helping desplegable"></i>
-
+                <div className="chicas">
+                    <div className="a">
+                        <a href="https://www.linkedin.com/feed/">
+                            <img src="https://ca.slack-edge.com/TPRS7H4PN-U01C5VCP7BP-5a413de05bd6-512"></img>
+                            <h4>Angelismar Magallanes</h4>
+                        </a>
                     </div>
-                    <ul>
-                        <li>Preguntas frecuentes</li>
-                        <li> Hablar con nosotros</li>
-                        <li>Reclamos</li>
-                    </ul>
+                    <div className="b">
+                        <a href="https://www.linkedin.com/feed/"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div className="chicas">
+                    <div className="a">
+                        <a href="https://www.linkedin.com/feed/">
+                            <img src="https://ca.slack-edge.com/TPRS7H4PN-U01C9D79S9Z-b09dc6d64b32-512"></img>
+                            <h4>Paula Donoso</h4>
+                        </a>
+                    </div>
+                    <div className="b">
+                        <a href="https://www.linkedin.com/feed/"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div className="chicas">
+                    <div className="a">
+                        <a href="https://www.linkedin.com/feed/">
+                            <img src="https://ca.slack-edge.com/TPRS7H4PN-U01CMUMJ9Q9-5b9e75b4de8e-512"></img>
+                            <h4>Leonelvis Garcia</h4>
+                        </a>
+                    </div>
+                    <div className="b">
+                        <a href="https://www.linkedin.com/feed/"><i class="fab fa-linkedin"></i></a>
+                    </div>
                 </div>
 
             </div>
             <div className="contenedor-redes">
-                {/* <h4>REDES</h4> */}
-                <div className="contenedor-iconos">
-                    <i className="fab fa-instagram"></i>
-                    <i className="fab fa-twitter"></i>
-                    <i className="fab fa-whatsapp"></i>
-                </div>
                 <p>2021 KITTY'S SHOP Argentina. Todos los derechos reservados</p>
             </div>
         </div>
