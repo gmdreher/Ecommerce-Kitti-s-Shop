@@ -61,14 +61,11 @@ Review.belongsTo(Product);
 User.hasMany(Review);
 Review.belongsTo(User);
 
-User.hasMany(AdoptionApplication);
-AdoptionApplication.belongsTo(User);
-
 User.hasMany(CreateAdoption);
 CreateAdoption.belongsTo(User);
 
-AdoptionApplication.belongsToMany(CreateAdoption,{ through: ReviewApprovedAdoption });
-CreateAdoption.belongsToMany(AdoptionApplication,{ through: ReviewApprovedAdoption });
+CreateAdoption.hasMany(ReviewApprovedAdoption);
+ReviewApprovedAdoption.belongsTo(CreateAdoption);
 
 User.hasMany(ReviewApprovedAdoption);
 ReviewApprovedAdoption.belongsTo(User);

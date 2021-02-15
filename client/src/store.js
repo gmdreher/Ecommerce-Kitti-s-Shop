@@ -4,12 +4,14 @@ import rootReducer from './reducers/reducerProducts.js';
 import cartReducer from './reducers/reducerCart.js';
 import orderReducer from './reducers/reducerOrders';
 import authReducer from './reducers/reducerAuth'
+import adoptionReducer from './reducers/reducerAdoption'
 
 const reducer = combineReducers({
     product: rootReducer,
     cart: cartReducer,
     orderStore: orderReducer,
-    auth: authReducer
+    auth: authReducer,
+    adoption: adoptionReducer
 })
 
 //REDUX DETVOOLS en google, instalar thunk
