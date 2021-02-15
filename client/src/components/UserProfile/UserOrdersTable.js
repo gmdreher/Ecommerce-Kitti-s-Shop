@@ -34,7 +34,7 @@ function UserOrdersTable (props) {
                 <th scope="col">Estado</th>
                 <th scope="col">Monto</th>
                 <th scope="col">Fecha y hora</th>
-                <th scope="col">Dirección de envío</th>
+                {/*<th scope="col">Dirección de envío</th>*/}
               </tr>
               </thead>
               <tbody >
@@ -60,9 +60,9 @@ function UserOrdersTable (props) {
                       <td>
                         {formatDate(order.createdAt)}
                       </td>
-                      <td>
-                        {order.address}
-                      </td>
+                      {/*<td>*/}
+                      {/*  {order.address}*/}
+                      {/*</td>*/}
                     </tr>
                   )
                 })

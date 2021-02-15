@@ -18,8 +18,8 @@
     div{
         img{
             padding: 1%;
-            width: 10em;
-            height: 10em;
+            width: 8em;
+            height: 8em;
             align-self: center;
         }
 
@@ -35,7 +35,6 @@
     ul{
         li{
             border: none;
-            margin-bottom: 10px;
             font-size: small;
         }
     }
@@ -64,6 +63,12 @@
     }
 }
 
+.soldOut{
+    color: red;
+    font-size: small;
+    margin: auto;
+}
+
 @media screen and (min-width: 600px) {
     .card{
         background-color: white;
@@ -80,13 +85,12 @@
             transform : translateY(-15px);
             border: 1px solid rgb(233, 185, 83);
             border-color: rgb(248, 219, 157);
-            box-shadow: 0px 2px 2px 0px  rgb(248, 219, 157);
+            box-shadow: 0 2px 2px 0  rgb(248, 219, 157);
 
         }
         div{
             img{
-
-                padding: .8em;
+                padding: .5em;
                 width: 15em;
                 height: 15em;
                 align-self: center;
@@ -104,7 +108,7 @@
         ul{
             li{
                 border: none;
-                margin-bottom: 15px;
+                margin-bottom: 5px;
                 font-size: x-large;
             }
         }
@@ -132,5 +136,11 @@
                 }
             }
         }
+    }
+
+    .soldOut{
+        color: red;
+        font-size: large;
+        margin: auto;
     }
 }
