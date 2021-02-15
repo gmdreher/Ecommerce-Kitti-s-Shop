@@ -1,8 +1,8 @@
 import axios from "axios";
-import {ADD_DESCUENTO, GET_DESCUENTOS, EDIT_DESCUENTO, GET_DESCUENTOS_ACTIVE} from "../constants/productConstants"
+import {ADD_DISCOUNT, GET_DISCOUNT, EDIT_DISCOUNT, GET_DISCOUNT_ACTIVE} from "../constants/productConstants"
 
 
-export const addDescuento = (monto, porcentaje, duracion, estado) => async (dispatch, getState) => {
+export const addDiscount = (mount, percentage, days, isActive) => async (dispatch, getState) => {
 
     try {
         if(getState().auth.userInfo!==null){
@@ -18,10 +18,10 @@ export const addDescuento = (monto, porcentaje, duracion, estado) => async (disp
                 }
             )
           }
-        const descuento = await axios.post(`http://localhost:3001/auth/descuentogral`, {monto: monto, porcentaje:porcentaje, duracion:duracion, estado:estado});
+        const descuento = await axios.post(`http://localhost:3001/auth/discount`, {mount: mount, percentage:percentage, days:days, isActive:isActive});
 
         dispatch({
-            type: ADD_DESCUENTO,
+            type: ADD_DISCOUNT,
             payload: descuento.data
         });
 
@@ -30,10 +30,42 @@ export const addDescuento = (monto, porcentaje, duracion, estado) => async (disp
     }
 }
 
-export const getDescuentos = () => async (dispatch, getState) => {
+export const getDiscount = () => async (dispatch, getState) => {
 
     try {
         if(getState().auth.userInfo!==null){
+            
+            const accessToken = localStorage.getItem('data')
+          
+            axios.interceptors.request.use(
+                config =>{
+                    config.headers.authorization=`Bearer ${accessToken}`;
+                    return config;
+                },
+                error =>{
+                    return Promise.reject(error)
+                }
+            )
+          }
+        const descuentos = await axios.get(`http://localhost:3001/auth/discount`);
+
+  
+
+        dispatch({
+            type: GET_DISCOUNT,
+            payload: descuentos.data
+        });
+
+    } catch (error) {
+        console.log("Error: " + error)
+    }
+}
+
+
+export const getDiscountActive = () => async (dispatch, getState) => {
+
+    try {
+       /*  if(getState().auth.userInfo!==null){
             console.log("entraS")
             const accessToken = localStorage.getItem('data')
           
@@ -46,13 +78,13 @@ export const getDescuentos = () => async (dispatch, getState) => {
                     return Promise.reject(error)
                 }
             )
-          }
-        const descuentos = await axios.get(`http://localhost:3001/auth/descuentogral`);
+          } */
+        const descuentos = await axios.get(`http://localhost:3001/auth/discount/active`);
 
   
 
         dispatch({
-            type: GET_DESCUENTOS,
+            type: GET_DISCOUNT_ACTIVE,
             payload: descuentos.data
         });
 
@@ -62,41 +94,9 @@ export const getDescuentos = () => async (dispatch, getState) => {
 }
 
 
-export const getDescuentosActivos = () => async (dispatch, getState) => {
-
-    try {
-        if(getState().auth.userInfo!==null){
-            console.log("entraS")
-            const accessToken = localStorage.getItem('data')
-          
-            axios.interceptors.request.use(
-                config =>{
-                    config.headers.authorization=`Bearer ${accessToken}`;
-                    return config;
-                },
-                error =>{
-                    return Promise.reject(error)
-                }
-            )
-          }
-        const descuentos = await axios.get(`http://localhost:3001/auth/descuentogral/active`);
+export const editDiscount = (id, isActive) => async (dispatch, getState) => {
 
   
-
-        dispatch({
-            type: GET_DESCUENTOS_ACTIVE,
-            payload: descuentos.data
-        });
-
-    } catch (error) {
-        console.log("Error: " + error)
-    }
-}
-
-
-export const EditDescuentos = (id, estado) => async (dispatch, getState) => {
-
-    console.log("aqui", id,estado)
     try {
         if(getState().auth.userInfo!==null){
 
@@ -112,12 +112,12 @@ export const EditDescuentos = (id, estado) => async (dispatch, getState) => {
                 }
             )
           }
-        const descuentosedit = await axios.put(`http://localhost:3001/auth/descuentogral/${id}`, {estado:estado});
+        const descuentosedit = await axios.put(`http://localhost:3001/auth/discount/${id}`, {isActive: isActive});
 
        console.log(descuentosedit.data)
 
         dispatch({
-            type: EDIT_DESCUENTO,
+            type: EDIT_DISCOUNT,
             payload: descuentosedit.data
         });
 

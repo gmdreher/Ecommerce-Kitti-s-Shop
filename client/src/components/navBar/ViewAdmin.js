@@ -41,7 +41,7 @@ function ViewAdmin (props) {
             Perfiles
             <li><a className="dropdown-item" href="#"/></li>
           </Link>
-          <Link to={'/admin/descuento'} className="dropdown-item">
+          <Link to={'/admin/discount'} className="dropdown-item">
             Descuentos
             <li><a className="dropdown-item" href="#"/></li>
           </Link>

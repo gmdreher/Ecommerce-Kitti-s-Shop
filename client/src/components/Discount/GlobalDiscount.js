@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect, useDispatch, useSelector } from "react-redux";
 
-import styles from './descuentoGeneral.module.scss'
-import { addDescuento, EditDescuentos, getDescuentos } from '../../actions/descuentosActions';
-import { GET_DESCUENTOS } from '../../constants/productConstants';
+import styles from './globalDiscount.module.scss'
+import { addDiscount, editDiscount, getDiscount } from '../../actions/discountsActions';
 import Moment from 'moment';
 
 
-export default function DescuentoGeneral() {
+export default function GlobalDiscount() {
   
-  useEffect(()=>dispatch(getDescuentos()),[])
+  // useEffect(()=>dispatch(getDiscount()),[])
 
   const dispatch= useDispatch()
-  const descuentos = useSelector((store) => store.auth.descuentos);
+  const descuentos = useSelector((store) => store.auth.discounts);
   // ESTADOS
   const [input, setInput]= useState({
     monto: "",
@@ -35,8 +34,9 @@ const [dataDescuento, setDataDescuento]= useState()
   const toggle3 = () => setModal3(!modal3);
 
    useEffect(() => {
-    console.log("entra");
-    dispatch(getDescuentos())
+
+    dispatch(getDiscount())
+  
   }, [input])
 
   //funcion de estado inputs
@@ -54,16 +54,16 @@ const [dataDescuento, setDataDescuento]= useState()
 // add descuento
   const handleAdd = async (data)=> {
 console.log("entra al handle add", data)
-   await dispatch(addDescuento(data.monto, data.porcentaje, data.duracion, data.estado))
-   await dispatch(getDescuentos())
+   await dispatch(addDiscount(data.monto, data.porcentaje, data.duracion, data.estado))
+   await dispatch(getDiscount())
     
     toggle();
   }
 
   const handleEdit = async (id, estado)=> {
       console.log(id,estado)
-      await dispatch(EditDescuentos(id,estado))
-      await dispatch(getDescuentos())
+      await dispatch(editDiscount(id,estado))
+      await dispatch(getDiscount())
  }
 
   function formatDate(date) {
@@ -94,12 +94,12 @@ console.log("entra al handle add", data)
             <tr key={descuento.id}>
       
               <td>{descuento.id}</td>
-              <td>{descuento.monto}</td>
-              <td>{descuento.porcentaje}</td>
+              <td>{descuento.mount}</td>
+              <td>{descuento.percentage}</td>
               <td>{formatDate(descuento.createdAt)}</td>
-              <td>{descuento.duracion}</td>
+              <td>{descuento.days}</td>
               <td>
-                  <input checked={descuento.estado ===true?true:false} onChange={(e)=>handleEdit(descuento.id ,e.target.checked )} class="form-check-input" type="checkbox" value={descuento.estado} id="flexCheckIndeterminate"/>
+                  <input checked={descuento.isActive ===true?true:false} onChange={(e)=>handleEdit(descuento.id ,e.target.checked )} class="form-check-input" type="checkbox" value={descuento.estado} id="flexCheckIndeterminate"/>
               </td>
         
             </tr>

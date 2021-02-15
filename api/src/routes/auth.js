@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User, DescuentoGeneral } = require('../db.js');
+const { User, GlobalDiscount } = require('../db.js');
 const server = require('express').Router();
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
@@ -207,27 +207,27 @@ server.post('/facebook/callback',
   
 //rutas para descuentos *******************************************************************
 
-  server.post("/descuentogral", protected.isAuthAdmin ,(req, res) => {
-    let { monto,porcentaje, duracion, estado}=req.body
+  server.post("/discount", protected.isAuthAdmin ,(req, res) => {
+    let { mount,percentage, days, isActive}=req.body
 
-    DescuentoGeneral
-    .create({monto ,porcentaje, duracion, estado})
-    .then((descuento)=>res.send(descuento))
+    GlobalDiscount
+    .create({mount ,percentage, days, isActive})
+    .then((discount)=>res.send(discount))
 
 })
 
-server.get("/descuentogral",protected.isAuthAdmin, (req, res) => {
-    DescuentoGeneral
+server.get("/discount",protected.isAuthAdmin, (req, res) => {
+  GlobalDiscount
     .findAll({order: [
         ['id', 'DESC']]})
     .then((e)=>res.send(e))
 
 })
 
-server.get("/descuentogral/active",protected.isAuth, (req, res) => {
-  DescuentoGeneral
+server.get("/discount/active", (req, res) => {
+  GlobalDiscount
   .findAll({where:{
-    estado:true
+    isActive:true
   },
   order: [
     ['id', 'DESC']]
@@ -236,27 +236,27 @@ server.get("/descuentogral/active",protected.isAuth, (req, res) => {
 
 })
 
-server.delete("/descuentogral/:id",protected.isAuthAdmin, (req, res) => {
+server.delete("/discount/:id",protected.isAuthAdmin, (req, res) => {
 
-  DescuentoGeneral.destroy({
+  GlobalDiscount.destroy({
     where:{
       id: req.params.id
     }
-  }).then((eliminado)=>{
-    res.status(200).json("se elimino correctamente " + eliminado)
+  }).then((deleted)=>{
+    res.status(200).json("se elimino correctamente " + deleted)
   }).catch((err)=>{
     res.status(400).json("no se pudo borrar el descuento" + err)
   })
 })
 
-server.put("/descuentogral/:id",protected.isAuthAdmin, (req, res) => {
-let estado= req.body.estado
+server.put("/discount/:id",protected.isAuthAdmin, (req, res) => {
+let isActive= req.body.isActive
 let id= req.params.id
 
- DescuentoGeneral.findByPk(id)
- .then((descuento=>{
-   return descuento.update({
-     estado: estado
+GlobalDiscount.findByPk(id)
+ .then((discount=>{
+   return discount.update({
+    isActive: isActive
    })
   })
  )

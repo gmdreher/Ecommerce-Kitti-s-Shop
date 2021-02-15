@@ -1,4 +1,4 @@
-import {EDIT_DESCUENTO ,GET_DESCUENTOS_ACTIVE,ADD_DESCUENTO, GET_DESCUENTOS, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS} from '../constants/productConstants.js';
+import {EDIT_DISCOUNT ,GET_DISCOUNT_ACTIVE,ADD_DISCOUNT, GET_DISCOUNT, LOGIN_USER, LOGOUT_USER, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS} from '../constants/productConstants.js';
 import decode from "jwt-decode";
 
 
@@ -9,9 +9,9 @@ const initialState = {
   isAuthenticated: localStorage.getItem("data")?true:false,
   loginFailed: false,
 
-  descuentos: [],
-  descuentoEditado:{},
-  descuentosAgregados:{}
+  discounts: [],
+  discountEdit:{},
+  discountAdd:{}
 };
 
 export default (state = initialState, action) => {
@@ -41,27 +41,26 @@ export default (state = initialState, action) => {
     case LOGOUT_USER:
       return { isAuthenticated:false}
 
-      case GET_DESCUENTOS:
+      case GET_DISCOUNT:
       return { 
         ...state,
-        descuentos: action.payload
+        discounts: action.payload
       }
 
-      case GET_DESCUENTOS_ACTIVE:
+      case GET_DISCOUNT_ACTIVE:
       return { 
         ...state,
-        descuentos: action.payload
+        discounts: action.payload
       }
-      case ADD_DESCUENTO:
+      case ADD_DISCOUNT:
         return { 
           ...state,
-          descuentosAgregados: action.payload
+          discountAdd: action.payload
         }
-      case EDIT_DESCUENTO:
-        console.log(action.payload)
+      case EDIT_DISCOUNT:
         return { 
           ...state,
-          descuentosEditado: action.payload
+          discountEdit: action.payload
         }
   
 

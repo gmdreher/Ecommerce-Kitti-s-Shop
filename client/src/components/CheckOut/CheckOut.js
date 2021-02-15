@@ -5,7 +5,7 @@ import style from "./checkOut.module.scss"
 import ML from "../../img/ML.jpeg"
 import { meliPost, updateStateOrder, addressOrder, getUserOrder } from '../../actions/orderActions';
 import { useHistory } from 'react-router';
-import { getDescuentosActivos } from '../../actions/descuentosActions';
+import { getDiscountActive } from '../../actions/discountsActions';
 
 export default function CheckOut() {
     const history= useHistory()
@@ -18,7 +18,7 @@ export default function CheckOut() {
     const state= useSelector((store)=> store.orderStore.order.state)
     const orderId= useSelector((store)=> store.orderStore.order.id)
     const order= useSelector((store)=> store.orderStore.order)
-    const descuentos= useSelector((store)=> store.auth.descuentos)
+    const descuentos= useSelector((store)=> store.auth.discounts)
 
     //const datos = order.products;
 
@@ -96,7 +96,7 @@ const [errorContact, setErrorContact] = useState({});
     
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
-        dispatch(getDescuentosActivos());
+        dispatch(getDiscountActive());
     }, [])
 
     useEffect(()=>{
@@ -168,22 +168,23 @@ const [errorContact, setErrorContact] = useState({});
         console.log(descuentos);
         if(descuentos.length < 1) return 
         let sum = sumaTotal()
-        let filtro =descuentos.filter((e)=>e.monto <= sum)
+        let filtro =descuentos.filter((e)=>e.mount <= sum)
         console.log("entra?", filtro,sum)
         if (filtro.length<1) return 
+
         let mayor = filtro.sort((a, b)=> {
-            if (a.numero < b.numero) {
+            if (a.mount < b.mount) {
                 return 1;
             }
-            if (a.numero > b.numero) {
+            if (a.mount > b.mount) {
                 return -1;
             }
             // a must be equal to b
             return 0;
         })[0]
-        console.log(sum,mayor.porcentaje)
-        setPorcen(mayor.porcentaje)
-        setDescuento((mayor.porcentaje*sum)/100)
+        console.log(sum,mayor.percentage)
+        setPorcen(mayor.percentage)
+        setDescuento((mayor.percentage*sum)/100)
         
     },[descuentos, cartProduct])
 
@@ -303,7 +304,7 @@ return (
                         <br />
                         <div className={style.total}>
                             {
-                                cartProduct && cartProduct.map((producto) => {
+                                cartProduct.length>0  && cartProduct.map((producto) => {
                                
                                     return (
                                         <div className={style.productTotal}>

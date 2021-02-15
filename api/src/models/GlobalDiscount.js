@@ -2,20 +2,20 @@ const { DataTypes } = require('sequelize');
 //carrito/orden
 
 module.exports = (sequelize) => {
-  const DescuentoGeneral = sequelize.define('DescuentoGeneral', {
-  monto: {
+  const GlobalDiscount = sequelize.define('GlobalDiscount', {
+  mount: {
       type: DataTypes.INTEGER,
       allowNull: false,
   },
-  porcentaje:{
+  percentage:{
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  duracion:{
+  days:{
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  estado:{
+  isActive:{
     type: DataTypes.BOOLEAN,
     allowNull: false
   }
