@@ -12,7 +12,7 @@ class UserProfile extends React.Component {
   render() {
     
     return (
-      <div className={'container ' + styles.globalContainer}>
+      <div className={'container ' + styles.userCard}>
         <div className="row">
           <div className="col-6">
             <div className="card">
