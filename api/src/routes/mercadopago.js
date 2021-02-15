@@ -22,9 +22,17 @@ mercadopago.configure({
 server.post("/" , (req, res)=>{
     const { carrito, orderId } = req.body
 
-    console.log("este es carrito ", carrito)
+    // console.log("este es el descuneto", carrito[0].porcentaje)
+    // console.log("este es carrito ", carrito)
 
-    // console.log("este es orderId ", orderId)
+    Order.findByPk(orderId)
+    .then((order)=>{
+        order.update({
+            discount: carrito[0].porcentaje
+        })
+        console.log("esto es order", order)
+    })
+    .then(()=>{
 
     const order_id= orderId;
    
@@ -36,7 +44,7 @@ server.post("/" , (req, res)=>{
         quantity: i.quantity,
     }))
 
-console.log("este es items_ml",items_ml)
+    // console.log("este es items_ml",items_ml)
     
     // Crea un objeto de preferencia
     let preference = {
@@ -59,7 +67,8 @@ console.log("este es items_ml",items_ml)
     };
        
 
-      mercadopago.preferences.create(preference)
+     return mercadopago.preferences.create(preference)
+    })
     .then(function(response){
 
         // console.log(response)
@@ -76,7 +85,7 @@ console.log("este es items_ml",items_ml)
 server.get("/response", async (req, res)=>{
     
     const { body } = await mercadopago.payment.get(req.query.collection_id)
-    console.log("EN body ",body)
+    // console.log("EN body ",body)
 
     const payment_status= body.status
     const external_reference = body.external_reference
@@ -98,7 +107,7 @@ server.get("/response", async (req, res)=>{
             order.state = "confirmada"
             let emailUser = order.user.dataValues.email
             let address= order.dataValues.address
-            console.log("esto es adress ", address)
+            // console.log("esto es adress ", address)
             order.save()
             .then((_) => {
     
@@ -122,14 +131,13 @@ server.get("/response", async (req, res)=>{
                     if(error){(res.status(500).send("no se pudo enviar" + error)) }
                     else {
                     res.status(200).send("Mail enviado" + info)
-                    }
-                })
-                })
-
-                res.redirect("http://localhost:3000/mercadopago/success")
-
-                .then(() => {
-                res.status(200).json("Mail enviado")
+                }
+            })
+        })
+        
+        
+        .then(() => {
+            res.status(200).redirect("http://localhost:3000/mercadopago/success")
                 })
                 .catch(error => {
                 res.status(400).send(`Error ${error}`);

@@ -216,7 +216,7 @@ server.post('/facebook/callback',
 
 })
 
-server.get("/descuentogral",protected.isAuth, (req, res) => {
+server.get("/descuentogral",protected.isAuthAdmin, (req, res) => {
     DescuentoGeneral
     .findAll({order: [
         ['id', 'DESC']]})

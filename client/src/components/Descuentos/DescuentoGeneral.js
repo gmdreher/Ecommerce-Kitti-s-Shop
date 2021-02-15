@@ -34,11 +34,11 @@ const [dataDescuento, setDataDescuento]= useState()
   const [modal3, setModal3] = useState(false);
   const toggle3 = () => setModal3(!modal3);
 
-  /* useEffect(() => {
+   useEffect(() => {
     console.log("entra");
     dispatch(getDescuentos())
-  }, [input]) */
- 
+  }, [input])
+
   //funcion de estado inputs
   const handleInputChange = function (e) {
     setInput({
@@ -152,47 +152,6 @@ console.log("entra al handle add", data)
         </Modal>
       </div>
 
-
-      {/* -----------------MODAL PUT------------------- */}
-{/* 
-      <div>
-        <Modal isOpen={modal2} toggle={toggle2} >
-          <Form onSubmit={handleSubmit}>
-            <ModalHeader toggle={toggle2}>Modificar Categoría</ModalHeader>
-            <ModalBody>
-
-
-              <FormGroup>
-                <Label for="name">Nombre</Label>
-                <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
-             
-              
-              </FormGroup>
-
-            </ModalBody>
-            <ModalFooter>
-         <button className={styles.buttonForm} type="submit" onClick={}>Modificar Categoría</button>
-              <button className={styles.buttonForm} onClick={toggle2}>Salir</button>
-            </ModalFooter>
-          </Form>
-        </Modal>
-      </div> */}
-
-
-
-      {/* ----------------MODAL DELETE------------------- */}
-      {/* <div>
-        <Modal isOpen={modal3} toggle={toggle3} className={props.className}>
-          <Form onSubmit={handleSubmit}>
-            <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
-
-            <ModalFooter>
-              <button className={styles.buttonForm}  type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
-              <button className={styles.buttonForm} onClick={toggle3}>No</button>
-            </ModalFooter>
-          </Form>
-        </Modal>
-      </div> */}
     </Container>
   );
 
