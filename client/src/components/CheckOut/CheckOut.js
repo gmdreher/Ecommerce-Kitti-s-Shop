@@ -111,7 +111,8 @@ const [errorContact, setErrorContact] = useState({});
     useEffect(()=>{
        if( order.products && order.products.length>0 ){
        let arr= order.products.map(product => {
-           return { name: product.name, price: product.price, quantity: product.OrderDetails.quantity, porcentaje:porcen}
+           
+           return { name: product.name, price: product.price, quantity: product.OrderDetails.quantity, porcentaje:porcen? porcen : 0}
         })
         setCarrito(arr)
     }

@@ -32,7 +32,7 @@ server.post("/" , (req, res)=>{
     const items_ml = carrito && carrito.map(i => (
         {
         title: i.name,
-        unit_price:( i.price - ((i.porcentaje * parseInt(i.price)) /100)) ,
+        unit_price: i.porcentaje !=0 ? ( i.price - ((i.porcentaje * parseInt(i.price)) /100)) : parseInt(i.price) ,
         quantity: i.quantity,
     }))
 
