@@ -11,9 +11,19 @@
 
 .prueba{
   position:relative!important;
-  h1{
+  .contentDiscount{
+
     position: absolute!important;
     bottom: 2rem;
     left: 2rem;
+    border: 1px solid rgb(233, 185, 83);
+    box-shadow: 0 2px 2px 0 rgb(175, 128, 56);
+    border-radius: 5%;
+    background-color: #f5b453;
+    padding: 0.7rem;
+
+    h1 h3{
+    }
+
   }
 }
