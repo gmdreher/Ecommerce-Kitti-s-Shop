@@ -9,8 +9,7 @@ import Moment from 'moment';
 
 export default function GlobalDiscount() {
   
-  // useEffect(()=>dispatch(getDiscount()),[])
-
+  
   const dispatch= useDispatch()
   const descuentos = useSelector((store) => store.auth.discounts);
   // ESTADOS
@@ -19,26 +18,29 @@ export default function GlobalDiscount() {
     porcentaje: "",
     duracion: "",
     estado: ""
-})
-
-const [dataDescuento, setDataDescuento]= useState()
-//nuevo descuento
+  })
+  
+  const [dataDescuento, setDataDescuento]= useState()
+  //nuevo descuento
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-
+  
   const [modal2, setModal2] = useState(false);
   const toggle2 = () => setModal2(!modal2);
-
+  
   //borrar descuento
   const [modal3, setModal3] = useState(false);
   const toggle3 = () => setModal3(!modal3);
-
-   useEffect(() => {
-
-    dispatch(getDiscount())
   
-  }, [input])
+  useEffect(()=>{dispatch(getDiscount())},[])
 
+
+  // useEffect(() => {
+    
+  //   dispatch(getDiscount())
+    
+  // }, [input])
+  
   //funcion de estado inputs
   const handleInputChange = function (e) {
     setInput({
