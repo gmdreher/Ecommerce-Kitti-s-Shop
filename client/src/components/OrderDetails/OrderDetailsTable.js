@@ -76,19 +76,19 @@ class OrderDetailsTable extends React.Component {
           <table className="table-responsive-m">
             <tbody>
             <tr>
-              <th scope="row">Fecha:</th>
+              <th className={styles.letterLeft} scope="row">Fecha:</th>
               <td className={styles.letterhead}>{this.formatDate(createdAt)}</td>
             </tr>
             {
               this.props.userInfo.rol === 'admin' ?
                 <tr>
-                <th scope="row">Id de Usuario:</th>
+                <th className={styles.letterLeft} scope="row">Id de Usuario:</th>
                 <td className={styles.letterhead}>{userId}</td>
               </tr> : ''
             }
             
             <tr>
-              <th scope="row" className='mr-3'>Estado de la orden:</th>
+              <th scope="row" className={'mr-3 ' + styles.letterLeft}>Estado de la orden:</th>
               <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
                 {
                   this.props.userInfo.rol === 'admin' ?
@@ -96,7 +96,7 @@ class OrderDetailsTable extends React.Component {
                   {this.state.editing? (
                     <form onSubmit={this.handleSubmit}>
                       <div className="row">
-                        <div className="col-9">
+                        <div className="col-7 col-sm-6">
                           <label className={styles.inlineLabel}>Elige un estado</label>
                           <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
                             <option value="carrito">En carrito</option>
@@ -108,8 +108,12 @@ class OrderDetailsTable extends React.Component {
                             <option value="completa">Completa</option>
                           </select>
                         </div>
-                        <div className="col-3">
-                          <input className={styles.btnExtraSmall + " btn btn-info btn-sm"} type="submit" value="Aceptar"/>
+                        <div className ={"col-5  col-sm-6 pl-sm-0 " + styles.aceptar}>
+                          <input
+                            className={styles.btnExtraSmall + " btn btn-sm"}
+                            type="submit"
+                            value="Aceptar"
+                          />
                         </div>
                       </div>
                     </form>
@@ -120,15 +124,15 @@ class OrderDetailsTable extends React.Component {
               </td>
             </tr>
             <tr>
-              <th scope="row" >Numero de orden:</th>
+              <th className={styles.letterLeft} scope="row" >Numero de orden:</th>
               <td className={styles.letterhead}>{id}</td>
             </tr>
             <tr>
-              <th scope="row" >Dirección de envío:</th>
+              <th className={styles.letterLeft} scope="row" >Dirección de envío:</th>
               <td className={styles.letterhead}>{address}</td>
             </tr>
             <tr>
-              <th>Productos:</th>
+              <th className={styles.letterLeft}>Productos:</th>
               <th> </th>
             </tr>
             </tbody>
@@ -141,30 +145,30 @@ class OrderDetailsTable extends React.Component {
               let subTot = product.price * quantity;
               priceOrder.push(subTot);
           
-              return <div className={styles.divProducts1} >
+              return <div className={"mb-1 " + styles.divProducts1} >
                 <div className={styles.image}>
                   <img className={styles.imgResponsive} src={product.images ? product.images[0].url : ''} alt="Cargando imagen..." />
                 </div>
                 <div className={styles.quantity}>
-                  <h5>{quantity}</h5>
+                  <span className={styles.fontSize}>{quantity}</span>
                 </div>
                 <div className={styles.name}>
-                  <h5 className="ml-3"><Link to={`/products?search=${product.name}`}>{product.name}</Link></h5>
-                </div>
-                <div className={styles.quantity}>
-                  <h5>${product.price} </h5>
+                  <span className={"ml-3 " + styles.fontSize}><Link to={`/products?search=${product.name}`}>{product.name}</Link></span>
                 </div>
                 <div className={styles.price}>
-                  <h6>${product.price * quantity}</h6>
+                  <span className={styles.fontSize}>${product.price} </span>
+                </div>
+                <div className={styles.price}>
+                  <span className={styles.fontSize}>${product.price * quantity}</span>
                 </div>
               </div>
             })
           }
         <div className={styles.ctnTotal}>
           <div className={styles.totalTable}>
-            <h5 className="grupo">Total a pagar: </h5>
+            <span className="grupo">Total a pagar: </span>
             <div className="grupo">
-              <h4 className='ml-3'>${getPriceOrder()}</h4>
+              <span className={'ml-3 ' + styles.fontSizeTotal}>${getPriceOrder()}</span>
             </div>
           </div>
         </div>
