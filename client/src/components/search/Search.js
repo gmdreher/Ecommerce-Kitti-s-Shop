@@ -24,7 +24,7 @@ export default function Search() {
     }
 
     return (
-      <div className="col">
+      <div className="col ">
           <div className={'' + style.searchBar} >
               <form className={"d-flex " + style.formSearch}  onSubmit={handleSubmit}>
                   <input onChange={handleChange} className={"form-control me-2 " + style.inputSearch}

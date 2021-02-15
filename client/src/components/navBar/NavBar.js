@@ -20,7 +20,9 @@ function NavBar(props) {
                 <img className={styles.logo} src={logo}  alt=''/>
               </Link>
             </div>
-            
+            <div className={'' + ''}>
+              <Search />
+            </div>
             <div className='d-flex d-sm-none'>
               {
                 !props.userInfo ?
@@ -56,9 +58,7 @@ function NavBar(props) {
                 </li>
               </ul>
             </div>
-            <div className={'' + ''}>
-              <Search />
-            </div>
+            
 
           </div>
         </nav>

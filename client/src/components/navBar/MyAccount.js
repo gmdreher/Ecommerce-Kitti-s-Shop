@@ -29,10 +29,10 @@ function MyAccount (props) {
           {props.userInfo.fullname.split(" ")[0]}
         </span>
         </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
           <li>
             <Link to="/users/me" className="dropdown-item">
-              Mi cuenta
+              Mi cuenta asd asd asd asdasdasdasds
             </Link>
           </li>
           <li>

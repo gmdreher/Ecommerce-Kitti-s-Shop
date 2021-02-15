@@ -25,7 +25,7 @@ function ViewAdmin (props) {
         <i className="fas fa-bars"/>
       </button>
       <ul
-        className="dropdown-menu"
+        className={"dropdown-menu " + styles.dropdownList}
         aria-labelledby="dropdownMenuButton">
         <Link to={'/admin/products'} className="dropdown-item">
           Productos
