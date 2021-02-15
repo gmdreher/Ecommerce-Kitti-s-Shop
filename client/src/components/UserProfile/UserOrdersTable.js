@@ -1,27 +1,31 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React, {Fragment, useEffect} from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import {connect} from "react-redux";
-import styles from "./userOrdersTable.module.scss"
+import styles from "../OrderTable/orderTable.module.scss"
 import { getOrdersUser } from "../../actions/orderActions";
 import Moment from "moment";
 
 
 
-class UserOrdersTable extends React.Component {
+function UserOrdersTable (props) {
   
-  componentDidMount() {
-    this.props.getOrdersUser(this.props.id)
-  }
   
-  formatDate(date) {
+  const history = useHistory();
+  
+   useEffect(() =>{
+      props.getOrdersUser(props.userInfo.id)
+   }, [])
+  
+  const formatDate = (date) => {
     let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
-  render() {
+  
     return (
       <Fragment>
-        <h3 className={styles.titleOrderUser}>Historial de Compras</h3>
-        <div className={styles.contenTable}>
+        <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>Volver</div>
+        <h3 className={styles.title}>Historial de Compras</h3>
+        <div className={styles.cont}>
           <div className="table-responsive" >
             <table className={"table table-sm " + styles.table} >
               <thead>
@@ -30,11 +34,12 @@ class UserOrdersTable extends React.Component {
                 <th scope="col">Estado</th>
                 <th scope="col">Monto</th>
                 <th scope="col">Fecha y hora</th>
+                <th scope="col">Dirección de envío</th>
               </tr>
               </thead>
               <tbody >
               {
-                this.props.ordersUser && this.props.ordersUser.map(order => {
+                props.ordersUser && props.ordersUser.map(order => {
                   let total = 0;
                   order.products.map(product => {
                     total = total + product.price * product.OrderDetails.quantity;
@@ -46,10 +51,18 @@ class UserOrdersTable extends React.Component {
                           {order.id}
                         </Link>
                       </td>
-                      <td>{order.state}
+                      <td>
+                        {order.state}
                       </td>
-                      <td>${total.toFixed(2)}</td>
-                      <td>{this.formatDate(order.createdAt)}</td>
+                      <td>
+                        ${total.toFixed(2)}
+                      </td>
+                      <td>
+                        {formatDate(order.createdAt)}
+                      </td>
+                      <td>
+                        {order.address}
+                      </td>
                     </tr>
                   )
                 })
@@ -60,14 +73,14 @@ class UserOrdersTable extends React.Component {
         </div>
       </Fragment>
     )
-  }
-  
 }
 
 
 function mapStateToProps(state) {
+  console.log("el estado con la orde", state.orderStore.ordersUser)
   return {
     ordersUser: state.orderStore.ordersUser,
+    userInfo: state.auth.userInfo,
   }
 }
 

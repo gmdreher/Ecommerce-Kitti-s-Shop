@@ -3,11 +3,14 @@ import './ViewOrder.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsCart, deleteTotalCart, removeFromCartLS, editQuantity, deleteItem } from '../../actions/cartAction.js';
 import PayCart from '../PayCart/PayCart.jsx';
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+
 
 
 export default function ViewOrder(props) {
     const dispatch = useDispatch();
-
+    const  MySwal  =  withReactContent (Swal);
 
     const user = useSelector(store => store.auth.userInfo);
 
@@ -37,14 +40,37 @@ export default function ViewOrder(props) {
         if (cartProduct.length >= 0 && cartProduct[0] !== undefined) {
             var idOrder = cartProduct[0].orderId;
             var idUser = user.id;
-            if (window.confirm(`Va a borrar la orden: ${idOrder} del usuario de id: ${idUser}. Desea continuar?`)) {
-                dispatch(deleteTotalCart({ userId: idUser, orderId: idOrder }))
-            } else {
-                window.alert('NO SE HA BORRADO')
-            }
-
+    
+            MySwal.fire({
+                title: '¿Estas seguro?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1B9528',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, borrar!',
+                customClass:{
+                    title: "alertTitle",
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(deleteTotalCart({ userId: idUser, orderId: idOrder }))
+                    MySwal.fire(
+                      'Borrado!',
+                    )
+                }
+            })
         } else {
-            window.alert('NO HAY ELEMENTOS PARA BORRAR')
+            MySwal.fire({
+                position: 'top-center',
+                icon: 'info',
+                width: "24rem",
+                title: 'No hay elementos para borrar',
+                showConfirmButton: false,
+                timer: 1000,
+                customClass:{
+                    title: "alertTitle"
+                }
+            }).then(r =>{} )
         }
     }
     function deleteLS() {

@@ -1,51 +1,80 @@
-.navBar{
-    display: grid;
-    grid-template-columns: auto 30em 5em 10em; //modifique provisionalmente
-    align-items: center;
-    div{
-        display: flex;
-        align-items: center;
-        margin-left: 10%;
 
-        img{
-            height: 120px;
-            margin-left: 5%;
-        }
+.navbarSearch {
+    width: 50% !important;
+}
+.navBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+.containerLogo{
+    display: flex;
+    margin: auto !important;
+    padding: 0;
+}
+.logo{
+    height: 4rem;
+    margin: auto;
+}
+.navItem {
+    margin-left: auto;
+}
+
+.navButtons {
+    width: auto;
+}
+
+@media screen and (min-width: 600px) {
+
+    .navBar {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
 
     }
-    label, button{
+    .navButtons {
+        flex-grow: 0 !important;
+    }
+    .containerLogo {
+        display: flex;
+        align-items: center;
+        margin-left: 0% !important;
+
+    }
+    //Cart
+    .ctnCart {
         background-color: #ffffff;
         display: flex;
         align-items: center;
-        border: none;
         border-radius: 9999px;
-        height: 46px;
+        height: 3rem;
         padding: 0 1em;
         width: fit-content;
         border: 1px solid #bdbdbd;
+        margin-right: 4%;
+    }
 
-        .carrito{
-            font-size: 25px;
-            margin: 10px;
-        }
+    .cart {
+        display: flex;
+        align-items: center;
+        border: none;
+        background-color: white;
     }
 
 
+    .logo {
+        height: 7.5rem;
+        margin-left: 5%;
+    }
+    .navbarSearch {
+        width: 100% !important;
+    }
+    .smallCart {
+        display: none;
+    }
 }
-.carritoCont{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left:0;
-    margin-top:0;
-    margin-right: 0;
-    background-color:rgb(247, 244, 244);
-    margin: 2rem;
-
-}
-
-.navBar button :hover {
-    color: orange;
-
-}
-

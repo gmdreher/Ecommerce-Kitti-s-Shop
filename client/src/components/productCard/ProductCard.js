@@ -6,9 +6,8 @@ import noImage from '../../img/noImage.jpg';
 import { addProductCart } from '../../actions/cartAction.js';
 
 
-export default function ProductCard({ data }) {
 
-    // console.log("Informacion que viene desde Catalogo", data);
+export default function ProductCard({ data }) {
 
     const dispatch = useDispatch();
     const user = useSelector(store => store.auth.userInfo)
@@ -19,6 +18,7 @@ export default function ProductCard({ data }) {
     function handleClick (data){
         let index = prodCart.indexOf(data.id)
         dispatch(addProductCart(user ? { userId:user.id, productId: data.id, price: data.price, quantity:1}:{productId: data.id, price: data.price, quantity:1}));
+    
     };
     
 
@@ -28,26 +28,22 @@ export default function ProductCard({ data }) {
                 {data.images ? (
                     <img src={data.images[0].url} class="card-img-top"  alt="No se encontró la imagen"/>)
                     :
-                    (<img src={noImage} />)
+                    (<img src={noImage}  alt="Imagen no encontrada"/>)
                 }
             </div>
             <div class={styles.cardbody}>
-                <h3><strong>{data.name}</strong></h3>
+              <p className={styles.nameProduct}><strong>{data.name}</strong></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Precio:</strong> {'$ ' + data.price}</li>
-
+              <li class="list-group-item"><strong>Precio:</strong> {'$ ' + data.price}</li>
             </ul>
             <div class="card-body">
-              
-                    <button disabled={data.stock<1}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"></i></button>
-                    <label id="stock"></label>
-                     {data.stock<1?<label >Producto Agotado</label>:<label></label>}
-    
-                {/* <a href="#" class="card-link " onClick={() => alert('Carrito')}>Añadir al Carrito</a> */}
-                <Link to={`/products/detalle/${data.id}`}>
-                    <button ><i class="fas fa-plus"></i></button>
-                </Link>
+              <button disabled={data.stock<1}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"/></button>
+              <label id="stock"/>
+               {data.stock<1 ? <label >Producto Agotado</label> : <label/>}
+              <Link to={`/products/detalle/${data.id}`}>
+                <button ><i class="fas fa-plus"/></button>
+              </Link>
             </div>
         </div>
     )

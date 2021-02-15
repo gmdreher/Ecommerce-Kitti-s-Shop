@@ -11,8 +11,7 @@ export default function UserTable() {
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-
-    console.log("LOS PERFILES ", usersData);
+    
 
     const [input, setInput] = useState();
 

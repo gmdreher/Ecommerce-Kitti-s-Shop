@@ -2,20 +2,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    h2{
-        margin: 1em;
-        // font-family: Arial, Helvetica, sans-serif;
+    .titleH2{
+        margin-top: 2%;
         font-family: 'Lato', sans-serif;
+        background-color: white;
 
     }
-    .contentcards{
-       
+    .contentCards{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         width: 90%;
-        margin: 10px;
+        margin: 2%;
     }
 
-    
+
+}
+
+@media screen and (min-width: 600px) {
+    .catalogue{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .titleH2{
+            margin: 1em;
+            font-family: 'Lato', sans-serif;
+            background-color: white;
+
+        }
+        .contentCards{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 90%;
+            margin: 2%;
+        }
+
+
+    }
 }
