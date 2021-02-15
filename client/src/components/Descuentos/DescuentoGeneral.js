@@ -1,77 +1,199 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
+import { connect, useDispatch, useSelector } from "react-redux";
 
+import styles from './descuentoGeneral.module.scss'
+import { addDescuento, EditDescuentos, getDescuentos } from '../../actions/descuentosActions';
+import { GET_DESCUENTOS } from '../../constants/productConstants';
+import Moment from 'moment';
 
 
 export default function DescuentoGeneral() {
-
-
-    const [input, setInput]= useState({
-        monto: "",
-        porcentaje: ""
-    })
-
-    const handleInputChange = function (e) {
-        setInput({
-          ...input,
-          [e.target.name]: e.target.value
-        })
-    }
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
   
+  useEffect(()=>dispatch(getDescuentos()),[])
+
+  const dispatch= useDispatch()
+  const descuentos = useSelector((store) => store.auth.descuentos);
+  // ESTADOS
+  const [input, setInput]= useState({
+    monto: "",
+    porcentaje: "",
+    duracion: "",
+    estado: ""
+})
+
+const [dataDescuento, setDataDescuento]= useState()
+//nuevo descuento
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
+
+  const [modal2, setModal2] = useState(false);
+  const toggle2 = () => setModal2(!modal2);
+
+  //borrar descuento
+  const [modal3, setModal3] = useState(false);
+  const toggle3 = () => setModal3(!modal3);
+
+  /* useEffect(() => {
+    console.log("entra");
+    dispatch(getDescuentos())
+  }, [input]) */
+ 
+  //funcion de estado inputs
+  const handleInputChange = function (e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
+  }
+  const handleOpenModal = ()=>{
+    // console.log(productId)
+    setDataDescuento()
+    toggle()
+  }
+// add descuento
+  const handleAdd = async (data)=> {
+console.log("entra al handle add", data)
+   await dispatch(addDescuento(data.monto, data.porcentaje, data.duracion, data.estado))
+   await dispatch(getDescuentos())
+    
+    toggle();
+  }
+
+  const handleEdit = async (id, estado)=> {
+      console.log(id,estado)
+      await dispatch(EditDescuentos(id,estado))
+      await dispatch(getDescuentos())
+ }
+
+  function formatDate(date) {
+    let formatDate = new Moment(date);
+    return formatDate.format('DD/MM/YY')
+    }
 
   return (
 
-    <Container>
+    <Container className={styles.container}>
       <h1>Descuentos</h1>
+      <button className={styles.buttonFormAdd} onClick={toggle}> Agregar Descuento</button>
       <br/>
       <Table>
         <thead>
           <tr>
+            <th>#</th>
             <th>Monto</th>
             <th>Porcentaje</th>
+            <th>Fecha de creacion</th>
+            <th>Duración</th>
+            <th>Estado</th>
 
           </tr>
         </thead>
         <tbody>
-          <button>Agregar Descuento</button>
-
+          {descuentos && descuentos.map(((descuento, index) => (
+            <tr key={descuento.id}>
+      
+              <td>{descuento.id}</td>
+              <td>{descuento.monto}</td>
+              <td>{descuento.porcentaje}</td>
+              <td>{formatDate(descuento.createdAt)}</td>
+              <td>{descuento.duracion}</td>
+              <td>
+                  <input checked={descuento.estado ===true?true:false} onChange={(e)=>handleEdit(descuento.id ,e.target.checked )} class="form-check-input" type="checkbox" value={descuento.estado} id="flexCheckIndeterminate"/>
+              </td>
+        
+            </tr>
+          )))} 
+          
         </tbody>
       </Table>
 
       {/* -------------MODAL POST--------------- */}
       <div>
-        <Modal>
-          <Form >
-            <ModalHeader>Agregar Descuento</ModalHeader>
+        <Modal isOpen={modal} toggle={toggle} >
+          <Form onSubmit={e=> e.preventDefault()}>
+            <ModalHeader toggle={toggle}>Nuevo Descuento</ModalHeader>
             <ModalBody>
 
               <FormGroup>
-                <Label for="monto"> Descuento</Label>
-                <Input type="text" value={input.monto} />
-                
+                <Label for="monto"> Monto</Label>
+                <Input type="number" name="monto" id='monto' value={input.monto} onChange={handleInputChange} />
+               
               </FormGroup>
-              
+
               <FormGroup>
-                <Label for="porcentaje"> Descuento</Label>
-                <Input type="text" value={input.porcentaje} />
-                
+                <Label for="porcentaje"> Porcentaje</Label>
+                <Input type="number" name="porcentaje" id='porcentaje' value={input.porcentaje} onChange={handleInputChange} />
+               
               </FormGroup>
-        
+              <FormGroup>
+                <Label for="duracion"> Duración (dias)</Label>
+                <Input type="number" name="duracion" id='duracion' value={input.duracion} onChange={handleInputChange} />
+               
+              </FormGroup>
+              <FormGroup>
+                <Label for="estado"> Estado</Label>
+                <select class="form-select" aria-label="Default select example" name="estado" id="estado" rows="1" value={input.estado} onChange={handleInputChange}>
+                    <option value="false">Inactivo</option>
+                    <option value="true">Activo</option>
+                </select>
+              </FormGroup>
+             
+
             </ModalBody>
             <ModalFooter>
-            
-               <button
-              >Agregar descuento</button>
+             
+               <button className={styles.buttonForm}  onClick={()=>handleAdd({monto:input.monto, porcentaje:input.porcentaje, duracion:input.duracion, estado:input.estado})}type="submit" >Crear Descuento</button>
 
-              <button >Salir</button>
+              <button className={styles.buttonForm} onClick={toggle}>Salir</button>
 
             </ModalFooter>
           </Form>
         </Modal>
       </div>
 
+
+      {/* -----------------MODAL PUT------------------- */}
+{/* 
+      <div>
+        <Modal isOpen={modal2} toggle={toggle2} >
+          <Form onSubmit={handleSubmit}>
+            <ModalHeader toggle={toggle2}>Modificar Categoría</ModalHeader>
+            <ModalBody>
+
+
+              <FormGroup>
+                <Label for="name">Nombre</Label>
+                <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
+             
+              
+              </FormGroup>
+
+            </ModalBody>
+            <ModalFooter>
+         <button className={styles.buttonForm} type="submit" onClick={}>Modificar Categoría</button>
+              <button className={styles.buttonForm} onClick={toggle2}>Salir</button>
+            </ModalFooter>
+          </Form>
+        </Modal>
+      </div> */}
+
+
+
+      {/* ----------------MODAL DELETE------------------- */}
+      {/* <div>
+        <Modal isOpen={modal3} toggle={toggle3} className={props.className}>
+          <Form onSubmit={handleSubmit}>
+            <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
+
+            <ModalFooter>
+              <button className={styles.buttonForm}  type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
+              <button className={styles.buttonForm} onClick={toggle3}>No</button>
+            </ModalFooter>
+          </Form>
+        </Modal>
+      </div> */}
     </Container>
   );
- }
+
+}

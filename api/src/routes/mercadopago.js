@@ -22,24 +22,27 @@ mercadopago.configure({
 server.post("/" , (req, res)=>{
     const { carrito, orderId } = req.body
 
-    // console.log("este es carrito ", carrito)
+    console.log("este es carrito ", carrito)
 
     // console.log("este es orderId ", orderId)
 
     const order_id= orderId;
+   
      
-    const items_ml = carrito && carrito.map(i => ({
+    const items_ml = carrito && carrito.map(i => (
+        {
         title: i.name,
-        unit_price:  parseInt(i.price),
+        unit_price:( i.price - ((i.porcentaje * parseInt(i.price)) /100)) ,
         quantity: i.quantity,
     }))
 
-
+console.log("este es items_ml",items_ml)
     
     // Crea un objeto de preferencia
     let preference = {
         items: items_ml,
         external_reference : order_id.toString(),
+        
         payment_methods: {
             excluded_payment_types: [
                 {

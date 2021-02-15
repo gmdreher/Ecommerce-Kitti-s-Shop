@@ -3,20 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import {getProductsCart }from "../../actions/cartAction"
 import style from "./checkOut.module.scss"
 import ML from "../../img/ML.jpeg"
-import { meliPost, updateStateOrder, addressOrder } from '../../actions/orderActions';
+import { meliPost, updateStateOrder, addressOrder, getUserOrder } from '../../actions/orderActions';
 import { useHistory } from 'react-router';
+import { getDescuentosActivos } from '../../actions/descuentosActions';
 
 export default function CheckOut() {
     const history= useHistory()
     const dispatch = useDispatch();
     
     const user = useSelector(store => store.auth.userInfo);
-    let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
+    //let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
+    let cartProduct = useSelector(store => store.product.cart );
+
     const state= useSelector((store)=> store.orderStore.order.state)
     const orderId= useSelector((store)=> store.orderStore.order.id)
     const order= useSelector((store)=> store.orderStore.order)
+    const descuentos= useSelector((store)=> store.auth.descuentos)
 
-    const datos = order.products;
+    //const datos = order.products;
 
     // console.log("este es user", user)
     const[inputContact, setInputContact]= useState({   
@@ -31,20 +35,22 @@ export default function CheckOut() {
         comentarios:""
     })
 
-
-
-function ValidateInputContact(inputContact) {
-    let errorContact = {};
-     if(!inputContact.telefono){
+    const [descuento, setDescuento] = useState()
+    const [porcen, setPorcen] = useState()
+    
+    
+    function ValidateInputContact(inputContact) {
+        let errorContact = {};
+        if(!inputContact.telefono){
         errorContact.telefono = '**Requiere un telefono valido';
-     }
+    }
     return errorContact;
-  }
+}
 
-  function ValidateInputEnvio(inputEnvio) {
-
+function ValidateInputEnvio(inputEnvio) {
+    
     let errorEnvio = {};
-
+    
     if (!inputEnvio.provincia) {
         errorEnvio.provincia = '**Requiere una provincia';
     }else if(!inputEnvio.ciudad){
@@ -53,102 +59,140 @@ function ValidateInputContact(inputContact) {
         errorEnvio.direccion = '**Requiere una direccion';
     }else if(!inputEnvio.piso){
         errorEnvio.piso = '**Requiere un piso valido';
-        }
-    return errorEnvio;
-  }
-
-  const [errorContact, setErrorContact] = useState({});
-  const [errorEnvio, setErrorEnvio] = useState({});
-
-    const [pasos, setPasos] = useState(1)
-    const handlePasos = () => {
-        setPasos(pasos + 1)
     }
+    return errorEnvio;
+}
 
+const [errorContact, setErrorContact] = useState({});
+  const [errorEnvio, setErrorEnvio] = useState({});
+  
+  const [pasos, setPasos] = useState(1)
+  const handlePasos = () => {
+      setPasos(pasos + 1)
+    }
+    
     const handlePasosVolver = () => {
         setPasos(pasos - 1)
     }
-
+    
     const handleInputChange = (e)=> {
         setInputContact({
-          ...inputContact,
-          [e.target.name]: e.target.value
+            ...inputContact,
+            [e.target.name]: e.target.value
         });
         setInputEnvio({
             ...inputEnvio,
             [e.target.name]: e.target.value
-          });
+        });
         setErrorContact(ValidateInputContact ({
             ...inputContact,
-          [e.target.name]: e.target.value
+            [e.target.name]: e.target.value
         }));
         setErrorEnvio(ValidateInputEnvio ({
             ...inputContact,
-          [e.target.name]: e.target.value
+            [e.target.name]: e.target.value
         }));
     }
-
+    
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
-        
+        dispatch(getDescuentosActivos());
     }, [])
 
-
-let carrito = datos && datos.map(product => {
-    return { name: product.name, price: product.price, quantity: product.OrderDetails.quantity}
-})
-
-function Meli() {
-
-    dispatch( meliPost(carrito , orderId) )
-
-}
-
- function sumaTotal() {
-     if(cartProduct){
-         let suma= 0
+    useEffect(()=>{
+        if(cartProduct.length<1)return
+        console.log(cartProduct)
+        dispatch(getUserOrder(cartProduct[0].orderId))
+    },[cartProduct])
     
-         for(let i=0; i<cartProduct.length; i++){
-             suma= suma +( parseInt(cartProduct[i].price)* cartProduct[i].quantity)
-         }
-         return suma
+    
+    const [carrito,setCarrito] = useState([])
 
-     }
- }
- const [habitado, setHabilitado]= useState(false)
-
- function habilitar() {
-    setHabilitado(true)
-    handlePasos()
-}
-
-function habilitarPago() {
-    setHabilitado(true)
-}
- function cambio() {
-
-    if (orderId && orderId !== undefined) {
-
-        let state = "procesando";
-        let num = orderId;
-          
-        dispatch(updateStateOrder( num, state ))
-       
+    useEffect(()=>{
+       if( order.products && order.products.length>0 ){
+       let arr= order.products.map(product => {
+           return { name: product.name, price: product.price, quantity: product.OrderDetails.quantity, porcentaje:porcen}
+        })
+        setCarrito(arr)
     }
-}
-//añadir la direccion
-let domicilio= `Provincia: ${inputEnvio.provincia}, Ciudad/Localidad: ${inputEnvio.ciudad}, Dirección de la calle: ${inputEnvio.direccion}, Piso/N°: ${inputEnvio.piso}, Comentarios: ${inputEnvio.comentarios}, Teléfono: ${inputContact.telefono}`
+    },[order])
+    
+    function Meli() {
+        console.log(carrito)
+        dispatch( meliPost(carrito , orderId) )
+        
+    }
+    
+    function sumaTotal() {
+        if(cartProduct){
+            let suma= 0
+            
+            for(let i=0; i<cartProduct.length; i++){
+                suma= suma +( parseInt(cartProduct[i].price)* cartProduct[i].quantity)
+            }
+            return suma
+            
+        }
+    }
+    const [habitado, setHabilitado]= useState(false)
+    
+    function habilitar() {
+        setHabilitado(true)
+        handlePasos()
+    }
+    
+    function habilitarPago() {
+        setHabilitado(true)
+    }
+    function cambio() {
+        
+        if (orderId && orderId !== undefined) {
+            
+            let state = "procesando";
+            let num = orderId;
+            
+            dispatch(updateStateOrder( num, state ))
+            
+        }
+    }
+    //añadir la direccion
+    let domicilio= `Provincia: ${inputEnvio.provincia}, Ciudad/Localidad: ${inputEnvio.ciudad}, Dirección de la calle: ${inputEnvio.direccion}, Piso/N°: ${inputEnvio.piso}, Comentarios: ${inputEnvio.comentarios}, Teléfono: ${inputContact.telefono}`
+    
+    function añadirDireccion() {
+        dispatch(addressOrder(orderId, domicilio))
+    }
+    
+    
+    useEffect(()=>{
+        console.log(descuentos);
+        if(descuentos.length < 1) return 
+        let sum = sumaTotal()
+        let filtro =descuentos.filter((e)=>e.monto <= sum)
+        console.log("entra?", filtro,sum)
+        if (filtro.length<1) return 
+        let mayor = filtro.sort((a, b)=> {
+            if (a.numero < b.numero) {
+                return 1;
+            }
+            if (a.numero > b.numero) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        })[0]
+        console.log(sum,mayor.porcentaje)
+        setPorcen(mayor.porcentaje)
+        setDescuento((mayor.porcentaje*sum)/100)
+        
+    },[descuentos, cartProduct])
 
-function añadirDireccion() {
-    dispatch(addressOrder(orderId, domicilio))
+    console.log(descuento)
+    
+    function handleCosa() {
+        cambio()
+        Meli()
+        añadirDireccion()
 }
-
-function handleCosa() {
-    cambio()
-     Meli()
-    añadirDireccion()
-}
-
 return (
     <div >
         <form class="row g-3 needs-validation" onSubmit={(e)=> e.preventDefault()}>
@@ -200,7 +244,7 @@ return (
                                 
                             </div>
                             <div >
-                                <h6 class="form-label">Direccion de la Calle</h6>
+                                <h6 class="form-label">Domicilio</h6>
                                 <input name="direccion" value={inputEnvio.direccion} type="text" class="form-control"  required placeholder="Calle y número de la casa" onChange={handleInputChange} />
                                
                             </div>
@@ -238,7 +282,7 @@ return (
                                   
                                     <h6 class="form-label"><strong>Provincia: </strong>{inputEnvio.provincia}</h6>
                                     <h6 class="form-label"><strong>Ciudad / Localidad: </strong>{inputEnvio.ciudad}</h6>
-                                    <h6 class="form-label"><strong>Direccion: </strong>{inputEnvio.direccion}</h6>
+                                    <h6 class="form-label"><strong>Domicilio: </strong>{inputEnvio.direccion}</h6>
                                     <h6 class="form-label"><strong>Piso / N°: </strong>{inputEnvio.piso}</h6>
                                     <h6 class="form-label"><strong>Comentarios: </strong>{inputEnvio.comentarios}</h6>
                                 </div>
@@ -269,9 +313,25 @@ return (
                                 })
                             }
                             <br />
+                           
+                            <div>
+                              {descuento && 
+                              <>
+                                <div className={style.subtotalDescuento}> 
+                                    <h5> SubTotal: </h5>
+                                    <h5 > $ {sumaTotal()}</h5>
+                                </div>
+                                <div className={style.subtotalDescuento}> 
+                                    <h5 >Descuento: {porcen} %</h5>
+                                    <h5 > $ - {descuento}</h5>
+                                </div>
+                              </>}
+                                
+                            </div>
+                            <br />
                             <div className={style.sumatotal}>
                                 <h4>Total: </h4>
-                                <h4>$ {sumaTotal()}</h4>
+                                <h4>$ {descuento? sumaTotal()-descuento : sumaTotal()}</h4>
                             </div>
                             <br />
                         </div>

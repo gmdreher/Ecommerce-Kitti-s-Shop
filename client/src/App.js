@@ -80,7 +80,7 @@ function App() {
               <Route path='/auth/google/redirect'><GoogleLogin/></Route>
               <Route path='/auth/facebook/callback'><FacebookLogin/></Route>
               
-              <Route exact path='/descuento'><DescuentoGeneral/></Route>
+              <Route exact path='/admin/descuento'><DescuentoGeneral/></Route>
 
             </div>
           </main>
