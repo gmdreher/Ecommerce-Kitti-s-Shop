@@ -17,7 +17,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
         let alreadyExists = false;
-        const  MySwal  =  withReactContent (Swal);
+        
 
         cartItems && cartItems.forEach((x) => {
 
@@ -121,7 +121,6 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 payload: order
             });
         } catch (error) {
-            const  MySwal  =  withReactContent (Swal);
             MySwal.fire({
                 position: 'top-end',
                 icon: 'info',

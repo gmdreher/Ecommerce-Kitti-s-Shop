@@ -48,7 +48,7 @@ export default function ViewGuest () {
             aria-expanded="false">
             <i className="fas fa-user"/>
           </button>
-          <ul className={"dropdown-menu dropdown-menu-end " +styles.dropdownList} aria-labelledby="dropdownMenuButton">
+          <ul className={"dropdown-menu dropdown-menu-end " + styles.dropdownList} aria-labelledby="dropdownMenuButton">
             <li>
               <Link to={'/user/signup'} className="dropdown-item">
                 Registrarse
