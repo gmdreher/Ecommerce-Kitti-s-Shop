@@ -8,13 +8,11 @@ import Badge from '@material-ui/core/Badge';
 
 export default function ViewUser () {
 
-  let cartProduct = useSelector(store => store.cart.cartItems);
+  let cartProduct = useSelector(store => store.product.cart);
 
   useEffect(() => {
-  
   }, [cartProduct])
-  
-console.log(cartProduct)
+
   return (
     <Fragment>
         <div className={styles.viewUser_Guest}>

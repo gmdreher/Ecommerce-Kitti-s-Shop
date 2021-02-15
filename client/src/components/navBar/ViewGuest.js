@@ -10,7 +10,7 @@ export default function ViewGuest () {
   const cartProduct = useSelector(store => store.cart.cartItems) 
  
  useEffect(() => {
-  console.log(cartProduct.length)
+ 
 }, [cartProduct])
   
 

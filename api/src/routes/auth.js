@@ -191,7 +191,7 @@ server.post('/google/redirect',
 server.post('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log(req.user)
+    
     try {
       const token = jwt.sign({
         id: req.user[0].id,

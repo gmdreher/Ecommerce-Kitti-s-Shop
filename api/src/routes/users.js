@@ -4,10 +4,9 @@ const passport = require('passport');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
 const uuid = require('uuid');
-//const { Op } = require("sequelize");
+const { Op } = require("sequelize");
 
 //Ruta de crear usuario
-//Pau
 server.post('/', passport.authenticate('signup'),async(req,res)=>{
     res.json({
       user:{id:req.user.id},
@@ -200,7 +199,7 @@ server.get('/:id/orders' , protected.isAuth, (req, res) => {
     })
 });
 
-// ruta que revuelve todas las review de un usuario
+// ruta que devuelve todas las review de un usuario
 server.get("/:id/review", (req, res) => {
   const userId = req.params.id;
   Review.findAll({ 
@@ -257,8 +256,12 @@ console.log(reset)
     User.findOne(
       {
         where: {
-          reset: reset,
-        }
+          [Op.or]: [
+            {reset: reset},
+            {id: reset}
+          ] 
+        },
+       
       })
     .then(user => {
         user.update(

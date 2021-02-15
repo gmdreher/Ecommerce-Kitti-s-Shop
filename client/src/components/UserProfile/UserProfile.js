@@ -48,10 +48,13 @@ class UserProfile extends React.Component {
                   </button>
                     </Link>
               </div>
+            
                 <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                <Link to={`/user/resetPass/${this.props.userInfo.id}`}>
                   <button className={styles.buttonGestion}>
                     Cambiar contraseña
                   </button>
+                  </Link>
               </div>
             </div>
               </div>
