@@ -29,6 +29,9 @@ import GoogleLogin from "./components/User/GoogleLogin";
 import FacebookLogin from "./components/User/FacebookLogin";
 import './Styles/App.scss'
 import './App.scss';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import GlobalDiscount from './components/Discount/GlobalDiscount';
+
 import UserOrdersTable from "./components/UserProfile/UserOrdersTable";
 
 
@@ -39,6 +42,7 @@ function App() {
   const user = useSelector(store => store.auth.userInfo);
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <div className='body'>
         <div className="App">
           <header>
@@ -56,17 +60,21 @@ function App() {
               <Route exact path='/auth/login' component={Login} />
               <Route exact path="/user/order" component={ViewOrder} />
               <Route exact path='/user/getEmail' component={GetEmail} />
-
-              <Route exact path='/user/resetPass/:id' render={({ match }) => <ResetPass key={match.params.id} id={match.params.id} />} />
+              
+              <Route exact path='/user/resetPass/:id' render={({match}) =><ResetPass key={match.params.id} id={match.params.id} /> }/>
               <Route exact path="/user/review/:id" render={({ match }) =>  <CrudReview key={match.params.id} id={match.params.id} /> } />
+              
+              <PrivateRoute exact path='/admin/discount' component={GlobalDiscount}/>
     
               <PrivateRoute exact path='/admin/products' component={CrudProduct} />
               <PrivateRoute exact path='/admin/categories' component={NewCategoryForm} />
               <PrivateRoute exact path="/admin/orders" component={OrderTable} />
               <PrivateRoute exact path="/admin/users" component={UserTable} />
+
               <Route exact path= "/checkOut" component= {CheckOut} />
               <Route exact path="/mercadopago/success" component={Success} />
               <Route exact path="/mercadopago/failed" component={Failed} />
+              
               <Route exact path="/orders/:id" render={({ match }) =>  <OrderDetails key={match.params.id} id={match.params.id} /> } />
               <Route exact path="/users/:id/orders" render={({ match }) => <OrderDetails key={match.params.id} id={match.params.id} /> }/>
   

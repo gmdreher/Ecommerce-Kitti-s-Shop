@@ -22,24 +22,35 @@ mercadopago.configure({
 server.post("/", (req, res) => {
     const { carrito, orderId } = req.body
 
+    // console.log("este es el descuneto", carrito[0].porcentaje)
     // console.log("este es carrito ", carrito)
 
-    // console.log("este es orderId ", orderId)
+    Order.findByPk(orderId)
+    .then((order)=>{
+        order.update({
+            discount: carrito[0].porcentaje
+        })
+        console.log("esto es order", order)
+    })
+    .then(()=>{
 
-    const order_id = orderId;
-
-    const items_ml = carrito && carrito.map(i => ({
+    const order_id= orderId;
+   
+     
+    const items_ml = carrito && carrito.map(i => (
+        {
         title: i.name,
-        unit_price: parseInt(i.price),
+        unit_price: i.porcentaje !=0 ? ( i.price - ((i.porcentaje * parseInt(i.price)) /100)) : parseInt(i.price) ,
         quantity: i.quantity,
     }))
 
-
-
+    // console.log("este es items_ml",items_ml)
+    
     // Crea un objeto de preferencia
     let preference = {
         items: items_ml,
-        external_reference: order_id.toString(),
+        external_reference : order_id.toString(),
+        
         payment_methods: {
             excluded_payment_types: [
                 {
@@ -55,10 +66,9 @@ server.post("/", (req, res) => {
         },
     };
 
-
-    mercadopago.preferences.create(preference)
-        .then(function (response) {
-
+     return mercadopago.preferences.create(preference)
+    })
+    .then(function(response){
             // console.log(response)
             res.json({ redirect: response.body.init_point })
 
@@ -73,7 +83,7 @@ server.post("/", (req, res) => {
 server.get("/response", async (req, res) => {
 
     const { body } = await mercadopago.payment.get(req.query.collection_id)
-    console.log("EN body ", body)
+    // console.log("EN body ",body)
 
     const payment_status = body.status
     const external_reference = body.external_reference
@@ -87,51 +97,50 @@ server.get("/response", async (req, res) => {
                 model: User, attributes: ["id", "email"]
             }]
     })
-        .then((order) => {
-            // console.log("esto es order", order)
+    .then((order) => {
+        // console.log("esto es order", order)
 
-            if (payment_status == "approved") {
+        if(payment_status == "approved"){
 
-                order.payment_status = payment_status //aprobado
-                order.state = "confirmada"
-                let emailUser = order.user.dataValues.email
-                let address = order.dataValues.address
-                console.log("esto es adress ", address)
-                order.save()
-                    .then((_) => {
-
-                        const transporter = nodemailer.createTransport({
-                            service: 'gmail',
-                            auth: {
-                                user: process.env.AUTH_MAIL,
-                                pass: process.env.AUTH_PASS
-                            }
-                        })
-                        transporter.sendMail({
-                            from: process.env.AUTH_MAIL,
-                            to: emailUser,
-                            subject: 'Su compra fue exitosa',
-                            text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
+            order.payment_status= payment_status //aprobado
+            order.state = "confirmada"
+            let emailUser = order.user.dataValues.email
+            let address= order.dataValues.address
+            // console.log("esto es adress ", address)
+            order.save()
+            .then((_) => {
+    
+                const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.AUTH_MAIL,
+                    pass: process.env.AUTH_PASS
+                }
+                })
+                transporter.sendMail({
+                    from: process.env.AUTH_MAIL,
+                    to: emailUser,
+                    subject: 'Su compra fue exitosa',
+                    text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
                     \n Datos de envio: 
                     \n ${address}
                     \n Ante cualquien consulta comunicarse a: ecommerce.kittishop@gmail.com
                     \n Gracias por la Compra!.`
-                        }, (error, info) => {
-                            if (error) { (res.status(500).send("no se pudo enviar" + error)) }
-                            else {
-                                res.status(200).send("Mail enviado" + info)
-                            }
-                        })
-                    })
-
-                res.redirect("http://localhost:3000/mercadopago/success")
-
-                    .then(() => {
-                        res.status(200).json("Mail enviado")
-                    })
-                    .catch(error => {
-                        res.status(400).send(`Error ${error}`);
-                    })
+                },(error, info)=>{
+                    if(error){(res.status(500).send("no se pudo enviar" + error)) }
+                    else {
+                    res.status(200).send("Mail enviado" + info)
+                }
+            })
+        })
+        
+        
+        .then(() => {
+            res.status(200).redirect("http://localhost:3000/mercadopago/success")
+                })
+                .catch(error => {
+                res.status(400).send(`Error ${error}`);
+                })
 
 
 

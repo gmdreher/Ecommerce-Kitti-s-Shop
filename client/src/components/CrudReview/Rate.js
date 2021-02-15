@@ -1,33 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
 
-export default function Rate({data}) {
+export default function Rate({handleInputChange,data}) {
 
-    const [rating, setRating] = useState(null);
+    const [rating, setRating] = useState(data.rate);
     const [hover, setHover] = useState(null);
     const [review, setReview] = useState({
-      rating: "",
-      estrellas: "",
+      rate: "",
     });
     let numero= 3.5;
 
-const rate= ()=>{
+/* const rate= ()=>{
   if( data.review === 1){
     
   }
 }
 
-console.log("esto es data de rate:",data)
+console.log("esto es data de rate:",data) */
     const onChange = (e) => {
         setReview({
           ...review,
           [e.target.name]: e.target.value,
         });
+
+        handleInputChange(e)
+
       };
 
-      // useEffect(()=>{
-      //     console.log("esto",rating)
-      // })
     return(
         <div>
              <div>
@@ -39,7 +38,7 @@ console.log("esto es data de rate:",data)
                       <input
                       style={{display: "none"}}
                         type="radio"
-                        name="estrellas"
+                        name="rate"
                         value={ratingValue}
                         onClick={() => setRating(ratingValue)}
                         onChange={onChange}
