@@ -1,6 +1,7 @@
 .title{
   margin-left: 5%;
   margin-top: 10px;
+  background-color: white;
 }
 
 .cont{
@@ -39,3 +40,12 @@
   border: none;
 }
 
+.volver{
+  display: inline-block !important;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+  padding: .5em 2em;
+  border-radius: 5px;
+  margin-top: 1em;
+  margin-left: 50px;
+}

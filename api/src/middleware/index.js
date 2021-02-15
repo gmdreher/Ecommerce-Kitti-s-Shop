@@ -71,7 +71,7 @@ passport.use(
                 email: profile.emails[0].value,
             },
         })
-          .then((user => {
+          .then(user => {
               if(user){
                 return done(null, user)
               }else{
@@ -88,8 +88,8 @@ passport.use(
                       return done(err)
                   })
               }
-            })
-          ).catch(err =>{
+          })
+          .catch(err =>{
             return done(err)
         })
         
@@ -107,7 +107,7 @@ passport.use(
           User.findOrCreate({
               where: {
                   email: profile.emails[0].value,
-                    },
+              },
                 defaults: {
                     email: profile.emails[0].value,
                     fullname: profile.name.givenName,
@@ -116,10 +116,13 @@ passport.use(
                     reset: null,
                     banned: false
                 }
-                    }).then(newUser => {
-                        done(null, newUser)
-                    }).catch(err =>{
-                        return done(err)
-                    })
-                }))
+          })
+            .then(newUser => {
+              done(null, newUser)
+          })
+            .catch(err =>{
+            return done(err)
+          })
+    })
+)
 

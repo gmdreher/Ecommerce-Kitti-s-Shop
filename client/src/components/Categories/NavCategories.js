@@ -8,7 +8,7 @@ export default function NavCategories() {
 
 
   return (
-    <header className={styles.navbar}>
+    <div className={styles.navbar}>
       <div className={styles.compCategories}>
         <Categories />
       </div>
@@ -21,6 +21,6 @@ export default function NavCategories() {
             <NavLink className={styles.nameCategory} exact to="/products" >Ver todo</NavLink>
           </li>
       </nav>
-    </header>
+    </div>
   )
 }

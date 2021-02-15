@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../User/login.module.scss'
+import styles from './viewUser_Guest.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions/userAction";
@@ -16,26 +16,32 @@ function MyAccount (props) {
   }
   
     return (
-        <div className="dropdown">
+      <div className={"btn-group "}>
         <button
-          className="dropdown-toggle"
+          className={"dropdown-toggle " + styles.dropMyAccount}
           type="button"
           id="dropdownMenuButton"
           data-bs-toggle="dropdown"
+          data-bs-display="static"
           aria-expanded="false">
           <i className={"fas fa-user " + styles.icon}/>
-        {props.userInfo.fullname.split(" ")[0]}
+        <span className={styles.hideWhenMobile}>
+          {props.userInfo.fullname.split(" ")[0]}
+        </span>
         </button>
-        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <Link to="/users/me" className="dropdown-item">
-            <li><a className="dropdown-item" href="#"/>Mi cuenta</li>
-          </Link>
-          <Link className="dropdown-item">
-              <div onClick={logOutHandler} className="dropdown-item">
+        <ul className={"dropdown-menu dropdown-menu-end " + styles.dropdownList} aria-labelledby="dropdownMenuButton">
+          <li>
+            <Link to="/users/me" className="dropdown-item">
+              Mi cuenta
+            </Link>
+          </li>
+          <li>
+            <Link to="#" className="dropdown-item">
+              <div onClick={logOutHandler}>
                 Cerrar sesión
               </div>
-            <li><div className="dropdown-item" /></li>
-          </Link>
+            </Link>
+          </li>
         </ul>
       </div>
       )
