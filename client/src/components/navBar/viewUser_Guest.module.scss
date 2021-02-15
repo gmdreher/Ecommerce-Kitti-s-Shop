@@ -58,6 +58,10 @@
   margin-left: auto;
 }
 
+.userName{
+  display: none;
+}
+
 //Mobile
 @media screen and (min-width: 600px) {
   .viewUser_Guest {
@@ -111,6 +115,10 @@
     margin-right: 0;
     background-color:rgb(247, 244, 244);
 
+  }
+
+  .userName{
+    display: inline-flex;
   }
 
   .navItem {
