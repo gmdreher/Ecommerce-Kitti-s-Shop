@@ -173,7 +173,7 @@ const [errorContact, setErrorContact] = useState({});
         if (filtro.length<1) return //ningun descuento matchea con el monto
 
         let mayor = filtro.sort((a, b)=> {// ordenamos por cual tiene mas descuento
-            if (a.mount < b.mount) {//ordena de mayor a menor
+            if (a.mount < b.mount) {      //ordena de mayor a menor
                 return 1;
             }
             if (a.mount > b.mount) {
@@ -181,7 +181,7 @@ const [errorContact, setErrorContact] = useState({});
             }
             // a must be equal to b
             return 0;
-        })[0] //agarra el primer valor 
+        })[0]    //agarra el primer valor 
         // console.log(sum,mayor.percentage)
         setPorcen(mayor.percentage)
         setDescuento((mayor.percentage*sum)/100)

@@ -85,8 +85,8 @@ export default function GlobalDiscount() {
             <th>#</th>
             <th>Monto</th>
             <th>Porcentaje</th>
-            <th>Fecha de creacion</th>
-            <th>Duración</th>
+            <th>Fecha de creación</th>
+            <th>Duración (días)</th>
             <th>Estado</th>
 
           </tr>
