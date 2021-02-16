@@ -54,9 +54,6 @@ export default function ViewOrder(props) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(deleteTotalCart({ userId: idUser, orderId: idOrder }))
-                    MySwal.fire(
-                      'Borrado!',
-                    )
                 }
             })
         } else {
