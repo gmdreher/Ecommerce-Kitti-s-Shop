@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {  CREATE_ADOPTION ,GET_ALL_ADOPTIONS_USER,REQUEST_USER,GET_ALL_ADOPTIONS,GET_ADOPTION_BY_ID} from '../constants/productConstants.js';
+import {  CREATE_ADOPTION ,GET_ALL_ADOPTIONS_USER,REQUEST_USER,GET_ALL_ADOPTIONS,GET_ADOPTION_BY_ID,UPDATE_ADOPTION} from '../constants/productConstants.js';
 
 export const getAllAdoptionsUser = (id) => async (dispatch)=>{
     const response = await axios.get(`http://localhost:3001/adoptions/createAdoption/${id}`);
@@ -30,20 +30,23 @@ export const getAllAdoptionsUser = (id) => async (dispatch)=>{
 }
 
 export const createAdoption = (datos) => async dispatch => {
-    console.log(datos)
-    const fd = new FormData();
-    fd.append('image', datos.image)
-    const response = await axios.post('http://localhost:3001/adoptions/createAdoption', datos);
-    const responseImage = await axios.put(`http://localhost:3001/adoptions/createAdoption/${response.data.id}/photo`,fd)  
-    dispatch({
-        type:CREATE_ADOPTION,
-        payload:response.data
-    })
+    try{
+            console.log(datos)
+            const fd = new FormData();
+            fd.append('image', datos.image)
+            datos.image = fd;
+            const response = await axios.post('http://localhost:3001/adoptions/createAdoption', datos);
+            const responseImage = await axios.put(`http://localhost:3001/adoptions/createAdoption/${response.data.id}/photo`,fd)  
+            dispatch({
+                type:CREATE_ADOPTION,
+                payload:response.data
+            })
+    }catch(err){
+        console.log(err)
+    }
 
   
-}
-               
-               
+}         
                
 export const getAllRequestUser = (id) => async (dispatch)=>{
 
@@ -53,6 +56,44 @@ export const getAllRequestUser = (id) => async (dispatch)=>{
         payload:response.data
     })
 
+}
+
+export const updateState = (data) => async (dispatch,getState)=>{
+    console.log(data)
+    const response = await axios.put(`http://localhost:3001/adoptions/createAdoption/${data.id}`, data)
+    const update = getState().adoption.adoption
+    if (update.id==data.id){
+        update.state=data.state
+    }
+
+    dispatch({
+        type:UPDATE_ADOPTION,
+        payload:update
+    })
+}
+export const getAllAdoptionState = (state) => async (dispatch)=>{
+    const response = await axios.get(`http://localhost:3001/adoptions/createAdoption/${state}`);
+    console.log(response)
+     
+    for(var i = 0 ; i<response.data.length;i++){
+            console.log(response.data[i])
+            if(response.data[i].photo){
+                function bin2string(array){
+                    var result = "";
+                    for(var j = 0; j <array.length; ++j){
+                        result+= (String.fromCharCode(array[j]));
+                    }
+                    return result;
+                }
+                var Imagen_Bin_String = bin2string(response.data[i].photo.data);
+                var Imagen_Base64 = btoa(Imagen_Bin_String);
+                response.data[i].photo = Imagen_Base64
+        }
+    } 
+     await dispatch({
+        type: GET_ALL_ADOPTIONS,
+        payload: response.data
+    });
 }
 
 export const getAllAdoptions = () => async (dispatch)=>{

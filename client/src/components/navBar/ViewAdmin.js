@@ -43,14 +43,22 @@ function ViewAdmin (props) {
           Perfiles
           <li><a className="dropdown-item" href="#"/></li>
         </Link>
-          <Link className="dropdown-item">
-            <div onClick={logOutHandler} className="dropdown-item">
-              Cerrar sesión
-            </div>
-          <li><div className="dropdown-item" /></li>
+          <Link to={'/admin/discount'} className="dropdown-item">
+            Descuentos
+            <li><a className="dropdown-item" href="#"/></li>
           </Link>
-      </ul>
-    </div>
+          <Link to={'/admin/createAdoptions'} className="dropdown-item">
+            Adopciones
+            <li><a className="dropdown-item" href="#"/></li>
+          </Link>
+            <Link className="dropdown-item">
+              <div onClick={logOutHandler} className="dropdown-item">
+                Cerrar sesión
+              </div>
+            <li><div className="dropdown-item" /></li>
+            </Link>
+        </ul>
+      </div>
   )
 }
 

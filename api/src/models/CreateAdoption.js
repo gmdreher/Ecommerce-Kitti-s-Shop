@@ -5,20 +5,20 @@ module.exports = (sequelize) => {
 
   const CreateAdoption = sequelize.define('createAdoption', {
     condition: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     },
     reason: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       
     },
     contact:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     state:{
         type: DataTypes.ENUM(['Creada','Aprobada','Adoptado','Cancelado'])
     },
     province:{
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
     },  
     photo:{
       type: DataTypes.BLOB

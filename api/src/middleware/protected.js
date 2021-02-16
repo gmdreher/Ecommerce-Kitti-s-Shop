@@ -11,6 +11,7 @@ exports.isAuthAdmin = async function(req,res,next){
     const token =req.headers.authorization.split(" ")[1]
     const payload = jwt.decode(token,authConfig.secret)
     let user = await User.findOne({where:{id:payload.id}})
+    console.log(user.rol)
     if(user.rol !== 'admin'){
         console.log('debes ser admin rol')
         return res.status(403).send({message:'No tienes autorización'})

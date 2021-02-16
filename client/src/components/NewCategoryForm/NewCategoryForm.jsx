@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
+import { Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
 import { insertCategory, getCategories, editCategory, deleteCategory } from "../../actions/productActions";
 import styles from './newCategoryForm.module.scss'
@@ -13,6 +13,7 @@ function NewCategoryForm(props) {
     description: '',
     id: ''
   });
+
   //estado errores
   const [errors, setErrors] = useState({});
 
@@ -32,7 +33,10 @@ function NewCategoryForm(props) {
   //get categorias
   useEffect(() => {
     props.getCategories()
-  }, [input])
+  }, [props.categories])
+
+
+  console.log('props', props)
   //validacion inputs
   const validate = function (input) {
     let errors = {};
@@ -54,8 +58,7 @@ function NewCategoryForm(props) {
     }));
   }
 
-
-  const handleSubmit = function (e) {
+  const handleSubmit = function(e) {
     props.getCategories();
     e.preventDefault();
   }
@@ -63,7 +66,6 @@ function NewCategoryForm(props) {
   //agregar categorias
   const handleAdd = function (category) {
     props.postCategories(category)
-    props.getCategories();
     toggle();
   }
 
@@ -71,17 +73,16 @@ function NewCategoryForm(props) {
   const handleEdit = function (category) {
     toggle2();
     setInput(category);
+    
   }
-
-
+  
   // funcionalidad a boton EDITAR
   const handleEditModal = function (category) {
     props.putCategory(category);
     props.getCategories();
     toggle2()
-
-
   }
+
   // info de boton BORRAR de cada categoria
   const handleDelete = function (category) {
     toggle3();
@@ -93,21 +94,24 @@ function NewCategoryForm(props) {
     props.getCategories();
     toggle3()
   }
+
   // COMPONENTE
   return (
-
-    <Container className={styles.container}>
-      <h1>Administrar Categorías</h1>
+    <Container>
+       <br/>
+      <h2 className={styles.title}>Administrar Categorías</h2>
+      <br/>
       <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
-      <br />
-      <Table>
+      <br/>
+      <div className={"table-responsive " + styles.container}>
+      <table className="table table-sm">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Editar</th>
-            <th>Borrar</th>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
           </tr>
         </thead>
         <tbody>
@@ -118,20 +122,16 @@ function NewCategoryForm(props) {
               <td>{category.description}</td>
 
               <td>
-                <button className={styles.buttonForm} onClick={() => handleEdit(category)} >Editar</button>
-              </td>
-              <td>
+                <button className={styles.buttonForm} onClick={() => handleEdit(category)}>Editar</button>
+                </td>
+                <td>
                 <button className={styles.buttonForm} onClick={() => handleDelete(category)}>Borrar</button>
               </td>
             </tr>
-          )))}
-
-
-
-
-
+          )))} 
         </tbody>
-      </Table>
+      </table>
+      </div>
 
       {/* -------------MODAL POST--------------- */}
       <div>
@@ -155,8 +155,8 @@ function NewCategoryForm(props) {
             </ModalBody>
             <ModalFooter>
               {errors.name ? <button className={styles.buttonForm} onClick={toggle}>Crear Categoría</button> :
-                <button className={styles.buttonForm} type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
-                >Crear Categoría</button>}
+               <button className={styles.buttonForm} type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+              >Crear Categoría</button>}
 
               <button className={styles.buttonForm} onClick={toggle}>Salir</button>
 

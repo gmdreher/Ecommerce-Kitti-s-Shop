@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './review.module.scss';
 import Moment from 'moment';
 
@@ -12,6 +12,7 @@ function formatDate(date) {
     }
 
 let valor= data.rate;
+useEffect(()=>console.log(data))
 
 function rate(valor){
 
@@ -82,7 +83,7 @@ function rate(valor){
                { data&& 
                <>
                 <div className={styles.nameStar}>
-                    <h4>{data.user.fullname}</h4>
+                    <h4>{data.user?.fullname}</h4>
                         
                     <h4 className={styles.estrella}>{rate(valor)}</h4>
 

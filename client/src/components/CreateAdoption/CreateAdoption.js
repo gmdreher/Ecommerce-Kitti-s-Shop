@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState,} from "react";
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
-import { createAdoption,getAllAdoptionsUser } from '../../actions/adoptionAction';
+import { createAdoption,getAllAdoptionsUser,getAllAdoptions,getAllAdoptionState } from '../../actions/adoptionAction';
 import { connect } from 'react-redux';
 import styles from './createAdoption.module.scss'
 import { Link } from "react-router-dom";
@@ -57,17 +57,7 @@ const handleInputChange = (e) => {
   }));
 
 }
-const resetInput = () => {
-  setInput({
-    condition: '',
-    reason: '',
-    contact:'',
-    province:'',
-    file:''
-  })
-}
 
- // añadir un review
  const handleOpenModal = () => {
   // console.log(productId)
  // setIdProductAdding(productId)
@@ -77,7 +67,6 @@ const handleChangeImage = e => {
   setInput({
     ...input,
       file: e.target.files[0]
-      //filename:e.target.files[0].name
   });
 
 }
@@ -88,7 +77,13 @@ const handleCreate = e =>{
 }
   
   useEffect(() => {
-    props.getAllAdoptionsUser(props.user.id)
+    if(props.user.rol=='User'){
+       props.getAllAdoptionsUser(props.user.id)
+    } else{
+      props.getAllAdoptions()
+    }
+    
+   
   }, [])
 
   const formatDate = (date) => {
@@ -96,11 +91,11 @@ const handleCreate = e =>{
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
   
- /*  const filteredOrders = (event) => {
-    props.getAllOrders(event.target.value)
-    setOrderStates(event.target.value)
+   const filteredAdoptions = (event) => {
+    props.getAllAdoptionState(event.target.value)
+    setAdoptionStates(event.target.value)
   }
-   */
+   
    
     return (
       <Fragment>
@@ -109,19 +104,19 @@ const handleCreate = e =>{
         </div>
         <br />
         <h2 className={styles.title}>Adopciones Creadas:</h2>
-        <div className={styles.select}>
-          {/* <div>
+        { props.user.rol == 'admin'?<div className={styles.select}>
+          <div>
             <label>Filtrar por estado </label> &nbsp;
-            <select  name="state" id="state" value={orderStates} onChange={filteredOrders}>
+             <select  name="state" id="state" value={adoptionStates} onChange={filteredAdoptions}>
               <option value="">Todas</option>
-              <option value="carrito">En carrito</option>
-              <option value="creada">Creadas</option>
-              <option value="procesando">Procesando</option>
-              <option value="cancelada">Canceladas</option>
-              <option value="completa">Completas</option>
+              <option value="Creada">Creadas</option>
+              <option value="Aprobada">Aprobadas</option>
+              <option value="Adoptado">Adoptados</option>
+              <option value="Cancelado">Cancelados</option>
+              
             </select>
-          </div> */}
-        </div>
+          </div>
+        </div>:null}
         <div className={styles.cont}>
         <div className={"table-responsive"}>
           <table className={"table table-sm " + styles.table} >
@@ -135,12 +130,8 @@ const handleCreate = e =>{
               </tr>
             </thead>
             <tbody >
-              {
+              {props.user.rol=='User'?
                 props.allAdoptionsUser && props.allAdoptionsUser.map(adopt => {
-                  //let total = 0;
-                  // order.products.map(product => {
-                  //   total = total + product.price * product.OrderDetails.quantity;
-                  // })
                   return (
                     <tr key={adopt.id}>
                       <td scope="row" >
@@ -158,6 +149,24 @@ const handleCreate = e =>{
                     </tr>
                   )
                 })
+              : props.allAdoptions && props.allAdoptions.map(adopt => {
+                return (
+                  <tr key={adopt.id}>
+                    <td scope="row" >
+                     <Link exact to={`/user/adoption/detalle/${adopt.id}`} > 
+                        {adopt.id}
+                      </Link> 
+                    </td>
+                    {/* <td>{adopt.userId}</td> */}
+                    <td>{adopt.condition}
+                    </td>
+                    <td>{adopt.state}</td>
+                    <td>{formatDate(adopt.updatedAt)}</td>
+          
+                    {adopt.photo?<td><img width='max-width:100%;width:auto' height='auto'src={`data:image/jpg;base64,${adopt.photo}`}/></td>:<td>No Se cargo Imagen</td>}
+                  </tr>
+                )
+              })
               }
             </tbody>
           </table>
@@ -220,27 +229,12 @@ const handleCreate = e =>{
 
 }
 
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
 function mapStateToProps(state) {
   return {
     allAdoptionsUser: state.adoption.allAdoptionsUser,
-    user: state.auth.userInfo
+    user: state.auth.userInfo,
+    allAdoptions:state.adoption.allAdoptions
   }
 }
 
-export default connect(mapStateToProps, { getAllAdoptionsUser, createAdoption })(CreateAdoption);
+export default connect(mapStateToProps, { getAllAdoptionsUser,getAllAdoptions, createAdoption, getAllAdoptionState })(CreateAdoption);

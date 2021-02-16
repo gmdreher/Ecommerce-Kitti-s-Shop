@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Modal, ModalHeader } from 'reactstrap'
-import logo from '../../img/logo.png'
+import {Modal, ModalHeader} from 'reactstrap'
 import { connect } from 'react-redux'
 import { forgotPassword } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
@@ -37,10 +33,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    textSizeAdjust: 12
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  row: {
+    marginTop: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'row',
+    float:'right',
+    textSizeAdjust: 12
   },
   form: {
     width: '100%', 
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    color: 'black',
+    backgroundColor: '#f5b453',
+    fontWeight: 'bold'
   },
 }));
 
@@ -66,6 +70,8 @@ const useStyles = makeStyles((theme) => ({
  function GetEmail(props) {
   const classes = useStyles();
   const history = useHistory()
+  
+  console.log(props)
 
   const [input, setInput] = useState({
     email: '',
@@ -76,6 +82,15 @@ const useStyles = makeStyles((theme) => ({
     history.push("/");
     setModal(!modal);
   }
+    // onSuccess
+  const [modal2, setModal2] = useState(false);
+  const toggle2 = () => setModal2(!modal2);
+
+  //onFail
+  const [modal3, setModal3] = useState(false);
+  const toggle3 = () => setModal3(!modal3);
+
+  
    //estado errores
    const [errors, setErrors] = useState({});
 
@@ -90,14 +105,17 @@ const useStyles = makeStyles((theme) => ({
     }));
   }
 
+
 const handleSubmit = (e) => {
   e.preventDefault();
-  history.push("/")
 }
 
-const handleSend = function (email) {
-  console.log(email)
-  props.forgotPassword(email);
+const handleSend = async function (email) {
+ try{ await props.forgotPassword(email);
+ }
+ catch(error){
+   console.log(error)
+ }
 }
 
   return (
@@ -132,8 +150,7 @@ const handleSend = function (email) {
                   )}
         
             
-            {errors.email  ?  
-            
+            {errors.email ?   
             <Button
               type="submit"
               fullWidth
@@ -142,16 +159,53 @@ const handleSend = function (email) {
               >
               Enviar
           </Button> 
-              :
-            <Button El boton de registro
+              : props.error === true ?
+              <Container  className={props.className}>
+        
+        <div className={classes.paper}><strong>Este usuario no se encuentra registrado!</strong></div>
+     
+              <div>
+                <div className={classes.row}>
+                <Link to="/"> 
+                <div className={styles.link}><strong>Inicio</strong></div></Link>
+                </div>
+                <div className={classes.row}>
+                <Link to="/user/signup"> 
+                <div className={styles.link}> <strong>Regístrate</strong></div></Link>
+                </div>
+              </div>
+             
+          </Container>
+           : props.error === false ?
+           <Container className={props.className}>
+        
+           <div className={classes.paper}><strong>Correo enviado! Sigue las instrucciones para cambiar tu contraseña</strong></div>
+  
+            <div className={classes.paper}>
+             <Link to="/" > 
+             <div className={styles.link}> <strong>Inicio</strong></div></Link>
+             </div>
+             <br/>
+             <Button
               type="submit"
               fullWidth
               variant="contained"
+              disabled>
+              Enviar
+          </Button> 
+         
+       </Container>
+             :
+            <Button 
+              type="submit"
+              fullWidth
               color="primary"
+              variant="contained"   
               onClick={() => handleSend({email: input.email})}
               className={classes.submit}>
               Enviar
-          </Button>}
+          </Button>
+            }
             
           </form> 
         </div>
@@ -160,13 +214,22 @@ const handleSend = function (email) {
         </Box>
         
       </Container>
+     
+    
     </Modal >
+    
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    error: state.product.error,
+    loading: state.product.loading
+  }
+}
 function mapDispatchToProps(dispatch) {
   return {
     forgotPassword: (email) => dispatch(forgotPassword(email))
   }
 }
-export default connect(null, mapDispatchToProps)(GetEmail)
+export default connect(mapStateToProps, mapDispatchToProps)(GetEmail)

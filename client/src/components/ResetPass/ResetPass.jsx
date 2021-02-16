@@ -9,9 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Modal, ModalHeader } from 'reactstrap'
 import { connect } from 'react-redux'
-import { updatePassword, getUserById } from '../../actions/userAction'
+import { updatePassword} from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
 import styles from './resetPass.module.scss'
+import {Link} from "react-router-dom";
 
 function Copyright() {
 
@@ -46,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    color: 'black',
+    backgroundColor: '#f5b453',
+    fontWeight: 'bold'
   },
 }));
 
@@ -75,8 +79,7 @@ function validate(input) {
 function ResetPass(props) {
 
   const usersData = useSelector(store => store);
-  console.log("AQUI MIERDA!", usersData);
-
+  
 
   const classes = useStyles();
   const history = useHistory()
@@ -104,25 +107,13 @@ function ResetPass(props) {
     }));
   }
 
-  //   const regUser = (e) => {
-  //     e.preventDefault();
-  //     props.singUp(input)
-  //     history.push("/")
-  //   }
-  //get user
-  useEffect(() => {
-    props.getUserById(props.id)
-  }, [])
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/")
   }
 
-  const handleEdit = function (password) {
-    console.log(password)
-    props.updatePassword(password);
-  }
+const handleEdit = function (password) {
+  props.updatePassword(password);
+}
 
   return (
     <Modal isOpen={modal} toggle={toggle}>
@@ -183,16 +174,59 @@ function ResetPass(props) {
               >
                 Cambiar Contraseña
           </Button>
-              :
-              <Button El boton de registro
+              : props.errors === true ?
+
+              <Container  className={props.className}>
+        
+        <div className={classes.paper}><strong>Hubo un error al intentar cambiar tu contraseña, porfavor comunícate con administración</strong></div>
+     
+              <div>
+                <div className={classes.row}>
+                <Link to="/"> 
+                <div className={styles.link}><strong>Volver a Inicio</strong></div></Link>
+                </div>
+              </div>
+              <br/>
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                color="primary"
-                onClick={() => handleEdit({ id: props.id, newPassword: input.newPass })}
-                className={classes.submit}>
+                disabled
+              >
                 Cambiar Contraseña
-          </Button>}
+          </Button>
+          </Container> 
+        : props.error === false ? 
+        <Container className={props.className}>
+        
+        <div className={classes.paper}><strong>Tu contraseña se ha cambiado!</strong></div>
+
+         <div className={classes.paper}>
+          <Link to="/" > 
+          <div className={styles.link}> <strong>Volver a Inicio </strong></div></Link>
+          </div>
+          <br/>
+          <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled
+              >
+                Cambiar Contraseña
+          </Button>
+      
+    </Container>
+    :
+    <Button 
+    type="submit"
+    fullWidth
+    variant="contained"
+    color="primary"
+    onClick={() => handleEdit({id: props.id, newPassword: input.newPass})}
+    className={classes.submit}>
+    Cambiar Contraseña
+</Button>
+     }
 
           </form>
         </div>
@@ -204,14 +238,16 @@ function ResetPass(props) {
     </Modal >
   );
 }
+
 function mapStateToProps(state) {
   return {
-    user: state.product.user
+    user: state.product.user,
+    error: state.product.error,
+    loading: state.product.loading
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    getUserById: (id) => dispatch(getUserById(id)),
     updatePassword: (id, payload) => dispatch(updatePassword(id, payload))
   }
 }

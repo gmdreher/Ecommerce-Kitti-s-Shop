@@ -49,22 +49,3 @@
   margin-top: 1em;
   margin-left: 50px;
 }
-.button_{
-  background-color: #ffffff;
-      display: center;
-      align-items: center;
-      position:relative;
-      float:right;
-      margin-right: 6%;
-      margin-top: 40px;
-      border: none;
-      border-radius: 9999px;
-      height: 46px;
-      padding: 0 1em;
-      width: fit-content;
-      border: 1px solid #bdbdbd;
-      color: black;
-     &:hover{
-      background-color: #f3f1f1e8;
-     }
-}

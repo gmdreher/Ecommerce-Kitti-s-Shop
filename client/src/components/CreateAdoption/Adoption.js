@@ -3,7 +3,7 @@ import style from './product.module.scss';
 import styles from './createAdoption.module.scss'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input} from 'reactstrap';
-import { getAdoptionById } from '../../actions/adoptionAction.js';
+import { getAdoptionById, updateState } from '../../actions/adoptionAction.js';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import noImage from '../../img/noImage.jpg'
@@ -11,6 +11,7 @@ import noImage from '../../img/noImage.jpg'
 function Adoption(props) {
     const [modal, setModal] = useState(false);
    const toggleAdd = () => setModal(!modal);
+   const [adoptionStates, setAdoptionStates] = useState('')
 
    const [input, setInput] = useState({
     condition: '',
@@ -54,6 +55,10 @@ function Adoption(props) {
         props.createRequest({userId:props.user.id,createAdoptionId:props.adopt.id,condition:input.condition,contact:input.contact,province:input.province})
         toggleAdd()
       }
+      const filteredAdoptions = (event) => {
+        props.updateState({id:props.adopt.id, state:event.target.value})
+        setAdoptionStates(event.target.value)
+      }
     useEffect(() => {
         props.getAdoptionById(props.id);
     }, [])
@@ -79,12 +84,25 @@ function Adoption(props) {
                     <p><strong>Concidiones Físicas: </strong> ${props.adopt.condition}</p>
       
                     <p><strong>Razón de la Adopción: </strong> {props.adopt.reason}</p>
-                    
+                    { props.user.rol == 'admin'?<div className={styles.select}>
+                      <div>
+                        <label>Cambiar estado </label> &nbsp;
+                        <select  name="state" id="state" value={adoptionStates} onChange={filteredAdoptions}>
+                          <option value="">Todas</option>
+                          <option value="Creada">Creadas</option>
+                          <option value="Aprobada">Aprobadas</option>
+                          <option value="Adoptado">Adoptados</option>
+                          <option value="Cancelado">Cancelados</option>
+                          
+                        </select>
+                      </div>
+                    </div>:
                     <div className="butt">
 
                     <button className="btn btn-outline-dark" onClick={handleOpenModal}>Solicitar Adopción</button>
 
                  </div>
+                 }
                 </div>
                               
                 
@@ -136,4 +154,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getAdoptionById})(Adoption);
+export default connect(mapStateToProps, { getAdoptionById, updateState})(Adoption);

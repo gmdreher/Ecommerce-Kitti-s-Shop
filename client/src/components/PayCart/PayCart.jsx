@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { updateStateOrder } from '../../actions/orderActions';
 import '../PayCart/PayCart.scss';
 
 
 export default function PayCart(props) {
-  
-    const dispatch = useDispatch()
 
+    // console.log("Paycartrttttttttttt", props);
+  const dispatch= useDispatch()
+const history = useHistory()
 
-    function cambio() {
-
-        if (props.dato2) {
-
-            let state = "creada";
-            let num = props.dato2[0].orderId;
-
-            dispatch(updateStateOrder(num, state))
-        }
+const cambio= async ()=>{
+    
+    if(props.dato3 == null) {
+        return history.push("/auth/login")
     }
+    else if (props.dato2 && props.dato2 !== undefined) {
+        let state = "creada";
+        let num = props.dato2[0].orderId;
+          
+        //await dispatch(updateStateOrder( num, state )) //*/*********************** */
+        return history.push("/CheckOut/")
+    }
+}
 
     return (
         <div className="contenedor">
@@ -34,9 +38,9 @@ export default function PayCart(props) {
                 </div>
             </div>
             <div className="pagar">
-                <Link to={`/checkOut/`} >
-                    <button onClick={cambio}>Finalizar Pago</button>
-                </Link>
+         
+                <button disabled={props.dato2.length<1?true:false}  onClick={cambio}>Finalizar Pago</button>
+              
             </div>
         </div>
 

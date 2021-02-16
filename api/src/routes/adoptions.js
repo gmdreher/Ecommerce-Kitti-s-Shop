@@ -18,6 +18,7 @@ server.post("/createAdoption", (req, res) => {
     }).then((adopt)=>{
         res.json(adopt)
     }).catch((err)=>{
+        console.log(err)
         res.status(400).json(err)
     })
   
@@ -53,9 +54,11 @@ server.put("/createAdoption/:id/photo", (req,res)=>{
         res.status(400).json(err)
     })
 })
-server.put("/createAdoption/:id", (req,res)=>{
+ server.put("/createAdoption/:id", (req,res)=>{
+    console.log('el estado recibido',req.body)
     const {id} = req.params
     const {state} = req.body
+   
     CreateAdoption.update({
       state:state
     }, {where:{
@@ -67,7 +70,7 @@ server.put("/createAdoption/:id", (req,res)=>{
         res.status(400).json(err)
     })
 })
-server.put("/application/:id", (req,res)=>{
+/*server.put("/application/:id", (req,res)=>{
     const {id} = req.params
     const {state,address} = req.body
     if (address){
@@ -98,9 +101,9 @@ server.get("/application/:userId", (req,res)=>{//////////////posiblemente
              res.json(act)
     }).catch((err)=>{
         res.status(400).json(err)
-    })
+    }) 
   
-})
+})*/
 server.get("/createAdoption/creada", (req,res)=>{
     
     CreateAdoption.findAll({where:{state:'Creada' }})
@@ -111,6 +114,19 @@ server.get("/createAdoption/creada", (req,res)=>{
      })
    
  })
+ server.get("/createAdoption/:state", (req,res)=>{
+    const {state} = req.params
+   
+    CreateAdoption.findAll({
+       where:{state:state }
+   }).then((act)=>{
+         res.json(act)
+    }).catch((err)=>{
+        res.status(400).json(err)
+    })
+  
+})
+
  server.get("/application/:state", (req,res)=>{
      const {state} = req.params
     
