@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 function MyAccount(props) {
 
   const history = useHistory();
+
   const logOutHandler = () => {
     props.logoutUser()
     history.push('/')

@@ -55,7 +55,7 @@ export default function GlobalDiscount() {
   }
   // add descuento
   const handleAdd = async (data) => {
-    console.log("entra al handle add", data)
+    // console.log("entra al handle add", data)
     await dispatch(addDiscount(data.monto, data.porcentaje, data.duracion, data.estado))
     await dispatch(getDiscount())
 
@@ -63,7 +63,7 @@ export default function GlobalDiscount() {
   }
 
   const handleEdit = async (id, estado) => {
-    console.log(id, estado)
+    // console.log(id,estado)
     await dispatch(editDiscount(id, estado))
     await dispatch(getDiscount())
   }
@@ -85,8 +85,8 @@ export default function GlobalDiscount() {
             <th>#</th>
             <th>Monto</th>
             <th>Porcentaje</th>
-            <th>Fecha de creacion</th>
-            <th>Duración</th>
+            <th>Fecha de creación</th>
+            <th>Duración (días)</th>
             <th>Estado</th>
 
           </tr>

@@ -9,7 +9,9 @@ export default function OrderDetails(props) {
 
   return (
     <Fragment>
-      <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>Volver</div>
+      <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>
+        Volver
+        </div>
       <div className={styles.primerDiv}>
         <h2 className={styles.title}>Detalle de compra</h2>
         <OrderDetailsTable id={props.id} />
