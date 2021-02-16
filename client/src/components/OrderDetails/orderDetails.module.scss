@@ -171,9 +171,17 @@
   }
 
   .letterLeft{
+    display: -moz-inline-block;
     font-size: large;
+    text-align: left;
+    width: 12rem
+
   }
 
+  .bodyTable{
+    display: inline-block;
+    width: 45rem
+  }
   .primerDiv{
     display: flex;
     flex-direction: column;
@@ -234,7 +242,7 @@
 
 
         .image{
-          width: 100px;
+          width: 8rem;
           height: 100px;
           background-color: rgb(245, 245, 245);
           border-right: 1px solid rgb(202, 202, 202);
@@ -254,7 +262,7 @@
           }
         }
         .name{
-          width: 200px;
+          width: 15rem;
           height: 100px;
           background-color: rgb(245, 245, 245);
           border-right: 1px solid rgb(202, 202, 202);
@@ -266,7 +274,7 @@
           align-items: center;
         }
         .quantity{
-          width: 80px;
+          width: 6rem;
           height: 100px;
           background-color: rgb(245, 245, 245);
           border-right: 1px solid rgb(202, 202, 202);
@@ -281,7 +289,7 @@
         }
         .price{
           height: 100px;
-          width: 100px;
+          width: 6rem;
           background-color: rgb(245, 245, 245);
           border-right: 1px solid rgb(202, 202, 202);
           border-bottom: 1px solid rgb(202, 202, 202);

@@ -74,7 +74,7 @@ class OrderDetailsTable extends React.Component {
       <div className={styles.container}>
         <div>
           <table className="table-responsive-m">
-            <tbody>
+            <tbody className={styles.bodyTable}>
             <tr>
               <th className={styles.letterLeft} scope="row">Fecha:</th>
               <td className={styles.letterhead}>{this.formatDate(createdAt)}</td>
