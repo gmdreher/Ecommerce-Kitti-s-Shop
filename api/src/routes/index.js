@@ -20,5 +20,4 @@ router.use('/mercadopago', mercadopago);
 router.use('/auth', authRouter);
 
 
-
 module.exports = router;
