@@ -270,7 +270,7 @@ class CrudProductForm extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup>
-                            <Label sm={3}>Descripcion</Label>
+                            <Label sm={3}>Descripción</Label>
                             <Col sm={20}>
                                 <Input  name='description' type="textarea" onChange={this.handleChange} />
                             </Col>
@@ -347,7 +347,6 @@ const mapDispatchToprops = (dispatch) => {
         getAllProducts: () => dispatch(getProducts()),
         putProduct: (payload) => dispatch(editProduct(payload)),
         //getCategoriesByProduct: (payload)=>dispatch(productCategoryAll(payload))
-
     }
 }
 export default connect(mapsStateToProps, mapDispatchToprops)(CrudProductForm)
