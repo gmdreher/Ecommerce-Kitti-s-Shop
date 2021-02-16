@@ -129,6 +129,8 @@ body.dark-mode {
       color:white;
     }
     .selectContainer {
+      background-color: $bg-dark-mode;
+      border-color: rgb(255, 255, 255);
       label {
         color: white;
       }
@@ -337,7 +339,13 @@ body.dark-mode {
   }
 }
 
-
+.tituloGlobal{
+  color:white;
+}
+.containerDiscout {
+      border: 1px solid #ffffff;
+      box-shadow: none;
+}
 
 
 }
