@@ -37,11 +37,11 @@ export default function ProductCard({ data }) {
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item"><strong>{t("product.price.dots")}</strong> {'$ ' + data.price}</li>
+              <label id="stock" />
+               {data.stock<1 ? <label className={styles.soldOut}>{t("product.noStock")}</label> : <label/>}
             </ul>
             <div class="card-body">
               <button disabled={data.stock<1}  onClick={() => handleClick(data)}><i class = "fas fa-cart-plus"/></button>
-              <label id="stock"/>
-               {data.stock<1 ? <label >{t("product.noStock")}</label> : <label/>}
               <Link to={`/products/detalle/${data.id}`}>
                 <button ><i class="fas fa-plus"/></button>
               </Link>

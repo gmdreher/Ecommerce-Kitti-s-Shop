@@ -34,7 +34,7 @@ function UserOrdersTable (props) {
                 <th scope="col">{t("discounts.phase")}</th>
                 <th scope="col">{t("discounts.amount")}</th>
                 <th scope="col">{t("order.time")}</th>
-                <th scope="col">{t("user.address")}</th>
+                {/* <th scope="col">{t("user.address")}</th> */}
               </tr>
               </thead>
               <tbody >
@@ -60,9 +60,9 @@ function UserOrdersTable (props) {
                       <td>
                         {formatDate(order.createdAt)}
                       </td>
-                      <td>
-                        {order.address}
-                      </td>
+                      {/*<td>*/}
+                      {/*  {order.address}*/}
+                      {/*</td>*/}
                     </tr>
                   )
                 })
@@ -77,7 +77,6 @@ function UserOrdersTable (props) {
 
 
 function mapStateToProps(state) {
-  console.log("el estado con la orde", state.orderStore.ordersUser)
   return {
     ordersUser: state.orderStore.ordersUser,
     userInfo: state.auth.userInfo,

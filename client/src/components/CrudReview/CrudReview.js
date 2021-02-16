@@ -218,8 +218,8 @@ export default function CrudReview(props) {
       }
       if (bandera === 0) sinRev.push(productCompletUno[i])
     }
-    console.log("con", conRev);
-    console.log("sin", sinRev);
+    // console.log("con", conRev);
+    // console.log("sin", sinRev);
 
     setProductWithReview(conRev);
     setProductWithoutReview(sinRev)

@@ -114,7 +114,7 @@
     "login.noAccount": "¿No tienes una cuenta? Regístrate",
     "signin.error": "El Email Ya Esta Registrado, Intente nuevamente con uno diferente",
     "signin.login": "Ya tienes una cuenta? Ingresa aquí",
-    "user.history": "Historial de Compras",
+    "user.history": "Historial de Órdenes",
     "user.number": "Número de Compra",
     "user.address": "Dirección de Envío",
     "user.role": "Perfil",

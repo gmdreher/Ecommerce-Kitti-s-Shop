@@ -18,7 +18,10 @@ module.exports = (sequelize) => {
   isActive:{
     type: DataTypes.BOOLEAN,
     allowNull: false
-  }
+  },
+  // isCaduced:{
+  //   type: DataTypes.BOOLEAN
+  //   },
   });
 };
 

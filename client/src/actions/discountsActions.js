@@ -114,7 +114,7 @@ export const editDiscount = (id, isActive) => async (dispatch, getState) => {
           }
         const descuentosedit = await axios.put(`http://localhost:3001/auth/discount/${id}`, {isActive: isActive});
 
-       console.log(descuentosedit.data)
+    //    console.log(descuentosedit.data)
 
         dispatch({
             type: EDIT_DISCOUNT,

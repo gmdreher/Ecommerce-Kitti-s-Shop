@@ -103,7 +103,7 @@ const [errorContact, setErrorContact] = useState({});
 
     useEffect(()=>{
         if(cartProduct.length<1)return
-        console.log(cartProduct)
+        // console.log(cartProduct)
         dispatch(getUserOrder(cartProduct[0].orderId))
     },[cartProduct])
     
@@ -121,7 +121,7 @@ const [errorContact, setErrorContact] = useState({});
     },[order])
     
     function Meli() {
-        console.log(carrito)
+        // console.log(carrito)
         dispatch( meliPost(carrito , orderId) )
         
     }
@@ -167,15 +167,15 @@ const [errorContact, setErrorContact] = useState({});
     
     
     useEffect(()=>{
-        console.log(descuentos);
+        // console.log(descuentos);
         if(descuentos === undefined || descuentos.length == 0) return 
         let sum = sumaTotal()
         let filtro =descuentos.filter((e)=>e.mount <= sum)
-        console.log("entra?", filtro,sum)
-        if (filtro.length<1) return 
+        // console.log("entra?", filtro,sum)
+        if (filtro.length<1) return //ningun descuento matchea con el monto
 
-        let mayor = filtro.sort((a, b)=> {
-            if (a.mount < b.mount) {
+        let mayor = filtro.sort((a, b)=> {// ordenamos por cual tiene mas descuento
+            if (a.mount < b.mount) {      //ordena de mayor a menor
                 return 1;
             }
             if (a.mount > b.mount) {
@@ -183,14 +183,14 @@ const [errorContact, setErrorContact] = useState({});
             }
             // a must be equal to b
             return 0;
-        })[0]
-        console.log(sum,mayor.percentage)
+        })[0]    //agarra el primer valor 
+        // console.log(sum,mayor.percentage)
         setPorcen(mayor.percentage)
         setDescuento((mayor.percentage*sum)/100)
         
     },[descuentos, cartProduct])
 
-    console.log(descuento)
+    // console.log(descuento)
     
     function handleCosa() {
         cambio()
