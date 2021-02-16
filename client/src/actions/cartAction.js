@@ -14,7 +14,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
     const  MySwal  =  withReactContent (Swal);
     if (!data.userId) {
 
-        const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
+        const res = await axios.get(`/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
         let alreadyExists = false;
         
@@ -96,9 +96,9 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 
                 }
             });
-            const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
+            const res = await axios.post(`/users/${data.userId}/order`, data);
 
-            const prod = await axios.get(`http://localhost:3001/products/${res.data.productId}`)
+            const prod = await axios.get(`/products/${res.data.productId}`)
             let order = {
                 description: prod.data.description, id: prod.data.id,
                 images: prod.data.images, name: prod.data.name,
@@ -158,7 +158,7 @@ export const getProductsCart = (data) => async (dispatch, getState) => {
         try {
             let orderProd = [];
             let order;
-            const res = await axios.get(`http://localhost:3001/users/${data.userId}/order/${data.state}`);
+            const res = await axios.get(`/users/${data.userId}/order/${data.state}`);
 
             // console.log("esto es un acrtaction, res", res)
             const valor = res.data;
@@ -166,7 +166,7 @@ export const getProductsCart = (data) => async (dispatch, getState) => {
                 let dato1 = valor[i].quantity;
                 let userId = data.userId;
                 let orderId = valor[i].orderId
-                let dataprod = await axios.get(`http://localhost:3001/products/${valor[i].productId}`)
+                let dataprod = await axios.get(`/products/${valor[i].productId}`)
                 order = {
                     description: dataprod.data.description, id: dataprod.data.id,
                     images: dataprod.data.images, name: dataprod.data.name,
@@ -203,9 +203,9 @@ export const deleteTotalCart = (data) => async (dispatch, getState) => {
             }
         )
     }
-    const Details = await axios.get(`http://localhost:3001/users/${data.userId}/order/${"carrito"}`);
+    const Details = await axios.get(`/users/${data.userId}/order/${"carrito"}`);
     Details.data && Details.data.map((det) => {
-        axios.delete(`http://localhost:3001/orders/${data.orderId}/${det.productId}`)
+        axios.delete(`/orders/${data.orderId}/${det.productId}`)
             .then(() => {
                 dispatch({
                     type: DELETE_ITEMS_CART,
@@ -213,7 +213,7 @@ export const deleteTotalCart = (data) => async (dispatch, getState) => {
                 });
             })
     })
-    await axios.delete(`http://localhost:3001/users/${data.userId}/order/${data.orderId}`)
+    await axios.delete(`/users/${data.userId}/order/${data.orderId}`)
     dispatch({
         type: DELETE_TOTAL_CART,
         payload: data.orderId
@@ -239,7 +239,7 @@ export const deleteItem = (data) => async (dispatch, getState) => {
                 }
             )
         }
-        const prod = await axios.delete(`http://localhost:3001/orders/${data.orderId}/${data.id}`)
+        const prod = await axios.delete(`/orders/${data.orderId}/${data.id}`)
         dispatch({
             type: DELETE_ITEMS_CART,
             payload: data.id
@@ -269,7 +269,7 @@ export const editQuantity = ({ idUser, productId, quantity, orderId }) => async 
                     }
                 )
             }
-            const res = await axios.put(`http://localhost:3001/orders/${idUser}/cart`, orderBody);
+            const res = await axios.put(`/orders/${idUser}/cart`, orderBody);
 
             cart && cart.forEach((x) => {
 

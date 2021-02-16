@@ -60,9 +60,9 @@ server.post("/", (req, res) => {
             installments: 3  //Cantidad máximo de cuotas
         },
         back_urls: {
-            success: 'http://localhost:3001/mercadopago/response',
-            failure: 'http://localhost:3001/mercadopago/response',
-            pending: 'http://localhost:3001/mercadopago/response',
+            success: '/mercadopago/response',
+            failure: '/mercadopago/response',
+            pending: '/mercadopago/response',
         },
     };
 
