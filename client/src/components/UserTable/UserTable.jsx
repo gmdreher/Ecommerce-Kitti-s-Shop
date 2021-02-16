@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import styles from './UserTable.module.scss';
+import './UserTable.scss';
 import { getUsers, updateToAdmin, bloquearUsers, desbloquearUsers, postResertPassword, updateToUsers } from '../../actions/userAction.js';
 import { Button, Modal, Form, ModalHeader, ModalFooter } from 'reactstrap';
 
@@ -11,7 +11,7 @@ export default function UserTable() {
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-    
+
 
     const [input, setInput] = useState();
 
@@ -114,8 +114,8 @@ export default function UserTable() {
     return (
         <Fragment>
             <br />
-            <h2 className={styles.title}>Perfiles</h2>
-            <div className={"table-responsive " + styles.container}>
+            <h2 className="title3">Perfiles</h2>
+            <div className={"table-responsive " + "containeruse"}>
                 <table className="table table-sm" >
                     <thead>
                         <tr>
@@ -135,19 +135,19 @@ export default function UserTable() {
                                         <td>{info.id}</td>
                                         <td>{info.fullname}</td>
                                         <td>{info.email}</td>
-                                        <td>{info.rol !== "admin" ? <button type="button" className={styles.admin} onClick={() => handlerAdmin(info)}>Usuario</button> :
-                                            <button type="button" className={styles.Noadmin} onClick={() => handlerUsers(info)}>Admin.</button>
+                                        <td>{info.rol !== "admin" ? <button type="button" className="admin" onClick={() => handlerAdmin(info)}>Usuario</button> :
+                                            <button type="button" className="Noadmin" onClick={() => handlerUsers(info)}>Admin.</button>
                                         }
                                         </td>
                                         <td>
                                             {
-                                                info.banned !== true ? <button type="button" className={styles.bloqueo} onClick={() => handlerBloquear(info)}>Bloquear</button> :
-                                                    <button type="button" className={styles.bloqueado} onClick={() => handlerDesbloquear(info)} >Bloqueado</button>
+                                                info.banned !== true ? <button type="button" className="bloqueo" onClick={() => handlerBloquear(info)}>Bloquear</button> :
+                                                    <button type="button" className="bloqueado" onClick={() => handlerDesbloquear(info)} >Bloqueado</button>
                                             }
 
                                         </td>
                                         <td>
-                                            <button type="button" className={styles.reset} onClick={() => handlerResert(info)}>Resetear</button>
+                                            <button type="button" className="reset" onClick={() => handlerResert(info)}>Resetear</button>
                                         </td>
                                     </tr>
                                 )

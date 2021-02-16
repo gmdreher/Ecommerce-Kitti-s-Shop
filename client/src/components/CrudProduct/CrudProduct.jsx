@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup, Label, Input, Form } from 'reactstrap'
-import styles from './crud.module.scss'
+import './crud.scss'
 import { connect } from 'react-redux';
 import { getProducts, getCategories, searchProduct, insertProduct, deleteProduct, editProduct } from '../../actions/productActions'
 class CrudProductForm extends React.Component {
@@ -119,11 +119,7 @@ class CrudProductForm extends React.Component {
                     return true
                 }
             }
-
-
-
         }
-
 
     }
     checkEditClick(cate) {
@@ -145,19 +141,20 @@ class CrudProductForm extends React.Component {
     render() {
         return (
             <>
-                <Container className={styles.container}>
-                    <div>
-                        <h1>Administrar Productos</h1>
-                        <Button color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </Button>
-                    </div>
+                <Container className="containerCrud">
+                    <h1>Administrar Productos</h1>
                     <br />
-                    <FormGroup>
-                        <div>
-                            <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
-                            <Input name='search' type="text" className="col-md-3 mb-3" placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
+                    <div className="unir">
+                        <div className="agregarBuscar">
+                            <Button color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </Button>
                         </div>
-                    </FormGroup>
-
+                        <FormGroup>
+                            <div className="buscarInput">
+                                <Input name='search' type="text" className={"col-md-7 mb-7"} placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
+                                <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
+                            </div>
+                        </FormGroup>
+                    </div>
                     <Table>
                         <thead>
                             <tr>
@@ -188,7 +185,7 @@ class CrudProductForm extends React.Component {
                     </Table>
 
 
-                </Container>
+                </Container >
                 <Modal isOpen={this.state.modalEditar}>
                     <ModalHeader>
                         <div>
@@ -260,25 +257,25 @@ class CrudProductForm extends React.Component {
                         <FormGroup>
                             <Label sm={3}>Nombre</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='name' type='text' onChange={this.handleChange} />
+                                <Input className="input" name='name' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Descripcion</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='description' type="textarea" onChange={this.handleChange} />
+                                <Input className="input" name='description' type="textarea" onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Precio</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='price' type='text' onChange={this.handleChange} />
+                                <Input className="input" name='price' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Stock</Label>
                             <Col sm={20}>
-                                <Input className={styles.input} name='stock' type='text' onChange={this.handleChange} />
+                                <Input className="input" name='stock' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <h4>Categorias</h4>

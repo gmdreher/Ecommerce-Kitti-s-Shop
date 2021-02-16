@@ -1,34 +1,34 @@
-import React, {Fragment, useEffect} from 'react'
-import {Link, useHistory} from 'react-router-dom'
-import {connect} from "react-redux";
-import styles from "../OrderTable/orderTable.module.scss"
+import React, { Fragment, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { connect } from "react-redux";
+// import styles from "../OrderTable/orderTable.module.scss"
 import { getOrdersUser } from "../../actions/orderActions";
 import Moment from "moment";
 
 
 
-function UserOrdersTable (props) {
-  
-  
+function UserOrdersTable(props) {
+
+
   const history = useHistory();
-  
-   useEffect(() =>{
-      props.getOrdersUser(props.userInfo.id)
-   }, [])
-  
+
+  useEffect(() => {
+    props.getOrdersUser(props.userInfo.id)
+  }, [])
+
   const formatDate = (date) => {
     let formatDate = new Moment(date);
     return formatDate.format('DD/MM/YY - HH:mm:ss')
   }
-  
-    return (
-      <Fragment>
-        <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>Volver</div>
-        <h3 className={styles.title}>Historial de Compras</h3>
-        <div className={styles.cont}>
-          <div className="table-responsive" >
-            <table className={"table table-sm " + styles.table} >
-              <thead>
+
+  return (
+    <Fragment>
+      <div onClick={history.goBack} className={" btn btn-light " + "volver"}>Volver</div>
+      <h3 className="title">Historial de Compras</h3>
+      <div className="cont">
+        <div className="table-responsive" >
+          <table className={"table table-sm " + "table"} >
+            <thead>
               <tr>
                 <th scope="col">Número de Compra</th>
                 <th scope="col">Estado</th>
@@ -36,8 +36,8 @@ function UserOrdersTable (props) {
                 <th scope="col">Fecha y hora</th>
                 <th scope="col">Dirección de envío</th>
               </tr>
-              </thead>
-              <tbody >
+            </thead>
+            <tbody >
               {
                 props.ordersUser && props.ordersUser.map(order => {
                   let total = 0;
@@ -67,12 +67,12 @@ function UserOrdersTable (props) {
                   )
                 })
               }
-              </tbody>
-            </table>
-          </div>
+            </tbody>
+          </table>
         </div>
-      </Fragment>
-    )
+      </div>
+    </Fragment>
+  )
 }
 
 
@@ -84,4 +84,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getOrdersUser } )(UserOrdersTable);
+export default connect(mapStateToProps, { getOrdersUser })(UserOrdersTable);

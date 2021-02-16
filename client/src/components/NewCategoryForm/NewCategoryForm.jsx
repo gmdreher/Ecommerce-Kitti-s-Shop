@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
 import { insertCategory, getCategories, editCategory, deleteCategory } from "../../actions/productActions";
-import styles from './newCategoryForm.module.scss'
+import './newCategoryForm.scss';
 
 
 function NewCategoryForm(props) {
@@ -96,9 +96,10 @@ function NewCategoryForm(props) {
   // COMPONENTE
   return (
 
-    <Container className={styles.container}>
+    <Container className="container">
       <h1>Administrar Categorías</h1>
-      <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
+      <br />
+      <button className="buttonFormAdd" onClick={toggle}> + Agregar Categoría</button>
       <br />
       <Table>
         <thead>
@@ -118,10 +119,10 @@ function NewCategoryForm(props) {
               <td>{category.description}</td>
 
               <td>
-                <button className={styles.buttonForm} onClick={() => handleEdit(category)} >Editar</button>
+                <button className="buttonForm" onClick={() => handleEdit(category)} >Editar</button>
               </td>
               <td>
-                <button className={styles.buttonForm} onClick={() => handleDelete(category)}>Borrar</button>
+                <button className="buttonForm" onClick={() => handleDelete(category)}>Borrar</button>
               </td>
             </tr>
           )))}
@@ -144,7 +145,7 @@ function NewCategoryForm(props) {
                 <Label for="name"> Nombre</Label>
                 <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
                 {errors.name && (
-                  <p className={styles.danger}>{errors.name}</p>
+                  <p className="danger">{errors.name}</p>
                 )}
               </FormGroup>
               <FormGroup>
@@ -154,11 +155,11 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <button className={styles.buttonForm} onClick={toggle}>Crear Categoría</button> :
-                <button className={styles.buttonForm} type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+              {errors.name ? <button className="buttonForm" onClick={toggle}>Crear Categoría</button> :
+                <button className="buttonForm" type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
                 >Crear Categoría</button>}
 
-              <button className={styles.buttonForm} onClick={toggle}>Salir</button>
+              <button className="buttonForm" onClick={toggle}>Salir</button>
 
             </ModalFooter>
           </Form>
@@ -178,7 +179,7 @@ function NewCategoryForm(props) {
                 <Label for="name">Nombre</Label>
                 <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
                 {errors.name && (
-                  <p className={styles.danger}>{errors.name}</p>
+                  <p className="danger">{errors.name}</p>
                 )}
               </FormGroup>
               <FormGroup>
@@ -188,8 +189,8 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> : <button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
-              <button className={styles.buttonForm} onClick={toggle2}>Salir</button>
+              {errors.name ? <button onClick={toggle2}>Modificar Categoría</button> : <button className="buttonForm" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>Modificar Categoría</button>}
+              <button className="buttonForm" onClick={toggle2}>Salir</button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -203,8 +204,8 @@ function NewCategoryForm(props) {
             <ModalHeader toggle={toggle3}>¿Estas Seguro?</ModalHeader>
 
             <ModalFooter>
-              <button className={styles.buttonForm} type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
-              <button className={styles.buttonForm} onClick={toggle3}>No</button>
+              <button className="buttonForm" type="submit" onClick={() => handleDeleteModal(input.id)}>Si</button>
+              <button className="buttonForm" onClick={toggle3}>No</button>
             </ModalFooter>
           </Form>
         </Modal>

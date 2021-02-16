@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import style from './product.module.scss';
+import './product.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../actions/productActions.js';
@@ -113,45 +113,45 @@ function Product(props) {
     }
 
     const user = props.user;
-    
-    function addedToCart(){
-    
+
+    function addedToCart() {
+
     }
 
-    function handleClick (data){
+    function handleClick(data) {
         props.addProductCart(
-          user ? {
-            userId:user.id,
-            productId: data.id,
-            price: data.price,
-             quantity: quantity
-          }
-            : {
-            productId: data.id,
-            price: data.price,
-            quantity:quantity
-          }
+            user ? {
+                userId: user.id,
+                productId: data.id,
+                price: data.price,
+                quantity: quantity
+            }
+                : {
+                    productId: data.id,
+                    price: data.price,
+                    quantity: quantity
+                }
         )
-        
-        
+
+
     };
-    
+
     function change(e) {
         setQuantity(e.target.value)
     }
     return (
-        <div className={style.container}>
+        <div className="containerProduct">
             <Link to={`/`}>
-                <button className={style.arrow}>Volver</button>
+                <button className="arrowp">Volver</button>
             </Link>
-            <div className={style.detail}>
-                <div className={style.imagen}>
+            <div className="detailp">
+                <div className="imagenp">
                     <img src={imageUrl} alt="Cargando imagen..." />
                 </div>
-                <div className={style.data}>
+                <div className="datap">
                     <h2>{props.product.name}</h2>
-                    <div className={style.start}>
-                        <h3 className={style.estrellitas}>{ratePromedio(valor)}</h3>
+                    <div className="startp">
+                        <h3 className="estrellitasp">{ratePromedio(valor)}</h3>
 
                     </div>
                     <p><strong>Precio: </strong> ${props.product.price}</p>
@@ -165,16 +165,16 @@ function Product(props) {
                         {props.product.stock < 1 ? <label className='agotado'>Producto Agotado</label> : <label className='stock'>Stock: {props.product.stock}</label>}
                     </form>
                     <div className="butt">
-
+                        <br />
                         {props.product.stock > 0 || props.prodCart.find(x => x.id == props.id) ? <button className="btn btn-outline-dark" onClick={() => handleClick(props.product)}>Agregar a Carrito</button> : null}
-
                     </div>
+                    <br />
                     <p><strong>Descripción: </strong> {props.product.description}</p>
                 </div>
             </div>
-            <section className={style.sectionPrincipal}>
-                <h2>{props.product.Reviews && props.product.Reviews.length > 0 ? <h2 className={style.reseñas}>Reseñas</h2> : <h3 className={style.reseñas}>Este producto aún no tiene reseñas</h3>}</h2>
-                <div className={style.divReview}>
+            <section className="sectionPrincipalp">
+                <h2>{props.product.Reviews && props.product.Reviews.length > 0 ? <h2 className="reseñas">Reseñas</h2> : <h3 className="reseñasp">Este producto aún no tiene reseñas</h3>}</h2>
+                <div className="divReviewp">
 
                     {props.product.Reviews && props.product.Reviews.map((review) => {
 

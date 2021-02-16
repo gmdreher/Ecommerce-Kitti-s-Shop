@@ -1,6 +1,6 @@
 import axios from 'axios';
-import  Swal  from  'sweetalert2';
-import  withReactContent  from  'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import {
     ADD_TO_CART, ADD_TO_CART_LOCALSTORAGE,
     GET_PRODUCT_CART, DELETE_TOTAL_CART,
@@ -11,13 +11,13 @@ import {
 
 
 export const addProductCart = (data) => async (dispatch, getState) => {
-    const  MySwal  =  withReactContent (Swal);
+    const MySwal = withReactContent(Swal);
     if (!data.userId) {
 
         const res = await axios.get(`http://localhost:3001/products/${data.productId}`)
         const cartItems = getState().cart.cartItems.slice();
         let alreadyExists = false;
-        
+
 
         cartItems && cartItems.forEach((x) => {
 
@@ -30,10 +30,10 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                     title: 'El producto ya se encuentra en el carrito',
                     showConfirmButton: false,
                     timer: 1500,
-                    customClass:{
+                    customClass: {
                         title: "alertTitle"
                     }
-                }).then(r =>{} )
+                }).then(r => { })
             }
         });
 
@@ -55,10 +55,10 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                     title: `El producto ${existe.name} fue agregado al carrito`,
                     showConfirmButton: false,
                     timer: 1500,
-                    customClass:{
+                    customClass: {
                         title: "alertTitle"
                     }
-                }).then(r =>{} )
+                }).then(r => { })
             }
         }
 
@@ -93,7 +93,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
             cart && cart.forEach((x) => {
 
                 if (x.id == data.productId) {
-                
+
                 }
             });
             const res = await axios.post(`http://localhost:3001/users/${data.userId}/order`, data);
@@ -112,10 +112,10 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 title: `El producto ${order.name} fue agregado al carrito`,
                 showConfirmButton: false,
                 timer: 1500,
-                customClass:{
+                customClass: {
                     title: "alertTitle"
                 }
-            }).then(r =>{} )
+            }).then(r => { })
             dispatch({
                 type: ADD_TO_CART,
                 payload: order
@@ -128,10 +128,10 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 title: 'El producto ya se encuentra en el carrito',
                 showConfirmButton: false,
                 timer: 1500,
-                customClass:{
+                customClass: {
                     title: "alertTitle"
                 }
-            }).then(r =>{} )
+            }).then(r => { })
             console.log("Error: " + error);
         }
     }
