@@ -1,10 +1,9 @@
 import React from "react";
 import styles from "./orderDetails.module.scss"
-import { connect } from 'react-redux';
-import { getUserOrder, updateStateOrder, getOrdersUser } from "../../actions/orderActions";
+import {connect} from 'react-redux';
+import {getUserOrder, updateStateOrder, getOrdersUser} from "../../actions/orderActions";
 import Moment from "moment";
-import { Link } from 'react-router-dom'
-
+import {Link} from 'react-router-dom'
 
 
 class OrderDetailsTable extends React.Component {
@@ -38,6 +37,7 @@ class OrderDetailsTable extends React.Component {
       editing: true
     })
   }
+  
   handleChange = event => {
     this.setState({
       OrderState: event.target.value,
@@ -56,8 +56,9 @@ class OrderDetailsTable extends React.Component {
     
   }
   
-  render(){
+  render() {
     let priceOrder = [];
+    
     function getPriceOrder() {
       if (priceOrder.length > 0) {
         let total = 0;
@@ -67,8 +68,8 @@ class OrderDetailsTable extends React.Component {
         return total.toFixed(2);
       }
     }
-  
-    let { id, state, createdAt, userId, products, address } = this.props.order;
+    
+    let {id, state, createdAt, userId, products, address, discount} = this.props.order;
     
     return (
       <div className={styles.container}>
@@ -82,58 +83,60 @@ class OrderDetailsTable extends React.Component {
             {
               this.props.userInfo.rol === 'admin' ?
                 <tr>
-                <th className={styles.letterLeft} scope="row">Id de Usuario:</th>
-                <td className={styles.letterhead}>{userId}</td>
-              </tr> : ''
+                  <th className={styles.letterLeft} scope="row">Id de Usuario:</th>
+                  <td className={styles.letterhead}>{userId}</td>
+                </tr> : ''
             }
             
             <tr>
               <th scope="row" className={'mr-3 ' + styles.letterLeft}>Estado de la orden:</th>
-              <td className={styles.letterhead}><div>{this.state.editing? " " :state}</div>
+              <td className={styles.letterhead}>
+                <div>{this.state.editing ? " " : state}</div>
                 {
                   this.props.userInfo.rol === 'admin' ?
-                <div className={styles.editar} onClick={this.handleState}>
-                  {this.state.editing? (
-                    <form onSubmit={this.handleSubmit}>
-                      <div className="row">
-                        <div className="col-7 col-sm-6">
-                          <label className={styles.inlineLabel}>Elige un estado</label>
-                          <select  name="state" id="state" value={this.state.OrderState} onChange={this.handleChange}>
-                            <option value="carrito">En carrito</option>
-                            <option value="creada">Creada</option>
-                            <option value="procesando">Procesando</option>
-                            <option value="confirmada">Confirmada</option>
-                            <option value="cancelada">Cancelada</option>
-                            <option value="enviada">Enviada</option>
-                            <option value="completa">Completa</option>
-                          </select>
-                        </div>
-                        <div className ={"col-5  col-sm-6 pl-sm-0 " + styles.aceptar}>
-                          <input
-                            className={styles.btnExtraSmall + " btn btn-sm"}
-                            type="submit"
-                            value="Aceptar"
-                          />
-                        </div>
-                      </div>
-                    </form>
-                  ) : <div className="btn-sm "><i title="Editar" className={"fas fa-edit " + styles.icon}/></div>
-                  }
-                </div>: ''
+                    <div className={styles.editar} onClick={this.handleState}>
+                      {this.state.editing ? (
+                        <form onSubmit={this.handleSubmit}>
+                          <div className="row">
+                            <div className="col-7 col-sm-6">
+                              <label className={styles.inlineLabel}>Elige un estado</label>
+                              <select name="state" id="state" value={this.state.OrderState}
+                                      onChange={this.handleChange}>
+                                <option value="carrito">En carrito</option>
+                                <option value="creada">Creada</option>
+                                <option value="procesando">Procesando</option>
+                                <option value="confirmada">Confirmada</option>
+                                <option value="cancelada">Cancelada</option>
+                                <option value="enviada">Enviada</option>
+                                <option value="completa">Completa</option>
+                              </select>
+                            </div>
+                            <div className={"col-5  col-sm-6 pl-sm-0 " + styles.aceptar}>
+                              <input
+                                className={styles.btnExtraSmall + " btn btn-sm"}
+                                type="submit"
+                                value="Aceptar"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      ) : <div className="btn-sm "><i title="Editar" className={"fas fa-edit " + styles.icon}/></div>
+                      }
+                    </div> : ''
                 }
               </td>
             </tr>
             <tr>
-              <th className={styles.letterLeft} scope="row" >Numero de orden:</th>
+              <th className={styles.letterLeft} scope="row">Numero de orden:</th>
               <td className={styles.letterhead}>{id}</td>
             </tr>
             <tr>
-              <th className={styles.letterLeft} scope="row" >Dirección de envío:</th>
+              <th className={styles.letterLeft} scope="row">Dirección de envío:</th>
               <td className={styles.letterhead}>{address}</td>
             </tr>
             <tr>
               <th className={styles.letterLeft}>Productos:</th>
-              <th> </th>
+              <th></th>
             </tr>
             </tbody>
           </table>
@@ -144,16 +147,18 @@ class OrderDetailsTable extends React.Component {
               let quantity = product.OrderDetails.quantity;
               let subTot = product.price * quantity;
               priceOrder.push(subTot);
-          
-              return <div className={"mb-1 " + styles.divProducts1} >
+              
+              return <div className={"mb-1 " + styles.divProducts1}>
                 <div className={styles.image}>
-                  <img className={styles.imgResponsive} src={product.images ? product.images[0].url : ''} alt="Cargando imagen..." />
+                  <img className={styles.imgResponsive} src={product.images ? product.images[0].url : ''}
+                       alt="Cargando imagen..."/>
                 </div>
                 <div className={styles.quantity}>
                   <span className={styles.fontSize}>{quantity}</span>
                 </div>
                 <div className={styles.name}>
-                  <span className={"ml-3 " + styles.fontSize}><Link to={`/products?search=${product.name}`}>{product.name}</Link></span>
+                  <span className={"ml-3 " + styles.fontSize}><Link
+                    to={`/products?search=${product.name}`}>{product.name}</Link></span>
                 </div>
                 <div className={styles.price}>
                   <span className={styles.fontSize}>${product.price} </span>
@@ -164,24 +169,60 @@ class OrderDetailsTable extends React.Component {
               </div>
             })
           }
-        <div className={styles.ctnTotal}>
-          <div className={styles.totalTable}>
-            <span className="grupo">Total a pagar: </span>
-            <div className="grupo">
-              <span className={'ml-3 ' + styles.fontSizeTotal}>${getPriceOrder()}</span>
-            </div>
-          </div>
-        </div>
+          {
+            discount !== 0
+              ?
+              <div className={styles.ctnTotal}>
+                <div className={styles.totalTable}>
+                  <table className="table table-striped table-sm">
+                    <tr>
+                      <th className={styles.fontTotales} scope="row">Subtotal:</th>
+                      <td className={styles.fontTotales} >${getPriceOrder()}</td>
+                    </tr>
+                    <tr>
+                      <th className={styles.fontTotales} scope="row">Descuento:</th>
+                      <td className={styles.fontTotales} >{discount}%</td>
+                    </tr>
+                    <tr className={styles.total}>
+                      <th scope="row">Total:</th>
+                      <td>${(getPriceOrder() - (getPriceOrder() * discount / 100)).toFixed(2)}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              :
+              <div className={styles.ctnTotal}>
+                <div className={styles.totalTable}>
+                  <table className="table">
+                    <tr>
+                      <th scope="row" className={styles.fontTotales}>Subtotal:</th>
+                      <td className={styles.fontTotales}>${getPriceOrder()}</td>
+                    </tr>
+                    <tr>
+                      <th className={styles.fontTotales} scope="row">Descuento:</th>
+                      <td className={styles.fontTotales} >{discount}%</td>
+                    </tr>
+                    <tr className={styles.total}>
+                      <th scope="row">Total:</th>
+                      <td>${(getPriceOrder() - (getPriceOrder() * discount / 100)).toFixed(2)}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+          }
+        
         </div>
       </div>
-      
+    
     )
   }
 }
+
 function mapStateToProps(state) {
   return {
     order: state.orderStore.order,
     userInfo: state.auth.userInfo
   }
 }
-export default connect( mapStateToProps, { getUserOrder, updateStateOrder, getOrdersUser })(OrderDetailsTable);
+
+export default connect(mapStateToProps, {getUserOrder, updateStateOrder, getOrdersUser})(OrderDetailsTable);

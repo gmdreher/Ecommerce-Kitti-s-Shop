@@ -24,7 +24,7 @@ function UserOrdersTable (props) {
     return (
       <Fragment>
         <div onClick={history.goBack} className={" btn btn-light " + styles.volver}>Volver</div>
-        <h3 className={styles.title}>Historial de Compras</h3>
+        <h3 className={styles.title}>Historial de Órdenes</h3>
         <div className={styles.cont}>
           <div className="table-responsive" >
             <table className={"table table-sm " + styles.table} >
@@ -77,7 +77,6 @@ function UserOrdersTable (props) {
 
 
 function mapStateToProps(state) {
-  console.log("el estado con la orde", state.orderStore.ordersUser)
   return {
     ordersUser: state.orderStore.ordersUser,
     userInfo: state.auth.userInfo,
