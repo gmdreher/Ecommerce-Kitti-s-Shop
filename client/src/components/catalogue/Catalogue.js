@@ -37,10 +37,11 @@ export default function Catalogue() {
         setProductosPaginados(products.slice(pagina * productsPerPage - productsPerPage, pagina * productsPerPage))
 
     }, [pagina, products, productsPerPage])
+
     function handlePage(arg){
-        console.log(paginasDisponibles)
+        // console.log(paginasDisponibles)
         if(arg==="left"){
-            console.log(pagina);
+            // console.log(pagina);
             if(pagina>1) {
                 setPagina(pagina-1)}
         }

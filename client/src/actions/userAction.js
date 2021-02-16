@@ -5,7 +5,7 @@ import {
     POST_USER, ADD_TO_CART, LOGIN_USER, LOGOUT_USER,
     USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, GET_USER, UPDATE_USER,
     UPDATE_PROMOTE, GET_USER_BY_ID, UPDATE_PASSWORD, POST_RESERT_PASSWORD,
-    FORGOT_PASSWORD, POST_USER_FAILED, FORGOT_PASSWORD_FAIL, FORGOT_PASSWORD_SUCCESS
+    FORGOT_PASSWORD, POST_USER_FAILED, FORGOT_PASSWORD_FAIL, FORGOT_PASSWORD_SUCCESS, DELETE_CART_LS
 } from '../constants/productConstants.js';
 
 export const getUsers = () => async (dispatch, getState) => {
@@ -346,6 +346,7 @@ export const loginUserFacebook = (data, getState) => {
 export const logoutUser = () => (dispatch) => {
     localStorage.clear();
     dispatch({ type: LOGOUT_USER })
+    dispatch({ type: DELETE_CART_LS })
 }
 
 export const getUserById = (id) => async (dispatch, getState) => {
