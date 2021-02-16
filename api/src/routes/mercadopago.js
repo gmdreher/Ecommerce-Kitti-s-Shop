@@ -12,7 +12,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 // Agrega credenciales
 mercadopago.configure({
-    access_token: "APP_USR-776301935377062-021020-49372b765aa3e7903bf716a40fd2187f-713776233",
+    access_token: process.env.MERCADO_PAGO_TOKEN,
     sandbox: true
 });
 
@@ -136,7 +136,7 @@ server.get("/response", async (req, res) => {
         
         
         .then(() => {
-            res.status(200).redirect("http://localhost:3000/mercadopago/success")
+            res.status(200).redirect(`${process.env.APP_URL}/mercadopago/success`)
                 })
                 .catch(error => {
                 res.status(400).send(`Error ${error}`);
@@ -151,14 +151,14 @@ server.get("/response", async (req, res) => {
                 order.save()
                     .then((err) => {
                         console.error('error al salvar', err)
-                        return res.redirect(`http://localhost:3000/mercadopago/failed`)
+                        return res.redirect(`${process.env.APP_URL}/mercadopago/failed`)
                     })
             }
 
         })
         .catch(err => {
             console.error('error al buscar', err)
-            return res.redirect(`http://localhost:3000/`)
+            return res.redirect(`${process.env.APP_URL}`)
         })
 })
 
