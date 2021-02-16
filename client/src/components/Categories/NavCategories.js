@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from 'react-router-dom';
 import Categories from "./Categories";
 import './NavCategories.scss';
+import Theme from '../../Theme.js';
 
 
 export default function NavCategories() {
@@ -19,6 +20,7 @@ export default function NavCategories() {
           <NavLink className="nameCategory" to="/products/category/accesorios" >Accesorios</NavLink>
           <NavLink className="nameCategory" to="/products/category/merchandising" >Cat lovers</NavLink>
           <NavLink className="nameCategory" exact to="/products" >Ver todo</NavLink>
+          <Theme />
         </li>
       </nav>
     </div>

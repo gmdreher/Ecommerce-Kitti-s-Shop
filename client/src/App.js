@@ -31,12 +31,12 @@ import './Styles/App.scss'
 import './App.scss';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import GlobalDiscount from './components/Discount/GlobalDiscount';
-
 import UserOrdersTable from "./components/UserProfile/UserOrdersTable";
-import Theme from './Theme';
 
 
 function App() {
+
+
 
   const user = useSelector(store => store.auth.userInfo);
   return (

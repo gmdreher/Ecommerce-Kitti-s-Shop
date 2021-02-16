@@ -42,8 +42,8 @@
     }
 
     
-.containerC{
-    background-color: white;
+  .containerC{
+    // background-color: white;
     display: flex;
     border: 1px solid rgb(233, 185, 83);
     box-shadow: 2px 2px 3px rgb(175, 128, 56);
@@ -61,9 +61,7 @@
                       width: 20px;
                 }
             }
-}
-   
-
+        
 
     button {
         background-color: rgb(255, 255, 255);
@@ -81,17 +79,7 @@
     
       }
 
-
-    //   Table {
-    //     border: 1px solid rgb(233, 185, 83);
-    //     box-shadow: 2px 2px 3px rgb(175, 128, 56);
-    //     border-radius: 15px;
-    //     width: auto;
-    //     align-self: center;
-    //     margin: 50px;
-    //     margin-bottom: 5%;
-    //   }
-
+    }
 }
 
 

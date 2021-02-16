@@ -8,25 +8,25 @@ import '../PayCart/PayCart.scss';
 export default function PayCart(props) {
 
     // console.log("Paycartrttttttttttt", props);
-  const dispatch= useDispatch()
-const history = useHistory()
+    const dispatch = useDispatch()
+    const history = useHistory()
 
-const cambio= async ()=>{
-    
-    if(props.dato3 == null) {
-        return history.push("/auth/login")
+    const cambio = async () => {
+
+        if (props.dato3 == null) {
+            return history.push("/auth/login")
+        }
+        else if (props.dato2 && props.dato2 !== undefined) {
+            let state = "creada";
+            let num = props.dato2[0].orderId;
+
+            //await dispatch(updateStateOrder( num, state )) //*/*********************** */
+            return history.push("/CheckOut/")
+        }
     }
-    else if (props.dato2 && props.dato2 !== undefined) {
-        let state = "creada";
-        let num = props.dato2[0].orderId;
-          
-        //await dispatch(updateStateOrder( num, state )) //*/*********************** */
-        return history.push("/CheckOut/")
-    }
-}
 
     return (
-        <div className="contenedor">
+        <div className="contenedorPay">
             <h5>Total a pagar </h5>
             <br />
             <div className="juntar">
@@ -38,9 +38,9 @@ const cambio= async ()=>{
                 </div>
             </div>
             <div className="pagar">
-         
-                <button disabled={props.dato2.length<1?true:false}  onClick={cambio}>Finalizar Pago</button>
-              
+
+                <button disabled={props.dato2.length < 1 ? true : false} onClick={cambio}>Finalizar Pago</button>
+
             </div>
         </div>
 

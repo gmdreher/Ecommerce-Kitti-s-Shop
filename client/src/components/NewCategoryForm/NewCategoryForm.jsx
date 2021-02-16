@@ -99,11 +99,11 @@ function NewCategoryForm(props) {
   return (
     <Container>
       <br />
-      <h2 className="title">Administrar Categorías</h2>
+      <h2 className="titleCategory">Administrar Categorías</h2>
       <br />
       <button className="buttonFormAdd" onClick={toggle}> + Agregar Categoría</button>
       <br />
-      <div className={"table-responsive " + "container"}>
+      <div className={"table-responsive " + "containerCategory"}>
         <table className="table table-sm">
           <thead>
             <tr>

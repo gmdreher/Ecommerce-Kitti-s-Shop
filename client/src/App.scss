@@ -3,6 +3,7 @@ main {
     background-image: url("./img/fondo.png");
 }
 
+
 //Clase de las alertas del carrito
 .alertTitle{
     font-size: 20px;
@@ -63,11 +64,19 @@ body.dark-mode {
     i {
       color: white;
     }
+    .hideWhenMobile {
+      color:white;
+    }
   }
 
-  .container {
+  .titleCategory {
+    color:white;
+  }
+  .containerCategory {
     background-color: $bg-dark-mode;
     color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    box-shadow: none;
     
     .buttonForm {
       background-color: $bg-dark-mode;
@@ -117,6 +126,12 @@ body.dark-mode {
   .catalogue { 
     .titleH2 {
       background-color: $bg-dark-mode;
+      color:white;
+    }
+    .selectContainer {
+      label {
+        color: white;
+      }
     }
   }
 
@@ -190,6 +205,10 @@ body.dark-mode {
   }
 
   .containerCrud{
+    background-color: $bg-dark-mode;
+    h1 {
+      color: white;
+    }
   .unir {
     button {
       background-color: $bg-dark-mode;
@@ -213,6 +232,14 @@ body.dark-mode {
       color: white;
     }
     }
+
+    .containerC {
+      border: 1px solid #ffffff;
+      color: white;
+      box-shadow: none;    
+  
+    }
+  
   }
 
 
@@ -244,12 +271,72 @@ body.dark-mode {
       color:white;
     }
   }
+  
 }
 
 .main-Footer {
   background: $secundario;
   color: rgb(168, 168, 168);
 }
+
+
+.containerRe {
+  background-color: $bg-dark-mode;
+  color: white;
+  
+}
+
+.contain {
+   h2 {
+     color: white;
+   }
+
+   .abc {
+    background-color: $bg-dark-mode;
+    box-shadow: none;
+    border: 1px solid #ffffff;
+   }
+
+   .soporte {
+     .borrar {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+     }
+     .borrar:hover{
+       
+        background-color:$click;
+        color: black;
+     }
+   }
+
+   .contenedorPay {
+    background-color: $bg-dark-mode;
+    box-shadow: none;
+    border: 1px solid #ffffff;
+    color: white;
+
+      button {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+      box-shadow: none;
+      }
+
+      button:hover{
+        background-color:$click;
+        color: black;
+     }
+   }
+}
+
+.containerDiscout {
+  background-color: $bg-dark-mode;
+  h1 {
+    color: white;
+  }
+}
+
 
 
 

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import './Theme.scss';
+
 
 const ThemeChanger = () => {
     const [themeState, setThemeState] = useState(false);
@@ -19,7 +21,7 @@ const ThemeChanger = () => {
     })
     return (
         <div>
-            <button onClick={handleChange}>{themeState ? 'Light Mode' : 'Dark Mode'}</button>
+            <button className="theme" onClick={handleChange}>{themeState ? <i class="far fa-sun"></i> : <i class="fas fa-moon"></i>}</button>
         </div>
     )
 }
