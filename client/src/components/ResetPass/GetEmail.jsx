@@ -7,11 +7,12 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Modal, ModalHeader} from 'reactstrap'
-import { connect } from 'react-redux'
-import { forgotPassword } from '../../actions/userAction'
-import { useHistory } from 'react-router-dom'
-import styles from './resetPass.module.scss'
+import {Modal, ModalHeader} from 'reactstrap';
+import { connect } from 'react-redux';
+import { forgotPassword } from '../../actions/userAction';
+import { useHistory } from 'react-router-dom';
+import styles from './resetPass.module.scss';
+import {useTranslation} from 'react-i18next';
 
 function Copyright() {
 
@@ -68,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 };
 
  function GetEmail(props) {
+  const {t} = useTranslation();
   const classes = useStyles();
   const history = useHistory()
   
@@ -157,21 +159,21 @@ const handleSend = async function (email) {
               variant="contained"
               disabled
               >
-              Enviar
+              {t("email.send")}
           </Button> 
               : props.error === true ?
               <Container  className={props.className}>
         
-        <div className={classes.paper}><strong>Este usuario no se encuentra registrado!</strong></div>
+        <div className={classes.paper}><strong>{t("email.noSignIn")}</strong></div>
      
               <div>
                 <div className={classes.row}>
                 <Link to="/"> 
-                <div className={styles.link}><strong>Inicio</strong></div></Link>
+                <div className={styles.link}><strong>{t("email.home")}</strong></div></Link>
                 </div>
                 <div className={classes.row}>
                 <Link to="/user/signup"> 
-                <div className={styles.link}> <strong>Regístrate</strong></div></Link>
+                <div className={styles.link}> <strong>{t("user.signIn")}</strong></div></Link>
                 </div>
               </div>
              
@@ -179,11 +181,11 @@ const handleSend = async function (email) {
            : props.error === false ?
            <Container className={props.className}>
         
-           <div className={classes.paper}><strong>Correo enviado! Sigue las instrucciones para cambiar tu contraseña</strong></div>
+           <div className={classes.paper}><strong>{t("email.emailSend")}</strong></div>
   
             <div className={classes.paper}>
              <Link to="/" > 
-             <div className={styles.link}> <strong>Inicio</strong></div></Link>
+             <div className={styles.link}> <strong>{t("email.home")}</strong></div></Link>
              </div>
              <br/>
              <Button
@@ -191,7 +193,7 @@ const handleSend = async function (email) {
               fullWidth
               variant="contained"
               disabled>
-              Enviar
+              {t("email.send")}
           </Button> 
          
        </Container>
@@ -203,7 +205,7 @@ const handleSend = async function (email) {
               variant="contained"   
               onClick={() => handleSend({email: input.email})}
               className={classes.submit}>
-              Enviar
+              {t("email.send")}
           </Button>
             }
             

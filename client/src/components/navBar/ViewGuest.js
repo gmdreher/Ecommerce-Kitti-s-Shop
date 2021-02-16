@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import styles from './viewUser_Guest.module.scss'
 import { Link } from 'react-router-dom'
 import Badge from '@material-ui/core/Badge';
+import {useTranslation} from 'react-i18next';
 
 
 export default function ViewGuest () {
-  
+  const {t} = useTranslation();
   const cartProduct = useSelector(store => store.cart.cartItems) 
  
  useEffect(() => {
@@ -34,11 +35,11 @@ return (
           </button>
           <ul className="dropdown-menu " aria-labelledby="dropdownMenuButton">
             <Link to={'/user/signup'} className="dropdown-item">
-              Registrarse
+              {t("user.signIn")}
               <li><a className="dropdown-item" href="#"/></li>
             </Link>
             <Link to={'/auth/login'} className="dropdown-item">
-              Iniciar sesión
+             {t("logIn")}
               <li><a className="dropdown-item" href="#"/></li>
             </Link>
           </ul>
@@ -64,13 +65,13 @@ return (
           <ul className={"dropdown-menu dropdown-menu-end " + styles.dropdownList} aria-labelledby="dropdownMenuButton">
             <li>
               <Link to={'/user/signup'} className="dropdown-item">
-                Registrarse
+               {t("user.signIn")}
               </Link>
               
             </li>
             <li>
               <Link to={'/auth/login'} className="dropdown-item">
-                Iniciar sesión
+              {t("user.logIn")}
               </Link>
             </li>
           </ul>

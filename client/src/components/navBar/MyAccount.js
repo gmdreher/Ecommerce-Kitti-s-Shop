@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
+import {useTranslation} from 'react-i18next';
 
 
 
 function MyAccount (props) {
+  const {t} = useTranslation();
   
   const history = useHistory();
   const logOutHandler = () => {
@@ -32,13 +34,13 @@ function MyAccount (props) {
         <ul className={"dropdown-menu dropdown-menu-end " + styles.dropdownList} aria-labelledby="dropdownMenuButton">
           <li>
             <Link to="/users/me" className="dropdown-item">
-              Mi cuenta
+              {t("myAccount")}
             </Link>
           </li>
           <li>
             <Link to="#" className="dropdown-item">
               <div onClick={logOutHandler}>
-                Cerrar sesión
+              {t("signOut")}
               </div>
             </Link>
           </li>

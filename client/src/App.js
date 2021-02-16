@@ -38,7 +38,7 @@ import UserOrdersTable from "./components/UserProfile/UserOrdersTable";
 
 
 function App() {
-
+  
   const user = useSelector(store => store.auth.userInfo);
   return (
     <BrowserRouter>

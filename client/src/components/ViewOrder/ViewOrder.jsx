@@ -5,10 +5,11 @@ import { getProductsCart, deleteTotalCart, removeFromCartLS, editQuantity, delet
 import PayCart from '../PayCart/PayCart.jsx';
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-
+import {useTranslation} from 'react-i18next';
 
 
 export default function ViewOrder(props) {
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const  MySwal  =  withReactContent (Swal);
 
@@ -124,7 +125,7 @@ export default function ViewOrder(props) {
 
         <div className="contain" >
             <div className="titulo">
-                <h2>Pedidos de tu carrito</h2>
+                <h2>{t("order.cart")}</h2>
 
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
@@ -187,7 +188,7 @@ export default function ViewOrder(props) {
                 </div>
                 <br />
                 <div className="soporte">
-                    <button className="borrar" onClick={!user ? () => deleteLS() : () => deleteCart()}> Vaciar carrito </button>
+                    <button className="borrar" onClick={!user ? () => deleteLS() : () => deleteCart()}> {t("order.delete")} </button>
                 </div>
             </div>
             <div className="parte-dos">

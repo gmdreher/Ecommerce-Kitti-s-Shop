@@ -11,7 +11,9 @@ export default function ViewUser () {
   let cartProduct = useSelector(store => store.product.cart);
 
   useEffect(() => {
+    
   }, [cartProduct])
+  
 
   return (
     <Fragment>

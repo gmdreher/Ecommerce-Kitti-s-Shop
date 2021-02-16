@@ -16,6 +16,8 @@ import { connect } from 'react-redux'
 import { postUser } from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
 import styles from './signUp.module.scss'
+import {useTranslation} from 'react-i18next';
+
 
 function Copyright() {
 
@@ -79,6 +81,7 @@ function validate(input) {
 };
 
 function SignUp(props) {
+  const {t} = useTranslation();
   const classes = useStyles();
   const history = useHistory()
   
@@ -121,13 +124,13 @@ function SignUp(props) {
     <div className={'container ' + styles.globalContainer}>
         <div className={styles.formContainer}>
 
-        <h2 className={styles.title}>Regístrate</h2>
+        <h2 className={styles.title}>{t("user.signIn")}</h2>
     
       <Container maxWidth="xs">
         <div className={classes.paper}>
           <form onSubmit={(e) => regUser(e)}>
           { props.signUpFailed && <div className="alert alert-danger" role="alert">
-            <p>El Email Ya Esta Registrado, Intente nuevamente con uno diferente.</p>
+            <p>{t("signin.error")}</p>
           </div>
           }
             <Grid container spacing={2}>
@@ -189,7 +192,7 @@ function SignUp(props) {
             <Grid container justify="flex-end">
               <Link to='/auth/login'>
               <Grid item >
-                  Ya tienes una cuenta? Ingresa aquí
+                 {t("signin.login")}
               </Grid>
               </Link>
             </Grid>

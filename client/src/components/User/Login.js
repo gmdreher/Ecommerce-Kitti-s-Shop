@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
+import {useTranslation} from 'react-i18next';
 
 const validate = (input) => {
   let errors = {};
@@ -29,6 +30,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const loginFailed = useSelector(store => store.auth.loginFailed)
   const userState = useSelector(store => store.auth.userInfo)
+  const {t} = useTranslation();
   
   
   const handleSubmit = (event) => {
@@ -66,14 +68,14 @@ export default function Login() {
   return (
     <div className={'container ' + styles.globalContainer}>
       <div className={styles.formContainer}>
-        <h2 className={styles.title}>Iniciar sesión</h2>
+        <h2 className={styles.title}>{t("user.logIn")}</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           { loginFailed && <div className="alert alert-danger" role="alert">
-            Los datos ingresados son incorrectos. Por favor, intente de nuevo.
+            {t("login.error")}
           </div>
           }
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">*Correo electrónico</label>
+            <label htmlFor="exampleInputEmail1" className="form-label">{t("login.email")}</label>
             <input
               type="email"
               name="email"
@@ -89,7 +91,7 @@ export default function Login() {
           <div className="mb-3">
             <label
               htmlFor="exampleInputPassword1"
-              className="form-label">*Contraseña
+              className="form-label">{t("login.password")}
             </label>
             <input
               type="password"
@@ -104,21 +106,21 @@ export default function Login() {
             {errors.password && (<p className="invalid-feedback">{errors.password}</p>)}
           </div>
           <Link to="/user/getEmail/">
-            <div className="form-text" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</div>
+            <div className="form-text" title="¿Olvidaste tu contraseña?">{t("login.forgot")}</div>
           </Link>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-            <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
+            <button type="submit" className={"btn " + styles.btnText}>{t("user.logIn")}</button>
             <a href="http://localhost:3001/auth/google" type="submit" className={"btn " + styles.btnGoogle}>
               <img className={styles.imgGoogle} src="https://img.icons8.com/color/48/000000/google-logo.png" alt=""/>
-              &nbsp;&nbsp;&nbsp;Iniciar sesión con Google</a>
+              &nbsp;&nbsp;&nbsp;{t("login.google")}</a>
             <a href={`http://localhost:3001/auth/facebook`} type='submit' className={"btn " + styles.btnFacebook}>
               <i className={"fab fa-facebook-f " + styles.imgFacebook}/>&nbsp;
-              Iniciar sesión con Facebook
+              {t("login.facebook")}
             </a>
           </div>
         </form>
         <Link to="/user/signup">
-          <div className={"form-text " + styles.linkRegistrarte} title="Regístrate">¿No tienes una cuenta? Regístrate
+          <div className={"form-text " + styles.linkRegistrarte} title="Regístrate">{t("login.noAccount")}
           </div>
         </Link>
       </div>

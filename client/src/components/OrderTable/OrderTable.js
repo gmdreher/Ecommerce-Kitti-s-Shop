@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import styles from './orderTable.module.scss'
 import { Link } from "react-router-dom";
 import Moment from 'moment';
+import {useTranslation} from 'react-i18next';
 
 
 
 function OrderTable (props) {
-  
+  const {t} = useTranslation();
   const [orderStates, setOrderStates] = useState('')
 
   
@@ -30,19 +31,19 @@ function OrderTable (props) {
     return (
       <Fragment>
         <br />
-        <h2 className={styles.title}>Ordenes de Usuario:</h2>
+        <h2 className={styles.title}>{t("admin.Orders.dots")}</h2>
         <div className={styles.select}>
           <div>
-            <label>Filtrar por estado </label> &nbsp;
+            <label>{t("order.state.filter")} </label> &nbsp;
             <select  name="state" id="state" value={orderStates} onChange={filteredOrders}>
-              <option value="">Todas</option>
-              <option value="carrito">En carrito</option>
-              <option value="creada">Creada</option>
-              <option value="procesando">Procesando</option>
-              <option value="confirmada">Confirmada</option>
-              <option value="cancelada">Cancelada</option>
-              <option value="enviada">Enviada</option>
-              <option value="completa">Completa</option>
+              <option value="">{t("order.state.all")}</option>
+              <option value="carrito">{t("order.onCart")}</option>
+              <option value="creada">{t("order.created")}</option>
+              <option value="procesando">{t("order.processing")}</option>
+              <option value="confirmada">{t("order.confirmed")}</option>
+              <option value="cancelada">{t("order.cancelled")}</option>
+              <option value="enviada">{t( "order.sended")}</option>
+              <option value="completa">{t("order.completed")}</option>
             </select>
           </div>
         </div>
@@ -51,13 +52,13 @@ function OrderTable (props) {
           <table className={"table table-sm " + styles.table} >
             <thead>
               <tr>
-                <th className={styles.th} scope="col">Número de Compra</th>
-                <th className={styles.th} scope="col">Id del Usuario</th>
+                <th className={styles.th} scope="col">{t("order.number")}</th>
+                <th className={styles.th} scope="col">{t("order.userId")}</th>
                 <th className={styles.th} scope="col">
-                 Estados
+                {t("discounts.phase")}
                 </th>
-                <th className={styles.th} scope="col">Monto</th>
-                <th className={styles.th} scope="col">Fecha y hora</th>
+                <th className={styles.th} scope="col">{t("discounts.amount")}</th>
+                <th className={styles.th} scope="col">{t("order.time")}</th>
               </tr>
             </thead>
             <tbody >

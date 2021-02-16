@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Search() {
 
+   
     const [input, setInput] = useState({ search: '' })
     const dispatch = useDispatch();
     const history = useHistory();

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect, useDispatch, useSelector } from "react-redux";
-
+import {useTranslation} from 'react-i18next';
 import styles from './globalDiscount.module.scss'
 import { addDiscount, editDiscount, getDiscount } from '../../actions/discountsActions';
 import Moment from 'moment';
 
 
 export default function GlobalDiscount() {
-  
+  const {t} = useTranslation();
   
   const dispatch= useDispatch()
   const descuentos = useSelector((store) => store.auth.discounts);
@@ -76,18 +76,18 @@ console.log("entra al handle add", data)
   return (
 
     <Container className={styles.container}>
-      <h1>Descuentos</h1>
-      <button className={styles.buttonFormAdd} onClick={toggle}> Agregar Descuento</button>
+      <h1>{t("discounts")}</h1>
+      <button className={styles.buttonFormAdd} onClick={toggle}> {t("discounts.addDiscount")}</button>
       <br/>
       <Table>
         <thead>
           <tr>
             <th>#</th>
-            <th>Monto</th>
-            <th>Porcentaje</th>
-            <th>Fecha de creacion</th>
-            <th>Duración</th>
-            <th>Estado</th>
+            <th>{t("discounts.amount")}</th>
+            <th>{t("discounts.percentage")}</th>
+            <th>{t("discounts.date")}</th>
+            <th>{t("discounts.durationDays")}</th>
+            <th>{t("discounts.phase")}</th>
 
           </tr>
         </thead>
@@ -114,30 +114,30 @@ console.log("entra al handle add", data)
       <div>
         <Modal isOpen={modal} toggle={toggle} >
           <Form onSubmit={e=> e.preventDefault()}>
-            <ModalHeader toggle={toggle}>Nuevo Descuento</ModalHeader>
+            <ModalHeader toggle={toggle}>{t("discounts.newDiscount")}</ModalHeader>
             <ModalBody>
 
               <FormGroup>
-                <Label for="monto"> Monto</Label>
+                <Label for="monto">{t("discounts.amount")}</Label>
                 <Input type="number" name="monto" id='monto' value={input.monto} onChange={handleInputChange} />
                
               </FormGroup>
 
               <FormGroup>
-                <Label for="porcentaje"> Porcentaje</Label>
+                <Label for="porcentaje">{t("discounts.percentage")}</Label>
                 <Input type="number" name="porcentaje" id='porcentaje' value={input.porcentaje} onChange={handleInputChange} />
                
               </FormGroup>
               <FormGroup>
-                <Label for="duracion"> Duración (dias)</Label>
+                <Label for="duracion">{t("discounts.durationDays")}</Label>
                 <Input type="number" name="duracion" id='duracion' value={input.duracion} onChange={handleInputChange} />
                
               </FormGroup>
               <FormGroup>
-                <Label for="estado"> Estado</Label>
+                <Label for="estado">{t("discounts.phase")}</Label>
                 <select class="form-select" aria-label="Default select example" name="estado" id="estado" rows="1" value={input.estado} onChange={handleInputChange}>
-                    <option value="false">Inactivo</option>
-                    <option value="true">Activo</option>
+                    <option value="false">{t("discounts.inactive")}</option>
+                    <option value="true">{t("discounts.active")}</option>
                 </select>
               </FormGroup>
              
@@ -145,9 +145,9 @@ console.log("entra al handle add", data)
             </ModalBody>
             <ModalFooter>
              
-               <button className={styles.buttonForm}  onClick={()=>handleAdd({monto:input.monto, porcentaje:input.porcentaje, duracion:input.duracion, estado:input.estado})}type="submit" >Crear Descuento</button>
+               <button className={styles.buttonForm}  onClick={()=>handleAdd({monto:input.monto, porcentaje:input.porcentaje, duracion:input.duracion, estado:input.estado})}type="submit" >{t("discounts.active")}</button>
 
-              <button className={styles.buttonForm} onClick={toggle}>Salir</button>
+              <button className={styles.buttonForm} onClick={toggle}>{t("crud.Review.exit")}</button>
 
             </ModalFooter>
           </Form>

@@ -1,13 +1,14 @@
 import React from "react"
 import rechazado from "../../img/pago-rechazado.jpg"
 import styles from "./success.module.scss"
+import {useTranslation} from 'react-i18next';
 
 export default function Failed() {
-    
+    const {t} = useTranslation();
     return(
         <>
         <div className={styles.contenedorImagen}>
-            <h3 className={styles.titulito}>Su pago fue rechazado, lo esperamos nuevamente!</h3>
+            <h3 className={styles.titulito}>{t("checkOut.Fail")}</h3>
             <img className={styles.imagencita} src={rechazado}/>       
         </div>
 
