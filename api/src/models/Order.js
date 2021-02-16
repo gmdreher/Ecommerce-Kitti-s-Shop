@@ -13,6 +13,10 @@ module.exports = (sequelize) => {
     address: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    discount: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   });
 };

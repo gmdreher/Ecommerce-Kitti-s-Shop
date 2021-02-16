@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User } = require('../db.js');
+const { User, GlobalDiscount } = require('../db.js');
 const server = require('express').Router();
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
@@ -205,4 +205,66 @@ server.post('/facebook/callback',
     }
   });
   
-module.exports = server
+//rutas para descuentos *******************************************************************
+
+  server.post("/discount", protected.isAuthAdmin ,(req, res) => {
+    let { mount,percentage, days, isActive}=req.body
+
+    GlobalDiscount
+    .create({mount ,percentage, days, isActive})
+    .then((discount)=>res.send(discount))
+
+})
+
+server.get("/discount",protected.isAuthAdmin, (req, res) => {
+  GlobalDiscount
+    .findAll({order: [
+        ['id', 'DESC']]})
+    .then((e)=>res.send(e))
+
+})
+
+server.get("/discount/active", (req, res) => {
+  GlobalDiscount
+  .findAll({where:{
+    isActive:true
+  },
+  order: [
+    ['id', 'DESC']]
+})
+  .then((e)=>res.send(e))
+
+})
+
+server.delete("/discount/:id",protected.isAuthAdmin, (req, res) => {
+
+  GlobalDiscount.destroy({
+    where:{
+      id: req.params.id
+    }
+  }).then((deleted)=>{
+    res.status(200).json("se elimino correctamente " + deleted)
+  }).catch((err)=>{
+    res.status(400).json("no se pudo borrar el descuento" + err)
+  })
+})
+
+server.put("/discount/:id",protected.isAuthAdmin, (req, res) => {
+let isActive= req.body.isActive
+let id= req.params.id
+
+GlobalDiscount.findByPk(id)
+ .then((discount=>{
+   return discount.update({
+    isActive: isActive
+   })
+  })
+ )
+  .then((e)=>{
+    res.send(e)
+  }).catch((err)=>{
+    res.status(400).json("Error al modificar el estado: " + error)
+  })
+})
+
+module.exports = server;

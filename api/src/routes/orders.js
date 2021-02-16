@@ -36,7 +36,8 @@ server.put('/:id' , protected.isAuth, (req, res) => {
   const { id } = req.params;
   const { state } = req.body;
 
-  Order.findByPk(id, {
+  Order.findOne({
+    where:{id},
     include: [
       { model: Product, include: { model: Image } },
       {model: User, attributes: ["id", "email"] }

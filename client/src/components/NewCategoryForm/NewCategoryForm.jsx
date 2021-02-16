@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
+import { Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
 import { insertCategory, getCategories, editCategory, deleteCategory } from "../../actions/productActions";
 import './newCategoryForm.scss';
@@ -13,6 +13,7 @@ function NewCategoryForm(props) {
     description: '',
     id: ''
   });
+
   //estado errores
   const [errors, setErrors] = useState({});
 
@@ -32,7 +33,10 @@ function NewCategoryForm(props) {
   //get categorias
   useEffect(() => {
     props.getCategories()
-  }, [input])
+  }, [props.categories])
+
+
+  console.log('props', props)
   //validacion inputs
   const validate = function (input) {
     let errors = {};
@@ -54,7 +58,6 @@ function NewCategoryForm(props) {
     }));
   }
 
-
   const handleSubmit = function (e) {
     props.getCategories();
     e.preventDefault();
@@ -63,7 +66,6 @@ function NewCategoryForm(props) {
   //agregar categorias
   const handleAdd = function (category) {
     props.postCategories(category)
-    props.getCategories();
     toggle();
   }
 
@@ -71,17 +73,16 @@ function NewCategoryForm(props) {
   const handleEdit = function (category) {
     toggle2();
     setInput(category);
-  }
 
+  }
 
   // funcionalidad a boton EDITAR
   const handleEditModal = function (category) {
     props.putCategory(category);
     props.getCategories();
     toggle2()
-
-
   }
+
   // info de boton BORRAR de cada categoria
   const handleDelete = function (category) {
     toggle3();
@@ -93,46 +94,44 @@ function NewCategoryForm(props) {
     props.getCategories();
     toggle3()
   }
+
   // COMPONENTE
   return (
-
-    <Container className="container">
-      <h1>Administrar Categorías</h1>
+    <Container>
+      <br />
+      <h2 className="title">Administrar Categorías</h2>
       <br />
       <button className="buttonFormAdd" onClick={toggle}> + Agregar Categoría</button>
       <br />
-      <Table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Editar</th>
-            <th>Borrar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.categories && props.categories.map(((category, index) => (
-            <tr key={category.id}>
-              <td>{(index) + 1}</td>
-              <td>{category.name}</td>
-              <td>{category.description}</td>
-
-              <td>
-                <button className="buttonForm" onClick={() => handleEdit(category)} >Editar</button>
-              </td>
-              <td>
-                <button className="buttonForm" onClick={() => handleDelete(category)}>Borrar</button>
-              </td>
+      <div className={"table-responsive " + "container"}>
+        <table className="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Borrar</th>
             </tr>
-          )))}
+          </thead>
+          <tbody>
+            {props.categories && props.categories.map(((category, index) => (
+              <tr key={category.id}>
+                <td>{(index) + 1}</td>
+                <td>{category.name}</td>
+                <td>{category.description}</td>
 
-
-
-
-
-        </tbody>
-      </Table>
+                <td>
+                  <button className="buttonForm" onClick={() => handleEdit(category)}>Editar</button>
+                </td>
+                <td>
+                  <button className="buttonForm" onClick={() => handleDelete(category)}>Borrar</button>
+                </td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
 
       {/* -------------MODAL POST--------------- */}
       <div>

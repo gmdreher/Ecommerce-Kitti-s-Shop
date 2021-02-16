@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 export default function ViewOrder(props) {
     const dispatch = useDispatch();
-    const  MySwal  =  withReactContent (Swal);
+    const MySwal = withReactContent(Swal);
 
     const user = useSelector(store => store.auth.userInfo);
 
@@ -40,7 +40,7 @@ export default function ViewOrder(props) {
         if (cartProduct.length >= 0 && cartProduct[0] !== undefined) {
             var idOrder = cartProduct[0].orderId;
             var idUser = user.id;
-    
+
             MySwal.fire({
                 title: '¿Estas seguro?',
                 icon: 'warning',
@@ -48,14 +48,14 @@ export default function ViewOrder(props) {
                 confirmButtonColor: '#1B9528',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Si, borrar!',
-                customClass:{
+                customClass: {
                     title: "alertTitle",
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
                     dispatch(deleteTotalCart({ userId: idUser, orderId: idOrder }))
                     MySwal.fire(
-                      'Borrado!',
+                        'Borrado!',
                     )
                 }
             })
@@ -67,10 +67,10 @@ export default function ViewOrder(props) {
                 title: 'No hay elementos para borrar',
                 showConfirmButton: false,
                 timer: 1000,
-                customClass:{
+                customClass: {
                     title: "alertTitle"
                 }
-            }).then(r =>{} )
+            }).then(r => { })
         }
     }
     function deleteLS() {
@@ -192,7 +192,7 @@ export default function ViewOrder(props) {
             </div>
             <div className="parte-dos">
 
-                <PayCart dato={totalHandler().toFixed(2)} dato2={cartProduct} />
+                <PayCart dato={totalHandler().toFixed(2)} dato2={cartProduct} dato3={user} />
             </div>
         </div>
     )

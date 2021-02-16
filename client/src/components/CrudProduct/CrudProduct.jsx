@@ -155,35 +155,41 @@ class CrudProductForm extends React.Component {
                             </div>
                         </FormGroup>
                     </div>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div className={"table-responsive " + "containerC"}>
+                        <table className="table table-sm">
 
-                            {this.props.products && this.props.products.map((product => (
+                            <thead>
                                 <tr>
-
-                                    <td>{product.name}</td>
-                                    <td>{product.description}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.stock}</td>
-
-                                    <td>
-                                        <Button color='primary' onClick={() => this.handleEdit(product)}>Editar</Button>
-                                        <Button color='danger' onClick={(e) => this.handleDelete(product.id)}>Borrar</Button>
-                                    </td>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Borrar</th>
                                 </tr>
-                            )))}
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </Table>
+                                {this.props.products && this.props.products.map((product => (
+                                    <tr>
 
+                                        <td>{product.name}</td>
+                                        <td>{product.description}</td>
+                                        <td>{product.price}</td>
+                                        <td>{product.stock}</td>
+
+                                        <td>
+                                            <button className="buttonForm" color='primary' onClick={() => this.handleEdit(product)}>Editar</button>
+                                        </td>
+                                        <td>
+                                            <button className="buttonForm" onClick={(e) => this.handleDelete(product.id)}>Borrar</button>
+                                        </td>
+                                    </tr>
+                                )))}
+
+                            </tbody>
+                        </table>
+                    </div>
 
                 </Container >
                 <Modal isOpen={this.state.modalEditar}>
@@ -240,8 +246,8 @@ class CrudProductForm extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</Button>
-                        <Button color='primary' onClick={() => this.ocultarModalEditar()}>Cancelar</Button>
+                        <button className="buttonForm" onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</button>
+                        <button className="buttonForm" onClick={() => this.ocultarModalEditar()}>Cancelar</button>
                     </ModalFooter>
                 </Modal>
 
@@ -311,8 +317,8 @@ class CrudProductForm extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color='primary' onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</Button>
-                        <Button color='primary' onClick={() => this.ocultarModalInsertar()}>Cancelar</Button>
+                        <button className="buttonForm" onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</button>
+                        <button className="buttonForm" onClick={() => this.ocultarModalInsertar()}>Cancelar</button>
                     </ModalFooter>
                 </Modal>
 
