@@ -1,10 +1,11 @@
-import {GET_ALL_ADOPTIONS_USER,CREATE_ADOPTION,REQUEST_USER,GET_ALL_ADOPTIONS,GET_ADOPTION_BY_ID,UPDATE_ADOPTION,POST_REQUEST} from '../constants/productConstants.js';
+import {GET_ALL_ADOPTIONS_USER,CREATE_ADOPTION,REQUEST_USER,GET_ALL_ADOPTIONS,GET_ADOPTION_BY_ID,UPDATE_ADOPTION,POST_REQUEST,ALL_REQUEST,UPDATE_REQUEST} from '../constants/productConstants.js';
 
 
 const initialState = {
   allAdoptionsUser:[],
   allRequestUser:[],
   allAdoptions:[],
+  allRequest:[],
   adoption:[]
 
 };
@@ -40,8 +41,6 @@ export default (state = initialState, action) => {
               adoption: action.payload
             }
           case UPDATE_ADOPTION:
-          console.log('todas las adopcones')
-          console.log(action.payload)
           return{
             ...state,
             adoption: action.payload
@@ -52,6 +51,16 @@ export default (state = initialState, action) => {
               allRequestUser: [...state.allRequestUser, action.payload]
               
             }
+      case ALL_REQUEST:
+        return{
+          ...state,
+          allRequest: action.payload
+        }
+        case UPDATE_REQUEST:
+          return{
+            ...state,
+            allRequest: action.payload
+          }
     default:
       return state;
   }

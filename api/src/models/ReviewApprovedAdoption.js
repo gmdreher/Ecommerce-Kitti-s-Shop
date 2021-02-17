@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
     },
     state:{
-        type: DataTypes.ENUM(['Creada','Aprobada','En proceso','Adoptado','Cancelado'])
+        type: DataTypes.ENUM(['Creada','Aprobada','Cancelado'])
     },
     contact:{
       type: DataTypes.TEXT,
