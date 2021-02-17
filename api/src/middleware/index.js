@@ -98,7 +98,7 @@ passport.use(
 
 passport.use(
     new FacebookStrategy({
-          callbackURL: 'http://localhost:3000/auth/facebook/callback',
+          callbackURL: 'https://ecommerce-ft08-g07.vercel.app/auth/facebook/callback',
           clientID: process.env.FACEBOOK_APP_ID,
           clientSecret: process.env.FACEBOOK_APP_SECRET,
           profileFields: ['id', 'emails', 'name']
