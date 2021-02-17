@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Container, FormGroup, Label, Input, Form } from 'reactstrap'
-import styles from './crud.module.scss'
+import './crud.scss'
 import { connect } from 'react-redux';
 import { getProducts, getCategories, searchProduct, insertProduct, deleteProduct, editProduct } from '../../actions/productActions'
 class CrudProductForm extends React.Component {
@@ -119,11 +119,7 @@ class CrudProductForm extends React.Component {
                     return true
                 }
             }
-
-
-
         }
-
 
     }
     checkEditClick(cate) {
@@ -145,56 +141,58 @@ class CrudProductForm extends React.Component {
     render() {
         return (
             <>
-                <Container>
-                    <div>
-                    <br/>
-                        <h2 className={styles.title}>Administrar Productos</h2>
-                        <button className={styles.buttonFormAdd} color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </button>
-                    </div>
-                    <FormGroup>
-                    <br/>
-                        <div className={styles.formInline}>
-                            <button className={styles.buttonFormAdd} color='primary' onClick={e => this.handleSubmit(e)}>Buscar</button>
-                            <Input name='search' type="text" className={styles.input} placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
+                <Container className="containerCrud">
+                    <br />
+                    <h1>Administrar Productos</h1>
+                    <br />
+                    <div className="unir">
+                        <div className="agregarBuscar">
+                            <Button color='primary' onClick={() => this.mostrarModalInsertar()}> + Agregar Producto </Button>
                         </div>
-                    </FormGroup>
-                   
-                    <div className={"table-responsive " + styles.container}>
-                    <table className="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Editar</th>
-                                <th scope="col">Borrar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {this.props.products && this.props.products.map((product => (
-                                <tr>
-
-                                    <td>{product.name}</td>
-                                    <td>{product.description}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.stock}</td>
-
-                                    <td>
-                                        <button className={styles.buttonForm} color='primary' onClick={() => this.handleEdit(product)}>Editar</button>
-                                    </td>
-                                    <td>
-                                        <button className={styles.buttonForm} onClick={(e) => this.handleDelete(product.id)}>Borrar</button>
-                                    </td>
-                                </tr>
-                            )))}
-
-                        </tbody>
-                    </table>
+                        <FormGroup>
+                            <div className="buscarInput">
+                                <Input name='search' type="text" className={"col-md-7 mb-7"} placeholder="Ingresa el producto a buscar..." onChange={this.handleChange} />
+                                <Button color='primary' onClick={e => this.handleSubmit(e)}>Buscar</Button>
+                            </div>
+                        </FormGroup>
                     </div>
-                    
-                </Container>
+                    <div className={"table-responsive " + "containerC"}>
+                        <table className="table table-sm">
+
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Borrar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {this.props.products && this.props.products.map((product => (
+                                    <tr>
+
+                                        <td>{product.name}</td>
+                                        <td>{product.description}</td>
+                                        <td>{product.price}</td>
+                                        <td>{product.stock}</td>
+
+                                        <td>
+                                            <button className="buttonForm" color='primary' onClick={() => this.handleEdit(product)}>Editar</button>
+                                        </td>
+                                        <td>
+                                            <button className="buttonForm" onClick={(e) => this.handleDelete(product.id)}>Borrar</button>
+                                        </td>
+                                    </tr>
+                                )))}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </Container >
                 <Modal isOpen={this.state.modalEditar}>
                     <ModalHeader>
                         <div>
@@ -249,8 +247,8 @@ class CrudProductForm extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <button className={styles.buttonForm} onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</button>
-                        <button className={styles.buttonForm} onClick={() => this.ocultarModalEditar()}>Cancelar</button>
+                        <button className="buttonForm" onClick={() => this.ocultarModalEditar(this.state.form)}>Editar</button>
+                        <button className="buttonForm" onClick={() => this.ocultarModalEditar()}>Cancelar</button>
                     </ModalFooter>
                 </Modal>
 
@@ -266,25 +264,25 @@ class CrudProductForm extends React.Component {
                         <FormGroup>
                             <Label sm={3}>Nombre</Label>
                             <Col sm={20}>
-                                <Input name='name' type='text' onChange={this.handleChange} />
+                                <Input className="input" name='name' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Descripción</Label>
                             <Col sm={20}>
-                                <Input  name='description' type="textarea" onChange={this.handleChange} />
+                                <Input className="input" name='description' type="textarea" onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Precio</Label>
                             <Col sm={20}>
-                                <Input  name='price' type='text' onChange={this.handleChange} />
+                                <Input className="input" name='price' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <FormGroup>
                             <Label sm={3}>Stock</Label>
                             <Col sm={20}>
-                                <Input  name='stock' type='text' onChange={this.handleChange} />
+                                <Input className="input" name='stock' type='text' onChange={this.handleChange} />
                             </Col>
                         </FormGroup>
                         <h4>Categorias</h4>
@@ -320,8 +318,8 @@ class CrudProductForm extends React.Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <button className={styles.buttonForm} onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</button>
-                        <button className={styles.buttonForm} onClick={() => this.ocultarModalInsertar()}>Cancelar</button>
+                        <button className="buttonForm" onClick={() => this.handlepost({ name: this.state.form.name, description: this.state.form.description, price: this.state.form.price, stock: this.state.form.stock, image: [{ url: this.state.form.url }] })}>Insertar</button>
+                        <button className="buttonForm" onClick={() => this.ocultarModalInsertar()}>Cancelar</button>
                     </ModalFooter>
                 </Modal>
 

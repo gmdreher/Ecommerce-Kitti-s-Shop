@@ -1,14 +1,14 @@
-.catalogue{
+.catalogueadop{
     display: flex;
     flex-direction: column;
     align-items: center;
-    .titleH2{
+    .titleadop{
         margin-top: 2%;
         font-family: 'Lato', sans-serif;
         background-color: white;
 
     }
-    .contentCards{
+    .contentadops{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -20,17 +20,17 @@
 }
 
 @media screen and (min-width: 600px) {
-    .catalogue{
+    .catalogueadop{
         display: flex;
         flex-direction: column;
         align-items: center;
-        .titleH2{
+        .titleadop{
             margin: 1em;
             font-family: 'Lato', sans-serif;
             background-color: white;
 
         }
-        .contentCards{
+        .contentadops{
             display: flex;
             flex-wrap: wrap;
             justify-content: center;

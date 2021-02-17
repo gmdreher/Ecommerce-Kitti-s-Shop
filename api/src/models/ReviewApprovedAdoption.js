@@ -4,23 +4,23 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
 
   const ReviewApprovedAdoption = sequelize.define('reviewApprovedAdoption', {
-    condition:{
+    condition: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    address:{
+    address: {
       type: DataTypes.TEXT,
     },
-    state:{
-        type: DataTypes.ENUM(['Creada','Aprobada','En proceso','Adoptado','Cancelado'])
+    state: {
+      type: DataTypes.ENUM(['Creada', 'Aprobada', 'En proceso', 'Adoptado', 'Cancelado'])
     },
-    contact:{
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    province:{
+    contact: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    province: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    }
   });
 };

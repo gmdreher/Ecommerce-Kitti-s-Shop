@@ -5,15 +5,15 @@ import {
     SEARCH_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT, POST_PRODUCT, GET_ORDERS, GET_SPECIFIC_ORDER, UPDATE_STATE_ORDER
 } from '../constants/productConstants.js';
 
-if(localStorage.getItem('data')){
+if (localStorage.getItem('data')) {
     const accessToken = localStorage.getItem('data')
 
     axios.interceptors.request.use(
-        config =>{
-            config.headers.authorization=`Bearer ${accessToken}`;
+        config => {
+            config.headers.authorization = `Bearer ${accessToken}`;
             return config;
         },
-        error =>{
+        error => {
             return Promise.reject(error)
         }
     )
@@ -204,3 +204,4 @@ export const editProduct = product => async (dispatch, getState) => {
         payload: cambio
     })
 }
+

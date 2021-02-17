@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
 import { connect } from "react-redux";
 import { insertCategory, getCategories, editCategory, deleteCategory } from "../../actions/productActions";
-import styles from './newCategoryForm.module.scss'
-import {useTranslation} from 'react-i18next';
+import './newCategoryForm.scss'
+import { useTranslation } from 'react-i18next';
 
 
 function NewCategoryForm(props) {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   // ESTADOS
   //estado inputs
   const [input, setInput] = useState({
@@ -60,7 +60,7 @@ function NewCategoryForm(props) {
     }));
   }
 
-  const handleSubmit = function(e) {
+  const handleSubmit = function (e) {
     props.getCategories();
     e.preventDefault();
   }
@@ -75,9 +75,9 @@ function NewCategoryForm(props) {
   const handleEdit = function (category) {
     toggle2();
     setInput(category);
-    
+
   }
-  
+
   // funcionalidad a boton EDITAR
   const handleEditModal = function (category) {
     props.putCategory(category);
@@ -100,12 +100,12 @@ function NewCategoryForm(props) {
   // COMPONENTE
   return (
     <Container>
-       <br/>
-      <h2 className={styles.title}>{t("categories.management")}</h2>
-      <br/>
-      <button className={styles.buttonFormAdd} onClick={toggle}>{t("categories.add")}</button>
-      <br/>
-   <div className={"table-responsive " + styles.container}>
+      <br />
+      <h2 className="titleCategory">{t("categories.management")}</h2>
+      <br />
+      <button className="buttonFormAdd" onClick={toggle}>{t("categories.add")}</button>
+      <br />
+      <div className={"table-responsive " + "containerCategory" }>
       <table className="table table-sm">
         <thead>
           <tr>
@@ -124,13 +124,13 @@ function NewCategoryForm(props) {
               <td>{category.description}</td>
 
               <td>
-                <button className={styles.buttonForm} onClick={() => handleEdit(category)}>{t("crud.Review.Edit")}</button>
-                </td>
-                <td>
-                <button className={styles.buttonForm} onClick={() => handleDelete(category)}>{t("crud.Review.Delete")}</button>
+                <button className="buttonForm" onClick={() => handleEdit(category)}>{t("crud.Review.Edit")}</button>
+              </td>
+              <td>
+                <button className="buttonForm" onClick={() => handleDelete(category)}>{t("crud.Review.Delete")}</button>
               </td>
             </tr>
-          )))} 
+          )))}
         </tbody>
       </table>
    </div>
@@ -146,7 +146,7 @@ function NewCategoryForm(props) {
                 <Label for="name">{t("crud.Categories.name")}</Label>
                 <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
                 {errors.name && (
-                  <p className={styles.danger}>{errors.name}</p>
+                  <p className="danger">{errors.name}</p>
                 )}
               </FormGroup>
               <FormGroup>
@@ -156,11 +156,11 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <button className={styles.buttonForm} onClick={toggle}>{t("crud.Categories.createCategory")}</button> :
-               <button className={styles.buttonForm} type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
-              >{t("crud.Categories.createCategory")}</button>}
+              {errors.name ? <button className="buttonForm" onClick={toggle}>{t("crud.Categories.createCategory")}</button> :
+                <button className="buttonForm" type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
+                >{t("crud.Categories.createCategory")}</button>}
 
-              <button className={styles.buttonForm} onClick={toggle}>{t("crud.Review.exit")}</button>
+              <button className="buttonForm" onClick={toggle}>{t("crud.Review.exit")}</button>
 
             </ModalFooter>
           </Form>
@@ -180,7 +180,7 @@ function NewCategoryForm(props) {
                 <Label for="name">{t("crud.Categories.name")}</Label>
                 <Input type="text" className={`${errors.name} && 'danger', "form-group"`} name="name" id='name' value={input.name} onChange={handleInputChange} />
                 {errors.name && (
-                  <p className={styles.danger}>{errors.name}</p>
+                  <p className="danger">{errors.name}</p>
                 )}
               </FormGroup>
               <FormGroup>
@@ -190,8 +190,8 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <button onClick={toggle2}>{t("crud.Categories.editCategory")}</button> : <button className={styles.buttonForm} type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>{t("crud.Categories.editCategory")}</button>}
-              <button className={styles.buttonForm} onClick={toggle2}>{t("crud.Review.exit")}</button>
+              {errors.name ? <button onClick={toggle2}>{t("crud.Categories.editCategory")}</button> : <button className="buttonForm" type="submit" onClick={() => handleEditModal({ id: input.id, name: input.name, description: input.description })}>{t("crud.Categories.editCategory")}</button>}
+              <button className="buttonForm" onClick={toggle2}>{t("crud.Review.exit")}</button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -205,8 +205,8 @@ function NewCategoryForm(props) {
             <ModalHeader toggle={toggle3}>{t("crud.Review.sure")}</ModalHeader>
 
             <ModalFooter>
-              <button className={styles.buttonForm} type="submit" onClick={() => handleDeleteModal(input.id)}>{t("yes")}</button>
-              <button className={styles.buttonForm} onClick={toggle3}>No</button>
+              <button className="buttonForm" type="submit" onClick={() => handleDeleteModal(input.id)}>{t("yes")}</button>
+              <button className="buttonForm" onClick={toggle3}>No</button>
             </ModalFooter>
           </Form>
         </Modal>

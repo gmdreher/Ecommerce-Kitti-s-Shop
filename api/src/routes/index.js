@@ -22,5 +22,4 @@ router.use('/adoptions', adoptionsRouter)
 
 
 
-
 module.exports = router;

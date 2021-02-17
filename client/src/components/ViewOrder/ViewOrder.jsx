@@ -5,17 +5,18 @@ import { getProductsCart, deleteTotalCart, removeFromCartLS, editQuantity, delet
 import PayCart from '../PayCart/PayCart.jsx';
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 
 export default function ViewOrder(props) {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
-    const  MySwal  =  withReactContent (Swal);
+    const MySwal = withReactContent(Swal);
 
     const user = useSelector(store => store.auth.userInfo);
 
     let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
+
 
     useEffect(function () {
         dispatch(getProductsCart(user ? { userId: user.id, state: "carrito" } : null));
@@ -41,7 +42,7 @@ export default function ViewOrder(props) {
         if (cartProduct.length >= 0 && cartProduct[0] !== undefined) {
             var idOrder = cartProduct[0].orderId;
             var idUser = user.id;
-    
+
             MySwal.fire({
                 title: t("crud.Review.sure"),
                 icon: 'warning',
@@ -49,7 +50,7 @@ export default function ViewOrder(props) {
                 confirmButtonColor: '#1B9528',
                 cancelButtonColor: '#d33',
                 confirmButtonText: t("order.confirmDelete"),
-                customClass:{
+                customClass: {
                     title: "alertTitle",
                 }
             }).then((result) => {
@@ -65,10 +66,10 @@ export default function ViewOrder(props) {
                 title: t("order.noElements"),
                 showConfirmButton: false,
                 timer: 1000,
-                customClass:{
+                customClass: {
                     title: "alertTitle"
                 }
-            }).then(r =>{} )
+            }).then(r => { })
         }
     }
     function deleteLS() {
@@ -89,7 +90,7 @@ export default function ViewOrder(props) {
             var takeStock = 1;
             var idProd = data.id;
             var qty = data.quantity + 1
-            dispatch(editQuantity({takeStock: takeStock, productId: idProd, quantity: qty }))
+            dispatch(editQuantity({ takeStock: takeStock, productId: idProd, quantity: qty }))
         }
 
 
@@ -191,7 +192,7 @@ export default function ViewOrder(props) {
             </div>
             <div className="parte-dos">
 
-                <PayCart dato={totalHandler().toFixed(2)} dato2={cartProduct} dato3={user}/>
+                <PayCart dato={totalHandler().toFixed(2)} dato2={cartProduct} dato3={user} />
             </div>
         </div>
     )

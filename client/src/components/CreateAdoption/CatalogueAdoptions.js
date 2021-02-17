@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdoptionCard from '../CreateAdoption/AdoptionCard.js';
-import styles from './catalogue.module.scss'
+import './catalogue.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllAdoptionsAcept } from '../../actions/adoptionAction.js';
 import { useHistory } from 'react-router-dom';
@@ -19,8 +19,8 @@ export default function CatalogueAdoptins() {
 
     useEffect(() => {
 
-         dispatch(getAllAdoptionsAcept())
-       // if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
+        dispatch(getAllAdoptionsAcept())
+        // if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
     }, [])//[history.location.search.length > 0])
 
     useEffect(() => {
@@ -29,10 +29,10 @@ export default function CatalogueAdoptins() {
     }, [pagina, adoptions])
 
     return (
-        <div className={styles.catalogue}>
-            <h2 className={styles.titleH2}>Galeria de Gatitos en Adopción</h2>
+        <div className="catalogueadop">
+            <h2 className="titleadop">Galeria de Gatitos en Adopción</h2>
 
-            <div className={styles.contentCards}>
+            <div className="contentadops">
                 {adopcionesPaginadas && adopcionesPaginadas.map((infoAdoption) => {
                     return <AdoptionCard key={infoAdoption.id} adopt={infoAdoption} />
                 })}

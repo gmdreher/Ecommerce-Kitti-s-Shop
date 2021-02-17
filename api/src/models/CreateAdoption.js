@@ -9,18 +9,18 @@ module.exports = (sequelize) => {
     },
     reason: {
       type: DataTypes.TEXT,
-      
+
     },
-    contact:{
+    contact: {
       type: DataTypes.TEXT,
     },
-    state:{
-        type: DataTypes.ENUM(['Creada','Aprobada','Adoptado','Cancelado'])
+    state: {
+      type: DataTypes.ENUM(['Creada', 'Aprobada', 'Adoptado', 'Cancelado'])
     },
-    province:{
-        type: DataTypes.TEXT,
-    },  
-    photo:{
+    province: {
+      type: DataTypes.TEXT,
+    },
+    photo: {
       type: DataTypes.BLOB
     }
   });

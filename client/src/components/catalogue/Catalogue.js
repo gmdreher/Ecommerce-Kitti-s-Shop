@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../productCard/ProductCard.js';
-import styles from './catalogue.module.scss'
+import './catalogue.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../actions/productActions.js';
 import { useHistory } from 'react-router-dom';
 import { searchProduct } from '../../actions/productActions.js'
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 export default function Catalogue() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const history = useHistory();
     const products = useSelector((store) => store.product.products);
 
     const [pagina, setPagina] = useState(1);
     const [productosPaginados, setProductosPaginados] = useState([]);
     const [paginasDisponibles, setPaginasDisponibles] = useState("");
-    const [productsPerPage, setProductsPerPage] =useState(8)
+    const [productsPerPage, setProductsPerPage] = useState(8)
 
-    function handleProductsPerPage(e){
-        if(e.target.value ==="" || e.target.value< 1) return
+    function handleProductsPerPage(e) {
+        if (e.target.value === "" || e.target.value < 1) return
         else setProductsPerPage(parseInt(e.target.value))
     }
-    useEffect(()=>{
+    useEffect(() => {
         setPagina(1)
-        setPaginasDisponibles(Math.ceil(products.length/productsPerPage))
-    },[products, productsPerPage])
+        setPaginasDisponibles(Math.ceil(products.length / productsPerPage))
+    }, [products, productsPerPage])
 
     const dispatch = useDispatch();
 
@@ -39,25 +39,25 @@ export default function Catalogue() {
         setProductosPaginados(products.slice(pagina * productsPerPage - productsPerPage, pagina * productsPerPage))
 
     }, [pagina, products, productsPerPage])
-
-    function handlePage(arg){
-        // console.log(paginasDisponibles)
-        if(arg==="left"){
-            // console.log(pagina);
-            if(pagina>1) {
-                setPagina(pagina-1)}
+    function handlePage(arg) {
+        console.log(paginasDisponibles)
+        if (arg === "left") {
+            console.log(pagina);
+            if (pagina > 1) {
+                setPagina(pagina - 1)
+            }
         }
-        if(arg==="right"){
-            if(pagina<paginasDisponibles) setPagina(pagina+1)
+        if (arg === "right") {
+            if (pagina < paginasDisponibles) setPagina(pagina + 1)
         }
     }
 
     return (
-        <div className={styles.catalogue}>
-            <h2 className={styles.titleH2}>{t("catalogue")}</h2>
-            <div className={styles.selectContainer}>
-            <label for="prueba">{t("catalogue.products")}</label>
-                <select  id="prueba" onChange={handleProductsPerPage}>
+        <div className="catalogue">
+            <h2 className="titleH2">{t("catalogue")}</h2>
+            <div className="selectContainer">
+                <label for="prueba">{t("catalogue.products")}</label>
+                <select id="prueba" onChange={handleProductsPerPage}>
                     <option value="2">2</option>
                     <option value="4">4</option>
                     <option selected value="8">8</option>
@@ -67,13 +67,13 @@ export default function Catalogue() {
                 </select>
 
             </div>
-            <div className={styles.contentCards}>
+            <div className="contentCards">
                 {productosPaginados && productosPaginados.map((infoProducto) => {
                     return <ProductCard key={infoProducto.id} data={infoProducto} />
                 })}
             </div>
-           
-           
+
+
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item" onClick={() => handlePage("left")}>
@@ -81,13 +81,13 @@ export default function Catalogue() {
                             <span aria-hidden="true"  >&laquo;</span>
                         </a>
                     </li>
-                    
-                            <li class="page-item" onClick={() => handlePage("right")}>
-                                <a class="page-link" aria-label="Next">
-                                    <span aria-hidden="true" >&raquo;</span>
-                                </a>
-                            </li>
-                    
+
+                    <li class="page-item" onClick={() => handlePage("right")}>
+                        <a class="page-link" aria-label="Next">
+                            <span aria-hidden="true" >&raquo;</span>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
         </div>

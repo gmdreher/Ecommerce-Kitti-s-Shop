@@ -3,6 +3,7 @@ main {
     background-image: url("./img/fondo.png");
 }
 
+
 //Clase de las alertas del carrito
 .alertTitle{
     font-size: 20px;
@@ -15,3 +16,359 @@ main {
        width: 100%;
     }
 }
+
+$bg-dark-mode:#37444d;
+$secundario: #4b5b66;
+$grey-dark-mode: rgba(66, 66, 66, 0.712);
+$white-text: rgb(0, 0, 0);
+$primary:rgb(0, 132, 255);
+$click: rgb(226, 226, 226);
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+body.dark-mode {
+  background-color: $bg-dark-mode !important;
+  color: $white-text !important;
+
+  .searchBar {
+    border: 2px solid #ffffff;
+
+    .btnSearch {
+      background-color: $bg-dark-mode;
+      .iconSearch {
+        color: white;
+      }
+    }
+  }
+
+  .ctnCart{
+    background-color: $bg-dark-mode;
+    border: 1px solid #ffffff;
+  }
+  .cart {
+    background-color: $bg-dark-mode;
+    i {
+      color: white;
+    }
+  }
+  .myAccount {
+    background-color: $bg-dark-mode;
+    border: 1px solid #ffffff;
+  }
+  .dropMyAccount {
+    background-color: $bg-dark-mode;
+    i {
+      color: white;
+    }
+    .hideWhenMobile {
+      color:white;
+    }
+  }
+
+  .titleCategory {
+    color:white;
+  }
+  .containerCategory {
+    background-color: $bg-dark-mode;
+    color: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    box-shadow: none;
+    
+    .buttonForm {
+      background-color: $bg-dark-mode;
+      border-color: rgb(255, 255, 255);
+      color: white;
+    }
+    .buttonFormAdd{
+      background-color: $bg-dark-mode;
+      border-color: rgb(255, 255, 255);
+      color: white;
+    }
+    .buttonFormAdd:hover {
+      background-color:$click;
+      color: black;
+
+    }
+    .buttonForm:hover {
+      background-color:$click;
+      color: black;
+
+    }
+  }
+
+  Table {
+    color:white;
+  }
+
+  .navbar1 {
+    background-color: $secundario;
+
+    .nameCategory {
+      background-color: $bg-dark-mode;
+        border-color: rgb(255, 255, 255);
+        color: white;
+    }
+  }
+
+  .botoncito{
+    background-color: $bg-dark-mode;
+    border-color: rgb(255, 255, 255);
+    color: white;
+    i {
+      color: white;
+    }
+  }
+
+  .catalogue { 
+    .titleH2 {
+      background-color: $bg-dark-mode;
+      color:white;
+    }
+    .selectContainer {
+      background-color: $bg-dark-mode;
+      border-color: rgb(255, 255, 255);
+      label {
+        color: white;
+      }
+    }
+  }
+
+  .cardprod {
+    background-color: $bg-dark-mode;
+    border-color: rgb(255, 255, 255);
+    color: white;
+
+    ul {
+      li {
+
+        background-color: $bg-dark-mode;
+      }
+    }
+  }
+
+  .orderTabletitle {
+    background-color: $bg-dark-mode;
+    color: white;
+  }
+  .select {
+    background-color: $bg-dark-mode;
+    label {
+      color: white;
+    }
+  }
+
+  .cont {
+    background-color: $bg-dark-mode;
+    border-color: rgb(255, 255, 255);
+    box-shadow: none;
+  }
+ 
+  .title3 {
+    color:white;
+  }
+  .containeruse {
+    background-color: $bg-dark-mode;
+    border-color: rgb(255, 255, 255);
+    box-shadow: none;
+
+    .admin {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+    }
+    .admin:hover {
+      background-color:$click;
+      color: black;
+    }
+
+    .bloqueo {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+    }
+    .bloqueo:hover {
+      background-color:$click;
+      color: black;
+    }
+
+    .reset {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+    }
+    .reset:hover {
+      background-color:$click;
+      color: black;
+    }
+  }
+
+  .containerCrud{
+    background-color: $bg-dark-mode;
+    h1 {
+      color: white;
+    }
+  .unir {
+    button {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+    }
+    .buscarInput {
+      button {
+        background-color: $bg-dark-mode;
+        border: 1px solid #ffffff;
+        color: white;
+      }
+    }
+  }
+  Table {
+    border-color: rgb(255, 255, 255);
+    box-shadow: none;
+    button {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+    }
+    }
+
+    .containerC {
+      border: 1px solid #ffffff;
+      color: white;
+      box-shadow: none;    
+  
+    }
+  
+  }
+
+
+.containerProduct {
+  .arrowp {
+    background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+      box-shadow: none;
+  }
+
+  .detailp{
+    .datap {
+      color: white;
+      .butt {
+        button {
+          border: 1px solid #ffffff;
+          color: white;
+        }
+      }
+    }
+  }
+
+  section {
+    h2 {
+      color:white;
+    }
+    h3 { 
+      color:white;
+    }
+  }
+  
+}
+
+.main-Footer {
+  background: $secundario;
+  color: rgb(168, 168, 168);
+}
+
+
+.containerRe {
+  background-color: $bg-dark-mode;
+  color: white;
+  
+}
+
+.contain {
+   h2 {
+     color: white;
+   }
+
+   .abc {
+    background-color: $bg-dark-mode;
+    box-shadow: none;
+    border: 1px solid #ffffff;
+   }
+
+   .soporte {
+     .borrar {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+     }
+     .borrar:hover{
+       
+        background-color:$click;
+        color: black;
+     }
+   }
+
+   .contenedorPay {
+    background-color: $bg-dark-mode;
+    box-shadow: none;
+    border: 1px solid #ffffff;
+    color: white;
+
+      button {
+      background-color: $bg-dark-mode;
+      border: 1px solid #ffffff;
+      color: white;
+      box-shadow: none;
+      }
+
+      button:hover{
+        background-color:$click;
+        color: black;
+     }
+   }
+}
+
+.containerDiscout {
+  background-color: $bg-dark-mode;
+  h1 {
+    color: white;
+  }
+}
+
+.tituloGlobal{
+  background-color: $bg-dark-mode;
+}
+.containerDiscout {
+      border: 1px solid #ffffff;
+      box-shadow: none;
+}
+
+.titleadop {
+  background-color: $bg-dark-mode;
+  color: white;
+}
+
+.contadop {
+  background-color: $bg-dark-mode;
+  border: 1px solid #ffffff;
+  box-shadow: none;
+}
+
+.selectadop {
+  background-color: $bg-dark-mode;
+  color: white;
+}
+
+.dataadop {
+  background-color: $bg-dark-mode;
+  color: white;
+}
+
+
+
+}
+

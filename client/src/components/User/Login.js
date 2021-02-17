@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
-import styles from './login.module.scss'
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect } from "react";
+import './login.scss'
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import dotenv from "dotenv"
 dotenv.config();
 
@@ -15,7 +15,7 @@ const validate = (input) => {
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.email = "Ingresar un correo valido";
   }
-  
+
   if (!input.password) {
     errors.password = '*Requiere una Contraseña';
   } else if (!/(?=.*[0-9])/.test(input.password)) {
@@ -25,54 +25,54 @@ const validate = (input) => {
 };
 
 export default function Login() {
-  
-  const [user, setUser] = React.useState({email: "", password: ""});
+
+  const [user, setUser] = React.useState({ email: "", password: "" });
   const [errors, setErrors] = React.useState({});
   const history = useHistory();
   const dispatch = useDispatch();
   const loginFailed = useSelector(store => store.auth.loginFailed)
   const userState = useSelector(store => store.auth.userInfo)
-  const {t} = useTranslation();
-  
-  
+  const { t } = useTranslation();
+
+
   const handleSubmit = (event) => {
-    
+
     event.preventDefault();
     setUser({
       ...user,
       [event.target.name]: event.target.value
     });
-    
-    if (Object.keys(errors).length === 0 ) {
+
+    if (Object.keys(errors).length === 0) {
       dispatch(loginUser(user.email, user.password))
     }
-    setUser({email: "", password: ""});
+    setUser({ email: "", password: "" });
   }
-  
+
   const handleInputChange = function (event) {
     setErrors(validate({
       ...user,
       [event.target.name]: event.target.value
     }))
-    
+
     setUser({
       ...user,
       [event.target.name]: event.target.value
     });
   }
-  
+
   useEffect(() => {
-    if(userState){
+    if (userState) {
       history.push('/')
     }
   }, [history, userState])
-  
+
   return (
-    <div className={'container ' + styles.globalContainer}>
-      <div className={styles.formContainer}>
-        <h2 className={styles.title}>{t("user.logIn")}</h2>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          { loginFailed && <div className="alert alert-danger" role="alert">
+    <div className={'container ' + "globalContainer"}>
+      <div className="formContainer">
+        <h2 className="titleL">{t("user.logIn")}</h2>
+        <form className="form" onSubmit={handleSubmit}>
+          {loginFailed && <div className="alert alert-danger" role="alert">
             {t("login.error")}
           </div>
           }
@@ -81,7 +81,7 @@ export default function Login() {
             <input
               type="email"
               name="email"
-              className={"form-control " + styles.input + `${errors.email && ' is-invalid'}`}
+              className={"form-control " + "input" + `${errors.email && ' is-invalid'}`}
               id="exampleInputEmail1" aria-describedby="emailHelp"
               value={user.email}
               error={errors.email}
@@ -101,7 +101,7 @@ export default function Login() {
               value={user.password}
               error={errors.password}
               required
-              className={"form-control " + styles.input + `${errors.password && ' is-invalid'}`}
+              className={"form-control " + "input" + `${errors.password && ' is-invalid'}`}
               id="exampleInputPassword1"
               onChange={handleInputChange}
             />
@@ -110,19 +110,19 @@ export default function Login() {
           <Link to="/user/getEmail/">
             <div className="form-text" title="¿Olvidaste tu contraseña?">{t("login.forgot")}</div>
           </Link>
-          <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-            <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
-            <a href={`${process.env.REACT_APP_API_URL}/auth/google`} type="submit" className={"btn " + styles.btnGoogle}>
-              <img className={styles.imgGoogle} src="https://img.icons8.com/color/48/000000/google-logo.png" alt=""/>
+          <div className={"d-grid gap-2 " + "btnIniciarSesion"}>
+            <button type="submit" className={"btn " + "btnText"}>Iniciar sesión</button>
+            <a href={`${process.env.REACT_APP_API_URL}/auth/google`} type="submit" className={"btn " + "btnGoogle"}>
+              <img className="imgGoogle" src="https://img.icons8.com/color/48/000000/google-logo.png" alt="" />
               &nbsp;&nbsp;&nbsp;Iniciar sesión con Google</a>
-            <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} type='submit' className={"btn " + styles.btnFacebook}>
-              <i className={"fab fa-facebook-f " + styles.imgFacebook}/>&nbsp;
+            <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} type='submit' className={"btn " + "btnFacebook"}>
+              <i className={"fab fa-facebook-f " + "imgFacebook"} />&nbsp;
               {t("login.facebook")}
             </a>
           </div>
         </form>
         <Link to="/user/signup">
-          <div className={"form-text " + styles.linkRegistrarte} title="Regístrate">{t("login.noAccount")}
+          <div className={"form-text " + "linkRegistrarte"} title="Regístrate">{t("login.noAccount")}
           </div>
         </Link>
       </div>

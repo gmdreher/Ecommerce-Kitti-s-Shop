@@ -1,11 +1,12 @@
 
-.container{
+.containerProduct{
   margin:auto;
   padding: 5rem;
   display: block;
 
-  .arrow{
-    display: inline-block !important;
+  .arrowp{
+    display: grid;
+    justify-items: start;
     background: white;
     box-shadow: 3px 3px 5px rgb(139, 139, 139);
     padding: .5em 2em;
@@ -14,23 +15,26 @@
     margin-top: 1em;
     border-radius: 25px;
 
-
     @media screen and (max-width: 360px) {
       margin-left: 50px;
     }
     
   }
   
-  .detail{
+  .detailp{
     margin-top: 3em;
     padding-bottom: 3em;
     display: flex;
     align-self: center;
 
+    .datap {
+      padding-left: 40px;
+    }
+
     @media screen and (max-width: 360px) {
       display: block;
       
-      .data {
+      .datap {
         display: grid;
         grid-row-gap: 1em;
         margin-left: 80px;
@@ -39,11 +43,11 @@
           width: 100%;
           margin-left: -40px;
       }
-        .start{
+        .startp{
           display: flex;
         }
       }     
-      .image {
+      .imagenp {
         display: grid;
         grid-row-gap: 1em;
         margin-left: 20px;
@@ -56,12 +60,12 @@
     }   
   }
 }
-.sectionPrincipal{
+.sectionPrincipalp{
 
 div{
   display: flex;
 }
-.reseñas{
+.reseñasp{
   @media screen and (max-width: 360px) {
     align-self:flex-start;
     font-size: 20px;
@@ -70,7 +74,7 @@ div{
 }
 
 }
-.divReview{
+.divReviewp{
   display: grid;
   grid-template-columns: auto auto;
 
@@ -80,6 +84,12 @@ div{
     }
   }
 }
+
+.estrellitasp{
+color: gold
+}
+
+
 
 
 
