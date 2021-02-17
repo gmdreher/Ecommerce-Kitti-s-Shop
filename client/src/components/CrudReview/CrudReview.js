@@ -357,7 +357,7 @@ export default function CrudReview(props) {
 
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
-              <Label for="rate">{t("crud.Review.score")}</Label>
+              <Label for="rate">{t("crud.Review.Score")}</Label>
               {/* <select  class="form-select" aria-label="Default select example"  name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>

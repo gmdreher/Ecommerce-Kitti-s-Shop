@@ -105,7 +105,7 @@ function NewCategoryForm(props) {
       <br/>
       <button className={styles.buttonFormAdd} onClick={toggle}>{t("categories.add")}</button>
       <br/>
-      <div className={"table-responsive " + styles.container}>
+   <div className={"table-responsive " + styles.container}>
       <table className="table table-sm">
         <thead>
           <tr>
@@ -133,7 +133,7 @@ function NewCategoryForm(props) {
           )))} 
         </tbody>
       </table>
-      </div>
+   </div>
 
       {/* -------------MODAL POST--------------- */}
       <div>
