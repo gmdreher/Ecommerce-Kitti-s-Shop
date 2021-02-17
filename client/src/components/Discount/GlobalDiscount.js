@@ -25,21 +25,25 @@ export default function GlobalDiscount() {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   
-  const [modal2, setModal2] = useState(false);
-  const toggle2 = () => setModal2(!modal2);
-  
-  //borrar descuento
-  const [modal3, setModal3] = useState(false);
-  const toggle3 = () => setModal3(!modal3);
+  const [errors, setErrors] = useState({}); 
   
   useEffect(()=>{dispatch(getDiscount())},[])
 
+    //validacion inputs
+    const validate = function (input) {//---------------------------
+      let errors = {};
+      if (!input.monto) {
+        errors.monto = '**Requiere una monto minimo';
+      }
+      if (!input.porcentaje) {
+        errors.porcentaje = '**Requiere un porcentaje de descuento';
+      }
+      if (!input.duracion) {
+        errors.duracion = '**Requiere una duracion en dias';
+      }
 
-  // useEffect(() => {
-    
-  //   dispatch(getDiscount())
-    
-  // }, [input])
+      return errors;
+    }
   
   //funcion de estado inputs
   const handleInputChange = function (e) {
@@ -47,7 +51,20 @@ export default function GlobalDiscount() {
       ...input,
       [e.target.name]: e.target.value
     });
+    setErrors(validate({//---------------------------------------
+      ...input,
+      [e.target.name]: e.target.value
+    }));
   }
+
+  const resetInput = () => {
+    setInput({
+      monto: '',
+      porcentaje: '',
+      duracion: ''
+    })
+  }
+
   const handleOpenModal = ()=>{
     // console.log(productId)
     setDataDescuento()
@@ -58,7 +75,7 @@ export default function GlobalDiscount() {
 // console.log("entra al handle add", data)
    await dispatch(addDiscount(data.monto, data.porcentaje, data.duracion, data.estado))
    await dispatch(getDiscount())
-    
+    resetInput()
     toggle();
   }
 
@@ -117,23 +134,29 @@ export default function GlobalDiscount() {
             <ModalHeader toggle={toggle}>{t("discounts.newDiscount")}</ModalHeader>
             <ModalBody>
 
-              <FormGroup>
+              <FormGroup onSubmit={e=> e.preventDefault()}>
                 <Label for="monto">{t("discounts.amount")}</Label>
-                <Input type="number" name="monto" id='monto' value={input.monto} onChange={handleInputChange} />
-               
+                <Input className={`${errors.monto} && 'danger', "form-group"`}type="number" name="monto" id='monto' value={input.monto} onChange={handleInputChange} />
+                {errors.monto && (
+                  <p  className={styles.danger}>{errors.monto}</p>
+                )}
               </FormGroup>
 
-              <FormGroup>
-                <Label for="porcentaje">{t("discounts.percentage")}</Label>
-                <Input type="number" name="porcentaje" id='porcentaje' value={input.porcentaje} onChange={handleInputChange} />
-               
+              <FormGroup onSubmit={e=> e.preventDefault()}>
+                <Label for="porcentaje"> {t("discounts.percentage")}</Label>
+                <Input className={`${errors.porcentaje} && 'danger', "form-group"`} type="number" name="porcentaje" id='porcentaje' value={input.porcentaje} onChange={handleInputChange} />
+                {errors.porcentaje && (
+                  <p  className={styles.danger}>{errors.porcentaje}</p>
+                )}
               </FormGroup>
-              <FormGroup>
-                <Label for="duracion">{t("discounts.durationDays")}</Label>
-                <Input type="number" name="duracion" id='duracion' value={input.duracion} onChange={handleInputChange} />
-               
+              <FormGroup onSubmit={e=> e.preventDefault()}>
+                <Label for="duracion"> {t("discounts.durationDays")}</Label>
+                <Input className={`${errors.duracion} && 'danger', "form-group"`} type="number" name="duracion" id='duracion' value={input.duracion} onChange={handleInputChange} />
+                {errors.duracion && (
+                  <p  className={styles.danger}>{errors.duracion}</p>
+                )}
               </FormGroup>
-              <FormGroup>
+              <FormGroup onSubmit={e=> e.preventDefault()}>
                 <Label for="estado">{t("discounts.phase")}</Label>
                 <select class="form-select" aria-label="Default select example" name="estado" id="estado" rows="1" value={input.estado} onChange={handleInputChange}>
                     <option value="false">{t("discounts.inactive")}</option>
@@ -144,8 +167,12 @@ export default function GlobalDiscount() {
 
             </ModalBody>
             <ModalFooter>
-             
-               <button className={styles.buttonForm}  onClick={()=>handleAdd({monto:input.monto, porcentaje:input.porcentaje, duracion:input.duracion, estado:input.estado})}type="submit" >{t("discounts.active")}</button>
+
+ 
+              {errors.monto || errors.porcentaje || errors.duracion? <Button  className={styles.button_} color="danger" >{t("crud.Review.checkInputs")}</Button> :
+               <button className={styles.buttonForm}  onClick={()=>handleAdd({monto:input.monto, porcentaje:input.porcentaje, duracion:input.duracion, estado:input.estado})}type="submit" >
+                 {t("discounts.createDiscount")}</button>
+             }
 
               <button className={styles.buttonForm} onClick={toggle}>{t("crud.Review.exit")}</button>
 
