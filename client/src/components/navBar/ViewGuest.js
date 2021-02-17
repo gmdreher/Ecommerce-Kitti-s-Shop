@@ -8,12 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 export default function ViewGuest() {
   const { t } = useTranslation();
-  const cartProduct = useSelector(store => store.cart.cartItems)
-
-  useEffect(() => {
-
-  }, [cartProduct])
-
 
   const cartProduct = useSelector(store => store.cart.cartItems)
 

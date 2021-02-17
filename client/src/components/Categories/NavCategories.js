@@ -23,6 +23,7 @@ export default function NavCategories() {
           <NavLink className="nameCategory" to="/products/category/merchandising" >Cat lovers</NavLink>
           <NavLink className="nameCategory1" to="/users/catalogueAdoptions" >Adopciones</NavLink>
           <NavLink className="nameCategory" exact to="/products" >{t("Categories.seeAll")}</NavLink>
+          <Theme/>
         </li>
       </nav>
     </div>
