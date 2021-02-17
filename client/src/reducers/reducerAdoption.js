@@ -1,4 +1,4 @@
-import {GET_ALL_ADOPTIONS_USER,CREATE_ADOPTION,REQUEST_USER,GET_ALL_ADOPTIONS,GET_ADOPTION_BY_ID,UPDATE_ADOPTION} from '../constants/productConstants.js';
+import {GET_ALL_ADOPTIONS_USER,CREATE_ADOPTION,REQUEST_USER,GET_ALL_ADOPTIONS,GET_ADOPTION_BY_ID,UPDATE_ADOPTION,POST_REQUEST} from '../constants/productConstants.js';
 
 
 const initialState = {
@@ -44,8 +44,14 @@ export default (state = initialState, action) => {
           console.log(action.payload)
           return{
             ...state,
-            allAdoptions: action.payload
+            adoption: action.payload
           }
+          case POST_REQUEST:
+            return{
+              ...state,
+              allRequestUser: [...state.allRequestUser, action.payload]
+              
+            }
     default:
       return state;
   }

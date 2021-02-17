@@ -3,10 +3,10 @@ import style from './product.module.scss';
 import styles from './createAdoption.module.scss'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input} from 'reactstrap';
-import { getAdoptionById, updateState } from '../../actions/adoptionAction.js';
-import { Link } from 'react-router-dom';
+import { getAdoptionById, updateState , createRequest} from '../../actions/adoptionAction.js';
 import { connect } from "react-redux";
 import noImage from '../../img/noImage.jpg'
+import { useHistory } from "react-router-dom";
 
 function Adoption(props) {
     const [modal, setModal] = useState(false);
@@ -18,6 +18,7 @@ function Adoption(props) {
     contact:'',
     province:''
   });
+  const history = useHistory();
   const [errors, setErrors] = useState({}); 
   const validate = function (input) {//---------------------------
     let errors = {};
@@ -34,8 +35,6 @@ function Adoption(props) {
   }
 
   const handleOpenModal = () => {
-    // console.log(productId)
-   // setIdProductAdding(productId)
     toggleAdd()
   }
 
@@ -66,9 +65,9 @@ function Adoption(props) {
     return (
         <Fragment>
         <div className={style.container}>
-            <Link to={`/`}>
-                <button className={style.arrow}>Volver</button>
-            </Link>
+        <div onClick={history.goBack} className={" btn btn-light " + style.arrow}>
+          Volver
+        </div>
             <div className={style.detail}>
                 <div className={style.imagen}>
                 {props.adopt.photo ? (
@@ -154,4 +153,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getAdoptionById, updateState})(Adoption);
+export default connect(mapStateToProps, { getAdoptionById, updateState, createRequest})(Adoption);

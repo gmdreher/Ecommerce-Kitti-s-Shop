@@ -58,7 +58,6 @@ function App() {
             <Route exact path='/users/adoptionsRequest' component={AdoptionRequest} />
             <Route exact path='/users/catalogueAdoptions' component={CatalogueAdoptions} />
             <Route exact path="/user/adoption/detalle/:id" render={({ match }) => <Adoption key={match.params.id} id={match.params.id} />} />
-            <Route exact path='/admin/createAdoptions' component={CreateAdoption} />
            
               <Route exact path="/users/me" component={UserProfile} />
               <Route exact path="/" component={Main} />

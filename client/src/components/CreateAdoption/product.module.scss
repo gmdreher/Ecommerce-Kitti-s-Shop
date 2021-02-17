@@ -5,8 +5,7 @@
   display: block;
 
   .arrow{
-    display: grid;
-    justify-items: start;
+    display: inline-block !important;
     background: white;
     box-shadow: 3px 3px 5px rgb(139, 139, 139);
     padding: .5em 2em;
@@ -14,6 +13,7 @@
     border: 1px solid #bdbdbd;
     margin-top: 1em;
     border-radius: 25px;
+
 
     @media screen and (max-width: 360px) {
       margin-left: 50px;
@@ -80,11 +80,6 @@ div{
     }
   }
 }
-
-.estrellitas{
-color: gold
-}
-
 
 
 

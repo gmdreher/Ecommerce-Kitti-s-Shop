@@ -3,7 +3,7 @@ const { User,CreateAdoption,ReviewApprovedAdoption } = require('../db.js');
 const bodyParser = require('body-parser')
 
 
-server.post("/createAdoption", (req, res) => {
+server.post("/createAdoption", (req, res) => {//createAdoption
     const { reason, condition, userId,province,contact } = req.body
    
     
@@ -24,14 +24,16 @@ server.post("/createAdoption", (req, res) => {
   
 })
 
-server.post("/application", (req, res) => {
-    const { condition, state, userId, createAdoptionId } = req.body
+server.post("/application", (req, res) => {//postRequest
+    const { condition, userId, contact, province, createAdoptionId } = req.body
     
     ReviewApprovedAdoption.create({
         condition:condition,
-        state:state,
+        state:'Creada',
         userId:userId,
-        createAdoptionId:createAdoptionId
+        createAdoptionId:createAdoptionId,
+        contact:contact,
+        province:province
     }).then((application)=>{
         res.json(application)
     }).catch((err)=>{
@@ -40,7 +42,7 @@ server.post("/application", (req, res) => {
   
 })
 
-server.put("/createAdoption/:id/photo", (req,res)=>{
+server.put("/createAdoption/:id/photo", (req,res)=>{//createAdoption
     const {data} = req.files.image;
     const {id} = req.params
     CreateAdoption.update({
@@ -54,7 +56,7 @@ server.put("/createAdoption/:id/photo", (req,res)=>{
         res.status(400).json(err)
     })
 })
- server.put("/createAdoption/:id", (req,res)=>{
+ server.put("/createAdoption/:id", (req,res)=>{//updateState
     console.log('el estado recibido',req.body)
     const {id} = req.params
     const {state} = req.body
@@ -63,7 +65,9 @@ server.put("/createAdoption/:id/photo", (req,res)=>{
       state:state
     }, {where:{
             id:id
-        } }
+        } },
+        {order: [
+            ['id', 'ASC']]}
     ).then((act)=>{
         res.json(act)
     }).catch((err)=>{
@@ -93,8 +97,8 @@ server.put("/createAdoption/:id/photo", (req,res)=>{
             res.status(400).json(err)
         })
     }
-})
-server.get("/application/:userId", (req,res)=>{//////////////posiblemente
+})*/
+server.get("/application/:userId", (req,res)=>{////////////// getAllRequestUser posiblemente
     const {userId} = req.params
         ReviewApprovedAdoption.findAll({where:{userId:userId}})
          .then((act)=>{
@@ -103,10 +107,10 @@ server.get("/application/:userId", (req,res)=>{//////////////posiblemente
         res.status(400).json(err)
     }) 
   
-})*/
-server.get("/createAdoption/creada", (req,res)=>{
+})
+server.get("/createAdoption/acept", (req,res)=>{
     
-    CreateAdoption.findAll({where:{state:'Creada' }})
+    CreateAdoption.findAll({where:{state:'Aprobada' }})
           .then((act)=>{
               res.json(act)
      }).catch((err)=>{
@@ -114,12 +118,14 @@ server.get("/createAdoption/creada", (req,res)=>{
      })
    
  })
- server.get("/createAdoption/:state", (req,res)=>{
+ server.get("/createAdoption/state/:state", (req,res)=>{//getAllAdoptionState
     const {state} = req.params
    
     CreateAdoption.findAll({
        where:{state:state }
-   }).then((act)=>{
+    },{order: [
+        ['id', 'ASC']]}
+    ).then((act)=>{
          res.json(act)
     }).catch((err)=>{
         res.status(400).json(err)
@@ -127,7 +133,7 @@ server.get("/createAdoption/creada", (req,res)=>{
   
 })
 
- server.get("/application/:state", (req,res)=>{
+ /* server.get("/application/:state", (req,res)=>{
      const {state} = req.params
     
      ReviewApprovedAdoption.findAll({
@@ -137,15 +143,16 @@ server.get("/createAdoption/creada", (req,res)=>{
             {
               model: CreateAdoption,
             },],
-    })
+    },{order: [
+        ['id', 'ASC']]})
           .then((act)=>{
               res.json(act)
      }).catch((err)=>{
          res.status(400).json(err)
      })
    
- })
- server.get("/application/:id", (req,res)=>{//para que el admin y los users  vea las soliciturdes que tiene una adopcion
+ }) 
+ server.get("/application/:id", (req,res)=>{// getAllRequestUser para que el admin y los users  vea las soliciturdes que tiene una adopcion
     const {id} = req.params
    
     ReviewApprovedAdoption.findOne({
@@ -162,18 +169,14 @@ server.get("/createAdoption/creada", (req,res)=>{
         res.status(400).json(err)
     })
   
-})
-server.get("/createAdoption/:id", (req,res)=>{//para que el user que creo la adopcion vea las slicitudes de adopcion
+})*/
+server.get("/createAdoption/:id", (req,res)=>{//  getAllAdoptionsUser createAdoption  para que el user que creo la adopcion vea las slicitudes de adopcion
     const {id} = req.params
    
     CreateAdoption.findAll({
        where:{userId:id }
-   },{
-       include: [
-           {
-             model: ReviewApprovedAdoption,
-           },],
-   })
+   },{order: [
+        ['id', 'ASC']]})
          .then((act)=>{
              res.json(act)
     }).catch((err)=>{
@@ -182,7 +185,7 @@ server.get("/createAdoption/:id", (req,res)=>{//para que el user que creo la ado
   
 })
 
-server.get("/createAdoption", (req,res)=>{//encuentra todas las adopciones que creo
+server.get("/createAdoption", (req,res)=>{// getAllAdoptions encuentra todas las adopciones que creo
     
     CreateAdoption.findAll()
           .then((act)=>{
@@ -192,7 +195,7 @@ server.get("/createAdoption", (req,res)=>{//encuentra todas las adopciones que c
      })
    
  })
- server.get("/:id", (req,res)=>{//encuentra una adopcion por su id
+ server.get("/:id", (req,res)=>{// getAdoptionById encuentra una adopcion por su id
     const {id}=req.params
     CreateAdoption.findOne({where:{id:id}})
           .then((act)=>{

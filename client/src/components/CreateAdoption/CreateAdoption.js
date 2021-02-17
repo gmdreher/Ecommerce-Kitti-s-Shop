@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 import styles from './createAdoption.module.scss'
 import { Link } from "react-router-dom";
 import Moment from 'moment';
+import { useHistory } from "react-router-dom";
 
 
 
 function CreateAdoption (props) {
 
-
-   //modal agregar reseña
    const [modal, setModal] = useState(false);
    const toggleAdd = () => setModal(!modal);
 
@@ -25,7 +24,7 @@ function CreateAdoption (props) {
   const [errors, setErrors] = useState({}); //---------------------------
 
   const [adoptionStates, setAdoptionStates] = useState('')
-
+  const history = useHistory();
 
 //validacion inputs
 const validate = function (input) {//---------------------------
@@ -45,13 +44,12 @@ const validate = function (input) {//---------------------------
   return errors;
 }
 
-//para setear los input
 const handleInputChange = (e) => {
   setInput({
     ...input,
     [e.target.name]: e.target.value
   });
-  setErrors(validate({//---------------------------------------
+  setErrors(validate({
     ...input,
     [e.target.name]: e.target.value
   }));
@@ -59,8 +57,6 @@ const handleInputChange = (e) => {
 }
 
  const handleOpenModal = () => {
-  // console.log(productId)
- // setIdProductAdding(productId)
   toggleAdd()
 }
 const handleChangeImage = e => {
@@ -77,7 +73,7 @@ const handleCreate = e =>{
 }
   
   useEffect(() => {
-    if(props.user.rol=='User'){
+    if(props.user.rol==='User'){
        props.getAllAdoptionsUser(props.user.id)
     } else{
       props.getAllAdoptions()
@@ -100,7 +96,12 @@ const handleCreate = e =>{
     return (
       <Fragment>
         <div>
-          <button className={styles.button_} onClick={handleOpenModal}>Agregar Adopción</button>
+        { props.user.rol == 'admin'?<button className={styles.button_} onClick={()=>history.push('/users/adoptionsRequest')}>Solicitudes de Adopción</button>:
+        <button className={styles.button_} onClick={handleOpenModal}>Agregar Adopción</button>
+        }
+        {props.user.rol !=='admin'?<button className={styles.button_} onClick={()=>history.push('/users/adoptionsRequest')}>Solicitudes Creadas</button>:
+        null
+        }
         </div>
         <br />
         <h2 className={styles.title}>Adopciones Creadas:</h2>
@@ -135,17 +136,20 @@ const handleCreate = e =>{
                   return (
                     <tr key={adopt.id}>
                       <td scope="row" >
-                        {/* <Link exact to={`/orders/${order.id}`} > */}
                           {adopt.id}
-                        {/* </Link> */}
                       </td>
-                      {/* <td>{adopt.userId}</td> */}
                       <td>{adopt.condition}
                       </td>
                       <td>{adopt.state}</td>
                       <td>{formatDate(adopt.updatedAt)}</td>
             
-                      {adopt.photo?<td><img width='max-width:100%;width:auto' height='auto'src={`data:image/jpg;base64,${adopt.photo}`}/></td>:<td>No Se cargo Imagen</td>}
+                      {adopt.photo?
+                      <td>
+                        <div>
+                          <img src={`data:image/jpg;base64,${adopt.photo}`}/>
+                        </div>
+                      </td>
+                      :<td>No Se cargo Imagen</td>}
                     </tr>
                   )
                 })
@@ -157,30 +161,28 @@ const handleCreate = e =>{
                         {adopt.id}
                       </Link> 
                     </td>
-                    {/* <td>{adopt.userId}</td> */}
+                   
                     <td>{adopt.condition}
                     </td>
                     <td>{adopt.state}</td>
                     <td>{formatDate(adopt.updatedAt)}</td>
           
-                    {adopt.photo?<td><img width='max-width:100%;width:auto' height='auto'src={`data:image/jpg;base64,${adopt.photo}`}/></td>:<td>No Se cargo Imagen</td>}
+                    {adopt.photo?
+                    <td>
+                      <div>
+                        <img src={`data:image/jpg;base64,${adopt.photo}`}/>
+                      </div>
+                    </td>
+                    :<td>No Se cargo Imagen</td>}
                   </tr>
                 )
               })
               }
             </tbody>
           </table>
-          {/* {
-            props.allOrders.length === 0 ? <div>
-              No se encontraron ordenes en estado {orderStates}
-            </div>: ""
-          } */}
+          
         </div>
         </div>
-
-
-
-        {/* -------------MODAL POST--------------- */}
  <div>
  <Modal isOpen={modal} toggle={toggleAdd} className={props.className}>
    <Form onSubmit={e => e.preventDefault()}>
@@ -212,12 +214,6 @@ const handleCreate = e =>{
 
      </ModalBody>
      <ModalFooter>
-
-
-      {/*  {errors.description ? <Button color="danger" onClick={toggleAdd}>Añadir reseña</Button> :
-         <Button className={styles.button_} type='submit' onClick={() => { handleAddReview(idProductAdding) }}
-         >Añadir Reseña</Button>} */}
-
         <Button className={styles.button_} onClick={handleCreate}>Enviar</Button>
        <Button className={styles.button_} onClick={toggleAdd}>Salir</Button>
      </ModalFooter>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AdoptionCard from '../CreateAdoption/AdoptionCard.js';
 import styles from './catalogue.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllAdoptions } from '../../actions/adoptionAction.js';
+import { getAllAdoptionsAcept } from '../../actions/adoptionAction.js';
 import { useHistory } from 'react-router-dom';
 import { searchProduct } from '../../actions/productActions.js'
 
@@ -19,7 +19,7 @@ export default function CatalogueAdoptins() {
 
     useEffect(() => {
 
-         dispatch(getAllAdoptions())
+         dispatch(getAllAdoptionsAcept())
        // if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
     }, [])//[history.location.search.length > 0])
 

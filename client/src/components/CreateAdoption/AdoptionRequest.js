@@ -1,16 +1,17 @@
 import React, {Fragment, useEffect, useState,} from "react";
 import { Button, Modal, Form, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Container, Table } from 'reactstrap';
-import { getAllRequestUser, requestAdoption } from '../../actions/adoptionAction';
+import { getAllRequestUser } from '../../actions/adoptionAction';
 import { connect } from 'react-redux';
 import styles from './createAdoption.module.scss'
 import { Link } from "react-router-dom";
 import Moment from 'moment';
+import { useHistory } from "react-router-dom";
 
 
 
 function AdoptionRequest (props) {
 
-
+  const history = useHistory();
    //modal agregar reseña
    const [modal, setModal] = useState(false);
    const toggleAdd = () => setModal(!modal);
@@ -105,10 +106,10 @@ const handleCreate = e =>{
     return (
       <Fragment>
         <div>
-          <button className={styles.button_} onClick={handleOpenModal}>Agregar Adopción</button>
+          <button className={styles.button_} onClick={()=>history.push('/users/adoptions')}>Adopciones Creadas</button>
         </div>
         <br />
-        <h2 className={styles.title}>Adopciones Creadas:</h2>
+        <h2 className={styles.title}>Adopciones Solicitadas:</h2>
         <div className={styles.select}>
           {/* <div>
             <label>Filtrar por estado </label> &nbsp;
@@ -241,4 +242,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getAllRequestUser, requestAdoption })(AdoptionRequest);
+export default connect(mapStateToProps, { getAllRequestUser })(AdoptionRequest);
