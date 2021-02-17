@@ -30,7 +30,7 @@ export default function CatalogueAdoptins() {
 
     return (
         <div className={styles.catalogue}>
-            <h2 className={styles.titleH2}>Catalogo de Adopciones</h2>
+            <h2 className={styles.titleH2}>Galeria de Gatitos en Adopción</h2>
 
             <div className={styles.contentCards}>
                 {adopcionesPaginadas && adopcionesPaginadas.map((infoAdoption) => {

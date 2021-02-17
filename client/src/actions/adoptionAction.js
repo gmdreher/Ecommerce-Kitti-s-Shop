@@ -35,10 +35,10 @@ export const createAdoption = (datos) => async dispatch => {
             const fd = new FormData();
             fd.append('image', datos.image)
             datos.image = fd;
-            const response = await axios.post('http://localhost:3001/adoptions/createAdoption', datos);
-            await axios.put(`http://localhost:3001/adoptions/createAdoption/${response.data.id}/photo`,fd)  
-            const responseNew = await axios.get(`http://localhost:3001/adoptions/${response.data.id}`)
-          //  for(var i = 0 ; i<response.data.length;i++){
+            const response = await axios.post('/adoptions/createAdoption', datos);
+            await axios.put(`/adoptions/createAdoption/${response.data.id}/photo`,fd)  
+            const responseNew = await axios.get(`/adoptions/${response.data.id}`)
+          
             console.log(response.data)
             if(responseNew.data.photo){
                 function bin2string(array){
@@ -52,7 +52,6 @@ export const createAdoption = (datos) => async dispatch => {
                 var Imagen_Base64 = btoa(Imagen_Bin_String);
                 responseNew.data.photo = Imagen_Base64
         }
-   // } 
             dispatch({
                 type:CREATE_ADOPTION,
                 payload:responseNew.data
@@ -66,7 +65,7 @@ export const createAdoption = (datos) => async dispatch => {
                
 export const getAllRequestUser = (id) => async (dispatch)=>{
 
-    const response = await axios.get(`http://localhost:3001/adoptions/application/${id}`)
+    const response = await axios.get(`/adoptions/application/${id}`)
     dispatch({
         type:REQUEST_USER,
         payload:response.data
@@ -77,22 +76,15 @@ export const getAllRequestUser = (id) => async (dispatch)=>{
 export const updateState = (data) => async (dispatch,getState)=>{
     console.log(data)
     let update = getState().adoption.adoption  
-    console.log('estado antes',update.state)
-    update.state=data.state 
-    
-   
-    await axios.put(`http://localhost:3001/adoptions/createAdoption/${data.id}`, data)
-    
-    console.log('estado despues',update.state)
+    update.state=data.state   
+    await axios.put(`/adoptions/createAdoption/${data.id}`, data)
      dispatch({
         type:UPDATE_ADOPTION,
         payload:update
     })
 }
 export const getAllAdoptionState = (state) => async (dispatch)=>{
-    const response = await axios.get(`http://localhost:3001/adoptions/createAdoption/state/${state}`);
-    console.log(response)
-     
+    const response = await axios.get(`/adoptions/createAdoption/state/${state}`);     
     for(var i = 0 ; i<response.data.length;i++){
             console.log(response.data[i])
             if(response.data[i].photo){
@@ -116,9 +108,8 @@ export const getAllAdoptionState = (state) => async (dispatch)=>{
 
 export const getAllAdoptions = () => async (dispatch)=>{
 
-    const response = await axios.get(`http://localhost:3001/adoptions/createAdoption`);
-    console.log(response)
-     
+    const response = await axios.get(`/adoptions/createAdoption`);
+
     for(var i = 0 ; i<response.data.length;i++){
             console.log(response.data[i])
             if(response.data[i].photo){
@@ -144,9 +135,7 @@ export const getAllAdoptions = () => async (dispatch)=>{
 
 export const getAllAdoptionsAcept = () => async (dispatch)=>{
 
-    const response = await axios.get(`http://localhost:3001/adoptions/createAdoption/acept`);
-    console.log(response)
-     
+    const response = await axios.get(`/adoptions/createAdoption/acept`);
     for(var i = 0 ; i<response.data.length;i++){
             console.log(response.data[i])
             if(response.data[i].photo){
@@ -170,7 +159,7 @@ export const getAllAdoptionsAcept = () => async (dispatch)=>{
 }
 
 export const getAdoptionById = (id)=> async dispatch=>{
-    const response = await axios.get(`http://localhost:3001/adoptions/${id}`)
+    const response = await axios.get(`/adoptions/${id}`)
 
         if(response.data.photo){
             function bin2string(array){
@@ -192,7 +181,7 @@ export const getAdoptionById = (id)=> async dispatch=>{
 
 }
 export const createRequest = (data)=>async dispatch =>{
-    const response = await axios.post(`http://localhost:3001/adoptions/application`,data)
+    const response = await axios.post(`/adoptions/application`,data)
     dispatch({
         type:POST_REQUEST,
         payload:response.data
