@@ -12,7 +12,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 // Agrega credenciales
 mercadopago.configure({
-    access_token: process.env.MERCADO_PAGO_TOKEN,
+    access_token: process.env.ACCESS_TOKEN,
     sandbox: true
 });
 
@@ -30,7 +30,7 @@ server.post("/", (req, res) => {
         order.update({
             discount: carrito[0].porcentaje
         })
-        console.log("esto es order", order)
+        // console.log("esto es order", order)
     })
     .then(()=>{
 

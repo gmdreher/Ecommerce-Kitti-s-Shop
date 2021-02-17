@@ -255,36 +255,46 @@ server.put('/promote/:id', (req, res)=>{
 //PUT /users/:id/passwordReset
 server.put('/passwordReset/:reset', function (req, res) {
   const {reset} = req.params;
-  const {newPassword } = req.body;
-console.log(reset)
-    if(!newPassword){
+  const {newPassword} = req.body;
+
+  if(!newPassword){
     return res.status(400)
     .json("Debe ingresar su nueva contraseña")
     }
-    User.findOne(
-      {
-        where: {
-          [Op.or]: [
-            {reset: reset},
-            {id: reset}
-          ] 
-        },
-       
-      })
+    if(isNaN(reset)){
+      User.findOne(
+        {
+          where: {
+           reset: reset
+          },
+          }
+    )
     .then(user => {
-        user.update(
-          {
-            password: newPassword
-          })
-      .then(() => {
-        res.status(200).json("Contraseña cambiada")
+      user.update(
+        {
+          password: newPassword
+        })
       })
+        .then((success => res.status(200).send("se ha cambiado la contraseña")))
       .catch(error => {
         res.status(400).send(`Error ${error}`);
       })
-       }
-   ) 
+} else{ 
+
+  User.findByPk(reset)
+  .then(user => {
+    user.update(
+      {
+        password: newPassword
+      })
+    })
+    .then((success => res.status(200).send("se ha cambiado la contraseña")))
+      .catch(error => {
+        res.status(400).send(`Error ${error}`);
+      })
+}
 });
+   
 
 
 //user olvida la contraseña

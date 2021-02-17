@@ -52,10 +52,10 @@ server.put('/:id' , protected.isAuth, (req, res) => {
        
     })
     .then((order) => {
-      console.log("ordeasd", order)
+      
 
       let direccion= order.dataValues.address
-      if(order.state === "enviado"){
+      if(order.state === "enviada"){
         const transporter = nodemailer.createTransport({
                service: 'gmail',
                auth: {
@@ -63,6 +63,7 @@ server.put('/:id' , protected.isAuth, (req, res) => {
                  pass: process.env.AUTH_PASS
                }
              })
+
                        transporter.sendMail({
                          from: process.env.AUTH_MAIL,
                          to: order.user.email,
@@ -78,6 +79,7 @@ server.put('/:id' , protected.isAuth, (req, res) => {
                            res.status(200).send("Mail enviado" + info)
                           }
                      })
+                  
       }
       res.status(200).json(order)
     })
