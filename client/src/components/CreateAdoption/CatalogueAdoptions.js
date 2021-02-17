@@ -19,9 +19,8 @@ export default function CatalogueAdoptins() {
 
     useEffect(() => {
 
-        dispatch(getAllAdoptionsAcept())
-        // if (history.location.search.length > 0) dispatch(searchProduct(history.location.search.slice(8)))
-    }, [])//[history.location.search.length > 0])
+         dispatch(getAllAdoptionsAcept())
+    }, [])
 
     useEffect(() => {
         setAdopcionesPaginadas(adoptions.slice(pagina * 8 - 8, pagina * 8))
@@ -34,7 +33,9 @@ export default function CatalogueAdoptins() {
 
             <div className="contentadops">
                 {adopcionesPaginadas && adopcionesPaginadas.map((infoAdoption) => {
-                    return <AdoptionCard key={infoAdoption.id} adopt={infoAdoption} />
+                   
+                        return <AdoptionCard key={infoAdoption.id} adopt={infoAdoption} />
+                    
                 })}
             </div>
             <nav aria-label="Page navigation example">
