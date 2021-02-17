@@ -14,14 +14,6 @@ export default function ViewGuest() {
 
   }, [cartProduct])
 
-
-  const cartProduct = useSelector(store => store.cart.cartItems)
-
-  useEffect(() => {
-    console.log(cartProduct.length)
-  }, [cartProduct])
-
-
   return (
     <div className='viewUser_Guest'>
       <div className="d-flex d-sm-none">

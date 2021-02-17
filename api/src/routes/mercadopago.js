@@ -26,11 +26,9 @@ server.post("/", (req, res) => {
     // console.log("este es carrito ", carrito)
 
     Order.findByPk(orderId)
-        .then((order) => {
-            order.update({
-                discount: carrito[0].porcentaje
-            })
-            console.log("esto es order", order)
+    .then((order)=>{
+        order.update({
+            discount: carrito[0].porcentaje
         })
         console.log("esto es order", order)
     })
@@ -99,31 +97,31 @@ server.get("/response", async (req, res) => {
                 model: User, attributes: ["id", "email"]
             }]
     })
-        .then((order) => {
-            // console.log("esto es order", order)
+    .then((order) => {
+        // console.log("esto es order", order)
 
-            if (payment_status == "approved") {
+        if(payment_status == "approved"){
 
-                order.payment_status = payment_status //aprobado
-                order.state = "confirmada"
-                let emailUser = order.user.dataValues.email
-                let address = order.dataValues.address
-                // console.log("esto es adress ", address)
-                order.save()
-                    .then((_) => {
-
-                        const transporter = nodemailer.createTransport({
-                            service: 'gmail',
-                            auth: {
-                                user: process.env.AUTH_MAIL,
-                                pass: process.env.AUTH_PASS
-                            }
-                        })
-                        transporter.sendMail({
-                            from: process.env.AUTH_MAIL,
-                            to: emailUser,
-                            subject: 'Su compra fue exitosa',
-                            text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
+            order.payment_status= payment_status //aprobado
+            order.state = "confirmada"
+            let emailUser = order.user.dataValues.email
+            let address= order.dataValues.address
+            // console.log("esto es adress ", address)
+            order.save()
+            .then((_) => {
+    
+                const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.AUTH_MAIL,
+                    pass: process.env.AUTH_PASS
+                }
+                })
+                transporter.sendMail({
+                    from: process.env.AUTH_MAIL,
+                    to: emailUser,
+                    subject: 'Su compra fue exitosa',
+                    text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
                     \n Datos de envio: 
                     \n ${address}
                     \n Ante cualquien consulta comunicarse a: ecommerce.kittishop@gmail.com
