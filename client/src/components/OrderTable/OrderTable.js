@@ -88,7 +88,7 @@ function OrderTable (props) {
           </table>
           {
             props.allOrders.length === 0 ? <div>
-              No se encontraron ordenes en estado {orderStates}
+              {t("noOrders")} {orderStates}
             </div>: ""
           }
         </div>

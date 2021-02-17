@@ -101,9 +101,9 @@ function NewCategoryForm(props) {
   return (
     <Container>
        <br/>
-      <h2 className={styles.title}>Administrar Categorías</h2>
+      <h2 className={styles.title}>{t("categories.management")}</h2>
       <br/>
-      <button className={styles.buttonFormAdd} onClick={toggle}> + Agregar Categoría</button>
+      <button className={styles.buttonFormAdd} onClick={toggle}>{t("categories.add")}</button>
       <br/>
       <div className={"table-responsive " + styles.container}>
       <table className="table table-sm">
@@ -156,11 +156,11 @@ function NewCategoryForm(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.name ? <button className={styles.buttonForm} onClick={toggle}>Crear Categoría</button> :
+              {errors.name ? <button className={styles.buttonForm} onClick={toggle}>{t("crud.Categories.createCategory")}</button> :
                <button className={styles.buttonForm} type="submit" onClick={() => handleAdd({ name: input.name, description: input.description })}
               >{t("crud.Categories.createCategory")}</button>}
 
-              <button className={styles.buttonForm} onClick={toggle}>Salir</button>
+              <button className={styles.buttonForm} onClick={toggle}>{t("crud.Review.exit")}</button>
 
             </ModalFooter>
           </Form>

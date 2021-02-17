@@ -125,7 +125,7 @@ function Product(props) {
             userId:user.id,
             productId: data.id,
             price: data.price,
-             quantity: quantity
+            quantity: quantity
           }
             : {
             productId: data.id,

@@ -11,6 +11,7 @@ import {
 
 
 export const addProductCart = (data) => async (dispatch, getState) => {
+    console.log("data", data)
     const  MySwal  =  withReactContent (Swal);
     if (!data.userId) {
 
@@ -188,8 +189,6 @@ export const getProductsCart = (data) => async (dispatch, getState) => {
 }
 
 export const deleteTotalCart = (data) => async (dispatch, getState) => {
-
-
     if (getState().auth.userInfo !== null) {
         const accessToken = localStorage.getItem('data')
 
@@ -213,7 +212,7 @@ export const deleteTotalCart = (data) => async (dispatch, getState) => {
                 });
             })
     })
-    await axios.delete(`http://localhost:3001/users/${data.userId}/order/${data.orderId}`)
+    await axios.delete(`http://localhost:3001/users/${data.userId}/order/${data.orderId}` , data)
     dispatch({
         type: DELETE_TOTAL_CART,
         payload: data.orderId
@@ -226,6 +225,7 @@ export const removeFromCartLS = (product) => dispatch => {
 };
 export const deleteItem = (data) => async (dispatch, getState) => {
     if (data.orderId) {
+        
         if (getState().auth.userInfo !== null) {
             const accessToken = localStorage.getItem('data')
 
@@ -237,8 +237,8 @@ export const deleteItem = (data) => async (dispatch, getState) => {
                 error => {
                     return Promise.reject(error)
                 }
-            )
-        }
+            ) 
+        } 
         const prod = await axios.delete(`http://localhost:3001/orders/${data.orderId}/${data.id}`)
         dispatch({
             type: DELETE_ITEMS_CART,
@@ -251,9 +251,9 @@ export const deleteItem = (data) => async (dispatch, getState) => {
     }
 
 }
-export const editQuantity = ({ idUser, productId, quantity, orderId }) => async (dispatch, getState) => {
+export const editQuantity = ({addStock, takeStock, idUser, productId, quantity, orderId  }) => async (dispatch, getState) => {
     if (orderId && idUser) {
-        var orderBody = { productId, quantity, orderId }
+        var orderBody = { productId, quantity, orderId, addStock, takeStock }
         const cart = getState().product.cart.slice();
         try {
             if (getState().auth.userInfo !== null) {

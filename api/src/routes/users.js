@@ -76,14 +76,21 @@ server.post('/:userId/order', (req, res) => {
   let { userId } = req.params;
   let { productId, price, quantity } = req.body;
 
-  Order.findOrCreate({
+  Product.findByPk(productId)
+  .then(product => {
+    product.update({
+      stock: product.stock - 1
+    })
+  console.log("entra")
+return Order.findOrCreate({
     where: {
       userId: userId,
       state: "carrito"
     },
     userId: userId,
     state: "carrito"
-
+    
+})
   }).then((order) => {
     OrderDetails.create({
       orderId: order[0].id,
@@ -92,6 +99,7 @@ server.post('/:userId/order', (req, res) => {
       quantity: quantity
     })
       .then((order_detalle) => {
+        console.log(order_detalle)
         res.status(201).json(order_detalle)
       })
       .catch(err => {

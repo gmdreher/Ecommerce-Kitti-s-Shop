@@ -7,24 +7,20 @@ import { connect } from 'react-redux';
 import ViewUser from "./ViewUser";
 import ViewGuest from "./ViewGuest";
 import ViewAdmin from "./ViewAdmin";
-import {useTranslation} from 'react-i18next';
-
+import { useTranslation } from 'react-i18next';
 
 function NavBar(props) {
-
-  const {t, i18n} = useTranslation();
-const [language, setLanguage] = useState('es');
+  const { t, i18n } = useTranslation();
+  const [language, setLenguage] = useState('es');
 
   const onChangeLanguage = () => {
     i18n.changeLanguage(language);
-
-    if(language === 'es'){
-      setLanguage('en');
+    if (language === 'es') {
+      setLenguage('en');
     } else {
-      setLanguage('es');
+      setLenguage('es');
     }
- };
-
+  };
     return (
       <Fragment>
   
@@ -35,8 +31,7 @@ const [language, setLanguage] = useState('es');
                 <img className={styles.logo} src={logo}  alt=''/>
               </Link>
             </div>
-            <button className={styles.ctnCart} id="navbarSupportedContent" onClick={onChangeLanguage}>
-              {t('nav.change')}</button>
+            <button className={styles.lenguaje} onClick={onChangeLanguage}>{t("nav.change")}</button>
             <div className={'' + ''}>
               <Search />
             </div>

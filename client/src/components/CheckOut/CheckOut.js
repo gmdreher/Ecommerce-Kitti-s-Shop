@@ -244,22 +244,22 @@ return (
                             </div>
                             <div >
                                 <h6 class="form-label">{t("checkOut.State")}</h6>
-                                <input name="ciudad" value={inputEnvio.ciudad} type="text" class="form-control"  required placeholder="Calle y número de la casa" onChange={handleInputChange} />
+                                <input name="ciudad" value={inputEnvio.ciudad} type="text" class="form-control"  required placeholder={t("address.streetNumber")} onChange={handleInputChange} />
                                 
                             </div>
                             <div >
                                 <h6 class="form-label">{t("checkOut.Address")}</h6>
-                                <input name="direccion" value={inputEnvio.direccion} type="text" class="form-control"  required placeholder="Calle y número de la casa" onChange={handleInputChange} />
+                                <input name="direccion" value={inputEnvio.direccion} type="text" class="form-control"  required placeholder={t("address.streetNumber")} onChange={handleInputChange} />
                                
                             </div>
                             <div >
                                 <h6 class="form-label">{t("checkOut.Apartment")}</h6>
-                                <input name="piso" value={inputEnvio.piso} type="text" class="form-control"  required placeholder="N° de planta o N°" onChange={handleInputChange} />
+                                <input name="piso" value={inputEnvio.piso} type="text" class="form-control"  required placeholder={t("address.floorNumber")} onChange={handleInputChange} />
                                 
                             </div>
                             <div >
                                 <h6 class="form-label">{t("checkOut.Comments")}</h6>
-                                <input name="comentarios" value={inputEnvio.comentarios} type="text" class="form-control"  placeholder="Informacion extra sobre envio" onChange={handleInputChange} />
+                                <input name="comentarios" value={inputEnvio.comentarios} type="text" class="form-control"  placeholder={t("address.extraInfo")} onChange={handleInputChange} />
                                 
                             </div>
                             <br />

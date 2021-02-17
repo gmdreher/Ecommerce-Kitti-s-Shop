@@ -3,6 +3,7 @@ import style from './search.module.scss'
 import { searchProduct } from '../../actions/productActions.js'
 import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
+import {useTranslation} from 'react-i18next';
 
 
 
@@ -12,6 +13,7 @@ export default function Search() {
     const [input, setInput] = useState({ search: '' })
     const dispatch = useDispatch();
     const history = useHistory();
+    const {t} = useTranslation();
 
 
     function handleChange(e) {
@@ -31,7 +33,7 @@ export default function Search() {
                   <input onChange={handleChange} className={"form-control me-2 " + style.inputSearch}
                          name='search'
                          type='text'
-                         placeholder="Buscar..."
+                         placeholder={t("search")}
                   />
                   <button className={style.btnSearch}>
                       <i className={"fas fa-search " + style.iconSearch}/>

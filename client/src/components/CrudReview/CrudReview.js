@@ -265,7 +265,7 @@ export default function CrudReview(props) {
       </Table>
       {/* productos que ya tienen reseña, y quiero editar o borrar */}
 
-      <h1>{t("crud.Review.MyReviews")}</h1>
+      <h1>{t("crud.Review.myReviews")}</h1>
       {/* {productWithReview.length > 0 && <h3>{productWithReview.length}</h3>} */}
       <Table>
         <thead>
@@ -306,7 +306,7 @@ export default function CrudReview(props) {
 
               <FormGroup onSubmit={e => e.preventDefault()}>
                 <Label for="description">{t("crud.Review.Description")}</Label>
-                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' placeholder='Deja tu comentario...' value={input.description} onChange={handleInputChange} />
+                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' placeholder={t("review.leaveComment")} value={input.description} onChange={handleInputChange} />
                 {errors.description && (
                   <p className={"danger"}>{errors.description ==="true"?"":errors.description}</p>
                 )}

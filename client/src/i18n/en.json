@@ -37,7 +37,7 @@
     "crud.Review.Description": "Description",
     "crud.Review.Options": "Options",
     "crud.Review.Add": "Add",
-    "crud.Review.myReviews": "My Reviews",
+    "crud.Review.myReviews":"My Reviews",
     "crud.Review": "Review",
     "crud.Review.Score": "Score",
     "crud.Review.Edit": "Edit",
@@ -132,5 +132,23 @@
     "order.cart": "Shopping Cart",
     "order.delete": "Delete Cart",
     "catalogue": "Catalogue",
-    "catalogue.products": "Products by Page"
+    "catalogue.products": "Products by Page",
+    "products.management": "Products Management",
+    "search": "Search...",
+    "order.confirmDelete": "Yes, delete!",
+    "order.noElements": "No elements to delete",
+    "loading.image": "Loading image...",
+    "cart.addAlready": "This product is already in the cart",
+    "cart.addProduct": "The product ",
+    "cart.wasAdded": " was added to the cart",
+    "categories.management": "Categories Management",
+    "categories.add": "+ Add Category",
+    "address.streetNumber": "Street and number",
+    "address.floorNumber": "Floor number, or N°",
+    "address.extraInfo": "Extra information about shipping" ,
+    "review.leaveComment": "Leave a comment...",
+    "noOrders": "There's no orders in state",
+    "order.choose":"Choose a state",
+    "order.cartState": "Cart"
+    
 }

@@ -132,5 +132,21 @@
     "order.cart": "Pedidos de tu carrito",
     "order.delete": "Vaciar carrito",
     "catalogue": "Nuestro Catálogo",
-    "catalogue.products": "Productos por Página"
+    "catalogue.products": "Productos por Página",
+    "products.management": "Administrar Productos",
+    "search": "Buscar...",
+    "order.confirmDelete": "Si, borrar!",
+    "order.noElements": "No hay elementos para borrar",
+    "loading.image": "Cargando imagen...",
+    "cart.addProduct": "El producto ",
+    "cart.wasAdded": " fue agregado al carrito",
+    "categories.management": "Administrar Categorías",
+    "categories.add": "+ Agregar Categoría",
+    "address.streetNumber": "Calle y número de la casa",
+    "address.floorNumber": "N° de planta o N°",
+    "address.extraInfo": "Informacion extra sobre envio" ,
+    "review.leaveComment": "Deja tu comentario...",
+    "noOrders": "No se encontraron ordenes en estado",
+    "order.choose":"Elige un estado",
+    "order.cartState": "Carrito"
 }
