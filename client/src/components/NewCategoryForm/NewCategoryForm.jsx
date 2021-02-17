@@ -105,35 +105,35 @@ function NewCategoryForm(props) {
       <br />
       <button className="buttonFormAdd" onClick={toggle}>{t("categories.add")}</button>
       <br />
-      <div className={"table-responsive " + "containerCategory" >
-        <table className="table table-sm">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">{t("crud.Categories.name")}</th>
-              <th scope="col">{t("crud.Review.Description")}</th>
-              <th scope="col">{t("crud.Review.Edit")}</th>
-              <th scope="col">{t("crud.Review.Delete")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.categories && props.categories.map(((category, index) => (
-              <tr key={category.id}>
-                <td>{(index) + 1}</td>
-                <td>{category.name}</td>
-                <td>{category.description}</td>
+      {/* <div className={"table-responsive " + "containerCategory" > */}
+      <table className="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{t("crud.Categories.name")}</th>
+            <th scope="col">{t("crud.Review.Description")}</th>
+            <th scope="col">{t("crud.Review.Edit")}</th>
+            <th scope="col">{t("crud.Review.Delete")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.categories && props.categories.map(((category, index) => (
+            <tr key={category.id}>
+              <td>{(index) + 1}</td>
+              <td>{category.name}</td>
+              <td>{category.description}</td>
 
-                <td>
-                  <button className="buttonForm" onClick={() => handleEdit(category)}>{t("crud.Review.Edit")}</button>
-                </td>
-                <td>
-                  <button className="buttonForm" onClick={() => handleDelete(category)}>{t("crud.Review.Delete")}</button>
-                </td>
-              </tr>
-            )))}
-          </tbody>
-        </table>
-      </div>
+              <td>
+                <button className="buttonForm" onClick={() => handleEdit(category)}>{t("crud.Review.Edit")}</button>
+              </td>
+              <td>
+                <button className="buttonForm" onClick={() => handleDelete(category)}>{t("crud.Review.Delete")}</button>
+              </td>
+            </tr>
+          )))}
+        </tbody>
+      </table>
+      {/* </div> */}
 
       {/* -------------MODAL POST--------------- */}
       <div>
