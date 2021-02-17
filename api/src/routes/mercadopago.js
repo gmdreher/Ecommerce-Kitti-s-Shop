@@ -12,7 +12,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 // Agrega credenciales
 mercadopago.configure({
-    access_token: process.env.MERCADO_PAGO_TOKEN,
+    access_token: "APP_USR-776301935377062-021020-49372b765aa3e7903bf716a40fd2187f-713776233",
     sandbox: true
 });
 
@@ -26,49 +26,49 @@ server.post("/", (req, res) => {
     // console.log("este es carrito ", carrito)
 
     Order.findByPk(orderId)
-    .then((order)=>{
-        order.update({
-            discount: carrito[0].porcentaje
+        .then((order) => {
+            order.update({
+                discount: carrito[0].porcentaje
+            })
+            console.log("esto es order", order)
         })
-        console.log("esto es order", order)
-    })
-    .then(()=>{
+        .then(() => {
 
-    const order_id= orderId;
-   
-     
-    const items_ml = carrito && carrito.map(i => (
-        {
-        title: i.name,
-        unit_price: i.porcentaje !=0 ? ( i.price - ((i.porcentaje * parseInt(i.price)) /100)) : parseInt(i.price) ,
-        quantity: i.quantity,
-    }))
+            const order_id = orderId;
 
-    // console.log("este es items_ml",items_ml)
-    
-    // Crea un objeto de preferencia
-    let preference = {
-        items: items_ml,
-        external_reference : order_id.toString(),
-        
-        payment_methods: {
-            excluded_payment_types: [
+
+            const items_ml = carrito && carrito.map(i => (
                 {
-                    id: "atm"
-                }
-            ],
-            installments: 3  //Cantidad máximo de cuotas
-        },
-        back_urls: {
-            success: '/mercadopago/response',
-            failure: '/mercadopago/response',
-            pending: '/mercadopago/response',
-        },
-    };
+                    title: i.name,
+                    unit_price: i.porcentaje != 0 ? (i.price - ((i.porcentaje * parseInt(i.price)) / 100)) : parseInt(i.price),
+                    quantity: i.quantity,
+                }))
 
-     return mercadopago.preferences.create(preference)
-    })
-    .then(function(response){
+            // console.log("este es items_ml",items_ml)
+
+            // Crea un objeto de preferencia
+            let preference = {
+                items: items_ml,
+                external_reference: order_id.toString(),
+
+                payment_methods: {
+                    excluded_payment_types: [
+                        {
+                            id: "atm"
+                        }
+                    ],
+                    installments: 3  //Cantidad máximo de cuotas
+                },
+                back_urls: {
+                    success: 'http://localhost:3001/mercadopago/response',
+                    failure: 'http://localhost:3001/mercadopago/response',
+                    pending: 'http://localhost:3001/mercadopago/response',
+                },
+            };
+
+            return mercadopago.preferences.create(preference)
+        })
+        .then(function (response) {
             // console.log(response)
             res.json({ redirect: response.body.init_point })
 
@@ -97,50 +97,50 @@ server.get("/response", async (req, res) => {
                 model: User, attributes: ["id", "email"]
             }]
     })
-    .then((order) => {
-        // console.log("esto es order", order)
+        .then((order) => {
+            // console.log("esto es order", order)
 
-        if(payment_status == "approved"){
+            if (payment_status == "approved") {
 
-            order.payment_status= payment_status //aprobado
-            order.state = "confirmada"
-            let emailUser = order.user.dataValues.email
-            let address= order.dataValues.address
-            // console.log("esto es adress ", address)
-            order.save()
-            .then((_) => {
-    
-                const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.AUTH_MAIL,
-                    pass: process.env.AUTH_PASS
-                }
-                })
-                transporter.sendMail({
-                    from: process.env.AUTH_MAIL,
-                    to: emailUser,
-                    subject: 'Su compra fue exitosa',
-                    text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
+                order.payment_status = payment_status //aprobado
+                order.state = "confirmada"
+                let emailUser = order.user.dataValues.email
+                let address = order.dataValues.address
+                // console.log("esto es adress ", address)
+                order.save()
+                    .then((_) => {
+
+                        const transporter = nodemailer.createTransport({
+                            service: 'gmail',
+                            auth: {
+                                user: process.env.AUTH_MAIL,
+                                pass: process.env.AUTH_PASS
+                            }
+                        })
+                        transporter.sendMail({
+                            from: process.env.AUTH_MAIL,
+                            to: emailUser,
+                            subject: 'Su compra fue exitosa',
+                            text: `Estimado Usuario: \n \nSu compra fue registrada, pronto le enviaremos los productos a la direccion que nos brindo.
                     \n Datos de envio: 
                     \n ${address}
                     \n Ante cualquien consulta comunicarse a: ecommerce.kittishop@gmail.com
                     \n Gracias por la Compra!.`
-                },(error, info)=>{
-                    if(error){(res.status(500).send("no se pudo enviar" + error)) }
-                    else {
-                    res.status(200).send("Mail enviado" + info)
-                }
-            })
-        })
-        
-        
-        .then(() => {
-            res.status(200).redirect(`${process.env.APP_URL}/mercadopago/success`)
-                })
-                .catch(error => {
-                res.status(400).send(`Error ${error}`);
-                })
+                        }, (error, info) => {
+                            if (error) { (res.status(500).send("no se pudo enviar" + error)) }
+                            else {
+                                res.status(200).send("Mail enviado" + info)
+                            }
+                        })
+                    })
+
+
+                    .then(() => {
+                        res.status(200).redirect("http://localhost:3000/mercadopago/success")
+                    })
+                    .catch(error => {
+                        res.status(400).send(`Error ${error}`);
+                    })
 
 
 
@@ -151,17 +151,16 @@ server.get("/response", async (req, res) => {
                 order.save()
                     .then((err) => {
                         console.error('error al salvar', err)
-                        return res.redirect(`${process.env.APP_URL}/mercadopago/failed`)
+                        return res.redirect(`http://localhost:3000/mercadopago/failed`)
                     })
             }
 
         })
         .catch(err => {
             console.error('error al buscar', err)
-            return res.redirect(`${process.env.APP_URL}`)
+            return res.redirect(`http://localhost:3000/`)
         })
 })
 
 
 module.exports = server;
-
