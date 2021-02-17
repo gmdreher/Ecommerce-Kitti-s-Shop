@@ -181,7 +181,7 @@ class OrderDetailsTable extends React.Component {
                     </tr>
                     <tr>
                       <th className={styles.fontTotales} scope="row">Descuento:</th>
-                      <td className={styles.fontTotales} >{discount}%</td>
+                      <td className={styles.fontTotales} >{discount? discount: 0}%</td>
                     </tr>
                     <tr className={styles.total}>
                       <th scope="row">Total:</th>
@@ -200,7 +200,7 @@ class OrderDetailsTable extends React.Component {
                     </tr>
                     <tr>
                       <th className={styles.fontTotales} scope="row">Descuento:</th>
-                      <td className={styles.fontTotales} >{discount}%</td>
+                      <td className={styles.fontTotales} >{discount? discount: 0}%</td>
                     </tr>
                     <tr className={styles.total}>
                       <th scope="row">Total:</th>

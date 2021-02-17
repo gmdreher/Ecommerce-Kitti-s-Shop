@@ -47,6 +47,10 @@ function ViewAdmin(props) {
           Descuentos
             <li><a className="dropdown-item" href="#" /></li>
         </Link>
+        <Link to={'/users/adoptions'} className="dropdown-item">
+          Adopciones
+            <li><a className="dropdown-item" href="#" /></li>
+        </Link>
         <Link className="dropdown-item">
           <div onClick={logOutHandler} className="dropdown-item">
             Cerrar sesión

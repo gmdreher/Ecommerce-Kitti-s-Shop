@@ -23,7 +23,7 @@ export const getUsers = () => async (dispatch, getState) => {
                 }
             )
         }
-        const respuesta = await axios.get('http://localhost:3001/users/');
+        const respuesta = await axios.get('/users/');
         dispatch({
             type: GET_USER,
             payload: respuesta.data
@@ -52,7 +52,7 @@ export const bloquearUsers = ({ id }) => async (dispatch, getState) => {
         const users = getState().product.user.slice();
 
         try {
-            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
+            const res = await axios.put(`/auth/${id}/banned`);
 
             users && users.forEach((x) => {
                 if (x.id == id && x.banned == false) {
@@ -90,7 +90,7 @@ export const desbloquearUsers = ({ id }) => async (dispatch, getState) => {
         const users = getState().product.user.slice();
 
         try {
-            const res = await axios.put(`http://localhost:3001/auth/${id}/banned`);
+            const res = await axios.put(`/auth/${id}/banned`);
 
             users && users.forEach((x) => {
                 if (x.id == id && x.banned == true) {
@@ -129,7 +129,7 @@ export const updateToAdmin = ({ id, rol }) => async (dispatch, getState) => {
         const users = getState().product.user.slice();
 
         try {
-            const res = await axios.put(`http://localhost:3001/auth/promote/${id}`);
+            const res = await axios.put(`/auth/promote/${id}`);
 
             users && users.forEach((x) => {
 
@@ -167,7 +167,7 @@ export const updateToUsers = ({ id, rol }) => async (dispatch, getState) => {
         }
         const users = getState().product.user.slice();
         try {
-            const res = await axios.put(`http://localhost:3001/auth/demote/${id}`);
+            const res = await axios.put(`/auth/demote/${id}`);
             users && users.forEach((x) => {
                 if (x.id == id && x.rol == "admin") {
                     x.rol = "User";
@@ -203,7 +203,7 @@ export const postResertPassword = ({ id }) => async (dispatch, getState) => {
             )
         }
 
-        const res = await axios.post(`http://localhost:3001/auth/${id}/forceReset/`);
+        const res = await axios.post(`/auth/${id}/forceReset/`);
 
         dispatch({
             type: POST_RESERT_PASSWORD,
@@ -222,8 +222,8 @@ async function productsMove(cartItems, idUser, getState, dispatch) {
 
         for (let i = 0; i < cartItems.length; i++) {
 
-            const prod = await axios.get(`http://localhost:3001/products/${cartItems[i].id}`);
-            const res = await axios.post(`http://localhost:3001/users/${idUser}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
+            const prod = await axios.get(`/products/${cartItems[i].id}`);
+            const res = await axios.post(`/users/${idUser}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
 
             let order = {
                 description: prod.data.description, id: prod.data.id,
@@ -241,7 +241,7 @@ async function productsMove(cartItems, idUser, getState, dispatch) {
 }
 export const postUser = (data) => async (dispatch, getState) => {
     try {
-        const response = await axios.post('http://localhost:3001/users/', data);
+        const response = await axios.post('/users/', data);
 
 
         dispatch({
@@ -253,8 +253,8 @@ export const postUser = (data) => async (dispatch, getState) => {
 
             for (var i = 0; i < cartItems.length; i++) {
 
-                const prod = await axios.get(`http://localhost:3001/products/${cartItems[i].id}`)
-                const res = await axios.post(`http://localhost:3001/users/${response.data.user.id}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
+                const prod = await axios.get(`/products/${cartItems[i].id}`)
+                const res = await axios.post(`/users/${response.data.user.id}/order`, { productId: cartItems[i].id, price: prod.data.price, quantity: cartItems[i].quantity });
                 //este me trae el id de laorden id user y catidad, lo demas lo tengo del localstorage
                 let order = {
                     description: prod.data.description, id: prod.data.id,
@@ -282,7 +282,7 @@ export const postUser = (data) => async (dispatch, getState) => {
 export const loginUser = (email, password, getState) => {
     return function (dispatch) {
         dispatch({ type: LOGIN_USER, payload: { email, password } });
-        return axios.post('http://localhost:3001/auth/login', { email, password })
+        return axios.post('/auth/login', { email, password })
             .then(res => {
                 dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
                 localStorage.setItem('data', res.data);
@@ -302,7 +302,7 @@ export const loginUser = (email, password, getState) => {
 }
 export const loginUserGoogle = (data, getState) => {
     return function (dispatch) {
-        return axios.post(`http://localhost:3001/auth/google/redirect${data}`)
+        return axios.post(`/auth/google/redirect${data}`)
             .then(res => {
                 dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
                 localStorage.setItem('data', res.data);
@@ -323,7 +323,7 @@ export const loginUserGoogle = (data, getState) => {
 
 export const loginUserFacebook = (data, getState) => {
     return function (dispatch) {
-        return axios.post(`http://localhost:3001/auth/facebook/callback${data}`)
+        return axios.post(`/auth/facebook/callback${data}`)
             .then(res => {
                 dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data })
                 localStorage.setItem('data', res.data);
@@ -364,7 +364,7 @@ export const getUserById = (id) => async (dispatch, getState) => {
                 }
             )
         }
-        const respuesta = await axios.get(`http://localhost:3001/users/${id}`);
+        const respuesta = await axios.get(`/users/${id}`);
         // console.log("respuesta", respuesta )
         dispatch({
             type: GET_USER_BY_ID,
@@ -389,7 +389,7 @@ export const updatePassword = user => async (dispatch, getState) => {
                 }
             )
         }
-        let answer = await axios.put(`http://localhost:3001/users/passwordReset/${user.id}`, user);
+        let answer = await axios.put(`/users/passwordReset/${user.id}`, user);
         dispatch({
             type: UPDATE_PASSWORD,
             payload: answer.data
@@ -417,7 +417,7 @@ export const forgotPassword = email => async (dispatch, getState) => {
         dispatch({
             type: FORGOT_PASSWORD
         })
-        let answer = await axios.post(`http://localhost:3001/users/forgot`, email);
+        let answer = await axios.post(`/users/forgot`, email);
         // console.log("SE VA------", answer);
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,

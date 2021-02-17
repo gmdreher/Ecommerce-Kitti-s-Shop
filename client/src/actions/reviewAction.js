@@ -18,7 +18,7 @@ export const getProductStateComplete = (userId) => async (dispatch, getState) =>
                 }
             )
           }
-        const products = await axios.get(`http://localhost:3001/users/${userId}/orders/complete`);
+        const products = await axios.get(`/users/${userId}/orders/complete`);
 
         // console.log("esto es products",products)
         let producto=[];// todos los productos con y sin review
@@ -58,7 +58,7 @@ export const getAllReviewsUser = (userId) => async (dispatch,getState) => {
                 }
             )
           }
-        const products = await axios.get(`http://localhost:3001/users/${userId}/review`);
+        const products = await axios.get(`/users/${userId}/review`);
 
         // console.log('esto es productos con review:', products)
 
@@ -88,7 +88,7 @@ export const addReview = (productId,body) => async (dispatch,getState) => {
                 }
             )
           }
-        const product = await axios.post(`http://localhost:3001/products/${productId}/review`,body);
+        const product = await axios.post(`/products/${productId}/review`,body);
 
         // console.log('esto es product de add review',product.data )
 
@@ -118,7 +118,7 @@ export const editReview = (productId, reviewId, data) => async (dispatch,getStat
                 }
             )
           }
-        const editar = await axios.put(`http://localhost:3001/products/${productId}/review/${reviewId}`,data);
+        const editar = await axios.put(`/products/${productId}/review/${reviewId}`,data);
 
         // console.log('esto es product de put review', editar)
 
@@ -148,7 +148,7 @@ export const deleteReview = (productId, reviewId) => async (dispatch,getState) =
                 }
             )
           }
-        const eliminar = await axios.delete(`http://localhost:3001/products/${productId}/review/${reviewId}`);
+        const eliminar = await axios.delete(`/products/${productId}/review/${reviewId}`);
 
         // console.log('este es delete', eliminar)
 
@@ -166,7 +166,7 @@ export const deleteReview = (productId, reviewId) => async (dispatch,getState) =
 
 // export const getAllReviewProduct = (productId) => async (dispatch) => {
 //     try {
-//         const reviewsProduct = await axios.get(`http://localhost:3001/products/${productId}/review`);
+//         const reviewsProduct = await axios.get(`/products/${productId}/review`);
 
 //         dispatch({
 //             type: GET_ALL_REVIEW_PRODUCT,

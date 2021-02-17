@@ -81,7 +81,7 @@ server.post('/:id/forceReset/',protected.isAuth, (req, res) =>{
 			  from: process.env.AUTH_MAIL,
 			  to: user.email,
 			  subject: 'Cambiar tu contraseña',
-			  text: `Por motivos de seguridad has click en el siguiente link para cambiar tu contraseña: \nhttp://localhost:3000/user/resetPass/${user.dataValues.reset}`
+			  text: `Por motivos de seguridad has click en el siguiente link para cambiar tu contraseña: \n${process.env.APP_URL}/user/resetPass/${user.dataValues.reset}`
 		  },(error, info)=>{
 			  if(error){(res.status(500).send("no se pudo enviar" + error)) }
 			  else {

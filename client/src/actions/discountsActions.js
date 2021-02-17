@@ -18,7 +18,7 @@ export const addDiscount = (mount, percentage, days, isActive) => async (dispatc
                 }
             )
           }
-        const descuento = await axios.post(`http://localhost:3001/auth/discount`, {mount: mount, percentage:percentage, days:days, isActive:isActive});
+        const descuento = await axios.post(`/auth/discount`, {mount: mount, percentage:percentage, days:days, isActive:isActive});
 
         dispatch({
             type: ADD_DISCOUNT,
@@ -47,7 +47,7 @@ export const getDiscount = () => async (dispatch, getState) => {
                 }
             )
           }
-        const descuentos = await axios.get(`http://localhost:3001/auth/discount`);
+        const descuentos = await axios.get(`/auth/discount`);
 
   
 
@@ -79,7 +79,7 @@ export const getDiscountActive = () => async (dispatch, getState) => {
                 }
             )
           } */
-        const descuentos = await axios.get(`http://localhost:3001/auth/discount/active`);
+        const descuentos = await axios.get(`/auth/discount/active`);
 
   
 
@@ -112,7 +112,7 @@ export const editDiscount = (id, isActive) => async (dispatch, getState) => {
                 }
             )
           }
-        const descuentosedit = await axios.put(`http://localhost:3001/auth/discount/${id}`, {isActive: isActive});
+        const descuentosedit = await axios.put(`/auth/discount/${id}`, {isActive: isActive});
 
     //    console.log(descuentosedit.data)
 

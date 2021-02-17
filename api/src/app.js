@@ -8,6 +8,7 @@ const passport = require('passport')
 const session = require('express-session');
 const { User } = require('./db')
 const configAuth = require('../src/config/auth')
+const upload = require('express-fileupload')
 
 
 
@@ -16,7 +17,7 @@ require('./middleware/index')
 const store = new session.MemoryStore;
 const server = express();
 server.use(cors());
-
+server.use(upload())
 server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
@@ -42,7 +43,7 @@ passport.deserializeUser(async (user ,done)=>{
 server.use(passport.initialize())
 server.use(passport.session())
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Origin', process.env.APP_URL); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
