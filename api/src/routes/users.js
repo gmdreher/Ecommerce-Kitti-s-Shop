@@ -313,7 +313,7 @@ server.post('/forgot', (req, res) =>{
 			  from: process.env.AUTH_MAIL,
 			  to: user.email,
 			  subject: 'Cambiar tu contraseña',
-			  text: `Parece que has olvidado tu contraseña! \nPorfavor has click en el siguiente link: http://localhost:3000/user/resetPass/${user.dataValues.reset}`
+			  text: `Parece que has olvidado tu contraseña! \nPorfavor has click en el siguiente link: ${process.env.APP_URL}/user/resetPass/${user.dataValues.reset}`
 		  },(error, info)=>{
 			  if(error){(res.status(500).send("no se pudo enviar" + error)) }
 			  else {

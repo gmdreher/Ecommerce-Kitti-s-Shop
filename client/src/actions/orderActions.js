@@ -18,7 +18,7 @@ export function getAllOrders(state) {
         }
       )
     }
-    var url = "http://localhost:3001/orders";
+    var url = "/orders";
     if (state) {
       url += `?state=${state}`
     }
@@ -45,7 +45,7 @@ export function getUserOrder(id) {
         }
       )
     }
-    return axios.get(`http://localhost:3001/orders/${id}`)
+    return axios.get(`/orders/${id}`)
       .then(userOrders => {
         dispatch({ type: GET_SPECIFIC_ORDER, payload: userOrders.data });
       });
@@ -69,7 +69,7 @@ export function updateStateOrder(orderId, state) {
       )
     }
     // console.log("este",orderId)
-    return axios.put(`http://localhost:3001/orders/${orderId}`, { "state": state })
+    return axios.put(`/orders/${orderId}`, { "state": state })
       .then(order => {
         dispatch({ type: UPDATE_STATE_ORDER, payload: order.data })
       });
@@ -91,7 +91,7 @@ export function getOrdersUser(id) {
         }
       )
     }
-    return axios.get(`http://localhost:3001/users/${id}/orders`)
+    return axios.get(`/users/${id}/orders`)
       .then(orders => {
         dispatch({ type: ALL_ORDERS_USER, payload: orders.data });
       });
@@ -117,7 +117,7 @@ export const meliPost = (data, orderId) => async (dispatch, getState) => {
       )
     }
     console.log(data)
-    const algo = await axios.post(`http://localhost:3001/mercadopago/`, { carrito: data, orderId: orderId })
+    const algo = await axios.post(`/mercadopago/`, { carrito: data, orderId: orderId })
 
     // console.log("esto es la data de la ction",algo)
 
@@ -150,7 +150,7 @@ export const addressOrder = (orderId, direccion) => async (dispatch, getState) =
       )
     }
     // console.log("action", direccion, orderId)
-    const algo = await axios.put(`http://localhost:3001/orders/${orderId}/address/`, { address: direccion })
+    const algo = await axios.put(`/orders/${orderId}/address/`, { address: direccion })
 
     //  console.log("esto es la data de la ction",algo)
 

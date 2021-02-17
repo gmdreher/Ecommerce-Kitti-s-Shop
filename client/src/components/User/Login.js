@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
 import {useTranslation} from 'react-i18next';
+import dotenv from "dotenv"
+dotenv.config();
 
 const validate = (input) => {
   let errors = {};
@@ -109,11 +111,11 @@ export default function Login() {
             <div className="form-text" title="¿Olvidaste tu contraseña?">{t("login.forgot")}</div>
           </Link>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
-            <button type="submit" className={"btn " + styles.btnText}>{t("user.logIn")}</button>
-            <a href="http://localhost:3001/auth/google" type="submit" className={"btn " + styles.btnGoogle}>
+            <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
+            <a href={`${process.env.REACT_APP_API_URL}/auth/google`} type="submit" className={"btn " + styles.btnGoogle}>
               <img className={styles.imgGoogle} src="https://img.icons8.com/color/48/000000/google-logo.png" alt=""/>
-              &nbsp;&nbsp;&nbsp;{t("login.google")}</a>
-            <a href={`http://localhost:3001/auth/facebook`} type='submit' className={"btn " + styles.btnFacebook}>
+              &nbsp;&nbsp;&nbsp;Iniciar sesión con Google</a>
+            <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} type='submit' className={"btn " + styles.btnFacebook}>
               <i className={"fab fa-facebook-f " + styles.imgFacebook}/>&nbsp;
               {t("login.facebook")}
             </a>

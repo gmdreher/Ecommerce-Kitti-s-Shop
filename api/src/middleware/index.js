@@ -61,7 +61,7 @@ passport.use('login', new LocalStrategy({
 
 passport.use(
   new GoogleStrategy({
-        callbackURL: 'http://localhost:3000/auth/google/redirect',
+        callbackURL: `${process.env.APP_URL}/auth/google/redirect`,
         clientID: process.env.GOOGLE_APP_ID,
         clientSecret: process.env.GOOGLE_APP_SECRET,
     },
@@ -98,7 +98,7 @@ passport.use(
 
 passport.use(
     new FacebookStrategy({
-          callbackURL: 'https://ecommerce-ft08-g07.vercel.app/auth/facebook/callback',
+          callbackURL: `${process.env.APP_URL}/auth/facebook/callback`,
           clientID: process.env.FACEBOOK_APP_ID,
           clientSecret: process.env.FACEBOOK_APP_SECRET,
           profileFields: ['id', 'emails', 'name']
