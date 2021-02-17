@@ -26,7 +26,7 @@ function MyAccount(props) {
         data-bs-display="static"
         aria-expanded="false">
         <i className={"fas fa-user " + "icon"} />
-        <span className="hideWhenMobile">
+        <span className="userName">
           {props.userInfo.fullname.split(" ")[0]}
         </span>
       </button>
