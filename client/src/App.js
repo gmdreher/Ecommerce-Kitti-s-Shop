@@ -33,7 +33,10 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import GlobalDiscount from './components/Discount/GlobalDiscount';
 
 import UserOrdersTable from "./components/UserProfile/UserOrdersTable";
-
+import CreateAdoption from "./components/CreateAdoption/CreateAdoption.js";
+import AdoptionRequest from "./components/CreateAdoption/AdoptionRequest.js";
+import CatalogueAdoptions from "./components/CreateAdoption/CatalogueAdoptions.js";
+import Adoption from './components/CreateAdoption/Adoption.js'
 
 
 
@@ -51,6 +54,11 @@ function App() {
           </header>
           <main>
             <div className="transparencia">
+            <Route exact path='/users/adoptions' component={CreateAdoption} />
+            <Route exact path='/users/adoptionsRequest' component={AdoptionRequest} />
+            <Route exact path='/users/catalogueAdoptions' component={CatalogueAdoptions} />
+            <Route exact path="/user/adoption/detalle/:id" render={({ match }) => <Adoption key={match.params.id} id={match.params.id} />} />
+           
               <Route exact path="/users/me" component={UserProfile} />
               <Route exact path="/" component={Main} />
               <Route exact path='/products' component={Catalogue} />

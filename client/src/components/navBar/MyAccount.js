@@ -39,6 +39,11 @@ function MyAccount (props) {
             </Link>
           </li>
           <li>
+            <Link to="/users/adoptions" className="dropdown-item">
+              Adopciones
+            </Link>
+          </li>
+          <li>
             <Link to="#" className="dropdown-item">
               <div onClick={logOutHandler}>
               {t("signOut")}

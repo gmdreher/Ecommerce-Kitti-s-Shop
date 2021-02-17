@@ -14,7 +14,7 @@
     "dotenv": "^8.2.0",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
-    "i18next": "^19.8.7",
+    "filereader": "^0.10.3",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",

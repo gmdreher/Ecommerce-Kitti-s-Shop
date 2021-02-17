@@ -48,6 +48,10 @@ function ViewAdmin (props) {
            {t("discounts")}
             <li><a className="dropdown-item" href="#"/></li>
           </Link>
+          <Link to={'/users/adoptions'} className="dropdown-item">
+            Adopciones
+            <li><a className="dropdown-item" href="#"/></li>
+          </Link>
             <Link className="dropdown-item">
               <div onClick={logOutHandler} className="dropdown-item">
                 {t("signOut")}
