@@ -118,7 +118,7 @@ function SignUp(props) {
   }
 
   return (
-    <div className={styles.globalContainer}>
+    <div className={'container ' + styles.globalContainer}>
       <div className={styles.formContainer}>
 
         <h2 className={styles.title}>Regístrate</h2>

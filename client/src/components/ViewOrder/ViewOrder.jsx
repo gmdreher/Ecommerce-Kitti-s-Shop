@@ -5,10 +5,11 @@ import { getProductsCart, deleteTotalCart, removeFromCartLS, editQuantity, delet
 import PayCart from '../PayCart/PayCart.jsx';
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-
+import { useTranslation } from 'react-i18next';
 
 
 export default function ViewOrder(props) {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const MySwal = withReactContent(Swal);
 
@@ -43,12 +44,12 @@ export default function ViewOrder(props) {
             var idUser = user.id;
 
             MySwal.fire({
-                title: '¿Estas seguro?',
+                title: t("crud.Review.sure"),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#1B9528',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, borrar!',
+                confirmButtonText: t("order.confirmDelete"),
                 customClass: {
                     title: "alertTitle",
                 }
@@ -62,7 +63,7 @@ export default function ViewOrder(props) {
                 position: 'top-center',
                 icon: 'info',
                 width: "24rem",
-                title: 'No hay elementos para borrar',
+                title: t("order.noElements"),
                 showConfirmButton: false,
                 timer: 1000,
                 customClass: {
@@ -79,17 +80,17 @@ export default function ViewOrder(props) {
     }
     function sumar(data) {
         if (data.userId && data.orderId) {
-
+            var takeStock = 1;
             var idProd = data.id;
             var idUsr = data.userId;
             var orderId = data.orderId
             var qty = data.quantity + 1
-            dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty, orderId }))
+            dispatch(editQuantity({ takeStock: takeStock, idUser: idUsr, productId: idProd, quantity: qty, orderId }))
         } else {
-
+            var takeStock = 1;
             var idProd = data.id;
             var qty = data.quantity + 1
-            dispatch(editQuantity({ productId: idProd, quantity: qty }))
+            dispatch(editQuantity({ takeStock: takeStock, productId: idProd, quantity: qty }))
         }
 
 
@@ -97,18 +98,19 @@ export default function ViewOrder(props) {
 
         if (data.userId && data.orderId) {
             if (data.quantity > 0) {
+                var addStock = 1;
                 var idProd = data.id;
                 var idUsr = data.userId;
                 var orderId = data.orderId
                 var qty = data.quantity - 1
-                dispatch(editQuantity({ idUser: idUsr, productId: idProd, quantity: qty, orderId }))
+                dispatch(editQuantity({ addStock: addStock, idUser: idUsr, productId: idProd, quantity: qty, orderId }))
             }
         } else {
             if (data.quantity > 0) {
-
+                var addStock = 1;
                 var idProd = data.id;
                 var qty = data.quantity - 1
-                dispatch(editQuantity({ productId: idProd, quantity: qty }))
+                dispatch(editQuantity({ addStock: addStock, productId: idProd, quantity: qty }))
             }
         }
 
@@ -122,7 +124,7 @@ export default function ViewOrder(props) {
 
         <div className="contain" >
             <div className="titulo">
-                <h2>Pedidos de tu carrito</h2>
+                <h2>{t("order.cart")}</h2>
 
                 <div className="parte-uno">
                     {cartProduct && cartProduct.map((info) => {
@@ -139,7 +141,7 @@ export default function ViewOrder(props) {
                                 { info.name ?
                                     <div className="abc" >
                                         <div className="foto" >
-                                            <img className="img-responsive" src={info.images ? info.images[0].url : console.log('no tiene imagen')} alt="Cargando imagen..." />
+                                            <img className="img-responsive" src={info.images ? info.images[0].url : console.log('no tiene imagen')} alt={t("loading.image")} />
                                         </div>
                                         <div className="datoName" >
                                             <div className="datoName2">
@@ -185,7 +187,7 @@ export default function ViewOrder(props) {
                 </div>
                 <br />
                 <div className="soporte">
-                    <button className="borrar" onClick={!user ? () => deleteLS() : () => deleteCart()}> Vaciar carrito </button>
+                    <button className="borrar" onClick={!user ? () => deleteLS() : () => deleteCart()}> {t("order.delete")} </button>
                 </div>
             </div>
             <div className="parte-dos">

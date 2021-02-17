@@ -13,11 +13,9 @@ import { updatePassword} from '../../actions/userAction'
 import { useHistory } from 'react-router-dom'
 import styles from './resetPass.module.scss'
 import {Link} from "react-router-dom";
+import {useTranslation} from 'react-i18next';
 
 function Copyright() {
-
-
-
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
@@ -77,7 +75,7 @@ function validate(input) {
 };
 
 function ResetPass(props) {
-
+  const {t} = useTranslation();
   const usersData = useSelector(store => store);
   
 
@@ -119,7 +117,7 @@ const handleEdit = function (password) {
     <Modal isOpen={modal} toggle={toggle}>
 
       <ModalHeader toggle={toggle}>
-        <h1>Nueva Contraseña</h1>
+        <h1>{t("reset.newPass")}</h1>
       </ModalHeader>
 
       <Container component="main" maxWidth="xs">
@@ -172,18 +170,18 @@ const handleEdit = function (password) {
                 variant="contained"
                 disabled
               >
-                Cambiar Contraseña
+                {t("reset.changePass")}
           </Button>
               : props.errors === true ?
 
               <Container  className={props.className}>
         
-        <div className={classes.paper}><strong>Hubo un error al intentar cambiar tu contraseña, porfavor comunícate con administración</strong></div>
+        <div className={classes.paper}><strong>{t("reset.error")}</strong></div>
      
               <div>
                 <div className={classes.row}>
                 <Link to="/"> 
-                <div className={styles.link}><strong>Volver a Inicio</strong></div></Link>
+                <div className={styles.link}><strong>{t("email.home")}</strong></div></Link>
                 </div>
               </div>
               <br/>
@@ -193,17 +191,17 @@ const handleEdit = function (password) {
                 variant="contained"
                 disabled
               >
-                Cambiar Contraseña
+                {t("reset.changePass")}
           </Button>
           </Container> 
         : props.error === false ? 
         <Container className={props.className}>
         
-        <div className={classes.paper}><strong>Tu contraseña se ha cambiado!</strong></div>
+        <div className={classes.paper}><strong>{t("reset.success")}</strong></div>
 
          <div className={classes.paper}>
           <Link to="/" > 
-          <div className={styles.link}> <strong>Volver a Inicio </strong></div></Link>
+          <div className={styles.link}> <strong>{t("email.home")}</strong></div></Link>
           </div>
           <br/>
           <Button
@@ -212,7 +210,7 @@ const handleEdit = function (password) {
                 variant="contained"
                 disabled
               >
-                Cambiar Contraseña
+                {t("reset.changePass")}
           </Button>
       
     </Container>
@@ -224,7 +222,7 @@ const handleEdit = function (password) {
     color="primary"
     onClick={() => handleEdit({id: props.id, newPassword: input.newPass})}
     className={classes.submit}>
-    Cambiar Contraseña
+    {t("reset.changePass")}
 </Button>
      }
 

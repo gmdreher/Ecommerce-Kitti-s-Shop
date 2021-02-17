@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import dotenv from "dotenv"
 dotenv.config();
 
@@ -31,6 +32,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const loginFailed = useSelector(store => store.auth.loginFailed)
   const userState = useSelector(store => store.auth.userInfo)
+  const { t } = useTranslation();
 
 
   const handleSubmit = (event) => {
@@ -66,16 +68,16 @@ export default function Login() {
   }, [history, userState])
 
   return (
-    <div className="globalContainer">
+    <div className={'container ' + "globalContainer"}>
       <div className="formContainer">
-        <h2 className="titleL">Iniciar sesión</h2>
+        <h2 className="titleL">{t("user.logIn")}</h2>
         <form className="form" onSubmit={handleSubmit}>
           {loginFailed && <div className="alert alert-danger" role="alert">
-            Los datos ingresados son incorrectos. Por favor, intente de nuevo.
+            {t("login.error")}
           </div>
           }
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">*Correo electrónico</label>
+            <label htmlFor="exampleInputEmail1" className="form-label">{t("login.email")}</label>
             <input
               type="email"
               name="email"
@@ -91,7 +93,7 @@ export default function Login() {
           <div className="mb-3">
             <label
               htmlFor="exampleInputPassword1"
-              className="form-label">*Contraseña
+              className="form-label">{t("login.password")}
             </label>
             <input
               type="password"
@@ -106,7 +108,7 @@ export default function Login() {
             {errors.password && (<p className="invalid-feedback">{errors.password}</p>)}
           </div>
           <Link to="/user/getEmail/">
-            <div className="form-text" title="¿Olvidaste tu contraseña?">¿Olvidaste tu contraseña?</div>
+            <div className="form-text" title="¿Olvidaste tu contraseña?">{t("login.forgot")}</div>
           </Link>
           <div className={"d-grid gap-2 " + "btnIniciarSesion"}>
             <button type="submit" className={"btn " + "btnText"}>Iniciar sesión</button>
@@ -115,12 +117,12 @@ export default function Login() {
               &nbsp;&nbsp;&nbsp;Iniciar sesión con Google</a>
             <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} type='submit' className={"btn " + "btnFacebook"}>
               <i className={"fab fa-facebook-f " + "imgFacebook"} />&nbsp;
-              Iniciar sesión con Facebook
+              {t("login.facebook")}
             </a>
           </div>
         </form>
         <Link to="/user/signup">
-          <div className={"form-text " + "linkRegistrarte"} title="Regístrate">¿No tienes una cuenta? Regístrate
+          <div className={"form-text " + "linkRegistrarte"} title="Regístrate">{t("login.noAccount")}
           </div>
         </Link>
       </div>

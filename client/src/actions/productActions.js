@@ -118,7 +118,21 @@ export const deleteProduct = (id) => async dispatch => {
         })
     }
 }
-export const insertProduct = (datos) => async dispatch => {
+export const insertProduct = (datos) => async (dispatch, getState) => {
+    if (getState().auth.userInfo !== null) {
+        const accessToken = localStorage.getItem('data')
+
+        axios.interceptors.request.use(
+            config => {
+                config.headers.authorization = `Bearer ${accessToken}`;
+                return config;
+            },
+            error => {
+                return Promise.reject(error)
+            }
+        )
+    }
+
     const response = await axios.post('/products/', datos.product);
     datos.cate.map((categoria) => {
         axios.post(`/products/${response.data.id}/category/${categoria}`)
@@ -144,7 +158,20 @@ export const insertProduct = (datos) => async dispatch => {
 
  } */
 
-export const editProduct = product => async dispatch => {
+export const editProduct = product => async (dispatch, getState) => {
+    if (getState().auth.userInfo !== null) {
+        const accessToken = localStorage.getItem('data')
+
+        axios.interceptors.request.use(
+            config => {
+                config.headers.authorization = `Bearer ${accessToken}`;
+                return config;
+            },
+            error => {
+                return Promise.reject(error)
+            }
+        )
+    }
     // const productDeta = {name:product.name,description:product.description,price:product.price,stock:product.stock}
     const respuesta = await axios.put(`/products/${product.id}`, product);
     const categorias = await axios.get(`/products/${product.id}/categories/`);
@@ -160,5 +187,21 @@ export const editProduct = product => async dispatch => {
     for (var i = 0; i < product.categories.length; i++) {
         axios.post(`/products/${product.id}/category/${product.categories[i].id}`)
     }
+   var cambio = getState().product.products.slice()
+
+   cambio.forEach(e => {
+       if(e.id === product.id){
+           console.log("entrooooo",product)
+           e.name = product.name
+           e.description = product.description
+           e.stock = product.stock
+           e.price = product.price
+       }   
+
+   });
+    dispatch({
+        type: UPDATE_PRODUCT,
+        payload: cambio
+    })
 }
 

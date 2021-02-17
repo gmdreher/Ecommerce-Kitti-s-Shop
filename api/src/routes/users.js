@@ -4,10 +4,9 @@ const passport = require('passport');
 const protected = require('../middleware/protected')
 var nodemailer = require('nodemailer');
 const uuid = require('uuid');
-//const { Op } = require("sequelize");
+const { Op } = require("sequelize");
 
 //Ruta de crear usuario
-//Pau
 server.post('/', passport.authenticate('signup'),async(req,res)=>{
     res.json({
       user:{id:req.user.id},
@@ -77,14 +76,21 @@ server.post('/:userId/order', (req, res) => {
   let { userId } = req.params;
   let { productId, price, quantity } = req.body;
 
-  Order.findOrCreate({
+  Product.findByPk(productId)
+  .then(product => {
+    product.update({
+      stock: product.stock - quantity
+    })
+  console.log("entra")
+return Order.findOrCreate({
     where: {
       userId: userId,
       state: "carrito"
     },
     userId: userId,
     state: "carrito"
-
+    
+})
   }).then((order) => {
     OrderDetails.create({
       orderId: order[0].id,
@@ -93,6 +99,7 @@ server.post('/:userId/order', (req, res) => {
       quantity: quantity
     })
       .then((order_detalle) => {
+        console.log(order_detalle)
         res.status(201).json(order_detalle)
       })
       .catch(err => {
@@ -200,7 +207,7 @@ server.get('/:id/orders' , protected.isAuth, (req, res) => {
     })
 });
 
-// ruta que revuelve todas las review de un usuario
+// ruta que devuelve todas las review de un usuario
 server.get("/:id/review", (req, res) => {
   const userId = req.params.id;
   Review.findAll({ 
@@ -248,32 +255,46 @@ server.put('/promote/:id', (req, res)=>{
 //PUT /users/:id/passwordReset
 server.put('/passwordReset/:reset', function (req, res) {
   const {reset} = req.params;
-  const {newPassword } = req.body;
-console.log(reset)
-    if(!newPassword){
+  const {newPassword} = req.body;
+
+  if(!newPassword){
     return res.status(400)
     .json("Debe ingresar su nueva contraseña")
     }
-    User.findOne(
-      {
-        where: {
-          reset: reset,
-        }
-      })
+    if(isNaN(reset)){
+      User.findOne(
+        {
+          where: {
+           reset: reset
+          },
+          }
+    )
     .then(user => {
-        user.update(
-          {
-            password: newPassword
-          })
-      .then(() => {
-        res.status(200).json("Contraseña cambiada")
+      user.update(
+        {
+          password: newPassword
+        })
       })
+        .then((success => res.status(200).send("se ha cambiado la contraseña")))
       .catch(error => {
         res.status(400).send(`Error ${error}`);
       })
-       }
-   ) 
+} else{ 
+
+  User.findByPk(reset)
+  .then(user => {
+    user.update(
+      {
+        password: newPassword
+      })
+    })
+    .then((success => res.status(200).send("se ha cambiado la contraseña")))
+      .catch(error => {
+        res.status(400).send(`Error ${error}`);
+      })
+}
 });
+   
 
 
 //user olvida la contraseña

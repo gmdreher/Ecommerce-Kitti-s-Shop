@@ -1,15 +1,16 @@
 import React from 'react';
 import './footer.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
+import {useTranslation} from 'react-i18next';
 
 
 export default function Footer(props) {
-
+    const {t} = useTranslation();
     return (
         <div className="main-Footer">
             <div className="contenedor-secciones">
                 <div className="intro">
-                    <h4><strong>Sobre nosotras</strong></h4>
+                    <h4><strong>{t("footer.aboutUs")}</strong></h4>
                 </div>
             </div>
             <div className="categorias-footer">
@@ -76,7 +77,7 @@ export default function Footer(props) {
 
             </div>
             <div className="contenedor-redes">
-                <p>2021 KITTY'S SHOP Argentina. Todos los derechos reservados</p>
+                <p>{t("footer")}</p>
             </div>
         </div>
     )

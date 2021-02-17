@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { updateStateOrder } from '../../actions/orderActions';
 import '../PayCart/PayCart.scss';
-
+import { useTranslation } from 'react-i18next';
 
 export default function PayCart(props) {
-
+    const { t } = useTranslation();
     // console.log("Paycartrttttttttttt", props);
     const dispatch = useDispatch()
     const history = useHistory()
@@ -27,7 +27,7 @@ export default function PayCart(props) {
 
     return (
         <div className="contenedorPay">
-            <h5>Total a pagar </h5>
+            <h5>{t("paycart.totalAmount")} </h5>
             <br />
             <div className="juntar">
                 <div className="grupo">
@@ -39,7 +39,7 @@ export default function PayCart(props) {
             </div>
             <div className="pagar">
 
-                <button disabled={props.dato2.length < 1 ? true : false} onClick={cambio}>Finalizar Pago</button>
+                <button disabled={props.dato2.length < 1 ? true : false} onClick={cambio}>{t("paycart.pay")}</button>
 
             </div>
         </div>

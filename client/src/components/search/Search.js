@@ -5,14 +5,17 @@ import './search.scss'
 import { searchProduct } from '../../actions/productActions.js'
 import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 
 
 export default function Search() {
 
+
     const [input, setInput] = useState({ search: '' })
     const dispatch = useDispatch();
     const history = useHistory();
+    const { t } = useTranslation();
 
 
     function handleChange(e) {
@@ -27,12 +30,12 @@ export default function Search() {
 
     return (
         <div className="col ">
-            <div className="searchBar">
+            <div className={'' + "searchBar"} >
                 <form className={"d-flex " + "formSearch"} onSubmit={handleSubmit}>
                     <input onChange={handleChange} className={"form-control me-2 " + "inputSearch"}
                         name='search'
                         type='text'
-                        placeholder="Buscar..."
+                        placeholder={t("search")}
                     />
                     <button className="btnSearch">
                         <i className={"fas fa-search " + "iconSearch"} />

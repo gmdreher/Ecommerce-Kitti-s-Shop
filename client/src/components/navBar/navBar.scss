@@ -26,6 +26,20 @@
     width: auto;
 }
 
+.lenguaje {
+    background-color: #ffffff;
+    position: fixed;
+    align-items: center;
+    border-radius: 9999px;
+    height: 2rem;
+    padding: 0 0.5em;
+    width: fit-content;
+    border: 1px solid #bdbdbd;
+    margin-left: 83%;
+     margin-top:55%;
+    position: absolute;
+}
+
 @media screen and (min-width: 600px) {
 
     .navBar {
@@ -76,5 +90,11 @@
     }
     .smallCart {
         display: none;
+    }
+    .lenguaje {
+        margin-left: 90%;
+        margin-top:95%;
+        position: absolute;
+      
     }
 }

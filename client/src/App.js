@@ -40,7 +40,6 @@ import Adoption from './components/CreateAdoption/Adoption.js'
 function App() {
 
 
-
   const user = useSelector(store => store.auth.userInfo);
   return (
     <BrowserRouter>
@@ -53,11 +52,11 @@ function App() {
           </header>
           <main>
             <div className="transparencia">
-            <Route exact path='/users/adoptions' component={CreateAdoption} />
-            <Route exact path='/users/adoptionsRequest' component={AdoptionRequest} />
-            <Route exact path='/users/catalogueAdoptions' component={CatalogueAdoptions} />
-            <Route exact path="/user/adoption/detalle/:id" render={({ match }) => <Adoption key={match.params.id} id={match.params.id} />} />
-           
+              <Route exact path='/users/adoptions' component={CreateAdoption} />
+              <Route exact path='/users/adoptionsRequest' component={AdoptionRequest} />
+              <Route exact path='/users/catalogueAdoptions' component={CatalogueAdoptions} />
+              <Route exact path="/user/adoption/detalle/:id" render={({ match }) => <Adoption key={match.params.id} id={match.params.id} />} />
+
               <Route exact path="/users/me" component={UserProfile} />
               <Route exact path="/" component={Main} />
               <Route exact path='/products' component={Catalogue} />

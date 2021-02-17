@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../actions/productActions.js';
 import { useHistory } from 'react-router-dom';
 import { searchProduct } from '../../actions/productActions.js'
+import { useTranslation } from 'react-i18next';
 
 export default function Catalogue() {
+    const { t } = useTranslation();
     const history = useHistory();
     const products = useSelector((store) => store.product.products);
 
@@ -52,9 +54,9 @@ export default function Catalogue() {
 
     return (
         <div className="catalogue">
-            <h2 className="titleH2">Nuestro Catálogo</h2>
+            <h2 className="titleH2">{t("catalogue")}</h2>
             <div className="selectContainer">
-                <label for="prueba">Productos por Página</label>
+                <label for="prueba">{t("catalogue.products")}</label>
                 <select id="prueba" onChange={handleProductsPerPage}>
                     <option value="2">2</option>
                     <option value="4">4</option>

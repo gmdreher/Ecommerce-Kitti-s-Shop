@@ -32,49 +32,66 @@ server.post("/", (req, res) => {
             })
             console.log("esto es order", order)
         })
-        .then(() => {
+    // console.log("esto es order", order)
+})
+    .then(() => {
 
-            const order_id = orderId;
+        const order_id = orderId;
 
 
-            const items_ml = carrito && carrito.map(i => (
-                {
-                    title: i.name,
-                    unit_price: i.porcentaje != 0 ? (i.price - ((i.porcentaje * parseInt(i.price)) / 100)) : parseInt(i.price),
-                    quantity: i.quantity,
-                }))
+        const items_ml = carrito && carrito.map(i => (
+            {
+                title: i.name,
+                unit_price: i.porcentaje != 0 ? (i.price - ((i.porcentaje * parseInt(i.price)) / 100)) : parseInt(i.price),
+                quantity: i.quantity,
+            }))
 
-            // console.log("este es items_ml",items_ml)
+        // console.log("este es items_ml",items_ml)
 
-            // Crea un objeto de preferencia
-            let preference = {
-                items: items_ml,
-                external_reference: order_id.toString(),
+        // Crea un objeto de preferencia
+        let preference = {
+            items: items_ml,
+            external_reference: order_id.toString(),
 
-                payment_methods: {
-                    excluded_payment_types: [
-                        {
-                            id: "atm"
-                        }
-                    ],
-                    installments: 3  //Cantidad máximo de cuotas
-                },
-                back_urls: {
-                    success: 'http://localhost:3001/mercadopago/response',
-                    failure: 'http://localhost:3001/mercadopago/response',
-                    pending: 'http://localhost:3001/mercadopago/response',
-                },
-            };
+            payment_methods: {
+                excluded_payment_types: [
+                    {
+                        title: i.name,
+                        unit_price: i.porcentaje != 0 ? (i.price - ((i.porcentaje * parseInt(i.price)) / 100)) : parseInt(i.price),
+                        quantity: i.quantity,
+                    }))
 
-            return mercadopago.preferences.create(preference)
+// console.log("este es items_ml",items_ml)
+
+// Crea un objeto de preferencia
+let preference = {
+    items: items_ml,
+    external_reference: order_id.toString(),
+
+    payment_methods: {
+        excluded_payment_types: [
+            {
+                id: "atm"
+            }
+        ],
+        installments: 3  //Cantidad máximo de cuotas
+    },
+    back_urls: {
+        success: 'http://localhost:3001/mercadopago/response',
+        failure: 'http://localhost:3001/mercadopago/response',
+        pending: 'http://localhost:3001/mercadopago/response',
+    },
+};
+
+return mercadopago.preferences.create(preference)
         })
         .then(function (response) {
-            // console.log(response)
-            res.json({ redirect: response.body.init_point })
+    // console.log(response)
+    res.json({ redirect: response.body.init_point })
 
-        }).catch(function (error) {
-            console.log("este es el error", error);
-        });
+}).catch(function (error) {
+    console.log("este es el error", error);
+});
 })
 
 

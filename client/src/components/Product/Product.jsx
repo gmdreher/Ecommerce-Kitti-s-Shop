@@ -8,11 +8,12 @@ import { getUsers } from '../../actions/userAction';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import Review from '../Review/Review';
+import { useTranslation } from 'react-i18next';
 
 function Product(props) {
     const [quantity, setQuantity] = React.useState(1)
     // const usersData = useSelector(store => store.product.user);
-
+    const { t } = useTranslation();
     useEffect(() => {
         props.getProductById(props.id);
         // props.getUsers()
@@ -142,7 +143,7 @@ function Product(props) {
     return (
         <div className="containerProduct">
             <Link to={`/`}>
-                <button className="arrowp">Volver</button>
+                <button className="arrowp">{t("checkOut.Back")}</button>
             </Link>
             <div className="detailp">
                 <div className="imagenp">
@@ -154,26 +155,26 @@ function Product(props) {
                         <h3 className="estrellitasp">{ratePromedio(valor)}</h3>
 
                     </div>
-                    <p><strong>Precio: </strong> ${props.product.price}</p>
+                    <p><strong>{t("product.price.dots")} </strong> ${props.product.price}</p>
                     <form>
-                        <label for="quanty"><strong>Cantidad: </strong></label>
+                        <label for="quanty"><strong>{t("product.quantity.dots")} </strong></label>
                         <select name="quantity" id="quantity" onChange={change}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
-                        {props.product.stock < 1 ? <label className='agotado'>Producto Agotado</label> : <label className='stock'>Stock: {props.product.stock}</label>}
+                        {props.product.stock < 1 ? <label className='agotado'>{t("product.noStock")}</label> : <label className='stock'>Stock: {props.product.stock}</label>}
                     </form>
                     <div className="butt">
                         <br />
-                        {props.product.stock > 0 || props.prodCart.find(x => x.id == props.id) ? <button className="btn btn-outline-dark" onClick={() => handleClick(props.product)}>Agregar a Carrito</button> : null}
+                        {props.product.stock > 0 || props.prodCart.find(x => x.id == props.id) ? <button className="btn btn-outline-dark" onClick={() => handleClick(props.product)}>{t("product.addToCart")}</button> : null}
+
                     </div>
-                    <br />
-                    <p><strong>Descripción: </strong> {props.product.description}</p>
+                    <p><strong>{t("product.description.dots")} </strong> {props.product.description}</p>
                 </div>
             </div>
             <section className="sectionPrincipalp">
-                <h2>{props.product.Reviews && props.product.Reviews.length > 0 ? <h2 className="reseñas">Reseñas</h2> : <h3 className="reseñasp">Este producto aún no tiene reseñas</h3>}</h2>
+                <h2>{props.product.Reviews && props.product.Reviews.length > 0 ? <h2 className="reseñas">{t("product.reviews")}</h2> : <h3 className="reseñas">{t("product.noReviews")}</h3>}</h2>
                 <div className="divReviewp">
 
                     {props.product.Reviews && props.product.Reviews.map((review) => {

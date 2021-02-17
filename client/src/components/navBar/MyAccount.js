@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 
 
 function MyAccount(props) {
+  const { t } = useTranslation();
 
   const history = useHistory();
 
@@ -33,8 +35,8 @@ function MyAccount(props) {
       <ul className={"dropdown-menu dropdown-menu-end " + "dropdownList"} aria-labelledby="dropdownMenuButton">
         <li>
           <Link to="/users/me" className="dropdown-item">
-            Mi cuenta
-            </Link>
+            {t("myAccount")}
+          </Link>
         </li>
         <li>
           <Link to="/users/adoptions" className="dropdown-item">
@@ -44,8 +46,8 @@ function MyAccount(props) {
         <li>
           <Link to="#" className="dropdown-item">
             <div onClick={logOutHandler}>
-              Cerrar sesión
-              </div>
+              {t("signOut")}
+            </div>
           </Link>
         </li>
       </ul>

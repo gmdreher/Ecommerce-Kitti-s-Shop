@@ -6,10 +6,12 @@ import ML from "../../img/ML.jpeg"
 import { meliPost, updateStateOrder, addressOrder, getUserOrder } from '../../actions/orderActions';
 import { useHistory } from 'react-router';
 import { getDiscountActive } from '../../actions/discountsActions';
+import { useTranslation } from 'react-i18next';
 
 export default function CheckOut() {
     const history = useHistory()
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const user = useSelector(store => store.auth.userInfo);
     //let cartProduct = useSelector(user ? (store => store.product.cart) : (store => store.cart.cartItems));
@@ -202,17 +204,17 @@ export default function CheckOut() {
                     <>
                         {pasos == 1 && (
                             <div className={style.grupo}>
-                                <h3>Información Personal</h3>
+                                <h3>{t("checkOut.Info")}</h3>
                                 <br />
                                 <div >
-                                    <h6 class="form-label"> Usuario: {user.fullname} </h6>
+                                    <h6 class="form-label"> {t("checkOut.User.dots")} {user.fullname} </h6>
                                 </div>
 
                                 <div >
                                     <h6 class="form-label">Email: {user.email} </h6>
                                 </div>
                                 <div >
-                                    <h6 class="form-label">Telefono</h6>
+                                    <h6 class="form-label">{t("checkOut.Phone")}</h6>
                                     <input name="telefono" value={inputContact.telefono} type="number" class="form-control" required onChange={handleInputChange} />
 
                                     {errorContact.telefono && (<p>{errorContact.telefono}</p>)}
@@ -220,11 +222,11 @@ export default function CheckOut() {
 
                                 <br />
                                 <div className={style.botones}>
-                                    <button className={style.next} onClick={() => history.push("/user/order")}>Volver</button>
+                                    <button className={style.next} onClick={() => history.push("/user/order")}>{t("checkOut.Back")}</button>
                                     {
-                                        errorContact.telefono || inputContact.telefono == '' ? <button className={style.next} >Continuar</button>
+                                        errorContact.telefono || inputContact.telefono == '' ? <button className={style.next} >{t("checkOut.Continue")}</button>
                                             :
-                                            <button className={style.next} onClick={handlePasos}>Continuar</button>
+                                            <button className={style.next} onClick={handlePasos}>{t("checkOut.Continue")}</button>
                                     }
                                 </div>
                             </div>
@@ -233,39 +235,39 @@ export default function CheckOut() {
                     <>
                         {pasos == 2 && (
                             <div className={style.grupo}>
-                                <h3>Datos de Envio</h3>
+                                <h3>{t("checkOut.Shipping")}</h3>
                                 <br />
                                 <div >
-                                    <h6 class="form-label">Provincia</h6>
+                                    <h6 class="form-label">{t("checkOut.State")}</h6>
                                     <input name="provincia" value={inputEnvio.provincia} type="text" class="form-control" required onChange={handleInputChange} />
 
                                 </div>
                                 <div >
-                                    <h6 class="form-label">Ciudad / Localidad</h6>
-                                    <input name="ciudad" value={inputEnvio.ciudad} type="text" class="form-control" required placeholder="Calle y número de la casa" onChange={handleInputChange} />
+                                    <h6 class="form-label">{t("checkOut.State")}</h6>
+                                    <input name="ciudad" value={inputEnvio.ciudad} type="text" class="form-control" required placeholder={t("address.streetNumber")} onChange={handleInputChange} />
 
                                 </div>
                                 <div >
-                                    <h6 class="form-label">Domicilio</h6>
-                                    <input name="direccion" value={inputEnvio.direccion} type="text" class="form-control" required placeholder="Calle y número de la casa" onChange={handleInputChange} />
+                                    <h6 class="form-label">{t("checkOut.Address")}</h6>
+                                    <input name="direccion" value={inputEnvio.direccion} type="text" class="form-control" required placeholder={t("address.streetNumber")} onChange={handleInputChange} />
 
                                 </div>
                                 <div >
-                                    <h6 class="form-label">Piso / N°</h6>
-                                    <input name="piso" value={inputEnvio.piso} type="text" class="form-control" required placeholder="N° de planta o N°" onChange={handleInputChange} />
+                                    <h6 class="form-label">{t("checkOut.Apartment")}</h6>
+                                    <input name="piso" value={inputEnvio.piso} type="text" class="form-control" required placeholder={t("address.floorNumber")} onChange={handleInputChange} />
 
                                 </div>
                                 <div >
-                                    <h6 class="form-label">Comentarios</h6>
-                                    <input name="comentarios" value={inputEnvio.comentarios} type="text" class="form-control" placeholder="Informacion extra sobre envio" onChange={handleInputChange} />
+                                    <h6 class="form-label">{t("checkOut.Comments")}</h6>
+                                    <input name="comentarios" value={inputEnvio.comentarios} type="text" class="form-control" placeholder={t("address.extraInfo")} onChange={handleInputChange} />
 
                                 </div>
                                 <br />
                                 <div className={style.botones}>
-                                    <button className={style.volver} onClick={handlePasosVolver}>Volver</button>
+                                    <button className={style.volver} onClick={handlePasosVolver}>{t("checkOut.Back")}</button>
                                     {
                                         errorEnvio.provincia || errorEnvio.ciudad || errorEnvio.direccion || errorEnvio.piso
-                                            ? <button className={style.next} >Continuar</button> : <button className={style.next} onClick={handlePasos}>Continuar</button>
+                                            ? <button className={style.next} >{t("checkOut.Continue")}</button> : <button className={style.next} onClick={handlePasos}>{t("checkOut.Continue")}</button>
                                         // ? <button className={style.next} >Continuar</button> : <button className={style.next} onClick={habilitar}>Pagar</button>
                                     }
                                 </div>
@@ -276,22 +278,22 @@ export default function CheckOut() {
                         {pasos == 3 && (
                             <div className={style.grupo} download="compra">
                                 <div >
-                                    <h3>Detalles de pago</h3>
+                                    <h3>{t("checkOut.Payment")}</h3>
                                     <br />
-                                    <h6 class="form-label"><strong>Nombre: </strong>{user.fullname}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.Name.dots")}</strong>{user.fullname}</h6>
                                     <h6 class="form-label"><strong>Email: </strong>{user.email}</h6>
-                                    <h6 class="form-label"><strong>Telefono: </strong>{inputContact.telefono}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.Phone.dots")}:</strong>{inputContact.telefono}</h6>
 
-                                    <h6 class="form-label"><strong>Provincia: </strong>{inputEnvio.provincia}</h6>
-                                    <h6 class="form-label"><strong>Ciudad / Localidad: </strong>{inputEnvio.ciudad}</h6>
-                                    <h6 class="form-label"><strong>Domicilio: </strong>{inputEnvio.direccion}</h6>
-                                    <h6 class="form-label"><strong>Piso / N°: </strong>{inputEnvio.piso}</h6>
-                                    <h6 class="form-label"><strong>Comentarios: </strong>{inputEnvio.comentarios}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.State.dots")}</strong>{inputEnvio.provincia}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.City.dots")}</strong>{inputEnvio.ciudad}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.Address.dots")}</strong>{inputEnvio.direccion}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.Apartment.dots")}</strong>{inputEnvio.piso}</h6>
+                                    <h6 class="form-label"><strong>{t("checkOut.Comments.dots")}</strong>{inputEnvio.comentarios}</h6>
                                 </div>
                                 <br />
                                 <div className={style.botones}>
-                                    <button className={style.volver} onClick={handlePasosVolver}>Volver</button>
-                                    <button className={style.next} onClick={habilitarPago}>Pagar</button>
+                                    <button className={style.volver} onClick={handlePasosVolver}>{t("checkOut.Back")}</button>
+                                    <button className={style.next} onClick={habilitarPago}>{t("checkOut.Pay")}</button>
 
                                 </div>
                             </div>
@@ -300,7 +302,7 @@ export default function CheckOut() {
                     </>
                     <div>
                         <div className={style.grupo}>
-                            <h3> Detalle de Compra</h3>
+                            <h3> {t("checkOut.Details")}</h3>
                             <br />
                             <div className={style.total}>
                                 {
@@ -324,7 +326,7 @@ export default function CheckOut() {
                                                 <h5 > $ {sumaTotal()}</h5>
                                             </div>
                                             <div className={style.subtotalDescuento}>
-                                                <h5 >Descuento: {porcen} %</h5>
+                                                <h5 >{t("checkOut.Discount.dots")} {porcen} %</h5>
                                                 <h5 > $ - {descuento}</h5>
                                             </div>
                                         </>}
@@ -338,8 +340,8 @@ export default function CheckOut() {
                                 <br />
                             </div>
                             <div >
-                                {habitado == true ? <button className={style.botonML} onClick={handleCosa}>Comprar ahora</button> :
-                                    <button className={style.botonllenar}>Completar Formulario</button>}
+                                {habitado == true ? <button className={style.botonML} onClick={handleCosa}>{t("checkOut.Buy")}</button> :
+                                    <button className={style.botonllenar}>{t("checkOut.Forms")}</button>}
 
                             </div>
                             <br />

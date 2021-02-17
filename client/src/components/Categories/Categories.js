@@ -3,10 +3,11 @@ import { NavLink, Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { getCategories } from "../../actions/productActions";
 import './categories.scss';
+import { useTranslation } from 'react-i18next';
 
 
 function Categories(props) {
-
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     props.getCategories()
@@ -16,7 +17,7 @@ function Categories(props) {
     <div className="dropCategory">
       <div className="dropdown">
         <button className="botoncito" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          Categorías &nbsp;<i className="fas fa-caret-down" />
+          {t('Categories.button')} &nbsp;<i className="fas fa-caret-down" />
         </button>
         <ul className={"dropdown-menu " + "ctnDropList"} aria-labelledby="dropdownMenuButton">
           {props.categories.map((e) => {
@@ -28,7 +29,7 @@ function Categories(props) {
           })}
           <div>
             <Link exact to="/products" className="dropdown-item">
-              <span className="dropList">Ver todo</span>
+              <span className="dropList">{t("Categories.seeAll")}</span>
             </Link>
           </div>
         </ul>

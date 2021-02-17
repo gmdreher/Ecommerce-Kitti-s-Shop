@@ -11,6 +11,7 @@ import {
 
 
 export const addProductCart = (data) => async (dispatch, getState) => {
+    console.log("data", data)
     const MySwal = withReactContent(Swal);
     if (!data.userId) {
 
@@ -86,6 +87,7 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 )
             }
 
+            getState().product.product.stock -= data.quantity
 
             const cart = getState().product.cart.slice();
             let alreadyExists = false;
@@ -188,8 +190,6 @@ export const getProductsCart = (data) => async (dispatch, getState) => {
 }
 
 export const deleteTotalCart = (data) => async (dispatch, getState) => {
-
-
     if (getState().auth.userInfo !== null) {
         const accessToken = localStorage.getItem('data')
 
@@ -212,6 +212,7 @@ export const deleteTotalCart = (data) => async (dispatch, getState) => {
                     payload: det.productId
                 });
             })
+        axios.put(`/products/${det.productId}`, { quantity: det.quantity })
     })
     await axios.delete(`/users/${data.userId}/order/${data.orderId}`)
     dispatch({
@@ -226,20 +227,24 @@ export const removeFromCartLS = (product) => dispatch => {
 };
 export const deleteItem = (data) => async (dispatch, getState) => {
     if (data.orderId) {
-        if (getState().auth.userInfo !== null) {
-            const accessToken = localStorage.getItem('data')
 
-            axios.interceptors.request.use(
-                config => {
-                    config.headers.authorization = `Bearer ${accessToken}`;
-                    return config;
-                },
-                error => {
-                    return Promise.reject(error)
-                }
-            )
-        }
+        // if (getState().auth.userInfo !== null) {
+        //     const accessToken = localStorage.getItem('data')
+
+        //     axios.interceptors.request.use(
+        //         config => {
+        //             config.headers.authorization = `Bearer ${accessToken}`;
+        //             return config;
+        //         },
+        //         error => {
+        //             return Promise.reject(error)
+        //         }
+        //     )
+        // }
+        console.log(data.quantity)
         const prod = await axios.delete(`/orders/${data.orderId}/${data.id}`)
+        const res = await axios.put(`/products/${data.id}`, { quantity: data.quantity })
+
         dispatch({
             type: DELETE_ITEMS_CART,
             payload: data.id
@@ -251,9 +256,9 @@ export const deleteItem = (data) => async (dispatch, getState) => {
     }
 
 }
-export const editQuantity = ({ idUser, productId, quantity, orderId }) => async (dispatch, getState) => {
+export const editQuantity = ({ addStock, takeStock, idUser, productId, quantity, orderId }) => async (dispatch, getState) => {
     if (orderId && idUser) {
-        var orderBody = { productId, quantity, orderId }
+        var orderBody = { productId, quantity, orderId, addStock, takeStock }
         const cart = getState().product.cart.slice();
         try {
             if (getState().auth.userInfo !== null) {

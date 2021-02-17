@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 // import styles from "../OrderTable/orderTable.module.scss"
 import { getOrdersUser } from "../../actions/orderActions";
 import Moment from "moment";
-
+import { useTranslation } from 'react-i18next';
 
 
 function UserOrdersTable(props) {
 
-
+  const { t } = useTranslation();
   const history = useHistory();
 
   useEffect(() => {
@@ -24,17 +24,17 @@ function UserOrdersTable(props) {
   return (
     <Fragment>
       <div onClick={history.goBack} className={" btn btn-light " + "volver"}>Volver</div>
-      <h3 className="title">Historial de Compras</h3>
+      <h3 className="title">{t("user.history")}</h3>
       <div className="cont">
         <div className="table-responsive" >
           <table className={"table table-sm " + "table"} >
             <thead>
               <tr>
-                <th scope="col">Número de Compra</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Monto</th>
-                <th scope="col">Fecha y hora</th>
-                {/*<th scope="col">Dirección de envío</th>*/}
+                <th scope="col">{t("user.number")}</th>
+                <th scope="col">{t("discounts.phase")}</th>
+                <th scope="col">{t("discounts.amount")}</th>
+                <th scope="col">{t("order.time")}</th>
+                {/* <th scope="col">{t("user.address")}</th> */}
               </tr>
             </thead>
             <tbody >
