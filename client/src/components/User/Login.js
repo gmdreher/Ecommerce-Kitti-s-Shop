@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import { loginUser } from "../../actions/userAction";
 import { useHistory } from "react-router-dom";
+import dotenv from "dotenv"
+dotenv.config();
 
 const validate = (input) => {
   let errors = {};
@@ -108,10 +110,10 @@ export default function Login() {
           </Link>
           <div className={"d-grid gap-2 " + styles.btnIniciarSesion}>
             <button type="submit" className={"btn " + styles.btnText}>Iniciar sesión</button>
-            <a href="http://localhost:3001/auth/google" type="submit" className={"btn " + styles.btnGoogle}>
+            <a href={`${process.env.REACT_APP_API_URL}/auth/google`} type="submit" className={"btn " + styles.btnGoogle}>
               <img className={styles.imgGoogle} src="https://img.icons8.com/color/48/000000/google-logo.png" alt=""/>
               &nbsp;&nbsp;&nbsp;Iniciar sesión con Google</a>
-            <a href={`http://localhost:3001/auth/facebook`} type='submit' className={"btn " + styles.btnFacebook}>
+            <a href={`${process.env.REACT_APP_API_URL}/auth/facebook`} type='submit' className={"btn " + styles.btnFacebook}>
               <i className={"fab fa-facebook-f " + styles.imgFacebook}/>&nbsp;
               Iniciar sesión con Facebook
             </a>
