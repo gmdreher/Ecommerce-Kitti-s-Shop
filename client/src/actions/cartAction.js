@@ -87,7 +87,8 @@ export const addProductCart = (data) => async (dispatch, getState) => {
                 )
             }
 
-
+           getState().product.product.stock -= data.quantity
+            
             const cart = getState().product.cart.slice();
             let alreadyExists = false;
 
@@ -211,6 +212,7 @@ export const deleteTotalCart = (data) => async (dispatch, getState) => {
                     payload: det.productId
                 });
             })
+         axios.put(`/products/${det.productId}`, {quantity: det.quantity})
     })
     await axios.delete(`/users/${data.userId}/order/${data.orderId}`)
     dispatch({
@@ -226,20 +228,23 @@ export const removeFromCartLS = (product) => dispatch => {
 export const deleteItem = (data) => async (dispatch, getState) => {
     if (data.orderId) {
         
-        if (getState().auth.userInfo !== null) {
-            const accessToken = localStorage.getItem('data')
+        // if (getState().auth.userInfo !== null) {
+        //     const accessToken = localStorage.getItem('data')
 
-            axios.interceptors.request.use(
-                config => {
-                    config.headers.authorization = `Bearer ${accessToken}`;
-                    return config;
-                },
-                error => {
-                    return Promise.reject(error)
-                }
-            )
-        }
+        //     axios.interceptors.request.use(
+        //         config => {
+        //             config.headers.authorization = `Bearer ${accessToken}`;
+        //             return config;
+        //         },
+        //         error => {
+        //             return Promise.reject(error)
+        //         }
+        //     )
+        // }
+        console.log(data.quantity)
         const prod = await axios.delete(`/orders/${data.orderId}/${data.id}`)
+        const res = await axios.put(`/products/${data.id}`, {quantity: data.quantity})
+       
         dispatch({
             type: DELETE_ITEMS_CART,
             payload: data.id

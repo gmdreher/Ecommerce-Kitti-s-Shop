@@ -109,9 +109,10 @@ export default (state = initialState, action) => {
                 products: state.products.filter(product => product.id !== action.payload)
             }
         case UPDATE_PRODUCT:
+            console.log("action", action.payload)
             return {
                 ...state,
-                products: state.products.map(product => product.id === action.payload.id ? product = action.payload : product)
+                products:action.payload
             }
         case POST_USER:
             return {

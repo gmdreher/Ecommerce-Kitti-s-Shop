@@ -79,7 +79,7 @@ server.post('/:userId/order', (req, res) => {
   Product.findByPk(productId)
   .then(product => {
     product.update({
-      stock: product.stock - 1
+      stock: product.stock - quantity
     })
   console.log("entra")
 return Order.findOrCreate({
