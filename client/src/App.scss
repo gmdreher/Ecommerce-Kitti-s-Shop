@@ -340,12 +340,34 @@ body.dark-mode {
 }
 
 .tituloGlobal{
-  color:white;
+  background-color: $bg-dark-mode;
 }
 .containerDiscout {
       border: 1px solid #ffffff;
       box-shadow: none;
 }
+
+.titleadop {
+  background-color: $bg-dark-mode;
+  color: white;
+}
+
+.contadop {
+  background-color: $bg-dark-mode;
+  border: 1px solid #ffffff;
+  box-shadow: none;
+}
+
+.selectadop {
+  background-color: $bg-dark-mode;
+  color: white;
+}
+
+.dataadop {
+  background-color: $bg-dark-mode;
+  color: white;
+}
+
 
 
 }
