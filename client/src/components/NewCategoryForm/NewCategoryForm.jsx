@@ -35,10 +35,8 @@ function NewCategoryForm(props) {
   //get categorias
   useEffect(() => {
     props.getCategories()
-  }, [props.categories])
-
-
-  console.log('props', props)
+  }, [input])
+ 
   //validacion inputs
   const validate = function (input) {
     let errors = {};
@@ -60,28 +58,36 @@ function NewCategoryForm(props) {
     }));
   }
 
+  const resetInput = () => {
+    setInput({
+      description: '',
+      name: ''
+    })
+  } 
+
   const handleSubmit = function (e) {
-    props.getCategories();
     e.preventDefault();
+    resetInput();
   }
 
   //agregar categorias
-  const handleAdd = function (category) {
+  const handleAdd =  function (category) {
     props.postCategories(category)
     toggle();
+  
   }
 
   // info de boton EDITAR de cada categoria
   const handleEdit = function (category) {
-    toggle2();
     setInput(category);
+    toggle2();
+    
 
   }
 
   // funcionalidad a boton EDITAR
   const handleEditModal = function (category) {
     props.putCategory(category);
-    props.getCategories();
     toggle2()
   }
 
@@ -93,7 +99,6 @@ function NewCategoryForm(props) {
   // funcionalidad a boton BORRAR
   const handleDeleteModal = function (category) {
     props.destroyCategory(category);
-    props.getCategories();
     toggle3()
   }
 

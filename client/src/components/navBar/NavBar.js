@@ -30,8 +30,10 @@ function NavBar(props) {
             <Link to={`/`}>
               <img className="logo" src={logo} alt='' />
             </Link>
+           
           </div>
-          <button className="lenguaje" onClick={onChangeLanguage}>{t("nav.change")}</button>
+           {/*--------------BOTON CAMBIAR DE LENGUAJE------------------*/}
+          {/* <button className="lenguaje" onClick={onChangeLanguage}>{t("nav.change")}</button> */}
           <div className={'' + ''}>
             <Search />
           </div>
