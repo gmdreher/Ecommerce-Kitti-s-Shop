@@ -9,14 +9,14 @@ module.exports = (sequelize) => {
     payment_status: {
       type: DataTypes.STRING,
       allowNull: true,
-  },
-  address:{
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  discount:{
-    type:DataTypes.INTEGER,
-    allowNull: true
-  }
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    discount: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    }
   });
 };

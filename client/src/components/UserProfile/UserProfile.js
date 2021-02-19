@@ -3,14 +3,11 @@ import styles from './userProfile.module.scss'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 
-
-
-
 class UserProfile extends React.Component {
-  
-  
+
+
   render() {
-    
+
     return (
       <div className={'container ' + styles.userCard}>
         <div className="row">
@@ -33,27 +30,30 @@ class UserProfile extends React.Component {
                 Gestiones de usuario
               </div>
               <div className={"card-body " + styles.cardBody}>
-            <div className="row">
-                <div className={"blockquote mb-0 " + styles.linksGestiones}>
-                  <Link to={`/user/review/${this.props.userInfo.id}`}>
-                    <button className={styles.buttonGestion} >
-                     Mis reseñas
+                <div className="row">
+                  <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                    <Link to={`/user/review/${this.props.userInfo.id}`}>
+                      <button className={styles.buttonGestion} >
+                        Mis reseñas
                     </button>
-                  </Link>
-                </div>
-              <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                    </Link>
+                  </div>
+                  <div className={"blockquote mb-0 " + styles.linksGestiones}>
                     <Link to={'/users/ordersTable'}>
-                  <button className={styles.buttonGestion}>
-                       Historial de Compras
+                      <button className={styles.buttonGestion}>
+                        Historial de Compras
                   </button>
                     </Link>
-              </div>
-                <div className={"blockquote mb-0 " + styles.linksGestiones}>
-                  <button className={styles.buttonGestion}>
-                    Cambiar contraseña
+                  </div>
+
+                  <div className={"blockquote mb-0 " + styles.linksGestiones}>
+                    <Link to={`/user/resetPass/${this.props.userInfo.id}`}>
+                      <button className={styles.buttonGestion}>
+                        Cambiar contraseña
                   </button>
-              </div>
-            </div>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

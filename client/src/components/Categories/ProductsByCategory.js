@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ProductCard from '../productCard/ProductCard.js';
 import { getProductByCategory } from '../../actions/productActions';
 import { connect } from 'react-redux';
-import styles from "../catalogue/catalogue.module.scss";
+import "../catalogue/catalogue.scss";
 
 function ProductsByCategory(props) {
 
@@ -13,8 +13,8 @@ function ProductsByCategory(props) {
 
 
   return (
-    <div className={styles.catalogue}>
-      <div className={styles.contentCards}>
+    <div className="catalogue">
+      <div className="contentCards">
         {props.productsByCategory.map((e) => {
           return <ProductCard data={e} key={e.id} />
         })}

@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addReview, editReview, getAllReviewsUser, getProductStateComplete, deleteReview } from '../../actions/reviewAction';
 import Rate from './Rate';
 import { useHistory } from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 
 
 export function rate(valor){
-
 
   if( valor == 1){
      return(
@@ -74,6 +74,7 @@ export function rate(valor){
 
 
 export default function CrudReview(props) {
+  const {t} = useTranslation();
  
   const dispatch= useDispatch()
 
@@ -229,16 +230,16 @@ export default function CrudReview(props) {
 
     <Container className={styles.container}>
         {/* productos sin reseña, solo boton añadir */}
-        <button className={styles.button_} onClick={()=>history.push("/users/me")} >Volver</button>
-<h1>Productos sin Reseña</h1>
+        <button className={styles.button_} onClick={()=>history.push("/users/me")} >{t("checkOut.Back")}</button>
+<h1>{t("crud.Review.noReview")}</h1>
 {productWithoutReview.length > 0 && <h3>{productWithoutReview.length}</h3>}
       <Table>
         <thead>
           <tr>
-            <th>Producto</th>
-            <th>Descripcion</th>
+            <th>{t("crud.Review.Product")}</th>
+            <th>{t("crud.Review.Description")}</th>
 
-            <th>Opciones</th>
+            <th>{t("crud.Review.Options")}</th>
 
           </tr>
         </thead>
@@ -252,7 +253,7 @@ export default function CrudReview(props) {
 
               <td>
 
-                <Button className={styles.button_} onClick={() => handleOpenModal(product.OrderDetails.productId)} >Añadir</Button>
+                <Button className={styles.button_} onClick={() => handleOpenModal(product.OrderDetails.productId)} >{t("crud.Review.Add")}</Button>
               </td>
             </tr>
 
@@ -264,15 +265,15 @@ export default function CrudReview(props) {
       </Table>
       {/* productos que ya tienen reseña, y quiero editar o borrar */}
 
-      <h1>Mis Reseñas</h1>
+      <h1>{t("crud.Review.myReviews")}</h1>
       {/* {productWithReview.length > 0 && <h3>{productWithReview.length}</h3>} */}
       <Table>
         <thead>
           <tr>
-            <th>Producto</th>
-            <th>Reseña</th>
-            <th>Puntuacion</th>
-            <th>Opciones</th>
+            <th>{t("crud.Review.Product")}</th>
+            <th>{t("crud.Review")}</th>
+            <th>{t("crud.Review.Score")}</th>
+            <th>{t("crud.Review.Options")}</th>
 
           </tr>
         </thead>
@@ -285,8 +286,8 @@ export default function CrudReview(props) {
                 <td className= {styles.estrellitas}>{rate(review.reviews.rate)}</td>
               <td>
 
-                <Button className={styles.button_} onClick={() => handleEditReview(review.reviews.productId, review.reviews.id, { description: review.reviews.description, rate: review.reviews.rate })} >Editar</Button>
-                <Button className={styles.button_} onClick={() => handleDelete(review.reviews.productId, review.reviews.id)}>Borrar</Button>
+                <Button className={styles.button_} onClick={() => handleEditReview(review.reviews.productId, review.reviews.id, { description: review.reviews.description, rate: review.reviews.rate })} >{t("crud.Review.Edit")}</Button>
+                <Button className={styles.button_} onClick={() => handleDelete(review.reviews.productId, review.reviews.id)}>{t("crud.Review.Delete")}</Button>
               </td>
             </tr>
           ))}
@@ -300,18 +301,18 @@ export default function CrudReview(props) {
       <div>
         <Modal isOpen={modal} toggle={toggleAdd} className={props.className}>
           <Form onSubmit={e => e.preventDefault()}>
-            <ModalHeader toggle={toggleAdd}>Añadir Reseña</ModalHeader>
+            <ModalHeader toggle={toggleAdd}>{t("crud.Review.addReview")}</ModalHeader>
             <ModalBody>
 
               <FormGroup onSubmit={e => e.preventDefault()}>
-                <Label for="description"> Descripcion</Label>
-                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' placeholder='Deja tu comentario...' value={input.description} onChange={handleInputChange} />
+                <Label for="description">{t("crud.Review.Description")}</Label>
+                <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' placeholder={t("review.leaveComment")} value={input.description} onChange={handleInputChange} />
                 {errors.description && (
                   <p className={"danger"}>{errors.description ==="true"?"":errors.description}</p>
                 )}
               </FormGroup>
               <FormGroup onSubmit={e => e.preventDefault()}>
-                <Label for="rate"> Puntuacion </Label>
+                <Label for="rate">{t("crud.Review.Score")} </Label>
                {/*  <select class="form-select" aria-label="Default select example" name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -326,12 +327,12 @@ export default function CrudReview(props) {
             <ModalFooter>
 
 
-             {errors.description || errors.rate?  <Button className={styles.button_} color="danger" >Revisa los campos</Button>:
+             {errors.description || errors.rate?  <Button className={styles.button_} color="danger" >{t("crud.Review.checkInputs")} </Button>:
              <Button className= {styles.button_} type= 'submit' onClick={()=>{ handleAddReview(idProductAdding)}}
-                >Añadir Reseña</Button> }
+                >{t("crud.Review.addReview")}</Button> }
 
 
-              <Button className={styles.button_} onClick={toggleAdd}>Salir</Button>
+              <Button className={styles.button_} onClick={toggleAdd}>{t("crud.Review.exit")}</Button>
             </ModalFooter>
           </Form>
         </Modal>
@@ -342,13 +343,13 @@ export default function CrudReview(props) {
       <div>
         <Modal isOpen={modal2} toggle={toggleEdit} className={props.className}>
           <Form onSubmit={e => e.preventDefault()}>
-            <ModalHeader toggle={toggleEdit}>Modificar Reseña</ModalHeader>
+            <ModalHeader toggle={toggleEdit}>{t("crud.Review.editReview")}</ModalHeader>
             <ModalBody>
 
 
               <FormGroup onSubmit={e => e.preventDefault()}>
                 <br />
-                <Label for="description">Descripcion</Label>
+                <Label for="description">{t("crud.Review.Description")}</Label>
                 <Input type="textarea" className={`${errors.description} && 'danger', "form-group"`} name="description" id='description' value={input.description} onChange={handleInputChange} />
                 {errors.description && (
                   <p className={styles.danger}>{errors.description==="true"?"":errors.description}</p>
@@ -356,7 +357,7 @@ export default function CrudReview(props) {
 
               </FormGroup>
               <FormGroup  onSubmit={e=>e.preventDefault()}>
-              <Label for="rate"> Puntuacion </Label>
+              <Label for="rate">{t("crud.Review.Score")}</Label>
               {/* <select  class="form-select" aria-label="Default select example"  name="rate" id="rate" rows="1" value={input.rate} onChange={handleInputChange}>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -370,8 +371,8 @@ export default function CrudReview(props) {
 
             </ModalBody>
             <ModalFooter>
-              {errors.description? <Button color="danger" className={styles.button_}>Revisa los campos</Button> : <Button className={styles.button_} onClick={()=> handleSendEditReview()}>Modificar Reseña</Button>}
-              <Button className={styles.button_} onClick={toggleEdit}>Salir</Button>
+              {errors.description? <Button color="danger" className={styles.button_}>Revisa los campos</Button> : <Button className={styles.button_} onClick={()=> handleSendEditReview()}>{t("crud.Review.editReview")}</Button>}
+              <Button className={styles.button_} onClick={toggleEdit}>{t("crud.Review.exit")}</Button>
 
             </ModalFooter>
           </Form>
@@ -383,10 +384,10 @@ export default function CrudReview(props) {
       <div>
         <Modal isOpen={modal3} toggle={toggleDelete} className={props.className}>
           <Form onSubmit={e => e.preventDefault()}>
-            <ModalHeader toggle={toggleDelete}>¿Estas Seguro?</ModalHeader>
+            <ModalHeader toggle={toggleDelete}>{t("crud.Review.sure")}</ModalHeader>
 
             <ModalFooter>
-              <Button className={styles.button_} type="submit" onClick={() => handleDeleteReview()}>Si</Button>
+              <Button className={styles.button_} type="submit" onClick={() => handleDeleteReview()}>{t("yes")}</Button>
               <Button className={styles.button_} onClick={toggleDelete}>No</Button>
             </ModalFooter>
           </Form>

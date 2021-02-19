@@ -131,7 +131,7 @@ server.get('/', (req, res, next) => {
       {
         model: Image,
       }
-    ]
+    ],order: [["id", "ASC"]]
 
   })
     .then(products => {
@@ -258,20 +258,44 @@ server.post('/', protected.isAuthAdmin, function (req, res) {
 
 
 //task 26
-server.put('/:id' , protected.isAuthAdmin, function (req, res) {
+server.put('/:id', function (req, res) {
   const { id } = req.params;
-  const { name, description, price, stock } = req.body;
-  Product.update(
-    {
-      name: name,
-      description: description,
-      price: price,
-      stock: stock
-    }, { where: { id: id } })
-    .then(e => {
-      res.status(200).send(e)
-    }).catch(error => {
-      res.status(400).send(`Error ${error}`);
+  const { name, description, price, stock, quantity } = req.body;
+
+  Product.findByPk(id)
+  .then((product) =>{
+    
+    if(!quantity){
+     
+      Product.update(
+        {
+          name: name,
+          description: description,
+          price: price,
+          stock: stock,
+        }, {where: {
+          id: id
+        }}, {order: [["id", "ASC"]]})
+        .then(() => 
+      res.send("exito!"))
+      .catch((e)=> console.log(e))
+    } else {
+      // console.log("cambiar stock", product.stock + quantity)
+      Product.update(
+        
+        {
+          stock: product.stock + quantity,
+        }, {where: {
+          id: id
+        }})
+        .then(() => 
+      res.send("exito!"))
+      .catch((e)=> console.log(e))
+    }
+    
+  })
+    .catch(error => {
+      res.status(400).send(console.log(`Error ${error}`));
     })
 });
 

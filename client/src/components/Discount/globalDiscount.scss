@@ -1,5 +1,17 @@
-.container{
+.tituloGlobal{
+    margin-top: 4%;
+}
+
+.containerDiscout{
     background-color: white;
+    // display: flex;
+    border: 1px solid rgb(233, 185, 83);
+    box-shadow: 2px 2px 3px rgb(175, 128, 56);
+    border-radius: 15px;
+    width: auto;
+    align-self: center;
+    margin: 50px;
+    margin-bottom: 10%;
 }
 
 .danger {
@@ -25,8 +37,7 @@
   }
 
   .buttonFormAdd{
-    background-color: rgb(255, 255, 255);
-
+                    background-color: rgb(255, 255, 255);
                     border-color: rgb(177, 177, 177);
                     padding: 4px;
                     padding-right: 20px;
@@ -39,4 +50,4 @@
     background-color: #f5b453;
     border-color: rgb(155, 155, 155);
 
-  }
+}

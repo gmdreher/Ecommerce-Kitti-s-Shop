@@ -1,17 +1,17 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import styles from './UserTable.module.scss';
+import './UserTable.scss';
 import { getUsers, updateToAdmin, bloquearUsers, desbloquearUsers, postResertPassword, updateToUsers } from '../../actions/userAction.js';
 import { Button, Modal, Form, ModalHeader, ModalFooter } from 'reactstrap';
-
+import { useTranslation } from 'react-i18next';
 
 
 export default function UserTable() {
-
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     const usersData = useSelector(store => store.product.user);
-    
+
 
     const [input, setInput] = useState();
 
@@ -114,17 +114,17 @@ export default function UserTable() {
     return (
         <Fragment>
             <br />
-            <h2 className={styles.title}>Perfiles</h2>
-            <div className={"table-responsive " + styles.container}>
+            <h2 className="title3">{t("admin.Profiles")}</h2>
+            <div className={"table-responsive " + "containeruse"}>
                 <table className="table table-sm" >
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">{t("crud.Categories.name")}</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Perfil</th>
-                            <th scope="col">Bloquear</th>
-                            <th scope="col">Contraseña</th>
+                            <th scope="col">{t("user.role")}</th>
+                            <th scope="col">{t("user.block")}</th>
+                            <th scope="col">{t("user.pass")}</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -135,19 +135,19 @@ export default function UserTable() {
                                         <td>{info.id}</td>
                                         <td>{info.fullname}</td>
                                         <td>{info.email}</td>
-                                        <td>{info.rol !== "admin" ? <button type="button" className={styles.admin} onClick={() => handlerAdmin(info)}>Usuario</button> :
-                                            <button type="button" className={styles.Noadmin} onClick={() => handlerUsers(info)}>Admin.</button>
+                                        <td>{info.rol !== "admin" ? <button type="button" className="admin" onClick={() => handlerAdmin(info)}>{t("user")}</button> :
+                                            <button type="button" className="Noadmin" onClick={() => handlerUsers(info)}>{t("admin")}</button>
                                         }
                                         </td>
                                         <td>
                                             {
-                                                info.banned !== true ? <button type="button" className={styles.bloqueo} onClick={() => handlerBloquear(info)}>Bloquear</button> :
-                                                    <button type="button" className={styles.bloqueado} onClick={() => handlerDesbloquear(info)} >Bloqueado</button>
+                                                info.banned !== true ? <button type="button" className="bloqueo" onClick={() => handlerBloquear(info)}>{t("user.block")}</button> :
+                                                    <button type="button" className="bloqueado" onClick={() => handlerDesbloquear(info)} >{t("user.banned")}</button>
                                             }
 
                                         </td>
                                         <td>
-                                            <button type="button" className={styles.reset} onClick={() => handlerResert(info)}>Resetear</button>
+                                            <button type="button" className="reset" onClick={() => handlerResert(info)}>{t("user.reset")}</button>
                                         </td>
                                     </tr>
                                 )
@@ -160,9 +160,9 @@ export default function UserTable() {
 
             <div>
                 <Modal onSubmit={handleSubmit} isOpen={modal1} toggle={toggle1} >
-                    <ModalHeader toggle={toggle1}>¿ Desea hacer Administrador al usuario ?</ModalHeader>
+                    <ModalHeader toggle={toggle1}>{t("user.toAdmin")}</ModalHeader>
                     <ModalFooter>
-                        <Button className="buttonForm" color="primary" type="submit" onClick={() => admin(input)}>Si</Button>
+                        <Button className="buttonForm" color="primary" type="submit" onClick={() => admin(input)}>{t("yes")}</Button>
                         <Button className="buttonForm" color="secondary" onClick={toggle1}>No</Button>
                     </ModalFooter>
                 </Modal>
@@ -170,9 +170,9 @@ export default function UserTable() {
             {/* -----------------------------------Modal para hacer USUARIO ---------------------------------------- */}
             <div>
                 <Modal onSubmit={handleSubmit} isOpen={modal} toggle={toggle} >
-                    <ModalHeader toggle={toggle}>¿ Desea hacer usuario al Administrador ?</ModalHeader>
+                    <ModalHeader toggle={toggle}>{t("user.toUser")}</ModalHeader>
                     <ModalFooter>
-                        <Button className="buttonForm" color="primary" type="submit" onClick={() => users(input)}>Si</Button>
+                        <Button className="buttonForm" color="primary" type="submit" onClick={() => users(input)}>{t("yes")}</Button>
                         <Button className="buttonForm" color="secondary" onClick={toggle}>No</Button>
                     </ModalFooter>
                 </Modal>
@@ -180,9 +180,9 @@ export default function UserTable() {
             {/* -----------------------------------Modal para BLOQUEAR ---------------------------------------- */}
             <div>
                 <Modal onSubmit={handleSubmit} isOpen={modal2} toggle={toggle2} >
-                    <ModalHeader toggle={toggle2}>¿ Desea bloquear al usuario ?</ModalHeader>
+                    <ModalHeader toggle={toggle2}>{t("user.toBanned")}</ModalHeader>
                     <ModalFooter>
-                        <Button className="buttonForm" color="primary" type="submit" onClick={() => bloqueo(input)}>Si</Button>
+                        <Button className="buttonForm" color="primary" type="submit" onClick={() => bloqueo(input)}>{t("yes")}</Button>
                         <Button className="buttonForm" color="secondary" onClick={toggle2}>No</Button>
                     </ModalFooter>
                 </Modal>
@@ -190,9 +190,9 @@ export default function UserTable() {
             {/* -----------------------------------Modal para DESBLOQUEAR ---------------------------------------- */}
             <div>
                 <Modal onSubmit={handleSubmit} isOpen={modal3} toggle={toggle3} >
-                    <ModalHeader toggle={toggle3}>¿ Desea desbloquear al usuario ?</ModalHeader>
+                    <ModalHeader toggle={toggle3}>{t("user.notBanned")}</ModalHeader>
                     <ModalFooter>
-                        <Button className="buttonForm" color="primary" type="submit" onClick={() => desbloqueo(input)}>Si</Button>
+                        <Button className="buttonForm" color="primary" type="submit" onClick={() => desbloqueo(input)}>{t("yes")}</Button>
                         <Button className="buttonForm" color="secondary" onClick={toggle3}>No</Button>
                     </ModalFooter>
                 </Modal>
@@ -200,9 +200,9 @@ export default function UserTable() {
             {/* -----------------------------------Modal para RESETEAR CONTRASEÑA ---------------------------------------- */}
             <div>
                 <Modal onSubmit={handleSubmit} isOpen={modal4} toggle={toggle4} >
-                    <ModalHeader toggle={toggle4}>¿ Desea resetear la contraseña ?</ModalHeader>
+                    <ModalHeader toggle={toggle4}>{t("user.resetPass")}</ModalHeader>
                     <ModalFooter>
-                        <Button className="buttonForm" color="primary" type="submit" onClick={() => resertcontraseña(input)}>Si</Button>
+                        <Button className="buttonForm" color="primary" type="submit" onClick={() => resertcontraseña(input)}>{t("yes")}</Button>
                         <Button className="buttonForm" color="secondary" onClick={toggle4}>No</Button>
                     </ModalFooter>
                 </Modal>

@@ -52,10 +52,10 @@ server.put('/:id' , protected.isAuth, (req, res) => {
        
     })
     .then((order) => {
-      console.log("ordeasd", order)
+      
 
       let direccion= order.dataValues.address
-      if(order.state === "enviado"){
+      if(order.state === "enviada"){
         const transporter = nodemailer.createTransport({
                service: 'gmail',
                auth: {
@@ -63,6 +63,7 @@ server.put('/:id' , protected.isAuth, (req, res) => {
                  pass: process.env.AUTH_PASS
                }
              })
+
                        transporter.sendMail({
                          from: process.env.AUTH_MAIL,
                          to: order.user.email,
@@ -78,6 +79,7 @@ server.put('/:id' , protected.isAuth, (req, res) => {
                            res.status(200).send("Mail enviado" + info)
                           }
                      })
+                  
       }
       res.status(200).json(order)
     })
@@ -113,6 +115,7 @@ server.get("/search" , protected.isAuth, (req, res) => {
 //eliminar un items de la orden
 server.delete("/:orderId/:productId" , protected.isAuth, (req, res) => {
   let { orderId, productId } = req.params;
+  
 
   OrderDetails.destroy({
     where: {
@@ -132,9 +135,22 @@ server.delete("/:orderId/:productId" , protected.isAuth, (req, res) => {
 // 41) modificar cantidades del carrito por id usuario
 server.put('/:idUser/cart' , protected.isAuth, (req, res) => {
   const { idUser } = req.params;
-  const { productId, quantity, orderId } = req.body;
-
-  OrderDetails.update({
+  const { productId, quantity, orderId, addStock, takeStock } = req.body;
+ 
+  Product.findByPk(productId)
+  .then((product) => {
+    if(addStock){
+      product.update({
+        stock: product.stock + 1
+      })
+    }
+   if(takeStock){
+      product.update({
+        stock: product.stock - 1
+      })
+    }   
+  })
+  return OrderDetails.update({
     quantity: quantity
   },
     {
