@@ -25,7 +25,7 @@ npm start >> Ecommerce-Kitti-s-Shop/client/
  + Sequelize
 
 ## Previews 
-<img src="https://i.ibb.co/r31zsRw/01.png" width="auto" height="auto" />
+<img src="https://i.ibb.co/r31zsRw/01.png" width="auto" height="auto" /> 
 
 ## Contribuidores 
 
