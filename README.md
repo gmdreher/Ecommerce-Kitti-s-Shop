@@ -26,6 +26,8 @@ npm start >> Ecommerce-Kitti-s-Shop/client/
 
 ## Previews 
 <img src="https://i.ibb.co/r31zsRw/01.png" width="auto" height="auto" /> 
+<img src="https://i.ibb.co/R4Q20nH/04.png" width="auto" height="auto" /> 
+<img src="https://i.ibb.co/g6Z6yCW/03.png" width="auto" height="auto" /> 
 
 ## Contribuidores 
 
