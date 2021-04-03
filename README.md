@@ -24,7 +24,9 @@ npm start >> Ecommerce-Kitti-s-Shop/client/
  + PostreSQL
  + Sequelize
 
+## Previews 
 
+<img href="https://i.ibb.co/r31zsRw/01.png">
 
 ## Contribuidores 
 
